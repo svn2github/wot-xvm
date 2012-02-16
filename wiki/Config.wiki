@@ -27,18 +27,18 @@ rating
 - атрибут lcolor тега fill задаёт цветовой переход для полоски здоровья;
 
 - тэг battle/showPostMortemTips позволяет отключить панель, всплывающую при уничтожении танка.
-  <battle>
+{{{  <battle>
     <showPostmortemTips>false</showPostmortemTips>
-  </battle>
+  </battle>}}}
 
 - тэг rating/showPlayersStatistics позволяет включить отображение статистики в infoText (см. ниже).
-  <rating>
+{{{  <rating>
     <showPlayersStatistics>true</showPlayersStatistics>
-  </rating>
+  </rating>}}}
 
 - тэг combatScrollText/hitKind позволяет переключить отображение всплывающих повреждений в режим показа процентов
-  <combatScrollText>
-    <hitKind>Relative</hitKind>
+{{{  <combatScrollText>
+    <hitKind>Relative</hitKind>}}}
 
 - тэг combatScrollText/font позволяет задать свой шрифт для вылетающего дамага
 
@@ -46,16 +46,16 @@ rating
 
 - тег components/*/infoText задаёт формат текстовых строк по умолчанию (аналогично components/*/currentHealth), тэг behavior/*/*/*/infoText задаёт положение и содержимое текстовых строк.
   Используемые макросы:
-    {{hp}}         - текущее здоровье
-    {{hp-ratio}}   - процент текущего здоровья
-    {{hp-max}}     - максимальное здоровье
-    {{nick}}       - ник игрока
-    {{vehicle}}    - название танка
+  * {{hp}}         - текущее здоровье
+  * {{hp-ratio}}   - процент текущего здоровья
+  * {{hp-max}}     - максимальное здоровье
+  * {{nick}}       - ник игрока
+  * {{vehicle}}    - название танка
   Статистика (необходимо включить rating/showPlayersStatistics):
-    {{rating}}     - процент побед
-    {{eff}}        - эффективность игрока
-    {{kb}}         - количество кило-боев (округление количества боев до 1000).
-    {{battles}}    - количество боев
-    {{wins}}       - количество побед
+  * {{rating}}     - процент побед
+  * {{eff}}        - эффективность игрока
+  * {{kb}}         - количество кило-боев (округление количества боев до 1000).
+  * {{battles}}    - количество боев
+  * {{wins}}       - количество побед
 
 Пример поля "format": "{{kb}} {{eff}} {{rating}}"
