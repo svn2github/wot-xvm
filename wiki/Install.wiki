@@ -1,5 +1,6 @@
 #summary Инструкция по установке
 
+  # Должен быть установлен Microsoft .NET Framework 2.0
   # Установить DokanLibrary: http://dokan-dev.net/en/download/#dokan
   # Разархивировать архив в папку с игрой
   # Настроить конфиг \res\gui\flash\XVM.xvmconf
@@ -10,6 +11,7 @@
 
 ----
 
+  # Microsoft .NET Framework 2.0 is required
   # Install DokanLibrary: http://dokan-dev.net/en/download/#dokan
   # Unzip archive to game folder
   # Setup config \res\gui\flash\XVM.xvmconf
