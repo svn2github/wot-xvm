@@ -43,7 +43,7 @@ class wot.BattleLoading extends net.wargaming.BattleLoading
     }
 
     setInfoFieldData({ });
-    
+
     // Force stats loading after 1 sec (for 12x12 battles or FogOfWar)
     var timer: TimelineLite = new TimelineLite({onComplete:StartLoadData, onCompleteParams:[]});
     timer.insert(new TweenLite(null, 1));
@@ -79,6 +79,17 @@ class wot.BattleLoading extends net.wargaming.BattleLoading
     {
       txt += data.error + "\n";
       infoField.textColor = 0xFF8080;
+    }
+
+    if (Stat.s_loaded)
+    {
+      var chances = Stat.GetChances();
+      if (chances)
+      {
+        txt += "Chances:";
+        txt += "\n  m = " + chances.m + " (" + chances.m1 + " / " + chances.m2 + ")";
+        txt += "\n  k = " + chances.k + " (" + chances.k1 + " / " + chances.k2 + ")";
+      }
     }
 
     infoField.text = txt;

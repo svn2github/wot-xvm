@@ -4,7 +4,8 @@ GAME_VER=0.7.1.1
 
 cd $(dirname $(realpath $(cygpath --unix $0)))
 
-[ "$WOT_DIRECTORY" = "" ] && WOT_DIRECTORY=/cygdrive/d/home/games/WoT
+WOT_DIRECTORY=/cygdrive/d/home/max/WoT
+
 SWF_DIR=$WOT_DIRECTORY/res_mods/$GAME_VER/gui/flash
 cp ../bin/*.swf $SWF_DIR 2>/dev/null
 [ -f "$SWF_DIR/XVM.xvmconf" ] && rm -f $SWF_DIR/XVM.xvmconf

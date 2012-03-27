@@ -2,9 +2,9 @@
 
 cd $(dirname $(realpath $(cygpath --unix $0)))
 
-./deploy.sh
+sh deploy.sh
 
-[ "$WOT_DIRECTORY" = "" ] && WOT_DIRECTORY=/cygdrive/d/home/games/WoT
+WOT_DIRECTORY=/cygdrive/d/home/max/WoT
 CURRENT_DIRECTORY=`pwd`
 
 #SAMPLE_REPLAY=15.wotreplay

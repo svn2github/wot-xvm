@@ -43,7 +43,7 @@ class wot.StatItemRenderer extends net.wargaming.controls.LobbyPlayerListItemRen
         _logShown = true;
         wot.utils.Logger.add("[BattleLoading] Show Players Statistics = TRUE"); // Just to check config is loaded correctly
       }
-      Stat.AddPlayerData(this, data.id, data.label, data.vehicle,
+      Stat.AddPlayerData(this, data.id, data.label, data.vehicle, wot.utils.VehicleInfo.getInfo(data.icon),
         this.owner._name == "team1List" ? Defines.TEAM_ALLY : Defines.TEAM_ENEMY);
       if (Stat.s_player_ids.length === 30)
         Stat.StartLoadData();
