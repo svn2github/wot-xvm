@@ -1,10 +1,6 @@
-﻿intrinsic class net.wargaming.controls.LobbyPlayerListItemRenderer extends gfx.core.UIComponent // net.wargaming.controls.TextFieldShort
+﻿intrinsic class net.wargaming.controls.LobbyPlayerListItemRenderer extends MovieClip // net.wargaming.controls.TextFieldShort
 {
-  var data;
-  var iconLoader;
   var owner;
-  var vehicleField;
 
-  function setData(data);
-  function update();
+  function completeLoad(event);
 }

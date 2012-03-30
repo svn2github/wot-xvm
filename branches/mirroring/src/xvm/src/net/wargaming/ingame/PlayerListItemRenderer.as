@@ -1,4 +1,4 @@
-﻿intrinsic class net.wargaming.ingame.PlayerListItemRenderer extends gfx.core.UIComponent
+﻿intrinsic class net.wargaming.ingame.PlayerListItemRenderer extends MovieClip
 {
   var vehicleLevel;
   var iconLoader;

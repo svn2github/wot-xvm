@@ -59456,7 +59456,7 @@
         <actions>
           <PushData>
             <items>
-              <StackString value="wot.PlayersPanel"/>
+              <StackString value="net.wargaming.ingame.PlayersPanel"/>
             </items>
           </PushData>
           <GetVariable/>
