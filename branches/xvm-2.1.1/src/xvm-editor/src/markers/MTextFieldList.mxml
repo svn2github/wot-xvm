@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:c="components.*"
+	xmlns:m="markers.*"
+	x="0" y="0" width="100%" height="100%" gap="-1">
+	<fx:Script>
+		<![CDATA[
+			import components.DynamicTextFieldEdit;
+			import components.LabeledComponent;
+			
+			import events.ValueChangedEvent;
+			
+			import flash.events.Event;
+			
+			import mx.core.IVisualElement;
+			
+			import spark.components.ToggleButton;
+			
+			import utils.Config;
+			import utils.DefaultConfig;
+			import utils.Utils;
+
+			private var m_activeMarkerStates:Array = null;
+			private var m_names:Array = [];
+			private var m_values:Object = {};
+			
+			[Embed(source="images/add.png")]
+			private static var IMG_add : Class;
+			
+			public function get value():*
+			{
+				var a:Object = {};
+				for each (var state:String in this.m_activeMarkerStates)
+					a[state] = [];
+				for (var n:Number = 0; n < m_names.length; ++n)
+				{
+					var v:Object = m_values[m_names[n]];
+					for (var i:Number = 0; i < v.states.length; ++i)
+						a[v.states[i]].push(v.values[i]);
+				}
+				return a;
+			}
+
+			protected function onChange(event: Event):void
+			{
+				dispatchEvent(new events.ValueChangedEvent(this));
+			}
+			
+			private function CreateNewElementButton():IVisualElement
+			{
+				var img:Image = new Image();
+				img.width = 16;
+				img.height = 16;
+				img.id = "new";
+				img.source = new IMG_add();
+				img.toolTip = "Добавить текстовое поле";
+				img.useHandCursor = true;
+				img.buttonMode = true;
+				img.addEventListener(MouseEvent.CLICK, this.onClick);
+				return img;
+			}
+			
+			private function CreateElement(v:String):DynamicTextFieldEdit
+			{
+				var instance:DynamicTextFieldEdit = new DynamicTextFieldEdit();
+				instance.label = v;
+				instance.labelWidth = "200";
+				instance.width = 255;
+				instance.group = rbg;
+				instance.addEventListener(MouseEvent.CLICK, onClick);
+				return instance;
+			}
+
+			public function RefreshSource(activeMarkerStates: Array): void
+			{
+				m_activeMarkerStates = activeMarkerStates;
+				
+				for (var n:Number = 0; n < container.numElements; ++n)
+				{
+					var e_old:DynamicTextFieldEdit = container.getElementAt(n) as DynamicTextFieldEdit; 
+					if (e_old)
+						e_old.group = null;
+					delete container.getElementAt(n);
+				}
+				container.removeAllElements();
+
+				m_names = [];
+				m_values = {};
+				var empty: Boolean = true;
+				var unnamedCounter:Number = 0;
+				for each (var state:String in activeMarkerStates)
+				{
+					var conf:String = "markers." + state + ".textFields";
+					var v:Array = Config.GetValue(conf);
+					for (var i:Number = 0; i < v.length; ++i)
+					{
+						empty = false;
+						var value:Object = v[i];
+						var name:String = value.name || value.format || "Текст " + (++unnamedCounter);
+						if (!m_values.hasOwnProperty(name))
+						{
+							var e:DynamicTextFieldEdit = CreateElement(name);
+							container.addElement(e);
+							m_names.push(name);
+							m_values[name] = { element: e, states: [], values: [] };
+						}
+						m_values[name].states.push(state);
+						m_values[name].values.push(value);
+					}
+				}
+
+				if (empty)
+					container.addElement(CreateNewElementButton());
+				else
+				{
+					for (var j:Number = 0; j < container.numElements; ++j)
+					{
+						var el:DynamicTextFieldEdit = container.getElementAt(j) as DynamicTextFieldEdit;
+						if (j == 0)
+						{
+							el.selected = true;
+							this.RefreshElement(el.label);
+						}
+						el.conflict = m_values[el.label].states.length != m_activeMarkerStates.length;
+					}
+				}
+			}
+
+			protected function onRadioButtonChange(event:Event):void
+			{
+				RefreshElement(rbg.selectedValue.toString());
+			}
+
+			public static var ElementControls:Object = {
+				textFields: [ "m_textField", "m_textField_font", "m_textField_shadow" ],
+				m_textField: [ "v_visible", "v_name", "v_x", "v_y", "v_alpha", "v_color", "v_format" ],
+				m_textField_font: [ "v_name", "v_size", "v_align", "v_bold" ],
+				m_textField_shadow: [ "v_size", "v_strength", "v_angle", "v_distance", "v_color", "v_alpha" ]
+			};
+
+			protected function RefreshElement(name:String):void
+			{
+				//trace(name);
+
+				var values:Object = m_values[name];
+				for each (var mname:String in ElementControls.textFields)
+				{
+					for each (var mname2:String in ElementControls[mname])
+					{
+						var control:LabeledComponent = this[mname][mname2] as LabeledComponent;
+
+						//trace(mname + "." + mname2);
+						var valueSet: Boolean = false;
+						var value:*;
+						var valueOk: Boolean = true;
+						for each (var curValues:Object in values.values)
+						{
+							var curValue:Object = Config.GetValue(control.config, curValues);
+							if (!valueSet)
+							{
+								valueSet = true;
+								value = curValue;
+							}
+							else
+							{
+								if (value != curValue)
+								{
+									valueOk = false;
+									break;
+								}
+							}
+						}
+
+						control.conflict = !valueOk;
+						control.value = value;
+					}
+				}
+			}
+
+			public function updateValue(event:ValueChangedEvent):void
+			{
+				try
+				{
+					if (!event.sender.config)
+					{
+						trace("ERROR: config is null for: " + event.sender.id);
+						return;
+					}
+
+					//var activeElement:String = getActiveMarkerElement().id;
+					//var activeMarkerStates:Array = getActiveMarkerStates();
+					/*for each (var state:String in activeMarkerStates)
+					{
+						var config:String = "markers." + state + "." + activeElement + "." + event.sender.config; 
+						//debug(config + "=" + event.sender.value);
+						Config.SetValue(config, event.sender.value);
+					}*/
+				}
+				catch (ex:Error)
+				{
+					trace("ERROR: updateMarkerValue(): " + ex.toString());
+				}
+			}
+
+			// add/del
+			protected function onClick(event:MouseEvent):void
+			{
+				var e:DynamicTextFieldEdit = event.currentTarget as DynamicTextFieldEdit; 
+				if (event.target.id == "del")
+				{
+					m_names.splice(m_names.indexOf(e.label), 1);
+					delete m_values[e.label];
+				}
+				else if (event.target.id == "copy")
+				{
+					for (var i:Number = 0; i < this.m_activeMarkerStates.length; ++i)
+					{
+						var state:String = m_activeMarkerStates[i];
+						if (m_values[e.label].states.indexOf(state) == -1)
+						{
+							m_values[e.label].states.push(state);
+							m_values[e.label].values.push(m_values[e.label].values[0]);
+						}
+						else if (i != 0)
+						{
+							m_values[e.label].values[i] = m_values[e.label].values[0];
+						}
+					}
+				}
+				else if (event.target.id == "add" || event.target.id == "new")
+				{
+					var n:Number = 0;
+					var name:String; 
+					do { name = "Текст " + (++n); } while (m_values.hasOwnProperty(name));
+					m_names.push(name);
+					m_values[name] = { element: null, states: this.m_activeMarkerStates, values: [] };
+					var defValue:Object = DefaultConfig.vehicleName_alive;
+					defValue.name = name;
+					defValue.format = "ТЕКСТ";
+					for (var j:Number = 0; j < m_values[name].states.length; ++j)
+						m_values[name].values.push(defValue);
+				}
+				else
+					return;
+
+				onChange(null);
+				this.RefreshSource(this.m_activeMarkerStates);
+			}
+		]]>
+	</fx:Script>
+	<fx:Metadata>
+		[Event(name="valueChanged", type="events.ValueChangedEvent")]
+	</fx:Metadata>
+	<fx:Declarations>
+		<s:RadioButtonGroup id="rbg" change="onRadioButtonChange(event)"/>
+	</fx:Declarations>
+	<c:PanelComponent title="Текстовые поля" width="100%" height="100" borderVisible="false">
+		<mx:Image right="5" y="-18" width="16" height="16" source="@Embed(source='images/cancel.png')" toolTip="Вернуть настройки по умолчанию" useHandCursor="true" buttonMode="true"/>
+		<s:Scroller left="10" right="10" top="5" bottom="6">
+			<s:VGroup id="container" width="100%" height="100%" gap="-1"/>
+		</s:Scroller>
+    </c:PanelComponent>
+	<m:MTextField id="m_textField" valueChanged="updateValue(event)"/>
+	<m:MFont id="m_textField_font" valueChanged="updateValue(event)"/>
+	<m:MShadow id="m_textField_shadow" valueChanged="updateValue(event)"/>
+</s:VGroup>
