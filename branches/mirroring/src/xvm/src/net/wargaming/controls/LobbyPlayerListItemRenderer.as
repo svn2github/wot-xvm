@@ -3,4 +3,6 @@
   var owner;
 
   function completeLoad(event);
+  function errorLoad(event);
+  function setData(event);
 }

@@ -1,7 +1,7 @@
 #!/bin/sh
 
-GAME_VER="0.7.2"
-FILES="battle.swf battleloading.swf PlayersPanel.swf StatisticForm.swf VehicleMarkersManager.swf XVM.xvmconf OTMData.xml"
+GAME_VER="0.7.3"
+FILES="battleloading.swf PlayersPanel.swf StatisticForm.swf VehicleMarkersManager.swf"
 
 cd $(dirname $(realpath $(cygpath --unix $0)))
 

@@ -1,8 +1,9 @@
 ﻿intrinsic class net.wargaming.ingame.PlayerListItemRenderer extends MovieClip
 {
-  var vehicleLevel;
-  var iconLoader;
   var owner;
+  var data;
 
-  function setData(data);
+  function errorLoad(event);
+  function completeLoad(event);
+  function update();
 }

@@ -1,6 +1,6 @@
---- orig\PlayersPanel.xml	2012-05-06 11:45:51.464756600 +0300
-+++ PlayersPanel.xml	2012-05-06 18:39:32.475494500 +0300
-@@ -55291,8 +55291,8 @@
+--- orig\VehicleMarkersManager.xml	2012-04-24 22:01:15.742899500 +0300
++++ VehicleMarkersManager.xml	2012-05-06 18:38:52.161188600 +0300
+@@ -27706,8 +27706,8 @@
                <String value="charAt"/>
                <String value=" "/>
                <String value="\"/>
@@ -11,21 +11,21 @@
                <String value="&#10;"/>
                <String value="&#13;"/>
                <String value="&#9;"/>
-@@ -59300,7 +59300,7 @@
+@@ -41733,7 +41733,7 @@
          <actions>
            <PushData>
              <items>
--              <StackString value="net.wargaming.ingame.PlayerListItemRenderer"/>
-+              <StackString value="wot.PlayerListItemRenderer"/>
+-              <StackString value="net.wargaming.ingame.VehicleMarkerEnemy"/>
++              <StackString value="wot.ingame.VehicleMarkerEnemy"/>
              </items>
            </PushData>
            <GetVariable/>
-@@ -59326,7 +59326,7 @@
+@@ -41759,7 +41759,7 @@
          <actions>
            <PushData>
              <items>
--              <StackString value="net.wargaming.ingame.PlayerListItemRenderer"/>
-+              <StackString value="wot.PlayerListItemRenderer"/>
+-              <StackString value="net.wargaming.ingame.VehicleMarkerAlly"/>
++              <StackString value="wot.ingame.VehicleMarkerAlly"/>
              </items>
            </PushData>
            <GetVariable/>
