@@ -75,7 +75,7 @@ class wot.BattleLoadingItemRenderer extends net.wargaming.controls.LobbyPlayerLi
           _logShown = true;
           Logger.add("[BattleLoading] Show Players Statistics = true"); // Just to check config is loaded correctly
         }
-        Stat.AddPlayerData(this, data.id, data.label, data.vehicle, data.icon, team);
+        Stat.AddPlayerData(this, XVMStatUpdateCallback, data.id, data.label, data.vehicle, data.icon, team);
         if (Stat.s_player_ids.length === 30)
           Stat.StartLoadData();
       }

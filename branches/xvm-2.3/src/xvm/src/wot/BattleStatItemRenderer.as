@@ -102,7 +102,7 @@ class wot.BattleStatItemRenderer extends net.wargaming.BattleStatItemRenderer
     if (data)
     {
       if (Config.s_config.rating.showPlayersStatistics && !Stat.s_player_data[data.label.toUpperCase()])
-        Stat.AddPlayerData(this, 1, data.label, data.vehicle, data.icon, team);
+        Stat.AddPlayerData(this, null, 1, data.label, data.vehicle, data.icon, team);
 
       // Alternative icon set
       data.icon = data.icon.split(Defines.CONTOUR_ICON_PATH).join(Config.s_config.iconset.statisticForm);

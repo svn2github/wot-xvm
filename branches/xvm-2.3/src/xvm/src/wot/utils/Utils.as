@@ -90,7 +90,7 @@ class wot.utils.Utils
     return (pos < 0) ? fullplayername : fullplayername.slice(0, pos);
   }
 
-  public static function GetUpperPlayerName(fullplayername: String): String
+  public static function GetNormalizedPlayerName(fullplayername: String): String
   {
     return GetPlayerName(fullplayername).toUpperCase();
   }
@@ -169,5 +169,6 @@ class wot.utils.Utils
       }
     }
     return sourceArray;
+ 
   }
 }

@@ -1,4 +1,16 @@
-﻿XVM-2.3.1:
+﻿XVM-2.3.2.test1:
+  * new proxy server
+  * added per-vehicle statistics. New macros:
+      {{t-kb}}
+      {{t-battles}}
+      {{t-wins}}
+      {{t-rating}}
+      {{t-kb:4}}
+      {{t-rating:3}}
+      {{c:t-rating}}
+      {{c:t-kb}}
+
+XVM-2.3.1:
   * fix 2.3 release bugs
 
 XVM-2.3:
