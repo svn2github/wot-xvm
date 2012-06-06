@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009"
+	    xmlns:s="library://ns.adobe.com/flex/spark"
+	    xmlns:mx="library://ns.adobe.com/flex/mx"
+		xmlns:c="components.*"
+		width="500" height="450"
+		borderVisible="false" xmlns:ns1="*" creationComplete="onCreationComplete(event)">
+	<fx:Script>
+		<![CDATA[
+			import flash.display.Loader;
+			
+			import mx.controls.SWFLoader;
+			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
+			
+			//import utils.ClassLoader;
+
+			[Embed(source="images/bg/hills-1.jpg")]
+			private static var IMG_hills1 : Class;
+			[Embed(source="images/bg/hills-2.jpg")]
+			private static var IMG_hills2 : Class;
+			[Embed(source="images/bg/hills-3.jpg")]
+			private static var IMG_hills3 : Class;
+			[Embed(source="images/bg/mannerheim-1.jpg")]
+			private static var IMG_mannerheim1 : Class;
+			[Embed(source="images/bg/mannerheim-2.jpg")]
+			private static var IMG_mannerheim2 : Class;
+			[Embed(source="images/bg/mannerheim-3.jpg")]
+			private static var IMG_mannerheim3 : Class;
+			[Embed(source="images/bg/desert-1.jpg")]
+			private static var IMG_desert1 : Class;
+			[Embed(source="images/bg/desert-2.jpg")]
+			private static var IMG_desert2 : Class;
+			[Embed(source="images/bg/desert-3.jpg")]
+			private static var IMG_desert3 : Class;
+
+			//[Embed(source="../assets/gfxfontlib.swf")]
+			//private static var SWF_gfxfontlib : Class;
+
+			protected function onCreationComplete(event:FlexEvent):void
+			{
+				//loadSWF("battle.swf");
+				//loadSWF("battleloading.swf");
+				//loadSWF("PlayersPanel.swf");
+				//loadSWF("StatisticForm.swf");
+				loadSWF("VehicleMarkersManager.swf");
+			}
+
+			//private var loader:ClassLoader;
+			private function loadSWF(url:String):void
+			{
+				/*loader = new ClassLoader();
+				loader.addEventListener(ClassLoader.LOAD_ERROR,loadErrorHandler);
+				loader.addEventListener(ClassLoader.CLASS_LOADED,classLoadedHandler);
+				loader.load(url);*/
+			}
+
+			private function loadErrorHandler(e:Event):void {
+				throw new IllegalOperationError("Cannot load the specified file.");
+			}
+			
+			private function classLoadedHandler(e:Event):void {
+				/*var xvmRef:Class = loader.getClass("VehicleMarkerAlly");
+				var xvm:Object = new xvmRef();
+				addChild(xvm as DisplayObject);*/
+			}
+			
+			/*private function loadSWFComplete( event:Event ):void
+			{
+-				var loader:Loader = event.target as Loader;
+				//var str:String = loader.content['hello']();
+				
+				var c:Class = loader.contentLoaderInfo.applicationDomain.getDefinition("VehicleMarkerAlly") as Class;
+				var vmm = new c() as MovieClip;
+				addChild(vmm);
+				
+				//trace(loader.content.toString());
+			}*/
+
+			private function loader_complete(evt:Event):void
+			{
+				/*var loader:Loader = evt.currentTarget.loader as Loader;
+				var c:Class = loader.contentLoaderInfo.applicationDomain
+					.getDefinition("wot.ingame.VehicleMarkerAlly") as Class;
+				var vmm = new c() as MovieClip;
+				addChild(vmm);*/
+			}
+
+			protected virtual function onChange(event:Event):void
+			{
+				if (event)
+					event.stopPropagation();
+
+				dispatchEvent(new Event(Event.CHANGE));
+			}
+
+			protected function cbBG_changeHandler(event:ListEvent):void
+			{
+				switch (cbBG.selectedIndex + 1)
+				{
+					case 1:
+						imgBG.source = new IMG_hills1();
+						break;
+					case 2:
+						imgBG.source = new IMG_hills2();
+						break;
+					case 3:
+						imgBG.source = new IMG_hills3();
+						break;
+					case 4:
+						imgBG.source = new IMG_mannerheim1();
+						break;
+					case 5:
+						imgBG.source = new IMG_mannerheim2();
+						break;
+					case 6:
+						imgBG.source = new IMG_mannerheim3();
+						break;
+					case 7:
+						imgBG.source = new IMG_desert1();
+						break;
+					case 8:
+						imgBG.source = new IMG_desert2();
+						break;
+					case 9:
+						imgBG.source = new IMG_desert3();
+						break;
+				}
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Metadata>
+		[Event(name="change", type="flash.events.Event")]
+		[ResourceBundle("components")]
+	</fx:Metadata>
+	<mx:ViewStack width="100%" height="100%" id="vsPreview" creationPolicy="all">
+		<s:NavigatorContent width="100%" height="100%" id="preview">
+			<mx:Canvas x="0" y="0" width="500" height="400" backgroundColor="0xAACCBB">
+				<mx:Image id="imgBG" x="0" y="0" width="500" height="400"/>
+			</mx:Canvas>
+			<s:BorderContainer y="400" width="100%" height="32" borderVisible="false">
+				<s:HGroup top="0" left="0" bottom="0" width="100%" gap="4" verticalAlign="middle" paddingLeft="4" paddingRight="4">
+					<s:Label text="{resourceManager.getString('components', 'Background')}"/>
+					<mx:ComboBox id="cbBG" width="150" selectedIndex="0" editable="false" change="cbBG_changeHandler(event)" creationComplete="cbBG_changeHandler(new ListEvent(''))">
+						<mx:ArrayCollection>
+							<fx:String>{resourceManager.getString('components', 'Hills')} 1</fx:String>
+							<fx:String>{resourceManager.getString('components', 'Hills')} 2</fx:String>
+							<fx:String>{resourceManager.getString('components', 'Hills')} 3</fx:String>
+							<fx:String>{resourceManager.getString('components', 'Mannerheim')} 1</fx:String>
+							<fx:String>{resourceManager.getString('components', 'Mannerheim')} 2</fx:String>
+							<fx:String>{resourceManager.getString('components', 'Mannerheim')} 3</fx:String>
+							<fx:String>{resourceManager.getString('components', 'Desert')} 1</fx:String>
+							<fx:String>{resourceManager.getString('components', 'Desert')} 2</fx:String>
+							<fx:String>{resourceManager.getString('components', 'Desert')} 3</fx:String>
+						</mx:ArrayCollection>
+					</mx:ComboBox>
+				</s:HGroup>
+			</s:BorderContainer>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" id="debug">
+			<s:TextArea right="0" width="500" height="100%" id="taDebug" visible="true" fontFamily="Consolas"/>
+		</s:NavigatorContent>
+	</mx:ViewStack>
+</s:BorderContainer>

@@ -1,0 +1,47 @@
+--- orig\battleloading.xml	2012-04-24 10:36:13.532366300 +0300
++++ battleloading.xml	2012-04-24 10:39:09.918117000 +0300
+@@ -301,7 +301,7 @@
+           </PlaceObject2>
+           <PlaceObject2 replace="0" depth="7" objectID="11" name="iconLoader" allflags1="0" allflags2="4">
+             <transform>
+-              <Transform scaleX="-0.6250000000000000" scaleY="0.1999511718750000" transX="1600" transY="0"/>
++              <Transform scaleX="-0.6250000000000000" scaleY="0.1999511718750000" transX="1674" transY="20"/>
+             </transform>
+             <events>
+               <Event flags1="0" flags2="4">
+@@ -529,7 +529,7 @@
+           </PlaceObject2>
+           <PlaceObject2 replace="0" depth="7" objectID="11" name="iconLoader" allflags1="0" allflags2="4">
+             <transform>
+-              <Transform scaleX="0.6250000000000000" scaleY="0.1999511718750000" transX="6780" transY="0"/>
++              <Transform scaleX="0.6250000000000000" scaleY="0.1999511718750000" transX="6780" transY="20"/>
+             </transform>
+             <events>
+               <Event flags1="0" flags2="4">
+@@ -43637,7 +43637,7 @@
+         <actions>
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.controls.LobbyPlayerListItemRenderer"/>
++              <StackString value="wot.BattleLoadingItemRenderer"/>
+             </items>
+           </PushData>
+           <GetVariable/>
+@@ -43663,7 +43663,7 @@
+         <actions>
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.controls.LobbyPlayerListItemRenderer"/>
++              <StackString value="wot.BattleLoadingItemRenderer"/>
+             </items>
+           </PushData>
+           <GetVariable/>
+@@ -43715,7 +43715,7 @@
+         <actions>
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.BattleLoading"/>
++              <StackString value="wot.BattleLoading"/>
+             </items>
+           </PushData>
+           <GetVariable/>
