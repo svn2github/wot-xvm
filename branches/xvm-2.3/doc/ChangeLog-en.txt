@@ -1,4 +1,7 @@
-﻿XVM-2.3.2.test1:
+﻿XVM-2.3.2.test2:
+  * rating bugfix
+
+XVM-2.3.2.test1:
   * new proxy server
   * added per-vehicle statistics. New macros:
       {{t-kb}}
