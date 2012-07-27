@@ -1,10 +1,8 @@
 #summary Project support
 
 *You may support project by donating some money:*
-
-||   $US, PayPal   || <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XQG2MB4F4WD22" rel="nofollow"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"/></a> ||
+<table border="0"><tr><td width="120">$US, PayPal</td><td><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XQG2MB4F4WD22" rel="nofollow"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"/></a></td></tr></table>
 
 = =
 *Вы можете поддержать проект, пожертвовав небольшую сумму:*
-
-|| в $ США, PayPal || <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XQG2MB4F4WD22" rel="nofollow"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"/></a> ||
+<table border="0"><tr><td width="120">в $ США, PayPal</td><td><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XQG2MB4F4WD22" rel="nofollow"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"/></a></td></tr></table>
