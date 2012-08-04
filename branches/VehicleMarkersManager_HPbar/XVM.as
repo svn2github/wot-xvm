@@ -671,6 +671,10 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
     // Health Visualization
     function XVMSetupNewHealth(curHealth)
     {
+        /* Called by
+         * overriden populateData()
+         * overriden updateHealth()
+         */
         try
         {
             var delta: Number = curHealth - m_currentHealth;
@@ -745,6 +749,11 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
 
     function XVMUpdateHealthBar(curHealth)
     {
+        /* Called by
+         * XVMSetupNewHealth() - Health Visualization
+         * XVMDrawHealthBar()
+         * XVMUpdateStyle()
+         */
         try
         {
             if (!Config.s_loaded)
@@ -812,6 +821,7 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
 
     function XVMDrawHealthBar(cfg)
     {
+        // Called by XVMPopulateData()
         xvmHB.clear();
         xvmHBBorder.clear();
         xvmHBFill.clear();
