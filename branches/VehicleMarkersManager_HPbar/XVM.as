@@ -22,6 +22,7 @@ import wot.utils.Utils;
 import wot.utils.Logger;
 import wot.utils.PlayerInfo;
 import wot.VehicleMarkersManager.ErrorHandler;
+import wot.VehicleMarkersManager.Watermark
 
 /*
  * XVM() instance creates corresponding marker
@@ -97,8 +98,7 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
         try
         {
             // Draw watermark
-            if (!Config.s_config.battle.hideXVMVersion && !_global.xvmWatermark)
-                DrawXvmWatermark();
+            Watermark.setComponent(_global);
 
             if (Config.s_config.battle.useStandardMarkers)
                 return;
@@ -140,15 +140,7 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
         }
     }
 
-    function DrawXvmWatermark()
-    {
-        _global.xvmWatermark = true;
-        var wm = _root.createTextField("xvmWatermark", _root.getNextHighestDepth(), -1, -2, 100, 16);
-        wm.antiAliasType = "advanced";
-        wm.setNewTextFormat(new TextFormat("$FieldFont", 8, 0x808080, false, false, false, null, null, "left"));
-        wm._alpha = 50;
-        wm.text = "XVM v" + Defines.XVM_VERSION;
-    }
+
 
     function XVMInit2(event)
     {
