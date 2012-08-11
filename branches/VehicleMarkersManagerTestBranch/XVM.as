@@ -291,23 +291,24 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
     // override
     function populateData()
     {
-        Logger.add("XVM::populateData(): Config.s_loaded=" + Config.s_loaded);
+        //Logger.add("XVM::populateData(): Config.s_loaded=" + Config.s_loaded);
         if (!Config.s_loaded || Config.s_config.battle.useStandardMarkers)
             return super.populateData();
 
         //super.populateData();
 
-        //Logger.add("populateData(): " + GetCurrentStateString() + " markerState=" + m_markerState + " pname=" + m_playerFullName);
+        Logger.add("populateData(): " + GetCurrentStateString() + " markerState=" + m_markerState + " pname=" + m_playerFullName);
 
         if (m_isPopulated)
             return false;
         m_isPopulated = true;
+        
+        Logger.add("___ populating");
 
         initMarkerLabel();
 
         setupIconLoader();
         
-        Logger.add("MY###########################");
         levelIconComponent = new LevelIconComponent(this);
 
         if (m_vehicleClass != null)
@@ -928,7 +929,7 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
     {
         try
         {
-            //Logger.add("XVMUpdateStyle: " + m_vname + " " + m_playerFullName + " scale=" + marker._xscale);
+            Logger.add("XVMUpdateStyle: " + m_vname + " " + m_playerFullName + " scale=" + marker._xscale);
             if (!Config.s_loaded)
                 return;
 

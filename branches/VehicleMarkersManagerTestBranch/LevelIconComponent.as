@@ -20,7 +20,6 @@ class wot.VehicleMarkersManager.LevelIconComponent
         if (visible)
         {
             draw(cfg);
-            Logger.add("visible#########!!");
         }
         owner.levelIcon._visible = visible;
     }
