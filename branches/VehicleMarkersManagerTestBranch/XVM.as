@@ -72,6 +72,9 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
     var allStatesEnemy: Array = [
         "enemy/alive/normal", "enemy/alive/extended", "enemy/dead/normal", "enemy/dead/extended"
     ]
+    
+    // init() calling twice by WG prevention
+    var initDone:Boolean = false;
 
     function XVM()
     {
@@ -170,22 +173,42 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
             marker.marker[childName]._y = 16;
         marker._y = -16;
     }
-
+    
     // override
     function init(vClass, vIconSource, vType, vLevel, pFullName, curHealth, maxHealth, entityName, speaking, hunt)
     {
-        //Logger.add("XVM::init(): Config.s_loaded=" + Config.s_loaded);
+        /*  Warning! 
+         *  init() is called two or three times instantaneously by WG
+         * 
+         *  Logger.add("ov:init(" + pFullName + " " + curHealth + " " + maxHealth + " " + entityName);
+         *  ->
+         *  2012.08.12 19:08:07 [i] [002] ov:init(Anatb_RU 300 300 ally
+         *  2012.08.12 19:08:07 [i] [004] ov:init(Anatb_RU 300 300 ally
+         *  
+         *  Introducing preventive measures at this function somehow causes marker malfunction.
+         *  Maybe because of "if (initialized) this.populateData()" statement at parent class.
+         */
+        
+        //Logger.add("XVM::ov:init(): Config.s_loaded=" + Config.s_loaded);
+        Logger.add("ov:init(" + pFullName + " " + curHealth + " " + maxHealth + " " + entityName);
+        
         // Use currently remembered extended / normal status for new markers
         m_showExInfo = s_showExInfo;
         m_isDead = curHealth <= 0;
 
+        /* 
+         * super.init(*)
+         * saves arguments to corresponding m_* fields
+         * and calls if (initialized) this.populateData().
+         * See _Super.as for details.
+         */
         super.init(vClass, vIconSource, vType, vLevel, pFullName, curHealth, maxHealth, entityName, speaking, hunt);
     }
 
     // override
     function updateMarkerSettings()
     {
-        //Logger.add("XVM::updateMarkerSettings(): Config.s_loaded=" + Config.s_loaded);
+        Logger.add("XVM::ov:updateMarkerSettings(): Config.s_loaded=" + Config.s_loaded);
         if (!Config.s_loaded || Config.s_config.battle.useStandardMarkers)
         {
             super.updateMarkerSettings();
@@ -207,7 +230,7 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
     // override
     function updateHealth(curHealth)
     {
-        //Logger.add("XVM::updateHealth(): Config.s_loaded=" + Config.s_loaded);
+        Logger.add("XVM::ov:updateHealth(): Config.s_loaded=" + Config.s_loaded);
         if (Config.s_config.battle.useStandardMarkers)
         {
             super.updateHealth(curHealth);
@@ -225,7 +248,7 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
     // override
     function updateState(newState, isImmediate)
     {
-        //Logger.add("XVM::updateState(): Config.s_loaded=" + Config.s_loaded);
+        Logger.add("XVM:ov:updateState(): Config.s_loaded=" + Config.s_loaded);
         if (Config.s_config.battle.useStandardMarkers)
         {
             super.updateState(newState, isImmediate);
@@ -240,7 +263,7 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
     // override
     function showExInfo(show)
     {
-        //Logger.add("XVM::showExInfo(): Config.s_loaded=" + Config.s_loaded);
+        Logger.add("XVM::ov:showExInfo(): Config.s_loaded=" + Config.s_loaded);
         if (Config.s_config.battle.useStandardMarkers)
         {
             super.showExInfo(show);
@@ -261,7 +284,7 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
     // override
     function configUI()
     {
-        //Logger.add("XVM::configUI(): Config.s_loaded=" + Config.s_loaded);
+        Logger.add("XVM::ov:configUI(): Config.s_loaded=" + Config.s_loaded);
         //Logger.add("configUI(): " + GetCurrentStateString() + " markerState=" + m_markerState + " pname=" + m_playerFullName);
         m_currentHealth = m_curHealth;
         super.configUI();
@@ -274,6 +297,7 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
     // override
     function setupIconLoader()
     {
+        Logger.add("XVM::ov:setupIconLoader()");
         if (!Config.s_loaded || Config.s_config.battle.useStandardMarkers)
         {
             super.setupIconLoader();
@@ -291,17 +315,29 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
     // override
     function populateData()
     {
-        Logger.add("XVM::populateData(): Config.s_loaded=" + Config.s_loaded);
+        /* Called by
+         * super.init() ???
+         * super.configUI() ???
+         */
+                
+        //Logger.add("XVM::ov:populateData(): Config.s_loaded=" + Config.s_loaded);
+        Logger.add("populateData(): " + GetCurrentStateString() + " markerState=" + m_markerState + " pname=" + m_playerFullName);
+        
+        // Standart marker fallback implementation.
         if (!Config.s_loaded || Config.s_config.battle.useStandardMarkers)
             return super.populateData();
 
-        Logger.add("populateData(): " + GetCurrentStateString() + " markerState=" + m_markerState + " pname=" + m_playerFullName);
-
+        /*  populateData() is executed two or three times instantaneously by super.init()
+         *  WG introduced preventive measures at this class by themselves.
+         *  Code below is WG copypaste from super.populateData()
+         *  see _Super.as for details.
+         */
         if (m_isPopulated)
             return false;
         m_isPopulated = true;
         
-        Logger.add("___ populating");
+        // Why this line does not get executed at round start?
+        Logger.add("___populating");
 
         initMarkerLabel();
 
@@ -324,7 +360,11 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
     // override
     function initMarkerLabel()
     {
-        //Logger.add("XVM::initMarkerLabel(): Config.s_loaded=" + Config.s_loaded);
+        /* Called by 
+         * this.populateData()
+         */
+
+        Logger.add("XVM::ov:initMarkerLabel(): Config.s_loaded=" + Config.s_loaded);
         super.initMarkerLabel();
         if (!Config.s_loaded || Config.s_config.battle.useStandardMarkers)
         {
@@ -339,7 +379,7 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
     // override
     function updateMarkerLabel()
     {
-        //Logger.add("XVM::updateMarkerLabel(): Config.s_loaded=" + Config.s_loaded);
+        Logger.add("XVM::ov:updateMarkerLabel(): Config.s_loaded=" + Config.s_loaded);
         //Logger.add("updateMarkerLabel(): " + GetCurrentStateString() + " markerLabel=" + m_markerLabel + " pname=" + m_playerFullName);
         super.updateMarkerLabel();
         if (Config.s_config.battle.useStandardMarkers)
@@ -359,6 +399,7 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
     // override
     function _centeringIcon()
     {
+        Logger.add("XVM::ov:_centeringIcon()");
         if (!Config.s_loaded || Config.s_config.battle.useStandardMarkers)
             super._centeringIcon();
     }
