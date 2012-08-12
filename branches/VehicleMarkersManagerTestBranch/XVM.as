@@ -291,11 +291,9 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
     // override
     function populateData()
     {
-        //Logger.add("XVM::populateData(): Config.s_loaded=" + Config.s_loaded);
+        Logger.add("XVM::populateData(): Config.s_loaded=" + Config.s_loaded);
         if (!Config.s_loaded || Config.s_config.battle.useStandardMarkers)
             return super.populateData();
-
-        //super.populateData();
 
         Logger.add("populateData(): " + GetCurrentStateString() + " markerState=" + m_markerState + " pname=" + m_playerFullName);
 
