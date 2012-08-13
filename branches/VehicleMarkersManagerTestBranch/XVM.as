@@ -316,28 +316,35 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
     function populateData()
     {
         /* Called by
-         * super.init() ???
-         * super.configUI() ???
+         * super.init()
+         * super.configUI()
+         * Method invocation order determined empirically. Parent method invokes child
          */
                 
         //Logger.add("XVM::ov:populateData(): Config.s_loaded=" + Config.s_loaded);
         Logger.add("populateData(): " + GetCurrentStateString() + " markerState=" + m_markerState + " pname=" + m_playerFullName);
+        Logger.add("populateData()A: " + m_isPopulated);
         
-        // Standart marker fallback implementation.
-        if (!Config.s_loaded || Config.s_config.battle.useStandardMarkers)
-            return super.populateData();
+        /* Standart marker fallback implementation.
+         * Warning! Breaks normal workflow.
+         * Code below return statement does not get executed at round start.
+         * Commenting out fixed levelIconComponent;
+         * TODO: fix, delete or investigate further.
+         */ 
+        // if (!Config.s_loaded || Config.s_config.battle.useStandardMarkers)
+        //  return super.populateData();
+         
 
         /*  populateData() is executed two or three times instantaneously by super.init()
          *  WG introduced preventive measures at this class by themselves.
          *  Code below is WG copypaste from super.populateData()
          *  see _Super.as for details.
          */
+        
         if (m_isPopulated)
             return false;
         m_isPopulated = true;
         
-        // Why this line does not get executed at round start?
-        Logger.add("___populating");
 
         initMarkerLabel();
 
