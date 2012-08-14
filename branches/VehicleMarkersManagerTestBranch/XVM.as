@@ -73,9 +73,6 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
         "enemy/alive/normal", "enemy/alive/extended", "enemy/dead/normal", "enemy/dead/extended"
     ]
     
-    // init() calling twice by WG prevention
-    var initDone:Boolean = false;
-
     function XVM()
     {
         //Logger.add("_global.gfxExtensions = " + _global.gfxExtensions);
@@ -190,7 +187,7 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
          */
         
         //Logger.add("XVM::ov:init(): Config.s_loaded=" + Config.s_loaded);
-        Logger.add("ov:init(" + pFullName + " " + curHealth + " " + maxHealth + " " + entityName);
+        //Logger.add("ov:init(" + pFullName + " " + curHealth + " " + maxHealth + " " + entityName);
         
         // Use currently remembered extended / normal status for new markers
         m_showExInfo = s_showExInfo;
@@ -295,9 +292,13 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
     }
 
     // override
+    /* Called by 
+     * populateData()
+     * XVMpopulateData()
+     */
     function setupIconLoader()
     {
-        Logger.add("XVM::ov:setupIconLoader()");
+        //Logger.add("XVM::ov:setupIconLoader()");
         if (!Config.s_loaded || Config.s_config.battle.useStandardMarkers)
         {
             super.setupIconLoader();
@@ -318,12 +319,18 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
         /* Called by
          * super.init()
          * super.configUI()
-         * Method invocation order determined empirically. Parent method invokes child
+         * Method invocation order determined empirically. Parent method invokes child.
+         * All AS2\AS3 methods are virtual.
+         */
+        
+        /* super.populateData() setups and shows
+         * levelIcon, HP, tankIcon, action marker, player name
+         * depending on normal or extended mode.
+         * This overriden method follows same subjects.
          */
                 
         //Logger.add("XVM::ov:populateData(): Config.s_loaded=" + Config.s_loaded);
-        Logger.add("populateData(): " + GetCurrentStateString() + " markerState=" + m_markerState + " pname=" + m_playerFullName);
-        Logger.add("populateData()A: " + m_isPopulated);
+        //Logger.add("populateData(): " + GetCurrentStateString() + " markerState=" + m_markerState + " pname=" + m_playerFullName);
         
         /* Standart marker fallback implementation.
          * Warning! Breaks normal workflow.
@@ -336,7 +343,7 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
          
 
         /*  populateData() is executed two or three times instantaneously by super.init()
-         *  WG introduced preventive measures at this class by themselves.
+         *  WG introduced preventive measures at parent class by themselves.
          *  Code below is WG copypaste from super.populateData()
          *  see _Super.as for details.
          */
@@ -345,8 +352,10 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
             return false;
         m_isPopulated = true;
         
-
-        initMarkerLabel();
+        // super.initMarkerLabel() handles color blind mode.
+        // Commenting out this XVM specific realization does not change behavior.
+        // TODO: fix, delete or investigate further.
+        //initMarkerLabel();
 
         setupIconLoader();
         
@@ -364,24 +373,39 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
         return true;
     }
 
+    /* super.initMarkerLabel() handles color blind mode.
+     * Commenting out this XVM specific realization does not change behavior.
+     * TODO: fix, delete or investigate further.
+     */
     // override
-    function initMarkerLabel()
+    /*function initMarkerLabel()
     {
         /* Called by 
          * this.populateData()
+         * Also can be called by super.populateData()
+         * 
+         * super.initMarkerLabel()
+         * changes marker colors by color scheme. Blind mode.
+         * This method does the same by its own way.
          */
 
-        Logger.add("XVM::ov:initMarkerLabel(): Config.s_loaded=" + Config.s_loaded);
+        //Logger.add("XVM::ov:initMarkerLabel(): Config.s_loaded=" + Config.s_loaded);
+        /*
         super.initMarkerLabel();
+        
+        // Temporarily commenting out all StandardMarkers implementatios.
+        // TODO: fix, delete or investigate further.
+        
         if (!Config.s_loaded || Config.s_config.battle.useStandardMarkers)
         {
             setDefaultVehicleMarkerPosition();
             return;
         }
+        
 
-        XVMUpdateMarkerLabel();
+        XVMUpdateMarkerLabel(); // XVM color blind mode implementation
         XVMUpdateUI(m_curHealth);
-    }
+    }*/
 
     // override
     function updateMarkerLabel()
