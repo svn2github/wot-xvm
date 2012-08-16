@@ -66,13 +66,16 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
     var hbCfg: Object = null;
 
     // All stated
-    var allStatesAlly: Array = [
+    private static var allStatesAlly: Array = [
         "ally/alive/normal", "ally/alive/extended", "ally/dead/normal", "ally/dead/extended"
     ]
-    var allStatesEnemy: Array = [
+    private static var allStatesEnemy: Array = [
         "enemy/alive/normal", "enemy/alive/extended", "enemy/dead/normal", "enemy/dead/extended"
     ]
     
+    // Level in roman numerals
+    private static var rlevel: Array = [ "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" ];
+
     function XVM()
     {
         //Logger.addObject(_root, "_root", 2);
@@ -524,6 +527,7 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
             format = format.split("{{nick}}").join(m_playerFullName);
             format = format.split("{{vehicle}}").join(m_vname);
             format = format.split("{{level}}").join(String(m_level));
+            format = format.split("{{rlevel}}").join(String(rlevel[m_level - 1]));
             format = StatFormat.FormatText({ label: m_playerFullName }, format);
             format = Utils.trim(format);
         }
@@ -670,21 +674,29 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
         {
             var n = getNextHighestDepth();
             var textField: TextField = createTextField("textField" + n, n, 0, 0, 140, 31);
+//            var textField: TextField = createTextField("textField" + n, n, 0, 0, 140 + 1, cfg.font.size + 4 + 1); // +1 because of ScaleForm bug
             textField.html = false; // FIXIT: in html mode Font and Position are wrong.
             textField.embedFonts = false;
             textField.selectable = false;
             textField.multiline = false;
             textField.wordWrap = false;
             textField.antiAliasType = "normal";
-            //textField.antiAliasType = "advanced";
+            textField.antiAliasType = "advanced";
             textField.gridFitType = "NONE";
             textField._quality = "BEST";
-//            textField.border = true;
-//            textField.borderColor = 0xFFFFFF;            
+            //textField.border = true;
+            //textField.borderColor = 0xFFFFFF;
             //textField.autoSize = "center"; // http://theolagendijk.com/2006/09/07/aligning-htmltext-inside-flash-textfield/
             var textFormat: TextFormat = XVMCreateNewTextFormat(cfg.font);
             textField.setNewTextFormat(textFormat);
-            textField.filters = [ GraphicsUtil.createShadowFilter(cfg.shadow) ];
+
+            if (cfg.shadow)
+            {
+                var sh_color:Number = XVMFormatDynamicColor(XVMFormatStaticColorText(cfg.shadow.color), m_curHealth);
+                var sh_alpha:Number = XVMFormatDynamicAlpha(cfg.shadow.alpha, m_curHealth);
+                textField.filters = [ GraphicsUtil.createShadowFilter(cfg.shadow.distance,
+                    cfg.shadow.angle, sh_color, sh_alpha, cfg.shadow.size, cfg.shadow.strength) ];
+            }
 
             var staticColor = XVMFormatStaticColorText(cfg.color);
             textField.textColor = XVMFormatDynamicColor(staticColor, m_curHealth);
@@ -737,7 +749,14 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
             damageField.textColor = isFinite(cfg.color) ? Number(cfg.color)
                 : Config.s_config.colors.system[m_entityName + "_alive_" + (s_isColorBlindMode ? "blind" : "normal")];
             damageField._x = -(damageField._width / 2.0);
-            damageField.filters = [ GraphicsUtil.createShadowFilter(cfg.shadow) ];
+
+            if (cfg.shadow)
+            {
+                var sh_color:Number = XVMFormatDynamicColor(XVMFormatStaticColorText(cfg.shadow.color), m_curHealth);
+                var sh_alpha:Number = XVMFormatDynamicAlpha(cfg.shadow.alpha, m_curHealth);
+                damageField.filters = [ GraphicsUtil.createShadowFilter(cfg.shadow.distance,
+                    cfg.shadow.angle, sh_color, sh_alpha, cfg.shadow.size, cfg.shadow.strength) ];
+            }
 
             animation.insert(new TweenLite(damageField, cfg.speed, { _y: -cfg.maxRange, ease: Linear.easeOut } ), 0);
         }
