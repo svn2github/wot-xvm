@@ -1,7 +1,7 @@
 #!/bin/sh
 
-[ "$GAME_VER" = "" ] && GAME_VER="0.7.5"
-[ "$WOT_DIRECTORY" = "" ] && WOT_DIRECTORY=/cygdrive/d/home/games/WoT
+[ "$GAME_VER" = "" ] && GAME_VER="New Physics Preview"
+[ "$WOT_DIRECTORY" = "" ] && WOT_DIRECTORY=/cygdrive/d/home/games/WoT-PT
 
 FILES="
   libxvm.swf
@@ -20,6 +20,8 @@ FILES="
 cd $(dirname $(realpath $(cygpath --unix $0)))
 
 SWF_DIR="$WOT_DIRECTORY/res_mods/$GAME_VER/gui/flash"
+
+mkdir -p "$SWF_DIR"
 
 copy_file()
 {

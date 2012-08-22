@@ -3,7 +3,7 @@
   <!-- Output SWF options -->
   <output>
     <movie outputType="Application" />
-    <movie input="swf\VehicleMarkersManager.swf" />
+    <movie input="swf\patched\VehicleMarkersManager.swf" />
     <movie path="..\..\bin\VehicleMarkersManager.swf" />
     <movie fps="30" />
     <movie width="800" />

@@ -3,7 +3,7 @@
   <!-- Output SWF options -->
   <output>
     <movie outputType="Application" />
-    <movie input="swf\battleloading.swf" />
+    <movie input="swf\patched\battleloading.swf" />
     <movie path="..\..\bin\battleloading.swf" />
     <movie fps="30" />
     <movie width="800" />
