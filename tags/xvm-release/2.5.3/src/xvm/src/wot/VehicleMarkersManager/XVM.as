@@ -344,8 +344,17 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
         * Commenting out fixed levelIconComponent for ally tanks at round start;
         * TODO: fix, delete or investigate further.
         */
+        Logger.add("");
+        Logger.add(m_entityName);
+        Logger.add("populateData 1");
+        
+        Logger.add("Config.s_loaded = " + Config.s_loaded);
+        Logger.add("Config.s_config.battle.useStandardMarkers = " + Config.s_config.battle.useStandardMarkers);
+        
         if (!Config.s_loaded || Config.s_config.battle.useStandardMarkers)
             return super.populateData();
+            
+        Logger.add("populateData 2");
 
         //Logger.add("populateData(): " + GetCurrentStateString() + " markerState=" + m_markerState + " pname=" + m_playerFullName);
 
@@ -365,6 +374,7 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
 
         setupIconLoader();
         
+        Logger.add("populateData 3");
         levelIconComponent = new LevelIconComponent(new LevelIconProxy(this));
         
         vehicleState = new VehicleState(new VehicleStateProxy(this));
