@@ -338,13 +338,9 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
 
         //Logger.add("XVM::populateData(): Config.s_loaded=" + Config.s_loaded);
        
-       /* Standart marker fallback implementation.
-        * Warning! Breaks normal workflow.
-        * Code below return statement does not get executed at round start.
-        * Commenting out fixed levelIconComponent for ally tanks at round start;
-        * TODO: fix, delete or investigate further.
-        */
-        if (Config.s_config.battle.useStandardMarkers)
+        levelIconComponent = new LevelIconComponent(new LevelIconProxy(this));
+        
+        if (!Config.s_loaded || Config.s_config.battle.useStandardMarkers)
             return super.populateData();
 
         //Logger.add("populateData(): " + GetCurrentStateString() + " markerState=" + m_markerState + " pname=" + m_playerFullName);
@@ -364,8 +360,6 @@ class wot.VehicleMarkersManager.XVM extends net.wargaming.ingame.VehicleMarker
         initMarkerLabel();
 
         setupIconLoader();
-        
-        levelIconComponent = new LevelIconComponent(new LevelIconProxy(this));
         
         vehicleState = new VehicleState(new VehicleStateProxy(this));
         
