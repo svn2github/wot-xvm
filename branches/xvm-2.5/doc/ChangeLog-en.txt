@@ -1,5 +1,8 @@
-﻿XVM-2.5.3:
-  * wot-xvm-proxy: "NA" game region changed to "US"
+﻿XVM-2.5.4:
+  * fixed original level icon display for tanks present at round start.
+  
+XVM-2.5.3:
+  * wot-xvm-proxy: "NA" game region changed to "US".
   * fixed standard markers broken in 2.5.2.
 
 XVM-2.5.2:
