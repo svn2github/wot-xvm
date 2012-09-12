@@ -25,4 +25,12 @@
 <tr><td align="center">WMR:</td><td>`R120528092923`</td></tr>
 <tr><td align="center">WMU:</td><td>`U384855503797`</td></tr>
 <tr><td>Яндекс.Деньги:</td><td>`41001406743444`</td></tr>
+<tr><td>QIWI:</td><td>1. Перейти на https://w.qiwi.ru/transfer.action <br/>
+2. Выбрать "QIWI Яйца" <br/>
+3. Нажать "Купите" <br/>
+4. Выбрать "Отправить" <br/>
+5. Ввести сумму. <br/>
+6. Указать адрес эл. почты: *m.schedriviy@gmail.com* <br/>
+7. Написать комментарий (XVM) <br/>
+8. Нажать "Заплатить"</td></tr>
 </table>
