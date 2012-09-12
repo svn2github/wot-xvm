@@ -1,7 +1,7 @@
 #summary Project support
 #labels Featured
 
-<!--
+<wiki:comment>
 *You may support project by donating some money:*
 <table border="0">
 <tr><td width="120">$US, `PayPal`:</td><td><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=54AGW38SYL9WJ" rel="nofollow"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"/></a></td></tr>
@@ -13,12 +13,13 @@
 </table>
 
 = =
--->
+</wiki:comment>
 
 *Вы можете поддержать проект, пожертвовав небольшую сумму:*
 <table border="0">
-<!--<tr><td width="120">в $ США, `PayPal`</td><td><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=54AGW38SYL9WJ" rel="nofollow"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"/></a></td></tr>
--->
+<wiki:comment>
+<tr><td width="120">в $ США, `PayPal`</td><td><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=54AGW38SYL9WJ" rel="nofollow"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"/></a></td></tr>
+</wiki:comment>
 <tr><td colspan="2">`WebMoney`:</td></tr>
 <tr><td align="center">WMZ:</td><td>`Z171323840192`</td></tr>
 <tr><td align="center">WMR:</td><td>`R120528092923`</td></tr>
