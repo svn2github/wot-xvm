@@ -1,36 +1,37 @@
 #summary Project support
 #labels Featured
 
-<wiki:comment>
 *You may support project by donating some money:*
-<table border="0">
-<tr><td width="120">$US, `PayPal`:</td><td><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=54AGW38SYL9WJ" rel="nofollow"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"/></a></td></tr>
-<tr><td colspan="2">`WebMoney`:</td></tr>
-<tr><td align="center">WMZ:</td><td>`Z171323840192`</td></tr>
-<tr><td align="center">WMR:</td><td>`R120528092923`</td></tr>
-<tr><td align="center">WMU:</td><td>`U384855503797`</td></tr>
-<tr><td>Yandex.Money:</td><td>`41001406743444`</td></tr>
-</table>
-
-= =
+<wiki:comment>
+$US, `PayPal`: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=54AGW38SYL9WJ" rel="nofollow"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"/></a>
 </wiki:comment>
+
+`WebMoney`:
+  * WMZ: `Z171323840192`
+  * WMR: `R120528092923`
+  * WMU: `U384855503797`
+Yandex.Money:
+  * 41001406743444
+
+----
 
 *Вы можете поддержать проект, пожертвовав небольшую сумму:*
-<table border="0">
 <wiki:comment>
-<tr><td width="120">в $ США, `PayPal`</td><td><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=54AGW38SYL9WJ" rel="nofollow"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"/></a></td></tr>
+в $ США, `PayPal`: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=54AGW38SYL9WJ" rel="nofollow"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"/></a>
 </wiki:comment>
-<tr><td colspan="2">`WebMoney`:</td></tr>
-<tr><td align="center">WMZ:</td><td>`Z171323840192`</td></tr>
-<tr><td align="center">WMR:</td><td>`R120528092923`</td></tr>
-<tr><td align="center">WMU:</td><td>`U384855503797`</td></tr>
-<tr><td>Яндекс.Деньги:</td><td>`41001406743444`</td></tr>
-<tr><td>QIWI:</td><td>1. Перейти на https://w.qiwi.ru/transfer.action <br/>
-2. Выбрать "QIWI Яйца" <br/>
-3. Нажать "Купите" <br/>
-4. Выбрать "Отправить" <br/>
-5. Ввести сумму. <br/>
-6. Указать адрес эл. почты: *m.schedriviy@gmail.com* <br/>
-7. Написать комментарий (XVM) <br/>
-8. Нажать "Заплатить"</td></tr>
-</table>
+
+`WebMoney`:
+  * WMZ: `Z171323840192`
+  * WMR: `R120528092923`
+  * WMU: `U384855503797`
+Яндекс.Деньги:
+  * 41001406743444
+QIWI:
+  # Перейти на https://w.qiwi.ru/transfer.action
+  # Выбрать "QIWI Яйца"
+  # Нажать "Купите"
+  # Выбрать "Отправить"
+  # Ввести сумму
+  # Указать адрес эл. почты: *m.schedriviy@gmail.com*
+  # Написать комментарий (XVM)
+  # Нажать "Заплатить"
