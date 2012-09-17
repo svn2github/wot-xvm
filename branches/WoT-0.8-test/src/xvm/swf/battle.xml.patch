@@ -1,13 +1,0 @@
---- orig\battle.xml	2012-08-22 15:21:57.383958400 +0300
-+++ battle.xml	2012-08-22 15:21:58.033951900 +0300
-@@ -125278,8 +125278,8 @@
-               <String value="charAt"/>
-               <String value=" "/>
-               <String value="\"/>
--              <String value=""/>
--              <String value=""/>
-+              <String value=""/>
-+              <String value=""/>
-               <String value="&#10;"/>
-               <String value="&#13;"/>
-               <String value="&#9;"/>
