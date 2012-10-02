@@ -1,24 +1,15 @@
 info: {
     RU: {
         ver: "3.0.3",
-        message: [
-            "  * доработки макроса {{turret}}",
-            "  * возможность замены лампочки шестого чувства"
-        ].join("\n")
+        message: "  * доработки макроса {{turret}}\n  * возможность замены лампочки шестого чувства"
     },
     EU: {
-       ver: "3.0.3",
-        message: [
-            "  * {{turret}} macro enhancement",
-            "  * possibility to change sixth sense lamp"
-        ].join("\n")
+        ver: "3.0.3",
+        message: "  * {{turret}} macro enhancement\n  * possibility to change sixth sense lamp"
     },
     US: {
         ver: "3.0.3",
-        message: [
-            "  * {{turret}} macro enhancement",
-            "  * possibility to change sixth sense lamp"
-        ].join("\n")
+        message: "  * {{turret}} macro enhancement\n  * possibility to change sixth sense lamp"
     },
     CT: {  ver: "3.0.3", message: "" },
 
