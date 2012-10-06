@@ -11,7 +11,10 @@
         "ver": "3.0.3",
         "message": "  * {{turret}} macro enhancement\n  * possibility to change sixth sense lamp"
     },
+    "SEA": {
+        "ver": "3.0.3",
+        "message": "  * {{turret}} macro enhancement\n  * possibility to change sixth sense lamp"
+    },
     "CT":  { "ver": "3.0.3", "message": "" },
-    "SEA": { "ver": "2.5.4", "message": "" },
     "VTC": { "ver": "2.5.4", "message": "" }
 }
