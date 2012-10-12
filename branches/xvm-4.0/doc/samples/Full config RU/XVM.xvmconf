@@ -28,7 +28,7 @@
     "useStandardMarkers": false,                // true - использовать стандартные маркеры клиента
     "clanIconsFolder": "../../../clanicons"     // путь к папке иконок кланов относительно res_mods/[ВЕРСИЯ ИГРЫ]/gui/flash
   },
-  // Блок управлением статистикой (только xvm-full)
+  // Блок управлением статистикой (только с xvm-stat)
   "rating": {
     "showPlayersStatistics": true,              // true - включить отображение статистики. Глобальный переключатель - без него модуль статистики будет везде отключен.
     "loadEnemyStatsInFogOfWar": true            // true - включить загрузку данных по противникам в "тумане войны"
@@ -36,7 +36,7 @@
   // Параметры экрана загрузки боя
   "battleLoading": {
     "clockFormat": "H:N:S",                     // Показать часы на экране загрузки боя. Формат: Y:год, M:месяц, D:день, H:часы, N:минуты, S:секунды. "" - убрать часы.
-    "showChances": false,                       // true - включить отображение шансов на победу (только в XVM Full) Прочитать подробней: http://www.koreanrandom.com/forum/topic/1642-chance
+    "showChances": false,                       // true - включить отображение шансов на победу (только с xvm-stat) Прочитать подробней: http://www.koreanrandom.com/forum/topic/1642-chance
     "showChancesExp": false,                    // Показывать экспериментальную формулу расчета шансов
     "removeSquadIcon": false,                   // true - убрать отображение иконки взвода. На пустое поле можно вывести, например, иконку клана.
     "clanIcon": {                               // параметры отображения иконки игрока/клана
@@ -56,7 +56,7 @@
   },
   // Параметры окна статистики по клавише Tab
   "statisticForm": {
-    "showChances": false,     // true - включить отображение шансов на победу (только в XVM Full, пока работает только в боях 15x15)
+    "showChances": false,     // true - включить отображение шансов на победу (только с xvm-stat, пока работает только в боях 15x15)
     "showChancesExp": false,  // Показывать экспериментальную формулу расчета шансов
     "removeSquadIcon": false, // true - убрать отображение иконки взвода
     // параметры отображения иконки игрока/клана (см. battleLoading выше)
@@ -1333,14 +1333,97 @@
       "enemy_dead_normal": "0x840500",             // Цвет для мертвого противника
       "enemy_dead_blind": "0x47407A",              // Цвет для мертвого противника в режиме цветовой слепоты
       "enemy_blowedup_normal": "0x5A0401",         // Цвет для взрыва БК у противника
-      "enemy_blowedup_blind": "0x3B365F",          // Цвет для взрыва БК у противника в режиме цветовой слепоты
-      // me - мой урон. используется только в markers//damageText когда источник урона - игрок
-      "me_alive_normal": "0xFFEE99",               // Мой обычный урон
-      "me_alive_blind": "0xFFFFFF",                // Мой обычный урон в режиме цветовой слепоты
-      "me_dead_normal": "0xFFDD33",                // Мой финальный урон
-      "me_dead_blind": "0xDDDDDD",                 // Мой финальный урон в режиме цветовой слепоты
-      "me_blowedup_normal": "0xFFDD33",            // Мой финальный урон со взрывом БК
-      "me_blowedup_blind": "0xDDDDDD"              // Мой финальный урон со взрывом БК в режиме цветовой слепоты
+      "enemy_blowedup_blind": "0x3B365F"           // Цвет для взрыва БК у противника в режиме цветовой слепоты
+    },
+    // Цвет для отлетающего урона
+    //   источник_получатель_тип
+    //   источник:   ally, squadman, enemy, unknown, player
+    //   получатель: ally, squadman, allytk, enemytk, enemy
+    //   тип:        hit, kill, blowup
+    "damage": {
+      "ally_ally_hit":			"0x00EAFF",
+      "ally_ally_kill":			"0x00EAFF",
+      "ally_ally_blowup":		"0x00EAFF",
+      "ally_squadman_hit":		"0x00EAFF",
+      "ally_squadman_kill":		"0x00EAFF",
+      "ally_squadman_blowup":		"0x00EAFF",
+      "ally_enemy_hit":			"0xF50800",
+      "ally_enemy_kill":		"0xF50800",
+      "ally_enemy_blowup":		"0xF50800",
+      "ally_allytk_hit":		"0x00EAFF",
+      "ally_allytk_kill":		"0x00EAFF",
+      "ally_allytk_blowup":		"0x00EAFF",
+      "ally_enemytk_hit":		"0xF50800",
+      "ally_enemytk_kill":		"0xF50800",
+      "ally_enemytk_blowup":		"0xF50800",
+      "squadman_ally_hit":		"0x00EAFF",
+      "squadman_ally_kill":		"0x00EAFF",
+      "squadman_ally_blowup":		"0x00EAFF",
+      "squadman_squad_hit":		"0x00EAFF",
+      "squadman_squad_kill":		"0x00EAFF",
+      "squadman_squad_blowup":		"0x00EAFF",
+      "squadman_enemy_hit":		"0xF50800",
+      "squadman_enemy_kill":		"0xF50800",
+      "squadman_enemy_blowup":		"0xF50800",
+      "squadman_allytk_hit":		"0x00EAFF",
+      "squadman_allytk_kill":		"0x00EAFF",
+      "squadman_allytk_blowup":		"0x00EAFF",
+      "squadman_enemytk_hit":		"0xF50800",
+      "squadman_enemytk_kill":		"0xF50800",
+      "squadman_enemytk_blowup":	"0xF50800",
+      "enemy_ally_hit":			"0xF50800",
+      "enemy_ally_kill":		"0xF50800",
+      "enemy_ally_blowup":		"0xF50800",
+      "enemy_squadman_hit":		"0xFFB964",
+      "enemy_squadman_kill":		"0xFFB964",
+      "enemy_squadman_blowup":		"0xFFB964",
+      "enemy_enemy_hit":		"0xF50800",
+      "enemy_enemy_kill":		"0xF50800",
+      "enemy_enemy_blowup":		"0xF50800",
+      "enemy_allytk_hit":		"0xF50800",
+      "enemy_allytk_kill":		"0xF50800",
+      "enemy_allytk_blowup":		"0xF50800",
+      "enemy_enemytk_hit":		"0xF50800",
+      "enemy_enemytk_kill":		"0xF50800",
+      "enemy_enemytk_blowup":		"0xF50800",
+      "unknown_ally_hit":		"0xF50800",
+      "unknown_ally_kill":		"0xF50800",
+      "unknown_ally_blowup":		"0xF50800",
+      "unknown_squadman_hit":		"0xFFB964",
+      "unknown_squadman_kill":		"0xFFB964",
+      "unknown_squadman_blowup":	"0xFFB964",
+      "unknown_enemy_hit":		"0xF50800",
+      "unknown_enemy_kill":		"0xF50800",
+      "unknown_enemy_blowup":		"0xF50800",
+      "unknown_allytk_hit":		"0xF50800",
+      "unknown_allytk_kill":		"0xF50800",
+      "unknown_allytk_blowup":		"0xF50800",
+      "unknown_enemytk_hit":		"0xF50800",
+      "unknown_enemytk_kill":		"0xF50800",
+      "unknown_enemytk_blowup":		"0xF50800",
+      "player_ally_hit":		"0xFFDD33",
+      "player_ally_kill":		"0xFFDD33",
+      "player_ally_blowup":		"0xFFDD33",
+      "player_squadman_hit":		"0xFFDD33",
+      "player_squadman_kill":		"0xFFDD33",
+      "player_squadman_blowup":		"0xFFDD33",
+      "player_enemy_hit":		"0xFFDD33",
+      "player_enemy_kill":		"0xFFDD33",
+      "player_enemy_blowup":		"0xFFDD33",
+      "player_allytk_hit":		"0xFFDD33",
+      "player_allytk_kill":		"0xFFDD33",
+      "player_allytk_blowup":		"0xFFDD33",
+      "player_enemytk_hit":		"0xFFDD33",
+      "player_enemytk_kill":		"0xFFDD33",
+      "player_enemytk_blowup":		"0xFFDD33"
+    },
+    // Динамический цвет по типу урона
+    "dmg_kind": {
+      "attack": "0xFFAA55",                        // атака
+      "fire": "0xFF6655",                          // пожар
+      "ramming": "0x998855",                       // таран
+      "world_collision": "0x228855",               // столкновение с объектами, падение
+      "other": "0xCCCCCC"                          // другое
     },
     // Динамический цвет по типу техники
     "vtype": {
@@ -1351,14 +1434,6 @@
       "TD":  "0xA0CFFF",                           // Цвет для ПТ
       "premium": "0xFFCC66",                       // Цвет для премиумной техники
       "usePremiumColor": false                     // Включить/выключить использование премиумного цвета
-    },
-    // Динамический цвет по типу урона
-    "dmg_kind": {
-      "attack": "0xFFAA55",                        // атака
-      "fire": "0xFF6655",                          // пожар
-      "ramming": "0x998855",                       // таран
-      "world_collision": "0x228855",               // столкновение с объектами, падение
-      "other": "0xCCCCCC"                          // другое
     },
     // Динамический цвет по оставшемуся здоровью. Значения от меньшего к большему.
     "hp": [
@@ -1374,7 +1449,7 @@
       { "value": 50,  "color": "0xFFCC33" },      // Цвет для значений меньше 50 проц
       { "value": 101, "color": "0xFFFFFF" }       // Цвет для 100 проц
     ],
-    // Динамический цвет по эффективности (только в xvm-full). Значения от меньшего к большему.
+    // Динамический цвет по эффективности (только с xvm-stat). Значения от меньшего к большему.
     "eff": [
       { "value": 600,  "color": "0xDD0000" },
       { "value": 900,  "color": "0xDD3333" },
@@ -1383,7 +1458,7 @@
       { "value": 1800, "color": "0x33FF33" },
       { "value": 9999, "color": "0xCC66CC" }
     ],
-    // Динамический цвет по проценту побед (только в xvm-full). Значения от меньшего к большему.
+    // Динамический цвет по проценту побед (только с xvm-stat). Значения от меньшего к большему.
     "rating": [
       { "value": 42,  "color": "0xDD0000" },
       { "value": 46,  "color": "0xDD3333" },
@@ -1393,7 +1468,7 @@
       { "value": 57,  "color": "0x33FF33" },
       { "value": 101, "color": "0xCC66CC" }
     ],
-    // Динамический цвет по количеству кило-боев (только в xvm-full). Значения от меньшего к большему.
+    // Динамический цвет по количеству кило-боев (только с xvm-stat). Значения от меньшего к большему.
     "kb": [
       { "value": 1,   "color": "0xDD0000" },
       { "value": 3,   "color": "0xDD3333" },
@@ -1402,7 +1477,7 @@
       { "value": 12,  "color": "0x33FF33" },
       { "value": 999, "color": "0xCC66CC" }
     ],
-    // Динамический цвет по количеству боев по текущему танку (только в xvm-full). Значения от меньшего к большему.
+    // Динамический цвет по количеству боев по текущему танку (только с xvm-stat). Значения от меньшего к большему.
     "t_battles": [
       { "value": 100,  "color": "0xDD0000" },
       { "value": 200,  "color": "0xDD3333" },
@@ -1428,19 +1503,19 @@
       { "value": 50,  "alpha": 60 },
       { "value": 101, "alpha": 40 }
     ],
-    // Динамическая прозрачность по эффективности (только в xvm-full). Значения от меньшего к большему.
+    // Динамическая прозрачность по эффективности (только с xvm-stat). Значения от меньшего к большему.
     "eff": [
       { "value": 900,  "alpha": 100 },
       { "value": 1200, "alpha": 100 },
       { "value": 9999, "alpha": 100 }
     ],
-    // Динамическая прозрачность по проценту побед (только в xvm-full). Значения от меньшего к большему.
+    // Динамическая прозрачность по проценту побед (только с xvm-stat). Значения от меньшего к большему.
     "rating": [
       { "value": 49,  "alpha": 100 },
       { "value": 53,  "alpha": 100 },
       { "value": 101, "alpha": 100 }
     ],
-    // Динамическая прозрачность по количеству кило-боев (только в xvm-full). Значения от меньшего к большему.
+    // Динамическая прозрачность по количеству кило-боев (только с xvm-stat). Значения от меньшего к большему.
     "kb": [
       { "value": 2,   "alpha": 100 },
       { "value": 10,  "alpha": 100 },
