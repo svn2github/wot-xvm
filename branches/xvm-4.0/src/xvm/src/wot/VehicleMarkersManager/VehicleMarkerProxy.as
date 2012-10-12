@@ -32,7 +32,7 @@ class wot.VehicleMarkersManager.VehicleMarkerProxy extends gfx.core.UIComponent 
 
     // Components
     private static var hitLog:HitLog = null;
-    
+
     // Used in child classes VehicleMarkerAlly and VehicleMarkerEnemy
     // TODO: can include to interface as property?
     public var m_team:String; // values: ally, enemy (readonly)
