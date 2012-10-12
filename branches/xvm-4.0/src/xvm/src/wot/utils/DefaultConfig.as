@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ...
  * @author sirmax2
  */
@@ -232,14 +232,93 @@ class wot.utils.DefaultConfig
           enemy_dead_normal: "0x840500",
           enemy_dead_blind: "0x47407A",
           enemy_blowedup_normal: "0x5A0401",
-          enemy_blowedup_blind: "0x3B365F",
-          // me - my damage. used only in markers//damageText when damageSource = 'player'
-          me_alive_normal: "0xFFEE99",
-          me_alive_blind: "0xFFFFFF",
-          me_dead_normal: "0xFFDD33",
-          me_dead_blind: "0xDDDDDD",
-          me_blowedup_normal: "0xFFDD33",
-          me_blowedup_blind: "0xDDDDDD"
+          enemy_blowedup_blind: "0x3B365F"
+        },
+        // src: ally, squadman, enemy, unknown, player
+        // dst: ally, squadman, allytk, enemytk, enemy
+        damage:Object = {
+          ally_ally_hit:		"0x00EAFF",
+          ally_ally_kill:		"0x00EAFF",
+          ally_ally_blowup:		"0x00EAFF",
+          ally_squadman_hit:		"0x00EAFF",
+          ally_squadman_kill:		"0x00EAFF",
+          ally_squadman_blowup:		"0x00EAFF",
+          ally_enemy_hit:		"0xF50800",
+          ally_enemy_kill:		"0xF50800",
+          ally_enemy_blowup:		"0xF50800",
+          ally_allytk_hit:		"0x00EAFF",
+          ally_allytk_kill:		"0x00EAFF",
+          ally_allytk_blowup:		"0x00EAFF",
+          ally_enemytk_hit:		"0xF50800",
+          ally_enemytk_kill:		"0xF50800",
+          ally_enemytk_blowup:		"0xF50800",
+          squadman_ally_hit:		"0x00EAFF",
+          squadman_ally_kill:		"0x00EAFF",
+          squadman_ally_blowup:		"0x00EAFF",
+          squadman_squad_hit:		"0x00EAFF",
+          squadman_squad_kill:		"0x00EAFF",
+          squadman_squad_blowup:	"0x00EAFF",
+          squadman_enemy_hit:		"0xF50800",
+          squadman_enemy_kill:		"0xF50800",
+          squadman_enemy_blowup:	"0xF50800",
+          squadman_allytk_hit:		"0x00EAFF",
+          squadman_allytk_kill:		"0x00EAFF",
+          squadman_allytk_blowup:	"0x00EAFF",
+          squadman_enemytk_hit:		"0xF50800",
+          squadman_enemytk_kill:	"0xF50800",
+          squadman_enemytk_blowup:	"0xF50800",
+          enemy_ally_hit:		"0xF50800",
+          enemy_ally_kill:		"0xF50800",
+          enemy_ally_blowup:		"0xF50800",
+          enemy_squadman_hit:		"0xFFB964",
+          enemy_squadman_kill:		"0xFFB964",
+          enemy_squadman_blowup:	"0xFFB964",
+          enemy_enemy_hit:		"0xF50800",
+          enemy_enemy_kill:		"0xF50800",
+          enemy_enemy_blowup:		"0xF50800",
+          enemy_allytk_hit:		"0xF50800",
+          enemy_allytk_kill:		"0xF50800",
+          enemy_allytk_blowup:		"0xF50800",
+          enemy_enemytk_hit:		"0xF50800",
+          enemy_enemytk_kill:		"0xF50800",
+          enemy_enemytk_blowup:		"0xF50800",
+          unknown_ally_hit:		"0xF50800",
+          unknown_ally_kill:		"0xF50800",
+          unknown_ally_blowup:		"0xF50800",
+          unknown_squadman_hit:		"0xFFB964",
+          unknown_squadman_kill:	"0xFFB964",
+          unknown_squadman_blowup:	"0xFFB964",
+          unknown_enemy_hit:		"0xF50800",
+          unknown_enemy_kill:		"0xF50800",
+          unknown_enemy_blowup:		"0xF50800",
+          unknown_allytk_hit:		"0xF50800",
+          unknown_allytk_kill:		"0xF50800",
+          unknown_allytk_blowup:	"0xF50800",
+          unknown_enemytk_hit:		"0xF50800",
+          unknown_enemytk_kill:		"0xF50800",
+          unknown_enemytk_blowup:	"0xF50800",
+          player_ally_hit:		"0xFFDD33",
+          player_ally_kill:		"0xFFDD33",
+          player_ally_blowup:		"0xFFDD33",
+          player_squadman_hit:		"0xFFDD33",
+          player_squadman_kill:		"0xFFDD33",
+          player_squadman_blowup:	"0xFFDD33",
+          player_enemy_hit:		"0xFFDD33",
+          player_enemy_kill:		"0xFFDD33",
+          player_enemy_blowup:		"0xFFDD33",
+          player_allytk_hit:		"0xFFDD33",
+          player_allytk_kill:		"0xFFDD33",
+          player_allytk_blowup:		"0xFFDD33",
+          player_enemytk_hit:		"0xFFDD33",
+          player_enemytk_kill:		"0xFFDD33",
+          player_enemytk_blowup:	"0xFFDD33"
+        },
+        dmg_kind: {
+          attack: "0xFFAA55",
+          fire: "0xFF6655",
+          ramming: "0x998855",
+          world_collision: "0x228855",
+          other: "0xCCCCCC"
         },
         vtype: {
           LT:  "0xA2FF9A",        // Color for light tanks
@@ -249,13 +328,6 @@ class wot.utils.DefaultConfig
           TD:  "0xA0CFFF",        // Color for tank destroyers
           premium: "0xFFCC66",    // Color for premium tanks
           usePremiumColor: false  // Enable/disable premium color usage
-        },
-        dmg_kind: {
-          attack: "0xFFAA55",
-          fire: "0xFF6655",
-          ramming: "0x998855",
-          world_collision: "0x228855",
-          other: "0xCCCCCC"
         },
         // values - from min to max, colors are for values 'lesser then ...'
         hp: [
@@ -335,7 +407,7 @@ class wot.utils.DefaultConfig
         ]
       },
       // TODO
-      images: {
+/*      images: {
         dmg_kind: {
           attack: "",
           fire: "../../../icons/xvm/dmg_fire.png",
@@ -343,7 +415,7 @@ class wot.utils.DefaultConfig
           world_collision: "../../../icons/xvm/dmg_world_collision.png",
           other: "../../../icons/xvm/dmg_other.png"
         }
-      },
+      },*/
       iconset: {
         battleLoading: "../maps/icons/vehicle/contour",
         statisticForm: "../maps/icons/vehicle/contour",
