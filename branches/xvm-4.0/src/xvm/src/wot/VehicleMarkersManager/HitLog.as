@@ -122,7 +122,7 @@ class wot.VehicleMarkersManager.HitLog
             format = format.split("{{level}}").join(String(level));
             format = format.split("{{rlevel}}").join(XvmHelper.rlevel[level - 1]);
 
-            format = format.split("{{dmg-kind}}").join(Locale.get(damageType)); // TODO: Localize
+            format = format.split("{{dmg-kind}}").join(Locale.get(damageType));
 
             // TODO: Stats macros
 
