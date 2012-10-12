@@ -1,0 +1,20 @@
+--- orig\StatisticForm.xml	2012-09-09 16:59:46.019500000 +0300
++++ StatisticForm.xml	2012-09-09 16:59:46.410125000 +0300
+@@ -39662,7 +39662,7 @@
+         <actions>
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.BattleStatItemRenderer"/>
++              <StackString value="wot.BattleStatItemRenderer"/>
+             </items>
+           </PushData>
+           <GetVariable/>
+@@ -39688,7 +39688,7 @@
+         <actions>
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.BattleStatItemRenderer"/>
++              <StackString value="wot.BattleStatItemRenderer"/>
+             </items>
+           </PushData>
+           <GetVariable/>
