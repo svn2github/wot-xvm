@@ -282,18 +282,18 @@ class wot.utils.DefaultConfig
           enemy_enemytk_hit:		"0xF50800",
           enemy_enemytk_kill:		"0xF50800",
           enemy_enemytk_blowup:		"0xF50800",
-          unknown_ally_hit:		"0xF50800",
-          unknown_ally_kill:		"0xF50800",
-          unknown_ally_blowup:		"0xF50800",
+          unknown_ally_hit:		"0x96FF00",
+          unknown_ally_kill:		"0x96FF00",
+          unknown_ally_blowup:		"0x96FF00",
           unknown_squadman_hit:		"0xFFB964",
           unknown_squadman_kill:	"0xFFB964",
           unknown_squadman_blowup:	"0xFFB964",
           unknown_enemy_hit:		"0xF50800",
           unknown_enemy_kill:		"0xF50800",
           unknown_enemy_blowup:		"0xF50800",
-          unknown_allytk_hit:		"0xF50800",
-          unknown_allytk_kill:		"0xF50800",
-          unknown_allytk_blowup:	"0xF50800",
+          unknown_allytk_hit:		"0x96FF00",
+          unknown_allytk_kill:		"0x96FF00",
+          unknown_allytk_blowup:	"0x96FF00",
           unknown_enemytk_hit:		"0xF50800",
           unknown_enemytk_kill:		"0xF50800",
           unknown_enemytk_blowup:	"0xF50800",
@@ -566,13 +566,11 @@ class wot.utils.DefaultConfig
       visible: true,
       x: 0,
       y: -67,
-      // TODO: remove [
       color: null,
       font: font_18,
       speed: 2,
       maxRange: 40,
-      // ]
-      effects: "dmg", // name of script function with animation effects
+      effects: "dmg()", // call script function with animation effects
       damageMessage: "{{dmg}}",
       blowupMessage: "Blow-up!"
     }

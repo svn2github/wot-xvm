@@ -83,7 +83,6 @@
     http://help.adobe.com/en_US/AS2LCR/Flash_10.0/help.html?content=00000293.html
   Поддерживаемые теги HTML:
     http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/text/TextField.html#htmlText
-  TODO: макросы в CSS пока не поддерживаются
 
   Используемые макросы:
     В ушах, на экране загрузги боя и в окне статистики боя по Tab:

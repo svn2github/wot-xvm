@@ -25,11 +25,11 @@ class wot.VehicleMarkersManager.components.HealthBarComponent
     public function showDamage(state_cfg:Object, curHealth:Number, maxHealth:Number, delta:Number)
     {
         var cfg = state_cfg.healthBar;
-        // Flow bar animation
+        //Flow bar animation
         TweenLite.killTweensOf(damage);
         damage._x = cfg.border.size + cfg.width * (curHealth / maxHealth) - 1;
         damage._xscale = damage._xscale + 100 * (delta / maxHealth);
-        GraphicsUtil.setColor(damage, proxy.formatDynamicColor(cfg.damage.color, curHealth));
+        GraphicsUtil.setColor(damage, proxy.formatDynamicColor(cfg.damage.color));
         damage._alpha = proxy.formatDynamicAlpha(cfg.damage.alpha, curHealth);
         TweenLite.to(damage, cfg.damage.fade, {_xscale: 0, ease: Cubic.easeIn });
     }

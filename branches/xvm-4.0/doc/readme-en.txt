@@ -80,7 +80,6 @@
     http://help.adobe.com/en_US/AS2LCR/Flash_10.0/help.html?content=00000293.html
   Supported HTML tags:
     http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/text/TextField.html#htmlText
-  TODO: macros is not supported in CSS yet
 
   Macros available:
     In players panel, battle loading screen and statistic form:

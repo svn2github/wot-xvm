@@ -5,6 +5,7 @@
 import wot.utils.Config;
 import wot.utils.Defines;
 import wot.utils.GraphicsUtil;
+import wot.utils.Locale;
 import wot.utils.Logger;
 import wot.utils.StatFormat;
 import wot.utils.Utils;
@@ -105,7 +106,7 @@ class wot.VehicleMarkersManager.XvmBase extends gfx.core.UIComponent
         return format;
     }
 
-    public function formatDynamicText(format:String, curHealth:Number, delta:Number):String
+    public function formatDynamicText(format:String, curHealth:Number, delta:Number, damageType:String):String
     {
         /* Substitutes macroses with values
          *
@@ -147,17 +148,26 @@ class wot.VehicleMarkersManager.XvmBase extends gfx.core.UIComponent
             formatArr = format.split("{{dmg}}");
             if (formatArr.length > 1)
                 format = formatArr.join(delta ? String(delta) : "");
+            formatArr = format.split("{{dmg-kind}}");
+            if (formatArr.length > 1)
+                format = formatArr.join(delta ? Locale.get(damageType) : "");
 
             // Colors
             formatArr = format.split("{{c:hp}}");
             if (formatArr.length > 1)
-                format = formatArr.join(GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_HP, curHealth))
+                format = formatArr.join(GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_HP, curHealth));
             formatArr = format.split("{{c:hp-ratio}}");
             if (formatArr.length > 1)
-                format = formatArr.join(GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_HP_RATIO, hpRatio))
+                format = formatArr.join(GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_HP_RATIO, hpRatio));
             formatArr = format.split("{{c:hp_ratio}}");
             if (formatArr.length > 1)
-                format = formatArr.join(GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_HP_RATIO, hpRatio))
+                format = formatArr.join(GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_HP_RATIO, hpRatio));
+            formatArr = format.split("{{c:dmg-kind}}");
+            if (formatArr.length > 1)
+                format = formatArr.join(delta ? GraphicsUtil.GetDmgKindValue(damageType) : "")
+            formatArr = format.split("{{c:dmg_kind}}");
+            if (formatArr.length > 1)
+                format = formatArr.join(delta ? GraphicsUtil.GetDmgKindValue(damageType) : "")
             formatArr = format.split("{{c:vtype}}");
             if (formatArr.length > 1)
             {
@@ -195,7 +205,7 @@ class wot.VehicleMarkersManager.XvmBase extends gfx.core.UIComponent
         return format;
     }
 
-    public function formatDynamicColor(format:String, curHealth:Number):Number
+    public function formatDynamicColor(format:String, curHealth:Number, damageType:String):Number
     {
         var systemColor =  ColorsManager.getSystemColor(m_entityName, m_isDead, isBlowedUp, ColorsManager.isColorBlindMode);
         try
@@ -209,13 +219,19 @@ class wot.VehicleMarkersManager.XvmBase extends gfx.core.UIComponent
             var hpRatio: Number = Math.ceil(curHealth / m_maxHealth * 100);
             var formatArr = format.split("{{c:hp}}");
             if (formatArr.length > 1)
-                format = formatArr.join(GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_HP, curHealth, "0x"))
+                format = formatArr.join(GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_HP, curHealth, "0x"));
             formatArr = format.split("{{c:hp-ratio}}");
             if (formatArr.length > 1)
-                format = formatArr.join(GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_HP_RATIO, hpRatio, "0x"))
+                format = formatArr.join(GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_HP_RATIO, hpRatio, "0x"));
             formatArr = format.split("{{c:hp_ratio}}");
             if (formatArr.length > 1)
-                format = formatArr.join(GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_HP_RATIO, hpRatio, "0x"))
+                format = formatArr.join(GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_HP_RATIO, hpRatio, "0x"));
+            formatArr = format.split("{{c:dmg-kind}}");
+            if (formatArr.length > 1)
+                format = formatArr.join(damageType ? GraphicsUtil.GetDmgKindValue(damageType, "0x") : "");
+            formatArr = format.split("{{c:dmg_kind}}");
+            if (formatArr.length > 1)
+                format = formatArr.join(damageType ? GraphicsUtil.GetDmgKindValue(damageType, "0x") : "");
             formatArr = format.split("{{c:vtype}}");
             if (formatArr.length > 1)
             {

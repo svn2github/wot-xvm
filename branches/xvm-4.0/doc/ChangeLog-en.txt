@@ -2,7 +2,6 @@
   * scripts for animation effects (file XVM.xs)
   * CSS: XVM.css contains global stylesheet, which can be used in any text
     field with html text
-  * flexible adjustment of the text of damage depending on the source of damage
 
 XVM-3.0.3:
   * added possibility to change {{turret}} marker display string

@@ -9,7 +9,7 @@ import wot.VehicleMarkersManager.components.damage.DamageTextAnimation;
 class wot.VehicleMarkersManager.components.damage.DamageTextComponent
 {
     private var proxy:DamageTextProxy;
-    private var cfg:Object;// DamageTextConfig;
+    private var cfg:Object;
 
     private var damage:MovieClip;
 
@@ -34,7 +34,7 @@ class wot.VehicleMarkersManager.components.damage.DamageTextComponent
         if (!cfg.visible)
             return;
 
-        var text:String = defineText(newHealth, delta);
+        var text:String = defineText(newHealth, delta, damageType);
 
         var color:Number;
         if (cfg.color == null)
@@ -44,7 +44,7 @@ class wot.VehicleMarkersManager.components.damage.DamageTextComponent
         }
         else
         {
-            color = proxy.formatDynamicColor(proxy.formatStaticColorText(cfg.color));
+            color = proxy.formatDynamicColor(proxy.formatStaticColorText(cfg.color), damageType);
         }
 
         var shadowColor:Number;
@@ -55,14 +55,14 @@ class wot.VehicleMarkersManager.components.damage.DamageTextComponent
         }
         else
         {
-            shadowColor = proxy.formatDynamicColor(proxy.formatStaticColorText(cfg.shadow.color));
+            shadowColor = proxy.formatDynamicColor(proxy.formatStaticColorText(cfg.shadow.color), damageType);
         }
 
         // TODO: dynamic alpha?
         //var alpha = proxy.formatDynamicAlpha(cfg.alpha);
         //var shadowAlpha = proxy.formatDynamicAlpha(cfg.shadow.alpha);
 
-        var tf:TextField = createTextField(color, shadowColor);
+        var tf:TextField = createTextField(color, shadowColor, cfg);
 
         tf.htmlText = "<textformat leading='-2'><p class='xvm_damageText'>" + text + "</p></textformat>";
         //wot.utils.Logger.add("dmg: " + flagToDamageSource(flag) + ", " + proxy.damageDest + " - color=" + color);
@@ -87,7 +87,7 @@ class wot.VehicleMarkersManager.components.damage.DamageTextComponent
 
     // PRIVATE METHODS
 
-    private function createTextField(color:Number, shadowColor:Number):TextField
+    private function createTextField(color:Number, shadowColor:Number, cfg):TextField
     {
         var n = damage.getNextHighestDepth();
         var tf: TextField = damage.createTextField("txt" + n, n, 0, 0, 200, 100);
@@ -111,10 +111,10 @@ class wot.VehicleMarkersManager.components.damage.DamageTextComponent
         return tf;
     }
 
-    private function defineText(newHealth:Number, delta:Number):String
+    private function defineText(newHealth:Number, delta:Number, damageType:String):String
     {
         var msg = (newHealth < 0) ? cfg.blowupMessage : cfg.damageMessage;
-        var text = proxy.formatDynamicText(proxy.formatStaticText(msg), newHealth, delta);
+        var text = proxy.formatDynamicText(proxy.formatStaticText(msg), newHealth, delta, damageType);
         // For some reason, DropShadowFilter is not rendered when textfield contains only one character,
         // so we're appending empty prefix and suffix to bypass this unexpected behavior
         return " " + text + " ";
