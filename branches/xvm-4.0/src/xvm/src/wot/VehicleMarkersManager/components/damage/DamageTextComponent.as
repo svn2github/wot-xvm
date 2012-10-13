@@ -40,7 +40,7 @@ class wot.VehicleMarkersManager.components.damage.DamageTextComponent
         if (cfg.color == null)
         {
             color = ColorsManager.getDamageSystemColor(flagToDamageSource(flag), proxy.damageDest,
-                proxy.entityName, proxy.isDead, proxy.isBlowedUp, proxy.isColorBlindMode);
+                proxy.isDead, proxy.isBlowedUp, proxy.isColorBlindMode);
         }
         else
         {
@@ -51,7 +51,7 @@ class wot.VehicleMarkersManager.components.damage.DamageTextComponent
         if (cfg.shadow.color == null)
         {
             shadowColor = ColorsManager.getDamageSystemColor(flagToDamageSource(flag), proxy.damageDest,
-                proxy.entityName, proxy.isDead, proxy.isBlowedUp, proxy.isColorBlindMode);
+                proxy.isDead, proxy.isBlowedUp, proxy.isColorBlindMode);
         }
         else
         {
