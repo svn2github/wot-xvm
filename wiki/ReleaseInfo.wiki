@@ -16,5 +16,5 @@
         "message": "  * HTML in all text fields\n  * damage enhancements\n  * hit-log"
     },
     "CT":  { "ver": "3.1.1", "message": "" },
-    "VTC": { "ver": "2.5.4", "message": "" }
+    "VTC": { "ver": "3.0.3", "message": "" }
 }
