@@ -1,7 +1,6 @@
 ﻿intrinsic class net.wargaming.login.Login extends MovieClip //gfx.core.UIComponent
 {
     var form_mc, visible;
-    function configUI();
     function draw();
 /*
     var __set__visible, copyr, awards, _parent, bg_image, invalidate, __height, version, __width, __get__visible, visible, sparks_mc, WOTLogo, logo_mc, shadow_mc;
