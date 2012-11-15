@@ -10,24 +10,20 @@ class Logger
 
   public static function add(str: String)
   {
-    var a: Array = ("[" + String(counter++) + "] " + str).split("");
-    var s: String = "";
-    var a_length = a.length;
+    var a:Array = ("[" + String(counter++) + "] " + str).split("");
+    var s:String = "";
+    var a_length:Number = a.length;
     for (var i = 0; i < a_length; ++i)
     {
-      var b = a[i].charCodeAt(0);
-      if (b < 32 && b != 10 && b != 13 && b != 9) // '\n', '\r', '\t'
-      {
-        b = 96; // '`'
-        //b = 126; // '~'
-      }
-      s += b.toString(16);
+      var b:Number = a[i].charCodeAt(0);
+      var c:String = (b < 128) ? b.toString(16) : escape(a[i].charAt(0)).split("%").join("");
+      s += (c.length % 2 == 0 ? "" : "0") + c;
     }
     s = s.length.toString(16) + "," + s;
 
-    var command = "../../../.stat/@LOG ";
-    var max_len = 199 - command.length;
-    var p = new LoadVars();
+    var command:String = "../../../.stat/@LOG ";
+    var max_len:Number = 199 - command.length;
+    var p:LoadVars = new LoadVars();
     while (s.length > max_len)
     {
       p.load(command + s.slice(0, max_len));
