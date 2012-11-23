@@ -1,20 +1,23 @@
 {
     "RU": {
-        "ver": "3.1.1",
-        "message": "  * поддержка HTML во всех текстовых полях\n  * улучшения в отлетающем уроне (цвет по источнику, анимация, ...)\n  * лог попаданий (hit-log)"
+        "ver": "3.1.2",
+        "message": "  * добавлен мод полосы захвата\n  * новые макросы\n  * улучшения и исправление ошибок"
     },
     "EU": {
-        "ver": "3.1.1",
-        "message": "  * HTML in all text fields\n  * damage enhancements\n  * hit-log"
+        "ver": "3.1.2",
+        "message": "  * added capture bar mod\n  * new macros\n  * improvements and bugfixes"
     },
     "US": {
-        "ver": "3.1.1",
-        "message": "  * HTML in all text fields\n  * damage enhancements\n  * hit-log"
+        "ver": "3.1.2",
+        "message": "  * added capture bar mod\n  * new macros\n  * improvements and bugfixes"
     },
     "SEA": {
-        "ver": "3.1.1",
-        "message": "  * HTML in all text fields\n  * damage enhancements\n  * hit-log"
+        "ver": "3.1.2",
+        "message": "  * added capture bar mod\n  * new macros\n  * improvements and bugfixes"
     },
-    "CT":  { "ver": "3.1.1", "message": "" },
-    "VTC": { "ver": "3.0.3", "message": "" }
+    "VTC": {
+        "ver": "3.1.2",
+        "message": "  * added capture bar mod\n  * new macros\n  * improvements and bugfixes"
+    },
+    "CT":  { "ver": "3.1.1", "message": "" }
 }
