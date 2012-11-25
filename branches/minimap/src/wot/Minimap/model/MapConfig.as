@@ -1,6 +1,6 @@
 import wot.utils.Config;
 
-class wot.Minimap.MapConfig
+class wot.Minimap.model.MapConfig
 {
     public static function get iconScale():Number
     {

@@ -6,6 +6,8 @@ import wot.utils.Defines;
 import wot.utils.Logger;
 import wot.utils.TextCache;
 import wot.utils.Utils;
+import wot.utils.GlobalEventDispatcher;
+import wot.Minimap.MinimapEvent;
 
 class wot.PlayersPanel extends net.wargaming.ingame.PlayersPanel
 {
@@ -24,6 +26,8 @@ class wot.PlayersPanel extends net.wargaming.ingame.PlayersPanel
         Utils.TraceXvmModule("PlayersPanel");
 
         Config.LoadConfig("PlayersPanel.as");
+        
+        GlobalEventDispatcher.addEventListener(MinimapEvent.REQUEST_PARTICIPANTS, this, onBattleParticipantsRequest)
     }
 
     // override
@@ -292,5 +296,12 @@ class wot.PlayersPanel extends net.wargaming.ingame.PlayersPanel
                 max_height = w;
         }
         return max_height;
+    }
+    
+    /** Used at Minimap */
+    
+    private function onBattleParticipantsRequest(event:MinimapEvent)
+    {
+        Logger.add("## HELLO MINIMAP");
     }
 }
