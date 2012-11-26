@@ -4,6 +4,7 @@
 import wot.utils.Config;
 import wot.utils.Utils;
 import wot.utils.VehicleInfoData;
+import wot.utils.VehicleInfoData2;
 
 class wot.utils.VehicleInfo
 {
@@ -46,13 +47,16 @@ class wot.utils.VehicleInfo
         return VehicleInfoData.data[getName(iconSource)] || null;
     }
 
+    public static function getInfo2(vehicleName: String): Object
+    {
+        return VehicleInfoData2.data[vehicleName.split("-").join("_").toLowerCase()] || null;
+    }
+
     public static function getVehicleNamesData():Object
     {
         var result:Object = {};
         for (var vname:String in VehicleInfoData.data)
-        {
             result[vname] = VehicleInfoData.data[vname].name;
-        }
         return result;
     }
 

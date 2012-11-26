@@ -222,7 +222,16 @@ class wot.utils.StatLoader
       var Tl = Math.max(stat.tl, 10) * 10;
       stat.tr = Math.round(Or - (Or - Tr) * Tb / Tl);
     }
+
     //Logger.addObject(stat);
+    stat.tdb = stat.td <= 0 ? 0 : Math.round(stat.td / stat.tb);
+    var info = VehicleInfo.getInfo2(stat.vn);
+    if (info == null)
+        Logger.add("Warning: no data for " + stat.vn);
+    stat.tdv = (info == null || stat.td <= 0) ? 0 : Math.round(stat.td / stat.tb / info.hptop * 10) / 10;
+    stat.tfb = stat.tf <= 0 ? 0 : Math.round(stat.tf / stat.tb * 10) / 10;
+    stat.tsb = stat.ts <= 0 ? 0 : Math.round(stat.ts / stat.tb * 10) / 10;
+
     return stat;
   }
 
