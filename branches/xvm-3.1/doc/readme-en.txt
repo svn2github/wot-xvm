@@ -149,11 +149,10 @@
       {{wins}}        - total wins count
       {{rating}}      - GWR (Global Win Ratio)
       {{eff}}         - player efficiency (http://wot-news.com/index.php/stat/calc/en/)
-      {{e}}           - player efficiency divided by 10 (save 1 char)
+      {{e}}           - player per-vehicle efficiency
       {{kb:3}}        - number of kilo-battles aligned from left to 3 chars
       {{rating:3}}    - GWR aligned from left to 3 chars
       {{eff:4}}       - player efficiency aligned from left to 4 chars
-      {{e:3}}         - player efficiency divided by 10 aligned to 3 chars
       {{t-kb}}        - number of kilo-battles for current vehicle
       {{t-kb-0}}      - number of kilo-battles for current vehicle with leading zero
       {{t-hb}}        - number of hecto-battles for current vehicle (hecto = 100)
@@ -169,6 +168,7 @@
       {{c:kb}}        - color depended from kilo-battles
       {{c:t-rating}}  - color depended from current vehicle win ratio
       {{c:t-battles}} - color depended from current vehicle battles
+      {{c:e}}         - color depended from player per-vehicle efficiency
 
   "format" field examples:
     1. Show number of kilo-battles, efficiency and GWR without changing a color:
