@@ -1,7 +1,7 @@
-intrinsic class net.wargaming.ingame.MinimapEntry
+import gfx.core.UIComponent;
+
+intrinsic class net.wargaming.ingame.MinimapEntry extends UIComponent
 {
-    var player;
+    function lightPlayer(visibility);
     function setDead(isPermanent);
-    function init(markerType, entryName, vehicleClass, markLabel)
-    function setEntryName(value);
 }

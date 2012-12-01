@@ -10,9 +10,9 @@ import wot.utils.GlobalEventDispatcher;
     
 class wot.Minimap.model.ParticipantsModel
 {
-    public function ParticipantsModel() 
+    public function ParticipantsModel()
     {
-        GlobalEventDispatcher.dispatchEvent(new MinimapEvent(MinimapEvent.REQUEST_PARTICIPANTS));
+        
     }
     
 }

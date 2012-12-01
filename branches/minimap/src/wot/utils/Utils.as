@@ -2,6 +2,7 @@
  * ...
  * @author sirmax2
  */
+
 class wot.utils.Utils
 {
     private static var TRACE_XVM_MODULES = true;
@@ -214,5 +215,22 @@ class wot.utils.Utils
             str += (val < 10) ? "0" + val : val;
         }
         return str;
+    }
+    
+    public static function getChildrenOf(target:MovieClip, recursive:Boolean):Array
+    {
+        var result:Array = [];
+        for (var i in target)
+        {
+            if (target[i] instanceof MovieClip)
+            {
+                result.push(target[i]);
+                
+                /** Concatenate children of clips at this level,recurse */
+                if (recursive)
+                    result = result.concat(getChildrenOf(target[i],true));
+            }
+        }
+        return result;
     }
 }

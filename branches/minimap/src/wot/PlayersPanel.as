@@ -1,16 +1,23 @@
 ﻿/**
  * @author sirmax2
  */
+
 import wot.utils.Config;
 import wot.utils.Defines;
-import wot.utils.Logger;
 import wot.utils.TextCache;
 import wot.utils.Utils;
-import wot.utils.GlobalEventDispatcher;
+import wot.utils.GlobalEventDispatcher
 import wot.Minimap.MinimapEvent;
+import wot.utils.Logger;
 
 class wot.PlayersPanel extends net.wargaming.ingame.PlayersPanel
 {
+    /**
+     * Sorted list of all UIDs in panel.
+     * Used for Minimap syncronization.
+     */
+    public var m_uids:Array;
+    
     static var DEBUG_TIMES = false;
 
     private var m_fieldType: Number = 0;
@@ -22,12 +29,9 @@ class wot.PlayersPanel extends net.wargaming.ingame.PlayersPanel
     function PlayersPanel()
     {
         super();
-
         Utils.TraceXvmModule("PlayersPanel");
-
         Config.LoadConfig("PlayersPanel.as");
-        
-        GlobalEventDispatcher.addEventListener(MinimapEvent.REQUEST_PARTICIPANTS, this, onBattleParticipantsRequest)
+        checkLoading();
     }
 
     // override
@@ -298,10 +302,26 @@ class wot.PlayersPanel extends net.wargaming.ingame.PlayersPanel
         return max_height;
     }
     
-    /** Used at Minimap */
+    /**
+     * ----------------------------------
+     * Code for Minimap interaction below
+     */
     
-    private function onBattleParticipantsRequest(event:MinimapEvent)
+    private function checkLoading():Void
     {
-        Logger.add("## HELLO MINIMAP");
+        m_list.onEnterFrame = function()
+        {
+            if (this._dataProvider.length > 1)
+            {
+                delete this.onEnterFrame;
+                
+                this._parent.updateUids();
+                
+                if (this._itemRenderer == "RightItemRendererIcon")
+                    GlobalEventDispatcher.dispatchEvent(new MinimapEvent(MinimapEvent.ENEMY_PLAYERS_PANEL_READY));
+                else
+                    GlobalEventDispatcher.dispatchEvent(new MinimapEvent(MinimapEvent.ALLY_PLAYERS_PANEL_READY));
+            }
+        }
     }
 }

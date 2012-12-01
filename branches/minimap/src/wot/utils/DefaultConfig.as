@@ -148,7 +148,7 @@ class wot.utils.DefaultConfig
         lowVulnerability: "'"
       },
       minimap: {
-        iconScale: 1,
+        iconScale: 1.5,
         isDeadPermanent: true
       },
       captureBar: {

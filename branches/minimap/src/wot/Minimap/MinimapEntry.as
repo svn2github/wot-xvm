@@ -5,29 +5,31 @@
  * @author ilitvinov87@gmail.com
  */
 
-//import wot.utils.Logger;
-import wot.Minimap.model.MapConfig;
+import wot.utils.Logger;
+//import wot.Minimap.model.MapConfig;
 
 class wot.Minimap.MinimapEntry extends net.wargaming.ingame.MinimapEntry
 {
+    /**
+     * Subject of PlayersPanel <-> Minimap syncronization.
+     * Syncronized during light delegate event.
+     */
+    public var actualUid:Number;
+    
     function setDead(isPermanent)
     {
         /** Does not work. No idea why */
         //Logger.add("- MinimapEntry.setDead(" + MapConfig.isDeadPermanent + ")");
         //MapConfig.isDeadPermanent
         //Logger.addObject(_root, "_root", 2);
-        super.setDead(MapConfig.isDeadPermanent);
+        //super.setDead(MapConfig.isDeadPermanent);
     }
     
-    function init(markerType, entryName, vehicleClass, markLabel)
+    function lightPlayer(visibility)
     {
-        //Logger.add("- MinimapEntry.init(" + markerType + " " + entryName + " " + vehicleClass + " " + markLabel + ")");
-        super.init(markerType, entryName, vehicleClass, markLabel)
-    }
-    
-    function setEntryName(value)
-    {
-        //Logger.add("- MinimapEntry.setEntryName(" + value + ")");
-        super.setEntryName(value);
+        Logger.add("------ me.lightPlayer(" + visibility + ")");
+        //Logger.addObject(_root, "_root", 2)
+        actualUid = _root.minimap.syncTestUid;
+        Logger.add("Sync! actualUid = " + actualUid );
     }
 }
