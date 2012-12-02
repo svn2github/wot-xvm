@@ -5,9 +5,5 @@ intrinsic class net.wargaming.ingame.Minimap
     var icons:MovieClip;
     
     function Minimap();
-    
-    function draw();
-    function updateContent();
-    function updateContentBeforeDraw(leftBorderSpace, topBorderSpace, rightBorderSpace, bottomBorderSpace);
     function onEntryInited();
 }

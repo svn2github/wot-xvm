@@ -16,8 +16,9 @@
  * @author ilitvinov87@gmail.com
  */
 
-import wot.utils.Utils;
+import wot.Minimap.model.PlayersModel;
 import wot.utils.Logger;
+import wot.utils.Utils;
 import wot.Minimap.model.MapConfig;
 import wot.utils.GlobalEventDispatcher;
 import wot.Minimap.MinimapEvent
@@ -27,9 +28,7 @@ class wot.Minimap.Minimap extends net.wargaming.ingame.Minimap
     private var isMinimapReady:Boolean = false;
     private var isAllyPlayersPanelReady:Boolean = false;
     private var isEnemyPlayersPanelReady:Boolean = false;
-    
-    private var allAllyUids:Array;
-    private var allEnemyUids:Array;
+    private var loadComplete:Boolean = false;
     
     /**
      * Testing uid during delegate event lighting cycle stored here.
@@ -39,6 +38,9 @@ class wot.Minimap.Minimap extends net.wargaming.ingame.Minimap
      */
     public var syncTestUid:Number;
     
+    private var players:PlayersModel;
+    
+    // override
     function Minimap()
     {
         Utils.TraceXvmModule("Minimap");
@@ -52,35 +54,21 @@ class wot.Minimap.Minimap extends net.wargaming.ingame.Minimap
          * Default at XVM config is 0.5.
          */
         MARKERS_SCALING = MapConfig.iconScale;
+        
         GlobalEventDispatcher.addEventListener(MinimapEvent.MINIMAP_READY, this, onReady);
         GlobalEventDispatcher.addEventListener(MinimapEvent.ALLY_PLAYERS_PANEL_READY, this, onReady);
         GlobalEventDispatcher.addEventListener(MinimapEvent.ENEMY_PLAYERS_PANEL_READY, this, onReady);
         checkLoading();
     }
     
-    /*function draw()
-    {
-        super.draw();
-        Logger.add("Minimap.draw");
-    }
-    
-    function updateContent()
-    {
-        super.updateContent();
-        Logger.add("Minimap.updateContent");
-    }
-    
-    function updateContentBeforeDraw(leftBorderSpace, topBorderSpace, rightBorderSpace, bottomBorderSpace)
-    {
-        super.updateContentBeforeDraw(leftBorderSpace, topBorderSpace, rightBorderSpace, bottomBorderSpace);
-        Logger.add("Minimap.updateContentBeforeDraw");
-    }
-    
+    // override
     function onEntryInited()
     {
         super.onEntryInited();
-        Logger.add("Minimap.onEntryInited");
-    }*/
+        
+        if (loadComplete)
+            updateIconsExtension();
+    }
     
     // -- Private
     
@@ -111,96 +99,58 @@ class wot.Minimap.Minimap extends net.wargaming.ingame.Minimap
                 break;
         }
         
-        if (isMinimapReady && isAllyPlayersPanelReady && isEnemyPlayersPanelReady)
-            battleStartUpdate();
+        loadComplete = isMinimapReady && isAllyPlayersPanelReady && isEnemyPlayersPanelReady;
+        
+        if (loadComplete)
+        {
+            players = new PlayersModel(icons);
+            updateIconsExtension();
+        }
     }
     
-    private function battleStartUpdate():Void
+    private function updateIconsExtension():Void
     {
+        var unassignedUids:Array = players.getUnassignedUids();
+        Logger.add("--- mm.unassignedUids.length " + unassignedUids.length);
         /**
-         * TODO: Append random sequenct at first for test purposes.
+         * TODO: Optimizations are possible to avoid unnecessary gfx.io.GameDelegate.call.
+         * 
+         * - Filter ally/type/alive -> much less unassigned to test.
+         * 
+         * - Exclusion. Only one alive enemy of type heavy in PlayersPanel
+         *   means no other alive enemy of type heavy present on Minimap.
+         *   Exact match without GameDelegate call.
+         * 
+         * - With each successful touch getUnassignedUids has to be recalculated
+         *   to work with exclusion for its best results.
+         *   By other words - remove successfully synced uid from unassignedUids and reevaluate Exclusion..
          */
         
-        //_root.leftPanel.
-        //Logger.addObject(_root.leftPanel.m_list, "--- mm._root.leftPanel.m_list", 3)
-        updateUser(participantsData[1].uid);
-        updateUser(participantsData[3].uid);
-        updateUser(participantsData[5].uid);
-                
-        // Individual sync
-        /** All uid-s from Players panel minus Assigned uids in icons*/
-        //var unassignedEnemyUids:Array = getUnassignedUids(_level0.rightPanel);
-        /*while (!isMinimapSynced())
+        for (var i in unassignedUids)
         {
-            Logger.add("-- Minimap !isMinimapSynced()");
-            var uid:Number = Number(unassignedUids.pop());
-            invokeUnusedUidTouch(uid);
-            assignUidToTouchRecepient(uid);
-        }*/
-    }
-    
-    private function appendText():Void
-    {
-        var clips:Array = Utils.getChildrenOf(icons);
-        for (var i:Number = 0 ; i < clips.length; i++)
-            if (clips[i].hasOwnProperty("vehicleClass") && !clips[i].uid)
-            {
-                //Logger.add("-- inside LOOP");
-                var clipTf:TextField = clips[i].markMC.createTextField("clipTf", 1, 0, 0, 20, 14);
-                clipTf.text = "123";
-                var format:TextFormat = new TextFormat();
-                format.color = 0xFFFFFF;
-                format.size = 8;
-                //tf.font = "Arial"; $FieldFont
-                clipTf.setTextFormat(format);
-            }
-    }
-    
-    /** Is there any unidentified tank icons on minimap */
-    private function isMinimapSynced():Boolean
-    {
-        var clips:Array = Utils.getChildrenOf(icons);
-        var tanks:Array = [];
-        
-        for (var i:Number = 0 ; i < clips.length; i++)
-        {
-            if (clips[i].entryName == "ally" || clips[i].entryName == "enemy")
-            {
-                if (!clips[i].uid)
-                    return false;
-            }
+            /**
+             * TODO: Optimization is possible to avoid unnecessary gfx.io.GameDelegate.call.
+             * 
+             * - Stop touching if everybody on Minimap is in sync.
+             *   Keep count of unsynced icons?
+             */
+            trySync(unassignedUids[i]);
         }
-        
-        return true;
     }
     
-    private function updateUser(uid:Number):Void
+    private function trySync(uid:Number):Void
     {
         syncTestUid = uid;
-        touchUser(uid);
+        syncTouchPlayer(uid);
     }
     
-    private function touchUser(uid:Number):Void
+    /** Touched players MinimapEntry receives event */
+    private function syncTouchPlayer(uid:Number):Void
     {
-        //Logger.addObject(participantsData, "participantsData", 3);
-        //Logger.add("participantsData.length = " + participantsData.length);
-        for (var i:Number = 0; i < participantsData.length; i++)
-        {
-            if (participantsData[i].uid == uid)
-            {
-                /**
-                 * Delegate call purpose is altered to extend Minimap functionality.
-                 * Lighting event is used at Minimap to define icon-user relation.
-                 */
-                gfx.io.GameDelegate.call("minimap.lightPlayer", [participantsData[i].vehId, true]);
-                Logger.add("-------- PP touch invoked for uid:" + uid + " vehID:" + participantsData[i].vehId + " i:" + i);
-                break;
-            }
-        }
-    }
-    
-    private function get participantsData():Array
-    {
-        return _root.leftPanel.m_list._dataProvider;
+        /**
+         * Delegate call purpose is altered to extend Minimap functionality.
+         * Lighting event is used at Minimap to define icon-user relation.
+         */
+        gfx.io.GameDelegate.call("minimap.lightPlayer", [players.getVehId(uid), true]);
     }
 }

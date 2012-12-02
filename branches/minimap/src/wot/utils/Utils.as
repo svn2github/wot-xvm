@@ -3,6 +3,7 @@
  * @author sirmax2
  */
 
+import wot.utils.Logger;
 class wot.utils.Utils
 {
     private static var TRACE_XVM_MODULES = true;
@@ -232,5 +233,35 @@ class wot.utils.Utils
             }
         }
         return result;
+    }
+    
+    /**
+     * c[] − b[] = a[]
+     * minuend (c) − subtrahend (b) = difference (a)
+     * [1,2,3], [1,2,3,4,5,6] -> return [4, 5, 6]
+     */
+    public static function subtractArray(minuend, subtrahend)
+    {
+        var difference:Array = [];
+        //Logger.addObject(minuend, "Utils.minuend", 3);
+        //Logger.addObject(subtrahend, "Utils.subtrahend", 3);
+        
+        for (var i in minuend)
+        {
+            var testVal = minuend[i];
+            var testIsAbcentInSubtrahend:Boolean = true;
+            for (var j in subtrahend)
+            {
+                if (testVal == subtrahend[j])
+                {
+                    testIsAbcentInSubtrahend = false;
+                    break;
+                }
+            }
+            if (testIsAbcentInSubtrahend)
+                difference.push(minuend[i])
+        }
+        //Logger.addObject(difference, "Utils.difference", 3);
+        return difference;
     }
 }
