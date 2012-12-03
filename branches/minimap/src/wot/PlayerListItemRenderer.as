@@ -8,7 +8,6 @@ import wot.utils.IconLoader;
 import wot.utils.Defines;
 import wot.utils.PlayerInfo;
 import wot.utils.Utils;
-import wot.utils.Logger;
 
 class wot.PlayerListItemRenderer extends net.wargaming.ingame.PlayerListItemRenderer
 {

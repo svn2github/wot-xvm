@@ -3,7 +3,6 @@
  * @author sirmax2
  */
 
-import wot.utils.Logger;
 class wot.utils.Utils
 {
     private static var TRACE_XVM_MODULES = true;
