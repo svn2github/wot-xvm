@@ -36,16 +36,16 @@ class wot.Minimap.MinimapEntry extends net.wargaming.ingame.MinimapEntry
     {
         var player:Object = PlayersPanelProxy.getPlayerInfo(uid);
         
-        var text:String = "<font face ='Arial' size='8' color='#CCCCCC'><b>" + player.level + "<b> <i>" + player.vehicle + "</i></font>";
+        var text:String = "<font face='Verdana' size='6' color='#FF9999'><b>" + player.level + "<b> <i>" + player.vehicle + "</i></font>";
         
         return text;
     }
     
     private function appendText(htmlText:String):Void
     {
-        var field:TextField = markMC.createTextField("clipTf", 1, 0, 0, 90, 14);
-        field.antiAliasType = "advanced";
-        field.html = true;
-        field.htmlText = htmlText;
+        var textField:TextField = markMC.createTextField("textField", 1, 0, 0, 90, 14);
+        textField.antiAliasType = "advanced";
+        textField.html = true;
+        textField.htmlText = htmlText;
     }
 }

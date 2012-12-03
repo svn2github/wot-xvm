@@ -149,9 +149,9 @@ class wot.utils.DefaultConfig
       },
       minimap: {
         enabled: true,
-        iconScale: 1.5,
+        iconScale: 0.5,
         isDeadPermanent: true,
-        format: "format.def"
+        format: "todo:format.default"
       },
       captureBar: {
           enabled: true,

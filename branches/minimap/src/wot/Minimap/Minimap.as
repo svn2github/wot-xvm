@@ -1,4 +1,5 @@
 import wot.Minimap.model.SyncModel;
+import wot.utils.Logger;
 import wot.utils.Utils;
 import wot.Minimap.model.MapConfig;
 import wot.utils.GlobalEventDispatcher;
@@ -46,6 +47,7 @@ class wot.Minimap.Minimap extends net.wargaming.ingame.Minimap
          * TODO:
          * Default at XVM config is 0.5.
          */
+        Logger.add("MapConfig.iconScale = " + MapConfig.iconScale);
         if (MapConfig.enabled)
             MARKERS_SCALING = MapConfig.iconScale;
         
