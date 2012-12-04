@@ -1,3 +1,4 @@
+import flash.geom.Point;
 import wot.Minimap.model.MinimapMacro;
 import wot.Minimap.model.PlayersPanelProxy;
 import wot.Minimap.model.MapConfig;
@@ -43,8 +44,9 @@ class wot.Minimap.MinimapEntry extends net.wargaming.ingame.MinimapEntry
     private function appendText(htmlText:String):Void
     {
         // TODO: {{vehicle-short}}
+        var offset:Point = MapConfig.textOffset;
         
-        var textField:TextField = markMC.createTextField("textField", 1, 0, 0, 90, 14);
+        var textField:TextField = markMC.createTextField("textField", 1, offset.x, offset.y, 100, 20);
         textField.antiAliasType = "advanced";
         textField.html = true;
        
@@ -58,7 +60,7 @@ class wot.Minimap.MinimapEntry extends net.wargaming.ingame.MinimapEntry
     private function getCSS():String
     {
         var style:String;
-        
+
         switch (this.entryName)
         {
             case "ally":
@@ -69,6 +71,9 @@ class wot.Minimap.MinimapEntry extends net.wargaming.ingame.MinimapEntry
                 break;
             case "squadman":
                 style = MapConfig.cssSquad;
+                break;
+            default:
+                style = MapConfig.cssOneself;
         }
         
         style = ".xvm_mm{" + style + "}"
@@ -90,6 +95,9 @@ class wot.Minimap.MinimapEntry extends net.wargaming.ingame.MinimapEntry
                 break;
             case "squadman":
                 text = MapConfig.formatSquad;
+                break;
+            default:
+                text = MapConfig.formatOneself;
         }
         
         return MinimapMacro.process(text, player);

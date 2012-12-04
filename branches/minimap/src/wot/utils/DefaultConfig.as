@@ -152,15 +152,19 @@ class wot.utils.DefaultConfig
         iconScale: 1,
         nickShrink: 3,
         isDeadPermanent: true,
+        textOffsetX: 0,
+        textOffsetY: 0,
         format: {
           ally:  "{{level}} {{vehicle}}",
           enemy: "{{level}} {{vehicle}}",
-          squad: "{{level}} {{vehicle}} <i>{{short-nick}}</i>"
+          squad: "{{level}} {{vehicle}} <i>{{short-nick}}</i>",
+          oneself: "<b>{{level}} {{vehicle}}</b>"
         },
         css: {
           ally:  "font-family:$FieldFont; font-size:6px; color:#BBEEBB;",
           enemy: "font-family:$FieldFont; font-size:6px; color:#EEBBBB;",
-          squad: "font-family:$FieldFont; font-size:6px; color:#FFEE44;"
+          squad: "font-family:$FieldFont; font-size:6px; color:#FFEE44;",
+          oneself: "font-family:$FieldFont; font-size:6px; color:#FFFFFF;"
         }
       },
       captureBar: {
