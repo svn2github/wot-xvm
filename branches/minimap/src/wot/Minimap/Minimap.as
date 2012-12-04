@@ -1,5 +1,4 @@
 import wot.Minimap.model.SyncModel;
-import wot.utils.Logger;
 import wot.utils.Utils;
 import wot.Minimap.model.MapConfig;
 import wot.utils.GlobalEventDispatcher;
@@ -42,18 +41,6 @@ class wot.Minimap.Minimap extends net.wargaming.ingame.Minimap
     {
         Utils.TraceXvmModule("Minimap");
         super();
-        
-        /**
-         * Setup minimap icon size.
-         * Read val from config.
-         * Default by WG is 0.5.
-         * 
-         * TODO:
-         * Default at XVM config is 0.5.
-         */
-        Logger.add("MapConfig.iconScale = " + MapConfig.iconScale);
-        if (MapConfig.enabled)
-            MARKERS_SCALING = MapConfig.iconScale;
         
         GlobalEventDispatcher.addEventListener(MinimapEvent.MINIMAP_READY, this, onReady);
         GlobalEventDispatcher.addEventListener(MinimapEvent.ALLY_PLAYERS_PANEL_READY, this, onReady);
@@ -103,9 +90,23 @@ class wot.Minimap.Minimap extends net.wargaming.ingame.Minimap
         loadComplete = isMinimapReady && isAllyPlayersPanelReady && isEnemyPlayersPanelReady;
         
         if (loadComplete && MapConfig.enabled)
-        {
-            sync = new SyncModel();
-            sync.updateIconsExtension();
-        }
+            startExtendedProcedure();
+    }
+    
+    private function startExtendedProcedure():Void
+    {
+        /**
+         * Setup minimap icon size.
+         * Read val from config.
+         * Default by WG is 0.5.
+         * 
+         * TODO:
+         * Default at XVM config is 0.5.
+         */
+        MARKERS_SCALING = MapConfig.iconScale;
+        scaleMarkers(MARKERS_SCALING);
+        
+        sync = new SyncModel();
+        sync.updateIconsExtension();
     }
 }

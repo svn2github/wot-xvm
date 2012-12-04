@@ -150,7 +150,7 @@ class wot.utils.DefaultConfig
       minimap: {
         enabled: true,
         iconScale: 1,
-        nickShrink: 3,
+        nickShrink: 4,
         isDeadPermanent: true,
         textOffsetX: 0,
         textOffsetY: 0,
