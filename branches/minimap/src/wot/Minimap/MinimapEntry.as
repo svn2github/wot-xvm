@@ -1,4 +1,6 @@
+import wot.Minimap.model.MinimapMacro;
 import wot.Minimap.model.PlayersPanelProxy;
+import wot.Minimap.model.MapConfig;
 
 /**
  * MinimapEntry represent individual object on map.
@@ -15,6 +17,9 @@ class wot.Minimap.MinimapEntry extends net.wargaming.ingame.MinimapEntry
      */
     public var uid:Number;
     
+    private var macro:MinimapMacro;
+    private var player:Object;
+    
     function setDead(isPermanent)
     {
         // If MinimapConfig.enabled
@@ -28,24 +33,65 @@ class wot.Minimap.MinimapEntry extends net.wargaming.ingame.MinimapEntry
     function lightPlayer(visibility)
     {
         uid = _root.minimap.sync.getTestUid();
+        player = PlayersPanelProxy.getPlayerInfo(uid);
         
-        appendText(defineText());
+        appendText();
     }
     
-    private function defineText():String
-    {
-        var player:Object = PlayersPanelProxy.getPlayerInfo(uid);
-        
-        var text:String = "<font face='Verdana' size='6' color='#FF9999'><b>" + player.level + "<b> <i>" + player.vehicle + "</i></font>";
-        
-        return text;
-    }
+    // -- Private
     
     private function appendText(htmlText:String):Void
     {
+        // TODO: {{vehicle-short}}
+        
         var textField:TextField = markMC.createTextField("textField", 1, 0, 0, 90, 14);
         textField.antiAliasType = "advanced";
         textField.html = true;
-        textField.htmlText = htmlText;
+       
+        var style:TextField.StyleSheet = new TextField.StyleSheet();
+        style.parseCSS(getCSS());
+        textField.styleSheet = style;
+        
+        textField.htmlText = "<span class='xvm_mm'>" + getText() + "</span>";
+    }
+    
+    private function getCSS():String
+    {
+        var style:String;
+        
+        switch (this.entryName)
+        {
+            case "ally":
+                style = MapConfig.cssAlly;
+                break;
+            case "enemy":
+                style = MapConfig.cssEnemy;
+                break;
+            case "squadman":
+                style = MapConfig.cssSquad;
+        }
+        
+        style = ".xvm_mm{" + style + "}"
+
+        return style;
+    }
+    
+    private function getText():String
+    {
+        var text:String;
+        
+        switch (this.entryName)
+        {
+            case "ally":
+                text = MapConfig.formatAlly;
+                break;
+            case "enemy":
+                text = MapConfig.formatEnemy;
+                break;
+            case "squadman":
+                text = MapConfig.formatSquad;
+        }
+        
+        return MinimapMacro.process(text, player);
     }
 }

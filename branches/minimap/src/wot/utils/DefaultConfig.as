@@ -149,9 +149,19 @@ class wot.utils.DefaultConfig
       },
       minimap: {
         enabled: true,
-        iconScale: 0.5,
+        iconScale: 1,
+        nickShrink: 3,
         isDeadPermanent: true,
-        format: "todo:format.default"
+        format: {
+          ally:  "{{level}} {{vehicle}}",
+          enemy: "{{level}} {{vehicle}}",
+          squad: "{{level}} {{vehicle}} <i>{{short-nick}}</i>"
+        },
+        css: {
+          ally:  "font-family:$FieldFont; font-size:6px; color:#BBEEBB;",
+          enemy: "font-family:$FieldFont; font-size:6px; color:#EEBBBB;",
+          squad: "font-family:$FieldFont; font-size:6px; color:#FFEE44;"
+        }
       },
       captureBar: {
           enabled: true,

@@ -18,7 +18,11 @@ import wot.Minimap.MinimapEvent
  *    Any individual user linked data is now available at Minimap.
  * ) Free marker scaling adjusts tank and base icon size.
  * 
+ * ) Distance marker <- minimap distance
+ * 
  * TODO: highlight T-50-2 etc automatically
+ * Weapon line
+ * Horizontal weapon angle
  * 
  * @author ilitvinov87@gmail.com
  */
