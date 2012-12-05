@@ -1,4 +1,4 @@
 #summary Project support
 #labels Featured
 
-http://www.modxvm.com/donate/
+<a href="http://www.modxvm.com/donate/"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" alt="Donate" /></a>
