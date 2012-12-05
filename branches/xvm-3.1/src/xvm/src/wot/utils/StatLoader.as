@@ -240,8 +240,39 @@ class wot.utils.StatLoader
 
         if (stat.tdv > 0)
         {
-            stat.te = stat.tdv * 5 /* / 0.9 */;
+            stat.te = 0;
+            var vi = VehicleInfo.getInfoFromMappedName(stat.vn);
+            if (vi == null)
+                Logger.add("ERROR: vehicle info (1) missed: " + stat.vn + ". Please notify XVM support.");
+            else
+            {
+                var vi3 = VehicleInfo.getInfo3(stat.vn);
+                if (vi3 == null)
+                    Logger.add("ERROR: vehicle info (3) missed: " + stat.vn + ". Please notify XVM support.");
+                else
+                {
+                    var s = vi3.b > 0 && vi3.s > 0 && stat.tsb > 0 ? stat.tsb / (vi3.s / vi3.b) : 1;
+                    var d = vi3.b > 0 && vi3.d > 0 && stat.tdb > 0 ? stat.tdb / (vi3.d / vi3.b) : 1;
+                    var f = vi3.b > 0 && vi3.f > 0 && stat.tfb > 0 ? stat.tfb / (vi3.f / vi3.b) : 1;
+                    switch (vi.type)
+                    {
+                        case "LT":
+                            stat.te = (s*2 + d) / 3 * 5;
+                            break;
 
+                            case "SPG":
+                            stat.te = (d*2 + f) / 3 * 5;
+                            break;
+
+                        default:
+                            stat.te = (d*2 + f*2 + s) / 5 * 5;
+                            break;
+                    }
+                }
+            }
+            stat.teff = Math.round(stat.te * 200);
+            stat.te = stat.tdv == 0 ? null : Math.max(0, Math.min(9, Math.round(stat.te)));
+/*
             var vi = VehicleInfo.getInfoFromMappedName(stat.vn);
             if (vi == null)
                 Logger.add("ERROR: vehicle info missed: " + stat.vn + ". Please notify XVM support.");
@@ -254,6 +285,7 @@ class wot.utils.StatLoader
             }
             stat.te_raw = stat.te;
             stat.te = stat.tdv == 0 ? null : Math.max(0, Math.min(9, Math.round(stat.te)));
+*/
         }
 
         // Normalize result

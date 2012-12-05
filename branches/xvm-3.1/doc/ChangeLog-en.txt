@@ -1,4 +1,10 @@
-﻿XVM-3.1.3-test4:
+﻿XVM-3.1.3-test5:
+  * removed macros {{d}}, {{f}}, {{s}}
+  * added macro {{teff}} = {{e}} * 200 (per-vehicle efficiency in usual
+    range 0..2000)
+  * new per-vehicle efficiency formula
+
+XVM-3.1.3-test4:
   * new value of macros:
       {{e}} - new per-vehicle efficiency.
               Discussion: http://www.koreanrandom.com/forum/topic/1643-
