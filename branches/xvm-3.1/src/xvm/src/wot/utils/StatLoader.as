@@ -242,7 +242,7 @@ class wot.utils.StatLoader
         {
             stat.te = 0;
             var vi = VehicleInfo.getInfoFromMappedName(stat.vn);
-            if (vi == null)
+            if (vi == null || !vi.level || !vi.type)
                 Logger.add("ERROR: vehicle info (1) missed: " + stat.vn + ". Please notify XVM support.");
             else
             {
@@ -254,24 +254,12 @@ class wot.utils.StatLoader
                     var s = vi3.b > 0 && vi3.s > 0 && stat.tsb > 0 ? stat.tsb / (vi3.s / vi3.b) : 1;
                     var d = vi3.b > 0 && vi3.d > 0 && stat.tdb > 0 ? stat.tdb / (vi3.d / vi3.b) : 1;
                     var f = vi3.b > 0 && vi3.f > 0 && stat.tfb > 0 ? stat.tfb / (vi3.f / vi3.b) : 1;
-                    switch (vi.type)
-                    {
-                        case "LT":
-                            stat.te = (s*2 + d) / 3 * 5;
-                            break;
-
-                            case "SPG":
-                            stat.te = (d*2 + f) / 3 * 5;
-                            break;
-
-                        default:
-                            stat.te = (d*2 + f*2 + s) / 5 * 5;
-                            break;
-                    }
+                    var EC = Config.s_config.consts.E[vi.type][vi.level];
+                    stat.te = (d * EC.CD + f * EC.CF + s * EC.CS) / (EC.CD + EC.CF + EC.CS);
                 }
             }
-            stat.teff = Math.round(stat.te * 200);
-            stat.te = stat.tdv == 0 ? null : Math.max(0, Math.min(9, Math.round(stat.te)));
+            stat.teff = Math.round(stat.te * 1000);
+            stat.te = stat.tdv == 0 ? null : Math.max(0, Math.min(9, Math.round(stat.te * 5)));
 /*
             var vi = VehicleInfo.getInfoFromMappedName(stat.vn);
             if (vi == null)
