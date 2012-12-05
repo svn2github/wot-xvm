@@ -1,37 +1,4 @@
 #summary Project support
 #labels Featured
 
-*You may support project by donating some money:*
-<wiki:comment>
-$US, `PayPal`: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=54AGW38SYL9WJ" rel="nofollow"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"/></a>
-</wiki:comment>
-
-`WebMoney`:
-  * WMZ: `Z171323840192`
-  * WMR: `R120528092923`
-  * WMU: `U384855503797`
-Yandex.Money:
-  * 41001406743444
-
-----
-
-*Вы можете поддержать проект, пожертвовав небольшую сумму:*
-<wiki:comment>
-в $ США, `PayPal`: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=54AGW38SYL9WJ" rel="nofollow"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"/></a>
-</wiki:comment>
-
-`WebMoney`:
-  * WMZ: `Z171323840192`
-  * WMR: `R120528092923`
-  * WMU: `U384855503797`
-Яндекс.Деньги:
-  * 41001406743444
-QIWI:
-  # Перейти на https://w.qiwi.ru/transfer.action
-  # Выбрать "QIWI Яйца"
-  # Нажать "Купите"
-  # Выбрать "Отправить"
-  # Ввести сумму
-  # Указать адрес эл. почты: *m.schedriviy@gmail.com*
-  # Написать комментарий (XVM)
-  # Нажать "Заплатить"
+http://www.modxvm.com/donate/
