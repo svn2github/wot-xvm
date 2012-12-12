@@ -1,0 +1,1911 @@
+﻿/**
+ * Full configuration file (hereinafter - the configuration) with all possible options,
+ * default configuration.
+ *
+ * Attention! You must NOT use the percent symbol in this file.
+ * Instead, the percent symbol should be written: \u0025
+ */
+{
+  "configVersion": "1.5.0", // Version of the config. Do not remove or change it unnecessarily.
+  "editorVersion": "0.15",  // Version of the editor.
+  // Common config options. All settings information in the mod not being used.
+  "definition": {
+    "author": "sirmax2",                        // Config author
+    "description": "Default settings for XVM",  // Config description
+    "url": "http://code.google.com/p/wot-xvm/", // Address to config updates
+    "date": "12.10.2012",                       // Config last modified
+    "gameVersion": "0.8.2",                     // Supported version of the game
+    "modMinVersion": "3.2.0"                    // The minimum required version of the XVM mod
+  },
+  // General parameters for the battle interface
+  "battle": {
+    "mirroredVehicleIcons": true,               // false - Disable tank icon mirroring (good for alternative icons). True by default.
+    "showPostmortemTips": true,                 // false - Disable pop-up panel at the bottom after death. True by default.
+    "removePanelsModeSwitcher": false,          // true - Remove the Players Panel mode switcher (buttons for changing size)
+    "highlightVehicleIcon": true,               // false - disable highlighting of selected vehicle icon and squad
+    "clockFormat": "H:N",                       // Show the clock on the Debug Panel (near FPS). Format: Y:year, M:month, D:day, H:hour, N:minutes, S:seconds. "" - remove clock.
+    "useStandardMarkers": false,                // true - use standard client vehicle markers
+    "clanIconsFolder": "../../../clanicons"     // path to clan icons folder relative to res_mods/[GAME VERSION]/gui/flash
+  },
+  // Options for player statistics (only with xvm-stat)
+  "rating": {
+    "showPlayersStatistics": true,              // true - Toggle player statistics on/off. Global setting - without the statistics module, this is always disabled
+    "loadEnemyStatsInFogOfWar": true,           // true - Enable downloading of data on opponents in the "fog of war"
+    "enableStatisticsLog": false                // true - Enable saving statistics to "xvm-stat.log" file
+  },
+  // Parameters of the Battle Loading Screen
+  "battleLoading": {
+    "clockFormat": "H:N:S",                     // Show the clock on the Battle Loading Screen. Format: Y:year, M:month, D:day, H:hour, N:minutes, S:seconds. "" - remove clock.
+    "showChances": false,                       // true - Enable display of "chance to win" (only with xvm-stat) Read more: http://www.koreanrandom.com/forum/topic/1642-chance
+    "showChancesExp": false,                    // Show experimental "chance to win" formula
+    "removeSquadIcon": false,                   // true - Disable Platoon icons. This blank space can house, for example, clan logos
+    "clanIcon": {                               // Display options for Team/Clan logos
+      "show": true,                             //   false - Disable Team/Clan logos in Battle Loading Screen
+      "x": 0,                                   //   Position on the X axis, relative to the vehicle icon
+      "y": 6,                                   //   Position on the Y axis, relative to the vehicle icon
+      "xr": 0,                                  //   Position on the X axis for right side (positive values run to the *inside* of the table)
+      "yr": 6,                                  //   Position on the Y axis for right side
+      "w": 16,                                  //   Width of the Team/Clan logo
+      "h": 16,                                  //   Height of the Team/Clan logo
+      "alpha": 90                               //   Transparency of the Team/Clan logo
+    },
+    // Display format for the left Players Panel (macros allowed, see readme-en.txt)
+    "formatLeft": "{{vehicle}} <font color='{{c:kb}}'>{{kb:3}}</font> <font color='{{c:eff}}'>{{eff}}</font> <font color='{{c:rating}}'>{{rating}}</font>",
+    // Display format for the right Players Panel (macros allowed, see readme-en.txt)
+    "formatRight": "<font color='{{c:rating}}'>{{rating}}</font> <font color='{{c:eff}}'>{{eff}}</font> <font color='{{c:kb}}'>{{kb:3}}</font> {{vehicle}}"
+  },
+  // Parameters of the Battle Statistics Form
+  "statisticForm": {
+    "showChances": false,     // true - Enable display of "chance to win" (only with xvm-stat).
+    "showChancesExp": false,  // Show experimental "chance to win" formula
+    "removeSquadIcon": false, // true - Disable Platoon icons. This blank space can house, for example, clan logos.
+    // Display options for Team/Clan logos (see battleLoading above)
+    "clanIcon": { "show": true, "x": 0, "y": 6, "xr": 0, "yr": 6, "h": 16, "w": 16, "alpha": 90 },
+    // Display format for the left column (macros allowed, see readme-en.txt)
+    "formatLeft": "{{vehicle}} <font color='{{c:kb}}'>{{kb:3}}</font> <font color='{{c:eff}}'>{{eff}}</font> <font color='{{c:rating}}'>{{rating}}</font>",
+    // Display format for the right column (macros allowed, see readme-en.txt)
+    "formatRight": "<font color='{{c:rating}}'>{{rating}}</font> <font color='{{c:eff}}'>{{eff}}</font> <font color='{{c:kb}}'>{{kb:3}}</font> {{vehicle}}"
+  },
+  // Parameters of the Players Panels
+  "playersPanel": {
+    "alpha": 60,       // Opacity percentage of the panels. (0 - transparent ... 100 - opaque)
+    "iconAlpha": 100,  // Opacity percentage of icons in the panels. (0 - transparent ... 100 - opaque)
+    "removeSquadIcon": false, // true - Disable Platoon icons.
+    // Display options for Team/Clan logos (see battleLoading above).
+    "clanIcon": { "show": true, "x": 0, "y": 6, "xr": 0, "yr": 6, "h": 16, "w": 16, "alpha": 90 },
+    // Options for the "medium" panels - the first of the medium panels
+    "medium": {
+      "width": 46,    // 0..250 - Width of the player's name column. Default is 46.
+      // Display format for the left panel (macros allowed, see readme-en.txt)
+      "formatLeft": "<font color='{{c:eff}}'>{{nick}}</font>",
+      // Display format for the right panel (macros allowed, see readme-en.txt)
+      "formatRight": "<font color='{{c:eff}}'>{{nick}}</font>"
+    },
+    // Options for the "medium2" panels - the second of the medium panels
+    "medium2": {
+      "width": 65,    // 0..250 - Width of the player's name column. Default is 65.
+      // Display format for the left panel (macros allowed, see readme-en.txt)
+      "formatLeft": "<font color='{{c:eff}}'>{{vehicle}}</font>",
+      // Display format for the right panel (macros allowed, see readme-en.txt)
+      "formatRight": "<font color='{{c:eff}}'>{{vehicle}}</font>"
+    },
+    // Options for the "large" panels - the widest panels
+    "large": {
+      "width": 170,  // 0..250 - Width of the player's name column. Default is 170.
+      // Display format for player nickname (macros allowed, see readme-en.txt)
+      "nickFormatLeft": "<font color='{{c:rating}}'>{{rating}}</font> {{nick}}",
+      "nickFormatRight": "{{nick}} <font color='{{c:rating}}'>{{rating}}</font>",
+      // Display format for vehicle name (macros allowed, see readme-en.txt)
+      "vehicleFormatLeft": "<font color='{{c:eff}}'>{{vehicle}}</font>",
+      "vehicleFormatRight": "<font color='{{c:eff}}'>{{vehicle}}</font>"
+    }
+  },
+  // {{turret}} marker display strings
+  "turretMarkers": {
+    "highVulnerability": "*", // Subject has stock turret and top gun can not be mounted. Subject is highly vulnerable.
+    "lowVulnerability": "'"   // Subject has stock turret and top gun can be mounted. Subject is somewhat vulnerable.
+  },
+  // Hit log (my hits calculator)
+  "hitLog": {
+    "enabled": true,      // on/off switch
+    "x": 270,             // X position (negative values - bind to right side of screen)
+    "y": 5,               // Y position (negative values - bind to bottom side of screen)
+    "w": 500,             // Width
+    "h": 1000,            // Height
+    "lines": 0,           // Number of lines. Old lines will be pushed out
+    "direction": "down",  // Log direction: up - lines will be added from up to down, down - from down to up.
+    "insertOrder": "end", // Insert order: begin - insert new values to begin, end - add to end
+    "groupHitsByPlayer": true, // group hits by players name
+    // Substitution for {{dead}} macro when tank is dead
+    "deadMarker": "<font face='Wingdings'>N</font>",
+    "blowupMarker": "<font face='Wingdings'>M</font>",
+    // Hits header format, including last hit (macros allowed, see readme-en.txt)
+    "formatHeader":  "<font color='#FFFFFF'>Hits:</font> <font size='13'>#{{n}}</font> <font size='0{{vehicle}}'><b>{{dmg-total}}</b>  <font color='#FFFFFF'>Last:</font> <font color='{{c:dmg-kind}}'><b>{{dmg}}</b> {{dead}}</font></font>",
+    // List of hits format (macros allowed, see readme-en.txt)
+    "formatHistory": "<textformat leading='-4' tabstops='[20,50,90,150]'><font size='12'>\u00D7{{n-player}}:</font><tab>{{dmg-player}}<tab>| <font color='{{c:dmg-kind}}'>{{dmg}}</font><tab>| <font color='{{c:dmg-kind}}'>{{dmg-kind}}</font><tab>| <font color='{{c:vtype}}'>{{vehicle}} {{dead}}</font></textformat>",
+    "shadow": {                       //   Shadow options
+      "alpha": 100,                   //     Opacity
+      "color": "0x000000",            //     Color
+      "angle": 45,                    //     Offset angle
+      "distance": 0,                  //     Offset distance
+      "size": 5,                      //     Size
+      "strength": 150                 //     Intensity
+    }
+  },
+  // Capture bar
+  "captureBar": {
+    "enabled": true, // On/off switch
+    "primaryTitleOffset": 7, // Upper textfield offset in case of big font size
+    "appendPlus" : true, // append plus to three capturers. Cant calculate more than three.
+    // Capture format (macros allowed, see readme-en.txt)
+    "enemy": {
+      "primaryTitleFormat":   "<font size='15' color='#FFFFFF'>Enemy base capture! {{extra}}</font>", // Upper textfield
+      "secondaryTitleFormat": "<font size='15' color='#FFFFFF'>{{points}}</font>",                    // Lower textfield
+      "captureDoneFormat":    "<font size='17' color='#FFCC66'>Enemy base captured!</font>",          // Full capture text
+      "extra": "Capturers: <b><font color='#FFCC66'>{{tanks}}</font></b> Timeleft: <b><font color='#FFCC66'>{{time}}</font><b>", // Extra text available after necessary calculations
+      "shadow": {            // Fields shadow
+        "color": "0x000000", // Color
+        "alpha": 50,         // Alpha 0-100
+        "blur": 6,           // Blur 0-255
+        "strength": 3        // Strength 0-255
+      }
+    },
+    "ally": {
+      "primaryTitleFormat":   "<font size='15' color='#FFFFFF'>Ally base capture! {{extra}}</font>",
+      "secondaryTitleFormat": "<font size='15' color='#FFFFFF'>{{points}}</font>",
+      "captureDoneFormat":    "<font size='17' color='#FFCC66'>Ally base captured!</font>",
+      "extra": "Capturers: <b><font color='#FFCC66'>{{tanks}}</font></b> Timeleft: <b><font color='#FFCC66'>{{time}}</font><b>",
+      "shadow": {
+        "color": "0x000000",
+        "alpha": 50,
+        "blur": 15,
+        "strength": 3
+      }
+    }
+  },
+  // Minimap
+  "minimap": {
+    "enabled": true,  // On/off modification switch
+    "iconScale": 1,   // Minimap icon and attached text scaling factor
+    "nickShrink": 4,  // Nickname shrink value for {{short-nick}} macro
+    "textOffsetX": 0, // Attached text X offset relative to icon
+    "textOffsetY": 0, // Attached text Y offset relative to icon
+    "format": {       // Attached text format. Macroses {{level}}, {{vehicle}}, {{short-nick}}
+      "ally":  "{{level}}", // Ally
+      "enemy": "{{level}}", // Enemy
+      "squad": "{{level}} <i>{{short-nick}}</i>", // Squadmates
+      "oneself": "<b>{{level}}</b>" // For oneself and camera receiver in case of death
+    },
+    "css": { // Attached text style
+      "ally":    "font-family:$FieldFont; font-size:6px; color:#BBEEBB;", // Ally
+      "enemy":   "font-family:$FieldFont; font-size:6px; color:#EEBBBB;", // Enemy
+      "squad":   "font-family:$FieldFont; font-size:6px; color:#FFEE44;", // Squadmates
+      "oneself": "font-family:$FieldFont; font-size:6px; color:#EEEEEE;"  // For oneself and camera receiver in case of death
+    }
+  },
+  // OVER-TARGET MARKERS
+  "markers": {
+    // Ally
+    "ally": {
+      // Ally - alive
+      "alive": {
+        // Ally - alive - normal mode (without 'Alt')
+        "normal": {
+          "vehicleIcon": {                    // "Type of vehicle" icon (HT / MT / LT / TD / Arty)
+            "visible": true,                  //   false - Disable
+            "showSpeaker": false,             //   true - Show speaker even if visible=false
+            "x": 0,                           //   Position on the X axis
+            "y": -16,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity
+            "color": null,                    //   Color (currently not in use)
+            "maxScale": 100,                  //   Maximum scale (default is 100)
+            "scaleX": 0,                      //   Offset along the X axis (?)
+            "scaleY": 16,                     //   Offset along the Y axis (?)
+            "shadow": {                       //   Shadow options
+              "alpha": 100,                   //     Opacity
+              "color": "0x000000",            //     Color
+              "angle": 45,                    //     Offset angle
+              "distance": 0,                  //     Offset distance
+              "size": 6,                      //     Size
+              "strength": 200                 //     Intensity
+            }
+          },
+          "healthBar": {                      // Health indicator
+            "visible": true,                  //   false - Disable
+            "x": -41,                         //   Position on the X axis
+            "y": -33,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Primary color (dynamic colors allowed, see readme-en.txt)
+            "lcolor": null,                   //   Optional color (for the gradient)
+            "width": 80,                      //   Width of health bar
+            "height": 12,                     //   Height of health bar
+            "border": {                       //   Options for substrate and border
+              "alpha": 30,                    //     Opacity
+              "color": "0x000000",            //     Color
+              "size": 1                       //     Border size
+            },
+            "fill": {                         //   Options for remaining health
+              "alpha": 30                     //     Opacity
+            },                                //
+            "damage": {                       //   Options for animation of health loss
+              "alpha": 80,                    //     Opacity
+              "color": null,                  //     Color
+              "fade": 1                       //     Fade time in seconds
+            }
+          },
+          "damageText": {                     // Floating damage values
+            "visible": true,                  //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Color (dynamic colors allowed, see readme-en.txt)
+            "font": {                         //   Font options
+              "name": "$FieldFont",           //     Font name
+              "size": 18,                     //     Font size
+              "align": "center",              //     Text alignment (left, center, right)
+              "bold": false,                  //     Normal (false) or bold (true)
+              "italic": false                 //     Normal (false) or italic (true)
+            },
+            "shadow": {                       //   Shadow options
+              "alpha": 100,                   //     Opacity
+              "color": "0x000000",            //     Color
+              "angle": 45,                    //     Offset angle
+              "distance": 0,                  //     Offset distance
+              "size": 6,                      //     Size
+              "strength": 200                 //     Intensity
+            },
+            "speed": 2,                       //   Rising speed of displayed damage (float up speed)
+            "maxRange": 40,                   //   Maximimum distance of target for which damage rises
+            "damageMessage": "{{dmg}}",       //   Text for normal damage (see description of macros in the readme-en.txt)
+            "blowupMessage": "Blown-up!"      //   Text for ammo rack explosion (see description of macros in the readme-en.txt)
+          },
+          "contourIcon": {                    // Vehicle icon
+            "visible": false,                 //   false - Disable
+            "x": 6,                           //   Position on the X axis
+            "y": -65,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Color (dynamic colors allowed, see readme-en.txt)
+            "amount": 0                       //   Color intensity from 0 to 100. The default is 0 (off).
+          },
+          "clanIcon": {                       // Player/clan icon
+            "visible": false,                 //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "w": 16,                          //   Width
+            "h": 16,                          //   Height
+            "alpha": 100                      //   Opacity (dynamic transparency allowed, see readme-en.txt)
+          },
+          "levelIcon": {                      // Vehicle tier
+            "visible": false,                 //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -21,                         //   Position on the Y axis
+            "alpha": 100                      //   Opacity
+          },
+          "actionMarker": {                   // Markers "Help!" and "Attack!"
+            "visible": true,                  //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "alpha": 100                      //   Opacity
+          },
+          // Block of text fields
+          "textFields": [
+            // Text field with the name of the tank
+            {
+              "visible": true,                // false - Disable
+              "x": 0,                         // Position on the X axis
+              "y": -36,                       // Position on the Y axis
+              "alpha": 100,                   // Opacity (dynamic transparency allowed, see readme-en.txt)
+              "color": null,                  // Color (dynamic colors allowed, see readme-en.txt)
+              "font": {                       // Font options
+                "name": "$FieldFont",         //   Font name
+                "size": 13,                   //   Font size
+                "align": "center",            //   Text alignment (left, center, right)
+                "bold": false,                //   Normal (false) or bold (true)
+                "italic": false               //   Normal (false) or italic (true)
+              },
+              "shadow": {                     // Shadow options
+                "alpha": 100,                 //   Opacity
+                "color": "0x000000",          //   Color
+                "angle": 45,                  //   Offset angle
+                "distance": 0,                //     Offset distance
+                "size": 6,                    //     Size
+                "strength": 200               //     Intensity
+              },
+              "format": "{{vehicle}}{{turret}}" // Text format (see description of macros in the readme-en.txt)
+            },
+            // Text field with the remaining / maximum health
+            {
+              "visible": true,                // false - Disable
+              "x": 0,                         // Position on the X axis
+              "y": -20,                       // Position on the Y axis
+              "alpha": 100,                   // Opacity (dynamic transparency allowed, see readme-en.txt)
+              "color": "0xFCFCFC",            // Color (dynamic colors allowed, see readme-en.txt)
+              "font": {                       // Font options
+                "name": "$FieldFont",         //   Font name
+                "size": 11,                   //   Font size
+                "align": "center",            //   Text alignment (left, center, right)
+                "bold": true,                 //   Normal (false) or bold (true)
+                "italic": false               //   Normal (false) or italic (true)
+              },
+              "shadow": {                     // Shadow options
+                "alpha": 100,                 //   Opacity
+                "color": "0x000000",          //   Color
+                "angle": 45,                  //   Offset angle
+                "distance": 0,                //   Offset distance
+                "size": 4,                    //   Size
+                "strength": 100               //   Intensity
+              },
+              "format": "{{hp}} / {{hp-max}}" // Text format (see description of macros in the readme-en.txt)
+            }
+          ]
+        },
+        // Ally - alive - alternative mode (pressing 'Alt')
+        "extended": {
+          "vehicleIcon": {                    // "Type of vehicle" icon (HT / MT / LT / TD / Arty)
+            "visible": true,                  //   false - Disable
+            "showSpeaker": false,             //   true - Show speaker even if visible=false
+            "x": 0,                           //   Position on the X axis
+            "y": -16,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity
+            "color": null,                    //   Color (currently not in use)
+            "maxScale": 100,                  //   Maximum scale (default is 100)
+            "scaleX": 0,                      //   Offset along the X axis (?)
+            "scaleY": 16,                     //   Offset along the Y axis (?)
+            "shadow": {                       //   Shadow options
+              "alpha": 100,                   //     Opacity
+              "color": "0x000000",            //     Color
+              "angle": 45,                    //     Offset angle
+              "distance": 0,                  //     Offset distance
+              "size": 6,                      //     Size
+              "strength": 200                 //     Intensity
+            }
+          },
+          "healthBar": {                      // Health indicator
+            "visible": true,                  //   false - Disable
+            "x": -41,                         //   Position on the X axis
+            "y": -33,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Primary color (dynamic colors allowed, see readme-en.txt)
+            "lcolor": null,                   //   Optional color (for the gradient)
+            "width": 80,                      //   Width of health bar
+            "height": 12,                     //   Height of health bar
+            "border": {                       //   Options for substrate and border
+              "alpha": 30,                    //     Opacity
+              "color": "0x000000",            //     Color
+              "size": 1                       //     Border size
+            },
+            "fill": {                         //   Options for remaining health
+              "alpha": 30                     //     Opacity
+            },                                //
+            "damage": {                       //   Options for animation of health loss
+              "alpha": 80,                    //     Opacity
+              "color": null,                  //     Color
+              "fade": 1                       //     Fade time in seconds
+            }
+          },
+          "damageText": {                     // Floating damage values
+            "visible": true,                  //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Color (dynamic colors allowed, see readme-en.txt)
+            "font": {                         //   Font options
+              "name": "$FieldFont",           //     Font name
+              "size": 18,                     //     Font size
+              "align": "center",              //     Text alignment (left, center, right)
+              "bold": false,                  //     Normal (false) or bold (true)
+              "italic": false                 //     Normal (false) or italic (true)
+            },
+            "shadow": {                       //   Shadow options
+              "alpha": 100,                   //     Opacity
+              "color": "0x000000",            //     Color
+              "angle": 45,                    //     Offset angle
+              "distance": 0,                  //     Offset distance
+              "size": 6,                      //     Size
+              "strength": 200                 //     Intensity
+            },
+            "speed": 2,                       //   Rising speed of displayed damage (float up speed)
+            "maxRange": 40,                   //   Maximimum distance of target for which damage rises
+            "damageMessage": "{{dmg}}",       //   Text for normal damage (see description of macros in the readme-en.txt)
+            "blowupMessage": "Blown-up!"      //   Text for ammo rack explosion (see description of macros in the readme-en.txt)
+          },
+          "contourIcon": {                    // Vehicle icon
+            "visible": false,                 //   false - Disable
+            "x": 6,                           //   Position on the X axis
+            "y": -65,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Color (dynamic colors allowed, see readme-en.txt)
+            "amount": 0                       //   Color intensity from 0 to 100. The default is 0 (off).
+          },
+          "clanIcon": {                       // Player/clan icon
+            "visible": false,                 //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "w": 16,                          //   Width
+            "h": 16,                          //   Height
+            "alpha": 100                      //   Opacity (dynamic transparency allowed, see readme-en.txt)
+          },
+          "levelIcon": {                      // Vehicle tier
+            "visible": false,                 //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -21,                         //   Position on the Y axis
+            "alpha": 100                      //   Opacity
+          },
+          "actionMarker": {                   // Markers "Help!" and "Attack!"
+            "visible": true,                  //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "alpha": 100                      //   Opacity
+          },
+          // Block of text fields
+          "textFields": [
+            // Text field with the name of the player
+            {
+              "visible": true,                // false - Disable
+              "x": 0,                         // Position on the X axis
+              "y": -36,                       // Position on the Y axis
+              "alpha": 100,                   // Opacity (dynamic transparency allowed, see readme-en.txt)
+              "color": null,                  // Color (dynamic colors allowed, see readme-en.txt)
+              "font": {                       // Font options
+                "name": "$FieldFont",         //   Font name
+                "size": 13,                   //   Font size
+                "align": "center",            //   Text alignment (left, center, right)
+                "bold": false,                //   Normal (false) or bold (true)
+                "italic": false               //   Normal (false) or italic (true)
+              },
+              "shadow": {                     // Shadow options
+                "alpha": 100,                 //   Opacity
+                "color": "0x000000",          //   Color
+                "angle": 45,                  //   Offset angle
+                "distance": 0,                //   Offset distance
+                "size": 6,                    //   Size
+                "strength": 200               //   Intensity
+              },
+              "format": "{{nick}}"            // Text format (see description of macros in the readme-en.txt)
+            },
+            // Text field with the percentage of remaining health
+            {
+              "visible": true,                // false - Disable
+              "x": 0,                         // Position on the X axis
+              "y": -20,                       // Position on the Y axis
+              "alpha": 100,                   // Opacity (dynamic transparency allowed, see readme-en.txt)
+              "color": "0xFCFCFC",            // Color (dynamic colors allowed, see readme-en.txt)
+              "font": {                       // Font options
+                "name": "$FieldFont",         //   Font name
+                "size": 11,                   //   Font size
+                "align": "center",            //   Text alignment (left, center, right)
+                "bold": true,                 //   Normal (false) or bold (true)
+                "italic": false               //   Normal (false) or italic (true)
+              },
+              "shadow": {                     // Shadow options
+                "alpha": 100,                 //   Opacity
+                "color": "0x000000",          //   Color
+                "angle": 45,                  //   Offset angle
+                "distance": 0,                //   Offset distance
+                "size": 4,                    //   Size
+                "strength": 100               //   Intensity
+              },
+              // Percent symbol - \u0025
+              "format": "{{hp-ratio}}\u0025"  // Text format (see description of macros in the readme-en.txt)
+            },
+            // Text field with win ratio
+            {
+              "name": "Global Win Rate",
+              "visible": true,
+              "x": 0,
+              "y": -46,
+              "alpha": 100,
+              "color": "{{c:rating}}",
+              "font": {
+                "name": "$FieldFont",
+                "size": 11,
+                "align": "center",
+                "bold": true,
+                "italic": false
+              },
+              "shadow": {
+                "alpha": 100,
+                "color": "0x000000",
+                "angle": 45,
+                "distance": 0,
+                "size": 6,
+                "strength": 200
+              },
+              "format": "{{rating}}"
+            }
+          ]
+        }
+      },
+      // Ally - dead
+      "dead": {
+        // Ally - dead - normal mode (without 'Alt')
+        "normal": {
+          "vehicleIcon": {                    // "Type of vehicle" icon (HT / MT / LT / TD / Arty)
+            "visible": true,                  //   false - Disable
+            "showSpeaker": false,             //   true - Show speaker even if visible=false
+            "x": 0,                           //   Position on the X axis
+            "y": -16,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity
+            "color": null,                    //   Color (currently not in use)
+            "maxScale": 100,                  //   Maximum scale (default is 100)
+            "scaleX": 0,                      //   Offset along the X axis (?)
+            "scaleY": 16,                     //   Offset along the Y axis (?)
+            "shadow": {                       //   Shadow options
+              "alpha": 100,                   //     Opacity
+              "color": "0x000000",            //     Color
+              "angle": 45,                    //     Offset angle
+              "distance": 0,                  //     Offset distance
+              "size": 6,                      //     Size
+              "strength": 200                 //     Intensity
+            }
+          },
+          "healthBar": {                      // Health indicator
+            "visible": false,                 //   false - Disable
+            "x": -41,                         //   Position on the X axis
+            "y": -33,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Primary color (dynamic colors allowed, see readme-en.txt)
+            "lcolor": null,                   //   Optional color (for the gradient)
+            "width": 80,                      //   Width of health bar
+            "height": 12,                     //   Height of health bar
+            "border": {                       //   Options for substrate and border
+              "alpha": 30,                    //     Opacity
+              "color": "0x000000",            //     Color
+              "size": 1                       //     Border size
+            },
+            "fill": {                         //   Options for remaining health
+              "alpha": 30                     //     Opacity
+            },                                //
+            "damage": {                       //   Options for animation of health loss
+              "alpha": 80,                    //     Opacity
+              "color": null,                  //     Color
+              "fade": 1                       //     Fade time in seconds
+            }
+          },
+          "damageText": {                     // Floating damage values
+            "visible": true,                  //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Color (dynamic colors allowed, see readme-en.txt)
+            "font": {                         //   Font options
+              "name": "$FieldFont",           //     Font name
+              "size": 18,                     //     Font size
+              "align": "center",              //     Text alignment (left, center, right)
+              "bold": false,                  //     Normal (false) or bold (true)
+              "italic": false                 //     Normal (false) or italic (true)
+            },
+            "shadow": {                       //   Shadow options
+              "alpha": 100,                   //     Opacity
+              "color": "0x000000",            //     Color
+              "angle": 45,                    //     Offset angle
+              "distance": 0,                  //     Offset distance
+              "size": 6,                      //     Size
+              "strength": 200                 //     Intensity
+            },
+            "speed": 2,                       //   Rising speed of displayed damage (float up speed)
+            "maxRange": 40,                   //   Maximimum distance of target for which damage rises
+            "damageMessage": "{{dmg}}",       //   Text for normal damage (see description of macros in the readme-en.txt)
+            "blowupMessage": "Blown-up!"      //   Text for ammo rack explosion (see description of macros in the readme-en.txt)
+          },
+          "contourIcon": {                    // Vehicle icon
+            "visible": false,                 //   false - Disable
+            "x": 6,                           //   Position on the X axis
+            "y": -65,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Color (dynamic colors allowed, see readme-en.txt)
+            "amount": 0                       //   Color intensity from 0 to 100. The default is 0 (off).
+          },
+          "clanIcon": {                       // Player/clan icon
+            "visible": false,                 //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "w": 16,                          //   Width
+            "h": 16,                          //   Height
+            "alpha": 100                      //   Opacity (dynamic transparency allowed, see readme-en.txt)
+          },
+          "levelIcon": {                      // Vehicle tier
+            "visible": false,                 //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -21,                         //   Position on the Y axis
+            "alpha": 100                      //   Opacity
+          },
+          "actionMarker": {                   // Markers "Help!" and "Attack!"
+            "visible": true,                  //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "alpha": 100                      //   Opacity
+          },
+          // Block of text fields
+          "textFields": [  ]                  // Disable text in this mode
+        },
+        // Ally - dead - alternative mode (pressing 'Alt')
+        "extended": {
+          "vehicleIcon": {                    // "Type of vehicle" icon (HT / MT / LT / TD / Arty)
+            "visible": true,                  //   false - Disable
+            "showSpeaker": false,             //   true - Show speaker even if visible=false
+            "x": 0,                           //   Position on the X axis
+            "y": -16,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity
+            "color": null,                    //   Color (currently not in use)
+            "maxScale": 100,                  //   Maximum scale (default is 100)
+            "scaleX": 0,                      //   Offset along the X axis (?)
+            "scaleY": 16,                     //   Offset along the Y axis (?)
+            "shadow": {                       //   Shadow options
+              "alpha": 100,                   //     Opacity
+              "color": "0x000000",            //     Color
+              "angle": 45,                    //     Offset angle
+              "distance": 0,                  //     Offset distance
+              "size": 6,                      //     Size
+              "strength": 200                 //     Intensity
+            }
+          },
+          "healthBar": {                      // Health indicator
+            "visible": false,                 //   false - Disable
+            "x": -41,                         //   Position on the X axis
+            "y": -33,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Primary color (dynamic colors allowed, see readme-en.txt)
+            "lcolor": null,                   //   Optional color (for the gradient)
+            "width": 80,                      //   Width of health bar
+            "height": 12,                     //   Height of health bar
+            "border": {                       //   Options for substrate and border
+              "alpha": 30,                    //     Opacity
+              "color": "0x000000",            //     Color
+              "size": 1                       //     Border size
+            },
+            "fill": {                         //   Options for remaining health
+              "alpha": 30                     //     Opacity
+            },                                //
+            "damage": {                       //   Options for animation of health loss
+              "alpha": 80,                    //     Opacity
+              "color": null,                  //     Color
+              "fade": 1                       //     Fade time in seconds
+            }
+          },
+          "damageText": {                     // Floating damage values
+            "visible": true,                  //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Color (dynamic colors allowed, see readme-en.txt)
+            "font": {                         //   Font options
+              "name": "$FieldFont",           //     Font name
+              "size": 18,                     //     Font size
+              "align": "center",              //     Text alignment (left, center, right)
+              "bold": false,                  //     Normal (false) or bold (true)
+              "italic": false                 //     Normal (false) or italic (true)
+            },
+            "shadow": {                       //   Shadow options
+              "alpha": 100,                   //     Opacity
+              "color": "0x000000",            //     Color
+              "angle": 45,                    //     Offset angle
+              "distance": 0,                  //     Offset distance
+              "size": 6,                      //     Size
+              "strength": 200                 //     Intensity
+            },
+            "speed": 2,                       //   Rising speed of displayed damage (float up speed)
+            "maxRange": 40,                   //   Maximimum distance of target for which damage rises
+            "damageMessage": "{{dmg}}",       //   Text for normal damage (see description of macros in the readme-en.txt)
+            "blowupMessage": "Blown-up!"      //   Text for ammo rack explosion (see description of macros in the readme-en.txt)
+          },
+          "contourIcon": {                    // Vehicle icon
+            "visible": false,                 //   false - Disable
+            "x": 6,                           //   Position on the X axis
+            "y": -65,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Color (dynamic colors allowed, see readme-en.txt)
+            "amount": 0                       //   Color intensity from 0 to 100. The default is 0 (off).
+          },
+          "clanIcon": {                       // Player/clan icon
+            "visible": false,                 //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "w": 16,                          //   Width
+            "h": 16,                          //   Height
+            "alpha": 100                      //   Opacity (dynamic transparency allowed, see readme-en.txt)
+          },
+          "levelIcon": {                      // Vehicle tier
+            "visible": false,                 //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -21,                         //   Position on the Y axis
+            "alpha": 100                      //   Opacity
+          },
+          "actionMarker": {                   // Markers "Help!" and "Attack!"
+            "visible": true,                  //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "alpha": 100                      //   Opacity
+          },
+          // Block of text fields
+          "textFields": [
+            // Text field with the name of the player
+            {
+              "visible": true,                // false - Disable
+              "x": 0,                         // Position on the X axis
+              "y": -34,                       // Position on the Y axis
+              "alpha": 80,                    // Opacity (dynamic transparency allowed, see readme-en.txt)
+              "color": null,                  // Color (dynamic colors allowed, see readme-en.txt)
+              "font": {                       // Font options
+                "name": "$FieldFont",         //   Font name
+                "size": 13,                   //   Font size
+                "align": "center",            //   Text alignment (left, center, right)
+                "bold": false,                //   Normal (false) or bold (true)
+                "italic": false               //   Normal (false) or italic (true)
+              },
+              "shadow": {                     //   Shadow options
+                "alpha": 100,                 //     Opacity
+                "color": "0x000000",          //     Color
+                "angle": 45,                  //     Offset angle
+                "distance": 0,                //     Offset distance
+                "size": 6,                    //     Size
+                "strength": 200               //     Intensity
+              },
+              "format": "{{nick}}"            // Text format (see description of macros in the readme-en.txt)
+            },
+            // Text field with the name of the tank
+            {
+              "visible": true,                // false - Disable
+              "x": 0,                         // Position on the X axis
+              "y": -20,                       // Position on the Y axis
+              "alpha": 80,                    // Opacity (dynamic transparency allowed, see readme-en.txt)
+              "color": null,                  // Color (dynamic colors allowed, see readme-en.txt)
+              "font": {                       // Font options
+                "name": "$FieldFont",         //   Font name
+                "size": 13,                   //   Font size
+                "align": "center",            //   Text alignment (left, center, right)
+                "bold": false,                //   Normal (false) or bold (true)
+                "italic": false               //   Normal (false) or italic (true)
+              },
+              "shadow": {                     //   Shadow options
+                "alpha": 100,                 //     Opacity
+                "color": "0x000000",          //     Color
+                "angle": 45,                  //     Offset angle
+                "distance": 0,                //     Offset distance
+                "size": 6,                    //     Size
+                "strength": 200               //     Intensity
+              },
+              "format": "{{vehicle}}"         // Text format (see description of macros in the readme-en.txt)
+            }
+          ]
+        }
+      }
+    },
+    // Enemy
+    "enemy": {
+      // Enemy - alive
+      "alive": {
+        // Enemy - alive - normal mode (without 'Alt')
+        "normal": {
+          "vehicleIcon": {                    // "Type of vehicle" icon (HT / MT / LT / TD / Arty)
+            "visible": true,                  //   false - Disable
+            "showSpeaker": false,             //   true - Show speaker even if visible=false
+            "x": 0,                           //   Position on the X axis
+            "y": -16,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity
+            "color": null,                    //   Color (currently not in use)
+            "maxScale": 100,                  //   Maximum scale (default is 100)
+            "scaleX": 0,                      //   Offset along the X axis (?)
+            "scaleY": 16,                     //   Offset along the Y axis (?)
+            "shadow": {                       //   Shadow options
+              "alpha": 100,                   //     Opacity
+              "color": "0x000000",            //     Color
+              "angle": 45,                    //     Offset angle
+              "distance": 0,                  //     Offset distance
+              "size": 6,                      //     Size
+              "strength": 200                 //     Intensity
+            }
+          },
+          "healthBar": {                      // Health indicator
+            "visible": true,                  //   false - Disable
+            "x": -41,                         //   Position on the X axis
+            "y": -33,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Primary color (dynamic colors allowed, see readme-en.txt)
+            "lcolor": null,                   //   Optional color (for the gradient)
+            "width": 80,                      //   Width of health bar
+            "height": 12,                     //   Height of health bar
+            "border": {                       //   Options for substrate and border
+              "alpha": 30,                    //     Opacity
+              "color": "0x000000",            //     Color
+              "size": 1                       //     Border size
+            },
+            "fill": {                         //   Options for remaining health
+              "alpha": 30                     //     Opacity
+            },                                //
+            "damage": {                       //   Options for animation of health loss
+              "alpha": 80,                    //     Opacity
+              "color": null,                  //     Color
+              "fade": 1                       //     Fade time in seconds
+            }
+          },
+          "damageText": {                     // Floating damage values
+            "visible": true,                  //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Color (dynamic colors allowed, see readme-en.txt)
+            "font": {                         //   Font options
+              "name": "$FieldFont",           //     Font name
+              "size": 18,                     //     Font size
+              "align": "center",              //     Text alignment (left, center, right)
+              "bold": false,                  //     Normal (false) or bold (true)
+              "italic": false                 //     Normal (false) or italic (true)
+            },
+            "shadow": {                       //   Shadow options
+              "alpha": 100,                   //     Opacity
+              "color": "0x000000",            //     Color
+              "angle": 45,                    //     Offset angle
+              "distance": 0,                  //     Offset distance
+              "size": 6,                      //     Size
+              "strength": 200                 //     Intensity
+            },
+            "speed": 2,                       //   Rising speed of displayed damage (float up speed)
+            "maxRange": 40,                   //   Maximimum distance of target for which damage rises
+            "damageMessage": "{{dmg}}",       //   Text for normal damage (see description of macros in the readme-en.txt)
+            "blowupMessage": "Blown-up!"      //   Text for ammo rack explosion (see description of macros in the readme-en.txt)
+          },
+          "contourIcon": {                    // Vehicle icon
+            "visible": false,                 //   false - Disable
+            "x": 6,                           //   Position on the X axis
+            "y": -65,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Color (dynamic colors allowed, see readme-en.txt)
+            "amount": 0                       //   Color intensity from 0 to 100. The default is 0 (off).
+          },
+          "clanIcon": {                       // Player/clan icon
+            "visible": false,                 //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "w": 16,                          //   Width
+            "h": 16,                          //   Height
+            "alpha": 100                      //   Opacity (dynamic transparency allowed, see readme-en.txt)
+          },
+          "levelIcon": {                      // Vehicle tier
+            "visible": false,                 //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -21,                         //   Position on the Y axis
+            "alpha": 100                      //   Opacity
+          },
+          "actionMarker": {                   // Markers "Help!" and "Attack!"
+            "visible": true,                  //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "alpha": 100                      //   Opacity
+          },
+          // Block of text fields
+          "textFields": [
+            // Text field with the name of the tank
+            {
+              "visible": true,                // false - Disable
+              "x": 0,                         // Position on the X axis
+              "y": -36,                       // Position on the Y axis
+              "alpha": 100,                   // Opacity (dynamic transparency allowed, see readme-en.txt)
+              "color": null,                  // Color (dynamic colors allowed, see readme-en.txt)
+              "font": {                       // Font options
+                "name": "$FieldFont",         //   Font name
+                "size": 13,                   //   Font size
+                "align": "center",            //   Text alignment (left, center, right)
+                "bold": false,                //   Normal (false) or bold (true)
+                "italic": false               //   Normal (false) or italic (true)
+              },
+              "shadow": {                     //   Shadow options
+                "alpha": 100,                 //     Opacity
+                "color": "0x000000",          //     Color
+                "angle": 45,                  //     Offset angle
+                "distance": 0,                //     Offset distance
+                "size": 6,                    //     Size
+                "strength": 200               //     Intensity
+              },
+              "format": "{{vehicle}}{{turret}}" // Text format (see description of macros in the readme-en.txt)
+            },
+            // Text field with the remaining / maximum health
+            {
+              "visible": true,                // false - Disable
+              "x": 0,                         // Position on the X axis
+              "y": -20,                       // Position on the Y axis
+              "alpha": 100,                   // Opacity (dynamic transparency allowed, see readme-en.txt)
+              "color": "0xFCFCFC",            // Color (dynamic colors allowed, see readme-en.txt)
+              "font": {                       // Font options
+                "name": "$FieldFont",         //   Font name
+                "size": 11,                   //   Font size
+                "align": "center",            //   Text alignment (left, center, right)
+                "bold": true,                 //   Normal (false) or bold (true)
+                "italic": false               //   Normal (false) or italic (true)
+              },
+              "shadow": {                     //   Shadow options
+                "alpha": 100,                 //     Opacity
+                "color": "0x000000",          //     Color
+                "angle": 45,                  //     Offset angle
+                "distance": 0,                //     Offset distance
+                "size": 4,                    //     Size
+                "strength": 100               //     Intensity
+              },
+              "format": "{{hp}} / {{hp-max}}" // Text format (see description of macros in the readme-en.txt)
+            }
+          ]
+        },
+        // Enemy - alive - alternative mode (pressing 'Alt')
+        "extended": {
+          "vehicleIcon": {                    // "Type of vehicle" icon (HT / MT / LT / TD / Arty)
+            "visible": true,                  //   false - Disable
+            "showSpeaker": false,             //   true - Show speaker even if visible=false
+            "x": 0,                           //   Position on the X axis
+            "y": -16,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity
+            "color": null,                    //   Color (currently not in use)
+            "maxScale": 100,                  //   Maximum scale (default is 100)
+            "scaleX": 0,                      //   Offset along the X axis (?)
+            "scaleY": 16,                     //   Offset along the Y axis (?)
+            "shadow": {                       //   Shadow options
+              "alpha": 100,                   //     Opacity
+              "color": "0x000000",            //     Color
+              "angle": 45,                    //     Offset angle
+              "distance": 0,                  //     Offset distance
+              "size": 6,                      //     Size
+              "strength": 200                 //     Intensity
+            }
+          },
+          "healthBar": {                      // Health indicator
+            "visible": true,                  //   false - Disable
+            "x": -41,                         //   Position on the X axis
+            "y": -33,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Primary color (dynamic colors allowed, see readme-en.txt)
+            "lcolor": null,                   //   Optional color (for the gradient)
+            "width": 80,                      //   Width of health bar
+            "height": 12,                     //   Height of health bar
+            "border": {                       //   Options for substrate and border
+              "alpha": 30,                    //     Opacity
+              "color": "0x000000",            //     Color
+              "size": 1                       //     Border size
+            },
+            "fill": {                         //   Options for remaining health
+              "alpha": 30                     //     Opacity
+            },                                //
+            "damage": {                       //   Options for animation of health loss
+              "alpha": 80,                    //     Opacity
+              "color": null,                  //     Color
+              "fade": 1                       //     Fade time in seconds
+            }
+          },
+          "damageText": {                     // Floating damage values
+            "visible": true,                  //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Color (dynamic colors allowed, see readme-en.txt)
+            "font": {                         //   Font options
+              "name": "$FieldFont",           //     Font name
+              "size": 18,                     //     Font size
+              "align": "center",              //     Text alignment (left, center, right)
+              "bold": false,                  //     Normal (false) or bold (true)
+              "italic": false                 //     Normal (false) or italic (true)
+            },
+            "shadow": {                       //   Shadow options
+              "alpha": 100,                   //     Opacity
+              "color": "0x000000",            //     Color
+              "angle": 45,                    //     Offset angle
+              "distance": 0,                  //     Offset distance
+              "size": 6,                      //     Size
+              "strength": 200                 //     Intensity
+            },
+            "speed": 2,                       //   Rising speed of displayed damage (float up speed)
+            "maxRange": 40,                   //   Maximimum distance of target for which damage rises
+            "damageMessage": "{{dmg}}",       //   Text for normal damage (see description of macros in the readme-en.txt)
+            "blowupMessage": "Blown-up!"      //   Text for ammo rack explosion (see description of macros in the readme-en.txt)
+          },
+          "contourIcon": {                    // Vehicle icon
+            "visible": false,                 //   false - Disable
+            "x": 6,                           //   Position on the X axis
+            "y": -65,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Color (dynamic colors allowed, see readme-en.txt)
+            "amount": 0                       //   Color intensity from 0 to 100. The default is 0 (off).
+          },
+          "clanIcon": {                       // Player/clan icon
+            "visible": false,                 //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "w": 16,                          //   Width
+            "h": 16,                          //   Height
+            "alpha": 100                      //   Opacity (dynamic transparency allowed, see readme-en.txt)
+          },
+          "levelIcon": {                      // Vehicle tier
+            "visible": false,                 //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -21,                         //   Position on the Y axis
+            "alpha": 100                      //   Opacity
+          },
+          "actionMarker": {                   // Markers "Help!" and "Attack!"
+            "visible": true,                  //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "alpha": 100                      //   Opacity
+          },
+          // Block of text fields
+          "textFields": [
+            // Text field with the name of the player
+            {
+              "visible": true,                // false - Disable
+              "x": 0,                         // Position on the X axis
+              "y": -36,                       // Position on the Y axis
+              "alpha": 100,                   // Opacity (dynamic transparency allowed, see readme-en.txt)
+              "color": null,                  // Color (dynamic colors allowed, see readme-en.txt)
+              "font": {                       // Font options
+                "name": "$FieldFont",         //   Font name
+                "size": 13,                   //   Font size
+                "align": "center",            //   Text alignment (left, center, right)
+                "bold": false,                //   Normal (false) or bold (true)
+                "italic": false               //   Normal (false) or italic (true)
+              },
+              "shadow": {                     //   Shadow options
+                "alpha": 100,                 //     Opacity
+                "color": "0x000000",          //     Color
+                "angle": 45,                  //     Offset angle
+                "distance": 0,                //     Offset distance
+                "size": 6,                    //     Size
+                "strength": 200               //     Intensity
+              },
+              "format": "{{nick}}"            // Text format (see description of macros in the readme-en.txt)
+            },
+            // Text field with the percentage of remaining health
+            {
+              "visible": true,                // false - Disable
+              "x": 0,                         // Position on the X axis
+              "y": -20,                       // Position on the Y axis
+              "alpha": 100,                   // Opacity (dynamic transparency allowed, see readme-en.txt)
+              "color": "0xFCFCFC",            // Color (dynamic colors allowed, see readme-en.txt)
+              "font": {                       // Font options
+                "name": "$FieldFont",         //   Font name
+                "size": 11,                   //   Font size
+                "align": "center",            //   Text alignment (left, center, right)
+                "bold": true,                 //   Normal (false) or bold (true)
+                "italic": false               //   Normal (false) or italic (true)
+              },
+              "shadow": {                     //   Shadow options
+                "alpha": 100,                 //     Opacity
+                "color": "0x000000",          //     Color
+                "angle": 45,                  //     Offset angle
+                "distance": 0,                //     Offset distance
+                "size": 4,                    //     Size
+                "strength": 100               //     Intensity
+              },
+              // Percent symbol - \u0025
+              "format": "{{hp-ratio}}\u0025"  // Text format (see description of macros in the readme-en.txt)
+            },
+            // Text field with win ratio
+            {
+              "name": "Global Win Rate",
+              "visible": true,
+              "x": 0,
+              "y": -46,
+              "alpha": 100,
+              "color": "{{c:rating}}",
+              "font": {
+                "name": "$FieldFont",
+                "size": 11,
+                "align": "center",
+                "bold": true,
+                "italic": false
+              },
+              "shadow": {
+                "alpha": 100,
+                "color": "0x000000",
+                "angle": 45,
+                "distance": 0,
+                "size": 6,
+                "strength": 200
+              },
+              "format": "{{rating}}"
+            }
+          ]
+        }
+      },
+      // Enemy - dead
+      "dead": {
+        // Enemy - dead - normal mode (without 'Alt')
+        "normal": {
+          "vehicleIcon": {                    // "Type of vehicle" icon (HT / MT / LT / TD / Arty)
+            "visible": true,                  //   false - Disable
+            "showSpeaker": false,             //   true - Show speaker even if visible=false
+            "x": 0,                           //   Position on the X axis
+            "y": -16,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity
+            "color": null,                    //   Color (currently not in use)
+            "maxScale": 100,                  //   Maximum scale (default is 100)
+            "scaleX": 0,                      //   Offset along the X axis (?)
+            "scaleY": 16,                     //   Offset along the Y axis (?)
+            "shadow": {                       //   Shadow options
+              "alpha": 100,                   //     Opacity
+              "color": "0x000000",            //     Color
+              "angle": 45,                    //     Offset angle
+              "distance": 0,                  //     Offset distance
+              "size": 6,                      //     Size
+              "strength": 200                 //     Intensity
+            }
+          },
+          "healthBar": {                      // Health indicator
+            "visible": false,                 //   false - Disable
+            "x": -41,                         //   Position on the X axis
+            "y": -33,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Primary color (dynamic colors allowed, see readme-en.txt)
+            "lcolor": null,                   //   Optional color (for the gradient)
+            "width": 80,                      //   Width of health bar
+            "height": 12,                     //   Height of health bar
+            "border": {                       //   Options for substrate and border
+              "alpha": 30,                    //     Opacity
+              "color": "0x000000",            //     Color
+              "size": 1                       //     Border size
+            },
+            "fill": {                         //   Options for remaining health
+              "alpha": 30                     //     Opacity
+            },                                //
+            "damage": {                       //   Options for animation of health loss
+              "alpha": 80,                    //     Opacity
+              "color": null,                  //     Color
+              "fade": 1                       //     Fade time in seconds
+            }
+          },
+          "damageText": {                     // Floating damage values
+            "visible": true,                  //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Color (dynamic colors allowed, see readme-en.txt)
+            "font": {                         //   Font options
+              "name": "$FieldFont",           //     Font name
+              "size": 18,                     //     Font size
+              "align": "center",              //     Text alignment (left, center, right)
+              "bold": false,                  //     Normal (false) or bold (true)
+              "italic": false                 //     Normal (false) or italic (true)
+            },
+            "shadow": {                       //   Shadow options
+              "alpha": 100,                   //     Opacity
+              "color": "0x000000",            //     Color
+              "angle": 45,                    //     Offset angle
+              "distance": 0,                  //     Offset distance
+              "size": 6,                      //     Size
+              "strength": 200                 //     Intensity
+            },
+            "speed": 2,                       //   Rising speed of displayed damage (float up speed)
+            "maxRange": 40,                   //   Maximimum distance of target for which damage rises
+            "damageMessage": "{{dmg}}",       //   Text for normal damage (see description of macros in the readme-en.txt)
+            "blowupMessage": "Blown-up!"      //   Text for ammo rack explosion (see description of macros in the readme-en.txt)
+          },
+          "contourIcon": {                    // Vehicle icon
+            "visible": false,                 //   false - Disable
+            "x": 6,                           //   Position on the X axis
+            "y": -65,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Color (dynamic colors allowed, see readme-en.txt)
+            "amount": 0                       //   Color intensity from 0 to 100. The default is 0 (off).
+          },
+          "clanIcon": {                       // Player/clan icon
+            "visible": false,                 //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "w": 16,                          //   Width
+            "h": 16,                          //   Height
+            "alpha": 100                      //   Opacity (dynamic transparency allowed, see readme-en.txt)
+          },
+          "levelIcon": {                      // Vehicle tier
+            "visible": false,                 //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -21,                         //   Position on the Y axis
+            "alpha": 100                      //   Opacity
+          },
+          "actionMarker": {                   // Markers "Help!" and "Attack!"
+            "visible": true,                  //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "alpha": 100                      //   Opacity
+          },
+          // Block of text fields
+          "textFields": [  ]                  // Disable text in this mode
+        },
+        // Enemy - dead - alternative mode (pressing 'Alt')
+        "extended": {
+          "vehicleIcon": {                    // "Type of vehicle" icon (HT / MT / LT / TD / Arty)
+            "visible": true,                  //   false - Disable
+            "showSpeaker": false,             //   true - Show speaker even if visible=false
+            "x": 0,                           //   Position on the X axis
+            "y": -16,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity
+            "color": null,                    //   Color (currently not in use)
+            "maxScale": 100,                  //   Maximum scale (default is 100)
+            "scaleX": 0,                      //   Offset along the X axis (?)
+            "scaleY": 16,                     //   Offset along the Y axis (?)
+            "shadow": {                       //   Shadow options
+              "alpha": 100,                   //     Opacity
+              "color": "0x000000",            //     Color
+              "angle": 45,                    //     Offset angle
+              "distance": 0,                  //     Offset distance
+              "size": 6,                      //     Size
+              "strength": 200                 //     Intensity
+            }
+          },
+          "healthBar": {                      // Health indicator
+            "visible": false,                 //   false - Disable
+            "x": -41,                         //   Position on the X axis
+            "y": -33,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Primary color (dynamic colors allowed, see readme-en.txt)
+            "lcolor": null,                   //   Optional color (for the gradient)
+            "width": 80,                      //   Width of health bar
+            "height": 12,                     //   Height of health bar
+            "border": {                       //   Options for substrate and border
+              "alpha": 30,                    //     Opacity
+              "color": "0x000000",            //     Color
+              "size": 1                       //     Border size
+            },
+            "fill": {                         //   Options for remaining health
+              "alpha": 30                     //     Opacity
+            },                                //
+            "damage": {                       //   Options for animation of health loss
+              "alpha": 80,                    //     Opacity
+              "color": null,                  //     Color
+              "fade": 1                       //     Fade time in seconds
+            }
+          },
+          "damageText": {                     // Floating damage values
+            "visible": true,                  //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Color (dynamic colors allowed, see readme-en.txt)
+            "font": {                         //   Font options
+              "name": "$FieldFont",           //     Font name
+              "size": 18,                     //     Font size
+              "align": "center",              //     Text alignment (left, center, right)
+              "bold": false,                  //     Normal (false) or bold (true)
+              "italic": false                 //     Normal (false) or italic (true)
+            },
+            "shadow": {                       //   Shadow options
+              "alpha": 100,                   //     Opacity
+              "color": "0x000000",            //     Color
+              "angle": 45,                    //     Offset angle
+              "distance": 0,                  //     Offset distance
+              "size": 6,                      //     Size
+              "strength": 200                 //     Intensity
+            },
+            "speed": 2,                       //   Rising speed of displayed damage (float up speed)
+            "maxRange": 40,                   //   Maximimum distance of target for which damage rises
+            "damageMessage": "{{dmg}}",       //   Text for normal damage (see description of macros in the readme-en.txt)
+            "blowupMessage": "Blown-up!"      //   Text for ammo rack explosion (see description of macros in the readme-en.txt)
+          },
+          "contourIcon": {                    // Vehicle icon
+            "visible": false,                 //   false - Disable
+            "x": 6,                           //   Position on the X axis
+            "y": -65,                         //   Position on the Y axis
+            "alpha": 100,                     //   Opacity (dynamic transparency allowed, see readme-en.txt)
+            "color": null,                    //   Color (dynamic colors allowed, see readme-en.txt)
+            "amount": 0                       //   Color intensity from 0 to 100. The default is 0 (off).
+          },
+          "clanIcon": {                       // Player/clan icon
+            "visible": false,                 //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "w": 16,                          //   Width
+            "h": 16,                          //   Height
+            "alpha": 100                      //   Opacity (dynamic transparency allowed, see readme-en.txt)
+          },
+          "levelIcon": {                      // Vehicle tier
+            "visible": false,                 //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -21,                         //   Position on the Y axis
+            "alpha": 100                      //   Opacity
+          },
+          "actionMarker": {                   // Markers "Help!" and "Attack!"
+            "visible": true,                  //   false - Disable
+            "x": 0,                           //   Position on the X axis
+            "y": -67,                         //   Position on the Y axis
+            "alpha": 100                      //   Opacity
+          },
+          // Block of text fields
+          "textFields": [
+            // Text field with the name of the player
+            {
+              "visible": true,                // false - Disable
+              "x": 0,                         // Position on the X axis
+              "y": -34,                       // Position on the Y axis
+              "alpha": 80,                    // Opacity (dynamic transparency allowed, see readme-en.txt)
+              "color": null,                  // Color (dynamic colors allowed, see readme-en.txt)
+              "font": {                       // Font options
+                "name": "$FieldFont",         //   Font name
+                "size": 13,                   //   Font size
+                "align": "center",            //   Text alignment (left, center, right)
+                "bold": false,                //   Normal (false) or bold (true)
+                "italic": false               //   Normal (false) or italic (true)
+              },
+              "shadow": {                     //   Shadow options
+                "alpha": 100,                 //     Opacity
+                "color": "0x000000",          //     Color
+                "angle": 45,                  //     Offset angle
+                "distance": 0,                //     Offset distance
+                "size": 6,                    //     Size
+                "strength": 200               //     Intensity
+              },
+              "format": "{{nick}}"            // Text format (see description of macros in the readme-en.txt)
+            },
+            // Text field with the name of the tank
+            {
+              "visible": true,                // false - Disable
+              "x": 0,                         // Position on the X axis
+              "y": -20,                       // Position on the Y axis
+              "alpha": 80,                    // Opacity (dynamic transparency allowed, see readme-en.txt)
+              "color": null,                  // Color (dynamic colors allowed, see readme-en.txt)
+              "font": {                       // Font options
+                "name": "$FieldFont",         //   Font name
+                "size": 13,                   //   Font size
+                "align": "center",            //   Text alignment (left, center, right)
+                "bold": false,                //   Normal (false) or bold (true)
+                "italic": false               //   Normal (false) or italic (true)
+              },
+              "shadow": {                     //   Shadow options
+                "alpha": 100,                 //     Opacity
+                "color": "0x000000",          //     Color
+                "angle": 45,                  //     Offset angle
+                "distance": 0,                //     Offset distance
+                "size": 6,                    //     Size
+                "strength": 200               //     Intensity
+              },
+              "format": "{{vehicle}}"         // Text format (see description of macros in the readme-en.txt)
+            }
+          ]
+        }
+      }
+    }
+  },
+  // COLOR SETTINGS
+  "colors": {
+    // System colors
+    "system": {
+      "ally_alive_normal": "0x96FF00",             // Ally - alive
+      "ally_alive_blind": "0x96FF00",              // Ally - alive - color blind mode
+      "ally_dead_normal": "0x009900",              // Ally - dead
+      "ally_dead_blind": "0x009900",               // Ally - dead - color blind mode
+      "ally_blowedup_normal": "0x007700",          // Ally - blown-up
+      "ally_blowedup_blind": "0x007700",           // Ally - blown-up - color blind mode
+      "squadman_alive_normal": "0xFFB964",         // Platoon member - alive
+      "squadman_alive_blind": "0xFFFF00",          // Platoon member - alive - color blind mode
+      "squadman_dead_normal": "0xCA7000",          // Platoon member - dead
+      "squadman_dead_blind": "0xAAAA00",           // Platoon member - dead - color blind mode
+      "squadman_blowedup_normal": "0xA45A00",      // Platoon member - blown-up
+      "squadman_blowedup_blind": "0x888800",       // Platoon member - blown-up - color blind mode
+      "teamKiller_alive_normal": "0x00EAFF",       // Team killer - alive
+      "teamKiller_alive_blind": "0x00EAFF",        // Team killer - alive - color blind mode
+      "teamKiller_dead_normal": "0x097783",        // Team killer - dead
+      "teamKiller_dead_blind": "0x097783",         // Team killer - dead - color blind mode
+      "teamKiller_blowedup_normal": "0x096A75",    // Team killer - blown-up
+      "teamKiller_blowedup_blind": "0x096A75",     // Team killer - blown-up - color blind mode
+      "enemy_alive_normal": "0xF50800",            // Enemy - alive
+      "enemy_alive_blind": "0x8379FE",             // Enemy - alive - color blind mode
+      "enemy_dead_normal": "0x840500",             // Enemy - dead
+      "enemy_dead_blind": "0x47407A",              // Enemy - dead - color blind mode
+      "enemy_blowedup_normal": "0x5A0401",         // Enemy - blown-up
+      "enemy_blowedup_blind": "0x3B365F"           // Enemy - blown-up - color blind mode
+    },
+    // Color for damage text animation
+    //   src_dst_type
+    //   src: ally, squadman, enemy, unknown, player
+    //   dst: ally, squadman, allytk, enemytk, enemy
+    //   type: hit, kill, blowup
+    "damage": {
+      "ally_ally_hit":		"0x00EAFF",
+      "ally_ally_kill":		"0x00EAFF",
+      "ally_ally_blowup":	"0x00EAFF",
+      "ally_squadman_hit":	"0x00EAFF",
+      "ally_squadman_kill":	"0x00EAFF",
+      "ally_squadman_blowup":	"0x00EAFF",
+      "ally_enemy_hit":		"0xF50800",
+      "ally_enemy_kill":	"0xF50800",
+      "ally_enemy_blowup":	"0xF50800",
+      "ally_allytk_hit":	"0x00EAFF",
+      "ally_allytk_kill":	"0x00EAFF",
+      "ally_allytk_blowup":	"0x00EAFF",
+      "ally_enemytk_hit":	"0xF50800",
+      "ally_enemytk_kill":	"0xF50800",
+      "ally_enemytk_blowup":	"0xF50800",
+      "squadman_ally_hit":	"0x00EAFF",
+      "squadman_ally_kill":	"0x00EAFF",
+      "squadman_ally_blowup":	"0x00EAFF",
+      "squadman_squadman_hit":	"0x00EAFF",
+      "squadman_squadman_kill":	"0x00EAFF",
+      "squadman_squadman_blowup":	"0x00EAFF",
+      "squadman_enemy_hit":	"0xF50800",
+      "squadman_enemy_kill":	"0xF50800",
+      "squadman_enemy_blowup":	"0xF50800",
+      "squadman_allytk_hit":	"0x00EAFF",
+      "squadman_allytk_kill":	"0x00EAFF",
+      "squadman_allytk_blowup":	"0x00EAFF",
+      "squadman_enemytk_hit":	"0xF50800",
+      "squadman_enemytk_kill":	"0xF50800",
+      "squadman_enemytk_blowup":"0xF50800",
+      "enemy_ally_hit":		"0x96FF00",
+      "enemy_ally_kill":	"0x96FF00",
+      "enemy_ally_blowup":	"0x96FF00",
+      "enemy_squadman_hit":	"0xFFB964",
+      "enemy_squadman_kill":	"0xFFB964",
+      "enemy_squadman_blowup":	"0xFFB964",
+      "enemy_enemy_hit":	"0xF50800",
+      "enemy_enemy_kill":	"0xF50800",
+      "enemy_enemy_blowup":	"0xF50800",
+      "enemy_allytk_hit":	"0x96FF00",
+      "enemy_allytk_kill":	"0x96FF00",
+      "enemy_allytk_blowup":	"0x96FF00",
+      "enemy_enemytk_hit":	"0xF50800",
+      "enemy_enemytk_kill":	"0xF50800",
+      "enemy_enemytk_blowup":	"0xF50800",
+      "unknown_ally_hit":	"0x96FF00",
+      "unknown_ally_kill":	"0x96FF00",
+      "unknown_ally_blowup":	"0x96FF00",
+      "unknown_squadman_hit":	"0xFFB964",
+      "unknown_squadman_kill":	"0xFFB964",
+      "unknown_squadman_blowup":"0xFFB964",
+      "unknown_enemy_hit":	"0xF50800",
+      "unknown_enemy_kill":	"0xF50800",
+      "unknown_enemy_blowup":	"0xF50800",
+      "unknown_allytk_hit":	"0x96FF00",
+      "unknown_allytk_kill":	"0x96FF00",
+      "unknown_allytk_blowup":	"0x96FF00",
+      "unknown_enemytk_hit":	"0xF50800",
+      "unknown_enemytk_kill":	"0xF50800",
+      "unknown_enemytk_blowup":	"0xF50800",
+      "player_ally_hit":	"0xFFDD33",
+      "player_ally_kill":	"0xFFDD33",
+      "player_ally_blowup":	"0xFFDD33",
+      "player_squadman_hit":	"0xFFDD33",
+      "player_squadman_kill":	"0xFFDD33",
+      "player_squadman_blowup":	"0xFFDD33",
+      "player_enemy_hit":	"0xFFDD33",
+      "player_enemy_kill":	"0xFFDD33",
+      "player_enemy_blowup":	"0xFFDD33",
+      "player_allytk_hit":	"0xFFDD33",
+      "player_allytk_kill":	"0xFFDD33",
+      "player_allytk_blowup":	"0xFFDD33",
+      "player_enemytk_hit":	"0xFFDD33",
+      "player_enemytk_kill":	"0xFFDD33",
+      "player_enemytk_blowup":	"0xFFDD33"
+    },
+    // Damage kind
+    "dmg_kind": {
+      "attack": "0xFFAA55",                        // attack
+      "fire": "0xFF6655",                          // fire
+      "ramming": "0x998855",                       // ramming
+      "world_collision": "0x228855",               // world_collision
+      "other": "0xCCCCCC"                          // other
+    },
+    // Dynamic color by vehicle type
+    "vtype": {
+      "LT":  "0xA2FF9A",                           // Color for light tanks
+      "MT":  "0xFFF198",                           // Color for medium tanks
+      "HT":  "0xFFACAC",                           // Color for heavy tanks
+      "SPG": "0xEFAEFF",                           // Color for arty
+      "TD":  "0xA0CFFF",                           // Color for tank destroyers
+      "premium": "0xFFCC66",                       // Color for premium tanks
+      "usePremiumColor": false                     // Enable/disable premium color usage
+    },
+    // Dynamic color by remaining absolute health
+    "hp": [
+      { "value": 201,  "color": "0xFF0000" },    // Color for health less than 201
+      { "value": 401,  "color": "0xDD4444" },    // Color for health less than 401
+      { "value": 1001, "color": "0xFFCC22" },    // Color for health less than 1001
+      { "value": 9999, "color": "0xFCFCFC" }     // Color for health 1000 and more
+    ],
+    // Dynamic color by remaining health percent
+    "hp_ratio": [
+      { "value": 10,  "color": "0xFF0000" },    // Color for health less than 10 prercent
+      { "value": 25,  "color": "0xDD4444" },    // Color for health less than 25 prercent
+      { "value": 50,  "color": "0xFFCC22" },    // Color for health less than 50 prercent
+      { "value": 101, "color": "0xFCFCFC" }     // Color for health 50 prercent and more
+    ],
+    // Dynamic color by efficiency (only with xvm-stat)
+    "eff": [
+      { "value": 600,  "color": "0xFE0E00" },   //    0 - 599  - very bad
+      { "value": 900,  "color": "0xFE7903" },   //  600 - 899  - bad
+      { "value": 1200, "color": "0xF8F400" },   //  900 - 1199 - normal
+      { "value": 1500, "color": "0x60FF00" },   // 1200 - 1499 - good
+      { "value": 1800, "color": "0x02C9B3" },   // 1500 - 1799 - very good
+      { "value": 9999, "color": "0xD042F3" }    // 1800 - *    - unique
+    ],
+    // Dynamic color by win percent (only with xvm-stat)
+    "rating": [
+      { "value": 46,  "color": "0xFE0E00" },   //  0 - 45  - very bad
+      { "value": 48,  "color": "0xFE7903" },   // 46 - 47  - bad
+      { "value": 51,  "color": "0xF8F400" },   // 48 - 50  - normal
+      { "value": 54,  "color": "0x60FF00" },   // 51 - 53  - good
+      { "value": 57,  "color": "0x02C9B3" },   // 54 - 56  - very good
+      { "value": 101, "color": "0xD042F3" }    // 57 - 100 - unique
+    ],
+    // Dynamic color by kilo-battles (only with xvm-stat)
+    "kb": [
+      { "value": 2,   "color": "0xFE0E00" },   //  0 - 1
+      { "value": 5,   "color": "0xFE7903" },   //  2 - 4
+      { "value": 9,   "color": "0xF8F400" },   //  5 - 8
+      { "value": 14,  "color": "0x60FF00" },   //  9 - 13
+      { "value": 20,  "color": "0x02C9B3" },   // 14 - 19
+      { "value": 999, "color": "0xD042F3" }    // 20 - *
+    ],
+    // Dynamic color by battles on current tank (only with xvm-stat)
+    "t_battles": [
+      { "value": 100,   "color": "0xFE0E00" }, //    0 - 99
+      { "value": 250,   "color": "0xFE7903" }, //  100 - 249
+      { "value": 500,   "color": "0xF8F400" }, //  250 - 499
+      { "value": 1000,  "color": "0x60FF00" }, //  500 - 999
+      { "value": 1800,  "color": "0x02C9B3" }, // 1000 - 1799
+      { "value": 99999, "color": "0xD042F3" }  // 1800 - *
+    ],
+    "tdb": [
+      { "value": 1,    "color": "0xFCFCFC" },
+      { "value": 500,  "color": "0xFE0E00" },
+      { "value": 1000, "color": "0xF8F400" },
+      { "value": 2000, "color": "0x60FF00" }
+    ],
+    "tdv": [
+      { "value": 0.01, "color": "0xFCFCFC" },
+      { "value": 0.6,  "color": "0xFE0E00" },
+      { "value": 0.8,  "color": "0xFE7903" },
+      { "value": 1.0,  "color": "0xF8F400" },
+      { "value": 1.3,  "color": "0x60FF00" },
+      { "value": 2.0,  "color": "0x02C9B3" },
+      { "value": 15,   "color": "0xD042F3" }
+    ],
+    "tfb": [
+      { "value": 0.01, "color": "0xFCFCFC" },
+      { "value": 0.6,  "color": "0xFE0E00" },
+      { "value": 0.8,  "color": "0xFE7903" },
+      { "value": 1.0,  "color": "0xF8F400" },
+      { "value": 1.3,  "color": "0x60FF00" },
+      { "value": 2.0,  "color": "0x02C9B3" },
+      { "value": 15,   "color": "0xD042F3" }
+    ],
+    "tsb": [
+      { "value": 0.01, "color": "0xFCFCFC" },
+      { "value": 0.6,  "color": "0xFE0E00" },
+      { "value": 0.8,  "color": "0xFE7903" },
+      { "value": 1.0,  "color": "0xF8F400" },
+      { "value": 1.3,  "color": "0x60FF00" },
+      { "value": 2.0,  "color": "0x02C9B3" },
+      { "value": 15,   "color": "0xD042F3" }
+    ],
+    "e": [
+      { "value": 0.01, "color": "0xFCFCFC" },
+      { "value": 2,    "color": "0xFE0E00" },
+      { "value": 3,    "color": "0xFE7903" },
+      { "value": 5,    "color": "0xF8F400" },
+      { "value": 7,    "color": "0x60FF00" },
+      { "value": 9,    "color": "0x02C9B3" },
+      { "value": 20,   "color": "0xD042F3" }
+    ]
+  },
+  // OPTIONS FOR DYNAMIC TRANSPARENCY
+  "alpha": {
+    // Dynamic transparency by remaining health
+    "hp": [
+      { "value": 200,  "alpha": 100 },
+      { "value": 400,  "alpha": 80 },
+      { "value": 1000, "alpha": 60 },
+      { "value": 9999, "alpha": 40 }
+    ],
+    // Dynamic transparency by percentage of remaining health
+    "hp_ratio": [
+      { "value": 10,  "alpha": 100 },
+      { "value": 25,  "alpha": 80 },
+      { "value": 50,  "alpha": 60 },
+      { "value": 101, "alpha": 40 }
+    ],
+    // Dynamic transparency by effectiveness (only with xvm-stat)
+    "eff": [
+      { "value": 900,  "alpha": 100 },
+      { "value": 1200, "alpha": 100 },
+      { "value": 9999, "alpha": 100 }
+    ],
+    // Dynamic transparency by victory percentage (only with xvm-stat)
+    "rating": [
+      { "value": 49,  "alpha": 100 },
+      { "value": 53,  "alpha": 100 },
+      { "value": 101, "alpha": 100 }
+    ],
+    // Dynamic transparency by the number of thousands of battles ("kilo-battles") (only with xvm-stat)
+    "kb": [
+      { "value": 2,   "alpha": 100 },
+      { "value": 10,  "alpha": 100 },
+      { "value": 999, "alpha": 100 }
+    ]
+  },
+  // Text substitutions
+  "texts": {
+    // Text for {{vtype}} macro
+    "vtype": {
+      "LT":  "LT",        // Text for light tanks
+      "MT":  "MT",        // Text for medium tanks
+      "HT":  "HT",        // Text for heavy tanks
+      "SPG": "SPG",       // Text for arty
+      "TD":  "TD"         // Text for tank destroyers
+    }
+  },
+  // ICON SETS
+  "iconset": {
+    // Folder containing the icon set for Battle Loading Screen
+    "battleLoading": "../maps/icons/vehicle/contour",
+    // Folder containing the icon set for Battle Statistics Form (pressing 'Tab')
+    "statisticForm": "../maps/icons/vehicle/contour",
+    // Folder containing the icon set for the Players Panels
+    "playersPanel":  "../maps/icons/vehicle/contour",
+    // Folder containing the icon set for the Over-target markers
+    "vehicleMarker": "../maps/icons/vehicle/contour"
+  },
+  // Vehicle names mapping. null value for standard name.
+  "vehicleNames": {
+    "china_Ch01_Type59": null,
+    "china_Ch02_Type62": null,
+    "china_Ch03_WZ_111": null,
+    "china_Ch04_T34_1": null,
+    "china_Ch05_T34_2": null,
+    "china_Ch06_Renault_NC31": null,
+    "china_Ch07_Vickers_MkE_Type_BT26": null,
+    "china_Ch08_Type97_Chi_Ha": null,
+    "china_Ch09_M5": null,
+    "china_Ch10_IS2": null,
+    "china_Ch11_110": null,
+    "china_Ch12_111_1_2_3": null,
+    "china_Ch13_111_4_5": null,
+    "china_Ch15_59_16": null,
+    "china_Ch16_WZ_131": null,
+    "china_Ch17_WZ131_1_WZ132": null,
+    "china_Ch18_WZ_120": null,
+    "china_Ch19_121": null,
+    "china_Ch20_Type58": null,
+    "china_Ch21_T34": null,
+    "france_AMX38": null,
+    "france_AMX40": null,
+    "france_AMX50_Foch": null,
+    "france_AMX_105AM": null,
+    "france_AMX_12t": null,
+    "france_AMX_13F3AM": null,
+    "france_AMX_13_75": null,
+    "france_AMX_13_90": null,
+    "france_AMX_50Fosh_155": null,
+    "france_AMX_50_100": null,
+    "france_AMX_50_120": null,
+    "france_AMX_AC_Mle1946": null,
+    "france_AMX_AC_Mle1948": null,
+    "france_AMX_M4_1945": null,
+    "france_ARL_44": null,
+    "france_ARL_V39": null,
+    "france_B1": null,
+    "france_BDR_G1B": null,
+    "france_Bat_Chatillon155": null,
+    "france_Bat_Chatillon25t": null,
+    "france_D1": null,
+    "france_D2": null,
+    "france_ELC_AMX": null,
+    "france_F10_AMX_50B": null,
+    "france_FCM_36Pak40": null,
+    "france_FCM_50t": null,
+    "france_Hotchkiss_H35": null,
+    "france_Lorraine155_50": null,
+    "france_Lorraine155_51": null,
+    "france_Lorraine39_L_AM": null,
+    "france_Lorraine40t": null,
+    "france_RenaultBS": null,
+    "france_RenaultFT": null,
+    "france_RenaultFT_AC": null,
+    "france_RenaultUE57": null,
+    "france_S_35CA": null,
+    "france_Somua_Sau_40": null,
+    "france__105_leFH18B2": null,
+    "germany_B_1bis_captured": null,
+    "germany_Bison_I": null,
+    "germany_DickerMax": null,
+    "germany_E50_Ausf_M": null,
+    "germany_E_100": null,
+    "germany_E_50": null,
+    "germany_E_75": null,
+    "germany_Ferdinand": null,
+    "germany_G20_Marder_II": null,
+    "germany_G_E": null,
+    "germany_G_Panther": null,
+    "germany_G_Tiger": null,
+    "germany_Grille": null,
+    "germany_H39_captured": null,
+    "germany_Hetzer": null,
+    "germany_Hummel": null,
+    "germany_JagdPanther": null,
+    "germany_JagdPantherII": null,
+    "germany_JagdPzIV": null,
+    "germany_JagdPz_E100": null,
+    "germany_JagdTiger": null,
+    "germany_JagdTiger_SdKfz_185": null,
+    "germany_Lowe": null,
+    "germany_Ltraktor": null,
+    "germany_Maus": null,
+    "germany_Panther_II": null,
+    "germany_Panther_M10": null,
+    "germany_PanzerJager_I": null,
+    "germany_Pz35t": null,
+    "germany_Pz38_NA": null,
+    "germany_Pz38t": null,
+    "germany_PzII": null,
+    "germany_PzIII": null,
+    "germany_PzIII_A": null,
+    "germany_PzIII_IV": null,
+    "germany_PzII_J": null,
+    "germany_PzII_Luchs": null,
+    "germany_PzIV": null,
+    "germany_PzIV_Hydro": null,
+    "germany_PzIV_schmalturm": null,
+    "germany_PzV": null,
+    "germany_PzVI": null,
+    "germany_PzVIB_Tiger_II": null,
+    "germany_PzVI_Tiger_P": null,
+    "germany_PzV_PzIV": null,
+    "germany_PzV_PzIV_ausf_Alfa": null,
+    "germany_S35_captured": null,
+    "germany_StuGIII": null,
+    "germany_Sturmpanzer_II": null,
+    "germany_T_15": null,
+    "germany_T_25": null,
+    "germany_VK1602": null,
+    "germany_VK2801": null,
+    "germany_VK3001H": null,
+    "germany_VK3001P": null,
+    "germany_VK3002DB": null,
+    "germany_VK3601H": null,
+    "germany_VK4502A": null,
+    "germany_VK4502P": null,
+    "germany_Wespe": null,
+    "uk_GB01_Medium_Mark_I": null,
+    "uk_GB03_Cruiser_Mk_I": null,
+    "uk_GB04_Valentine": null,
+    "uk_GB05_Vickers_Medium_Mk_II": null,
+    "uk_GB06_Vickers_Medium_Mk_III": null,
+    "uk_GB07_Matilda": null,
+    "uk_GB08_Churchill_I": null,
+    "uk_GB09_Churchill_VII": null,
+    "uk_GB10_Black_Prince": null,
+    "uk_GB11_Caernarvon": null,
+    "uk_GB12_Conqueror": null,
+    "uk_GB13_FV215b": null,
+    "uk_GB20_Crusader": null,
+    "uk_GB21_Cromwell": null,
+    "uk_GB22_Comet": null,
+    "uk_GB23_Centurion": null,
+    "uk_GB24_Centurion_Mk3": null,
+    "uk_GB58_Cruiser_Mk_III": null,
+    "uk_GB59_Cruiser_Mk_IV": null,
+    "uk_GB60_Covenanter": null,
+    "uk_GB63_TOG_II": null,
+    "uk_GB68_Matilda_Black_Prince": null,
+    "uk_GB69_Cruiser_Mk_II": null,
+    "uk_GB70_FV4202_105": null,
+    "uk_GB71_AT_15A": null,
+    "usa_A74_T1_E6": null,
+    "usa_M103": null,
+    "usa_M10_Wolverine": null,
+    "usa_M12": null,
+    "usa_M18_Hellcat": null,
+    "usa_M22_Locust": null,
+    "usa_M24_Chaffee": null,
+    "usa_M2_lt": null,
+    "usa_M2_med": null,
+    "usa_M36_Slagger": null,
+    "usa_M37": null,
+    "usa_M3_Grant": null,
+    "usa_M3_Stuart": null,
+    "usa_M40M43": null,
+    "usa_M41": null,
+    "usa_M46_Patton": null,
+    "usa_M48A1": null,
+    "usa_M4A2E4": null,
+    "usa_M4A3E8_Sherman": null,
+    "usa_M4_Sherman": null,
+    "usa_M5_Stuart": null,
+    "usa_M6": null,
+    "usa_M6A2E1": null,
+    "usa_M7_Priest": null,
+    "usa_M7_med": null,
+    "usa_M8A1": null,
+    "usa_MTLS_1G14": null,
+    "usa_Pershing": null,
+    "usa_Ram_II": null,
+    "usa_Sherman_Jumbo": null,
+    "usa_T110": null,
+    "usa_T110E3": null,
+    "usa_T110E4": null,
+    "usa_T14": null,
+    "usa_T18": null,
+    "usa_T1_Cunningham": null,
+    "usa_T1_E6": null,
+    "usa_T1_hvy": null,
+    "usa_T20": null,
+    "usa_T21": null,
+    "usa_T25_2": null,
+    "usa_T25_AT": null,
+    "usa_T26_E4_SuperPershing": null,
+    "usa_T28": null,
+    "usa_T28_Prototype": null,
+    "usa_T29": null,
+    "usa_T2_lt": null,
+    "usa_T2_med": null,
+    "usa_T30": null,
+    "usa_T32": null,
+    "usa_T34_hvy": null,
+    "usa_T40": null,
+    "usa_T49": null,
+    "usa_T54E1": null,
+    "usa_T57": null,
+    "usa_T57_58": null,
+    "usa_T69": null,
+    "usa_T71": null,
+    "usa_T82": null,
+    "usa_T92": null,
+    "usa_T95": null,
+    "ussr_AT_1": null,
+    "ussr_A_20": null,
+    "ussr_A_32": null,
+    "ussr_BT_2": null,
+    "ussr_BT_7": null,
+    "ussr_BT_SV": null,
+    "ussr_Churchill_LL": null,
+    "ussr_GAZ_74b": null,
+    "ussr_IS8": null,
+    "ussr_IS": null,
+    "ussr_ISU_152": null,
+    "ussr_IS_3": null,
+    "ussr_IS_4": null,
+    "ussr_IS_7": null,
+    "ussr_KV1": null,
+    "ussr_KV2": null,
+    "ussr_KV4": null,
+    "ussr_KV_13": null,
+    "ussr_KV_1s": null,
+    "ussr_KV_220": null,
+    "ussr_KV_220_action": null,
+    "ussr_KV_3": null,
+    "ussr_KV_5": null,
+    "ussr_M3_Stuart_LL": null,
+    "ussr_MS_1": null,
+    "ussr_Matilda_II_LL": null,
+    "ussr_Object252": null,
+    "ussr_Object263": null,
+    "ussr_Object268": null,
+    "ussr_Object_212": null,
+    "ussr_Object_261": null,
+    "ussr_Object_704": null,
+    "ussr_ST_I": null,
+    "ussr_SU100M1": null,
+    "ussr_SU100Y": null,
+    "ussr_SU122_44": null,
+    "ussr_SU122_54": null,
+    "ussr_SU_100": null,
+    "ussr_SU_101": null,
+    "ussr_SU_14": null,
+    "ussr_SU_152": null,
+    "ussr_SU_18": null,
+    "ussr_SU_26": null,
+    "ussr_SU_5": null,
+    "ussr_SU_76": null,
+    "ussr_SU_85": null,
+    "ussr_SU_85I": null,
+    "ussr_SU_8": null,
+    "ussr_S_51": null,
+    "ussr_T150": null,
+    "ussr_T62A": null,
+    "ussr_T_127": null,
+    "ussr_T_26": null,
+    "ussr_T_28": null,
+    "ussr_T_34": null,
+    "ussr_T_34_85": null,
+    "ussr_T_43": null,
+    "ussr_T_44": null,
+    "ussr_T_46": null,
+    "ussr_T_50": null,
+    "ussr_T_50_2": null,
+    "ussr_T_54": null,
+    "ussr_Tetrarch_LL": null,
+    "ussr_Valentine_LL": null
+  }
+}
