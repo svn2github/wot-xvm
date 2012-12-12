@@ -58,6 +58,8 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
      */
     function Xvm(proxy:VehicleMarkerProxy)
     {
+/* ::6 */
+return;
         super(); // gfx.core.UIComponent
         _proxy = proxy;
         initialize();
@@ -68,10 +70,11 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
         clanIconComponent = new ClanIconComponent(new ClanIconProxy(this));
         contourIconComponent = new ContourIconComponent(new ContourIconProxy(this));
         levelIconComponent = new LevelIconComponent(new LevelIconProxy(this));
+/* ::4
         turretStatusComponent = new TurretStatusComponent(new TurretStatusProxy(this));
         vehicleTypeComponent = new VehicleTypeComponent(new VehicleTypeProxy(this));
         damageTextComponent = new DamageTextComponent(new DamageTextProxy(this));
-
+*/
     }
     
     private static var initialized:Boolean = false;
@@ -82,7 +85,7 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
         Xvm.initialized = true;
 
         Utils.TraceXvmModule("XVM");
-
+/* ::2
         // initialize ColorsManager for detecting color blind mode
         ColorsManager.initialize();
 
@@ -93,6 +96,7 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
             FrameBackwardPlugin, FrameForwardPlugin, FrameLabelPlugin, FramePlugin, GlowFilterPlugin,
             HexColorsPlugin, QuaternionsPlugin, RemoveTintPlugin, RoundPropsPlugin, ScalePlugin, ScrollRectPlugin,
             SetSizePlugin, ShortRotationPlugin, TintPlugin, TransformMatrixPlugin, VisiblePlugin, VolumePlugin]);
+*/
     }
 
     /**
@@ -105,6 +109,8 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
     function init(vClass, vIconSource, vType, vLevel, pFullName,
         curHealth, maxHealth, entityName, speaking, hunt, entityType)
     {
+/* ::6 */
+return;
         m_playerFullName = pFullName; // alex[ALX]
 
         //trace("Xvm::init(): " + entityName + ", " + entityType);
@@ -128,10 +134,11 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
         healthBarComponent.init();
         contourIconComponent.init();
         levelIconComponent.init();
+/* ::4
         turretStatusComponent.init();
-        vehicleTypeComponent.init(vClass /*mediumTank*/, hunt);
+        vehicleTypeComponent.init(vClass /*mediumTank* /, hunt);
         damageTextComponent.init();
-
+*/
         Macros.RegisterPlayerData(m_playerFullName,
             {
                 label: m_playerFullName,
@@ -139,7 +146,9 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
                 icon: m_defaultIconSource,
                 squad: m_entityName == "squadman" ? "1" : "",
                 level: m_level,
+/* ::1
                 turret: turretStatusComponent.getMarker(),
+*/
                 vtype: Utils.vehicleClassToVehicleType(vClass),
                 maxHealth: m_maxHealth,
                 team: proxy.m_team
@@ -149,8 +158,9 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
         clanIconComponent.initialize(vehicleState.getCurrentConfig(), proxy);
 
         // Initialize states and creating text fields
+/* ::3
         initializeTextFields();
-
+*/
         // Draw marker
         XVMUpdateStyle();
 
@@ -169,7 +179,9 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
     {
         //trace("Xvm::update()");
         // Update Color Blind mode
+/* ::4
         vehicleTypeComponent.updateMarkerLabel();
+*/
         XVMUpdateStyle();
     }
 
@@ -194,9 +206,11 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
         m_speaking = value;
         if (initialized)
         {
+/* ::4
             vehicleTypeComponent.setVehicleClass();
             vehicleTypeComponent.updateState(vehicleState.getCurrentConfig());
-        }
+*/
+            }
     }
 
     /**
@@ -208,7 +222,9 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
         if (value == m_entityName)
             return;
         m_entityName = value;
+/* ::4
         vehicleTypeComponent.updateMarkerLabel();
+*/
         initializeTextFields();
         XVMUpdateStyle();
     }
@@ -248,8 +264,10 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
             healthBarComponent.updateState(vehicleStateCfg);
             healthBarComponent.showDamage(vehicleStateCfg, newHealth, m_maxHealth, -delta);
 
+/* ::4
             damageTextComponent.showDamage(vehicleStateCfg.damageText, newHealth, -delta, flag, damageType);
-        }
+*/
+            }
 
         XVMUpdateDynamicTextFields();
     }
@@ -266,8 +284,9 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
 
         m_isDead = newState == "dead";
 
+/* ::4
         vehicleTypeComponent.setMarkerState(isImmediate && m_isDead ? "immediate_dead" : newState);
-
+*/
         XVMUpdateStyle();
     }
 
@@ -321,6 +340,7 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
     {
         try
         {
+/* ::5
             if (textFields)
             {
                 var st = vehicleState.getCurrentState();
@@ -337,7 +357,8 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
                     tfi.field.filters = [  tfi.shadow ];
                 }
             }
-        }
+*/
+            }
         catch (e)
         {
             ErrorHandler.setText("ERROR: XVMUpdateDynamicTextFields():" + String(e));
@@ -351,6 +372,7 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
         try
         {
             // cleanup
+/* ::5
             if (textFields)
             {
                 for (var st in textFields)
@@ -387,7 +409,8 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
                 }
                 textFields[st] = fields;
             }
-        }
+*/
+            }
         catch (e)
         {
             ErrorHandler.setText("ERROR: initializeTextFields():" + String(e));
@@ -397,6 +420,8 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
 
     function XVMUpdateStyle()
     {
+/* ::6 */
+return;
         //trace("XVMUpdateStyle: " + m_playerFullName + m_vname + " " + " scale=" + proxy.marker._xscale);
         try
         {
@@ -405,8 +430,9 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
             var cfg = vehicleState.getCurrentConfig();
 
             // Vehicle Type Marker
+/* ::4
             vehicleTypeComponent.updateState(cfg);
-
+*/
             // Contour Icon
             contourIconComponent.updateState(cfg);
 
@@ -420,12 +446,14 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
             clanIconComponent.updateState(cfg);
 
             // Damage Text
+/* ::4
             damageTextComponent.updateState(cfg);
-
+*/
             // Health Bar
             healthBarComponent.updateState(cfg);
 
             // Text fields
+/* ::5
             if (textFields)
             {
                 var st = vehicleState.getCurrentState();
@@ -438,7 +466,8 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
 
             // Update Colors and Values
             XVMUpdateDynamicTextFields();
-        }
+*/
+            }
         catch (e)
         {
             ErrorHandler.setText("ERROR: XVMUpdateStyle():" + String(e));
