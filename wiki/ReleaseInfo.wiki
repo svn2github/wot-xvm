@@ -12,8 +12,8 @@
         "message": "  * adaptation for WoT 0.8.2\n  * new macros\n  * improvements and bugfixes"
     },
     "SEA": {
-        "ver": "3.1.2",
-        "message": "  * added capture bar mod\n  * new macros\n  * improvements and bugfixes"
+        "ver": "3.2.0",
+        "message": "  * adaptation for WoT 0.8.2\n  * new macros\n  * improvements and bugfixes"
     },
     "VTC": {
         "ver": "3.1.2",
