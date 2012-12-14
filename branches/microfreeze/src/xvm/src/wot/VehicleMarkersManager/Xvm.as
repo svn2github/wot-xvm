@@ -58,8 +58,6 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
      */
     function Xvm(proxy:VehicleMarkerProxy)
     {
-/* ::6 */
-return;
         super(); // gfx.core.UIComponent
         _proxy = proxy;
         initialize();
@@ -70,11 +68,10 @@ return;
         clanIconComponent = new ClanIconComponent(new ClanIconProxy(this));
         contourIconComponent = new ContourIconComponent(new ContourIconProxy(this));
         levelIconComponent = new LevelIconComponent(new LevelIconProxy(this));
-/* ::4
         turretStatusComponent = new TurretStatusComponent(new TurretStatusProxy(this));
         vehicleTypeComponent = new VehicleTypeComponent(new VehicleTypeProxy(this));
         damageTextComponent = new DamageTextComponent(new DamageTextProxy(this));
-*/
+
     }
     
     private static var initialized:Boolean = false;
@@ -85,7 +82,7 @@ return;
         Xvm.initialized = true;
 
         Utils.TraceXvmModule("XVM");
-/* ::2
+
         // initialize ColorsManager for detecting color blind mode
         ColorsManager.initialize();
 
@@ -96,7 +93,6 @@ return;
             FrameBackwardPlugin, FrameForwardPlugin, FrameLabelPlugin, FramePlugin, GlowFilterPlugin,
             HexColorsPlugin, QuaternionsPlugin, RemoveTintPlugin, RoundPropsPlugin, ScalePlugin, ScrollRectPlugin,
             SetSizePlugin, ShortRotationPlugin, TintPlugin, TransformMatrixPlugin, VisiblePlugin, VolumePlugin]);
-*/
     }
 
     /**
@@ -109,8 +105,6 @@ return;
     function init(vClass, vIconSource, vType, vLevel, pFullName,
         curHealth, maxHealth, entityName, speaking, hunt, entityType)
     {
-/* ::6 */
-return;
         m_playerFullName = pFullName; // alex[ALX]
 
         //trace("Xvm::init(): " + entityName + ", " + entityType);
@@ -134,11 +128,10 @@ return;
         healthBarComponent.init();
         contourIconComponent.init();
         levelIconComponent.init();
-/* ::4
         turretStatusComponent.init();
-        vehicleTypeComponent.init(vClass /*mediumTank* /, hunt);
+        vehicleTypeComponent.init(vClass /*mediumTank*/, hunt);
         damageTextComponent.init();
-*/
+
         Macros.RegisterPlayerData(m_playerFullName,
             {
                 label: m_playerFullName,
@@ -146,21 +139,18 @@ return;
                 icon: m_defaultIconSource,
                 squad: m_entityName == "squadman" ? "1" : "",
                 level: m_level,
-/* ::1
                 turret: turretStatusComponent.getMarker(),
-*/
                 vtype: Utils.vehicleClassToVehicleType(vClass),
                 maxHealth: m_maxHealth,
                 team: proxy.m_team
             });
 
         // Create clan icon and place to mc.
-        clanIconComponent.initialize(vehicleState.getCurrentConfig(), proxy);
+        clanIconComponent.initialize(proxy);
 
         // Initialize states and creating text fields
-/* ::3
         initializeTextFields();
-*/
+
         // Draw marker
         XVMUpdateStyle();
 
@@ -179,9 +169,7 @@ return;
     {
         //trace("Xvm::update()");
         // Update Color Blind mode
-/* ::4
         vehicleTypeComponent.updateMarkerLabel();
-*/
         XVMUpdateStyle();
     }
 
@@ -206,11 +194,9 @@ return;
         m_speaking = value;
         if (initialized)
         {
-/* ::4
             vehicleTypeComponent.setVehicleClass();
             vehicleTypeComponent.updateState(vehicleState.getCurrentConfig());
-*/
-            }
+        }
     }
 
     /**
@@ -222,9 +208,7 @@ return;
         if (value == m_entityName)
             return;
         m_entityName = value;
-/* ::4
         vehicleTypeComponent.updateMarkerLabel();
-*/
         initializeTextFields();
         XVMUpdateStyle();
     }
@@ -264,10 +248,8 @@ return;
             healthBarComponent.updateState(vehicleStateCfg);
             healthBarComponent.showDamage(vehicleStateCfg, newHealth, m_maxHealth, -delta);
 
-/* ::4
             damageTextComponent.showDamage(vehicleStateCfg.damageText, newHealth, -delta, flag, damageType);
-*/
-            }
+        }
 
         XVMUpdateDynamicTextFields();
     }
@@ -284,9 +266,8 @@ return;
 
         m_isDead = newState == "dead";
 
-/* ::4
         vehicleTypeComponent.setMarkerState(isImmediate && m_isDead ? "immediate_dead" : newState);
-*/
+
         XVMUpdateStyle();
     }
 
@@ -340,7 +321,6 @@ return;
     {
         try
         {
-/* ::5
             if (textFields)
             {
                 var st = vehicleState.getCurrentState();
@@ -357,8 +337,7 @@ return;
                     tfi.field.filters = [  tfi.shadow ];
                 }
             }
-*/
-            }
+        }
         catch (e)
         {
             ErrorHandler.setText("ERROR: XVMUpdateDynamicTextFields():" + String(e));
@@ -372,7 +351,6 @@ return;
         try
         {
             // cleanup
-/* ::5
             if (textFields)
             {
                 for (var st in textFields)
@@ -409,8 +387,7 @@ return;
                 }
                 textFields[st] = fields;
             }
-*/
-            }
+        }
         catch (e)
         {
             ErrorHandler.setText("ERROR: initializeTextFields():" + String(e));
@@ -420,8 +397,6 @@ return;
 
     function XVMUpdateStyle()
     {
-/* ::6 */
-return;
         //trace("XVMUpdateStyle: " + m_playerFullName + m_vname + " " + " scale=" + proxy.marker._xscale);
         try
         {
@@ -430,9 +405,8 @@ return;
             var cfg = vehicleState.getCurrentConfig();
 
             // Vehicle Type Marker
-/* ::4
             vehicleTypeComponent.updateState(cfg);
-*/
+
             // Contour Icon
             contourIconComponent.updateState(cfg);
 
@@ -446,14 +420,12 @@ return;
             clanIconComponent.updateState(cfg);
 
             // Damage Text
-/* ::4
             damageTextComponent.updateState(cfg);
-*/
+
             // Health Bar
             healthBarComponent.updateState(cfg);
 
             // Text fields
-/* ::5
             if (textFields)
             {
                 var st = vehicleState.getCurrentState();
@@ -466,8 +438,7 @@ return;
 
             // Update Colors and Values
             XVMUpdateDynamicTextFields();
-*/
-            }
+        }
         catch (e)
         {
             ErrorHandler.setText("ERROR: XVMUpdateStyle():" + String(e));

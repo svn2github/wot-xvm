@@ -155,16 +155,18 @@ class wot.utils.DefaultConfig
                 textOffsetX: 0,
                 textOffsetY: 0,
                 format: {
-                  ally:  "{{level}} {{vehicle}}",
-                  enemy: "{{level}} {{vehicle}}",
-                  squad: "{{level}} {{vehicle}} <i>{{short-nick}}</i>",
-                  oneself: "<b>{{level}} {{vehicle}}</b>"
+                  ally:  "{{level}}",
+                  enemy: "{{level}}",
+                  squad: "{{level}} <i>{{short-nick}}</i>",
+                  oneself: "<b>{{level}}</b>",
+                  lostenemy: "<i>{{level}}</i>"
                 },
                 css: {
-                  ally:  "font-family:$FieldFont; font-size:6px; color:#BBEEBB;",
-                  enemy: "font-family:$FieldFont; font-size:6px; color:#EEBBBB;",
-                  squad: "font-family:$FieldFont; font-size:6px; color:#FFEE44;",
-                  oneself: "font-family:$FieldFont; font-size:6px; color:#FFFFFF;"
+                  ally:  "font-family:$FieldFont; font-size:8px; color:#BBEEBB;",
+                  enemy: "font-family:$FieldFont; font-size:8px; color:#EEBBBB;",
+                  squad: "font-family:$FieldFont; font-size:8px; color:#FFEE44;",
+                  oneself: "font-family:$FieldFont; font-size:8px; color:#FFFFFF;",
+                  lostenemy: "font-family:$FieldFont; font-size:8px; color:#EEAACC;"
                 }
             },
             captureBar: {

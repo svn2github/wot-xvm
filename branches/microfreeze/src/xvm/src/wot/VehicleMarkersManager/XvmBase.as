@@ -57,9 +57,8 @@ class wot.VehicleMarkersManager.XvmBase extends gfx.core.UIComponent
     var m_defaultIconSource: String;
 
     // TextFields
-/* ::5
     var textFields: Object;
-*/
+
     // Vehicle State
     var vehicleState: VehicleState;
 
@@ -67,13 +66,12 @@ class wot.VehicleMarkersManager.XvmBase extends gfx.core.UIComponent
     var actionMarkerComponent: ActionMarkerComponent;
     var clanIconComponent:ClanIconComponent;
     var contourIconComponent: ContourIconComponent;
+    var damageTextComponent: DamageTextComponent;
     var healthBarComponent: HealthBarComponent;
     var levelIconComponent: LevelIconComponent;
-/* ::4
     var turretStatusComponent: TurretStatusComponent;
     var vehicleTypeComponent: VehicleTypeComponent;
-    var damageTextComponent: DamageTextComponent;
-*/
+
     // Parent proxy instance (assigned from proxy)
     private var _proxy:VehicleMarkerProxy;
     public function get proxy():VehicleMarkerProxy { return _proxy; }
