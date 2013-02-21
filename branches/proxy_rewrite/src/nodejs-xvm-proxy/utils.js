@@ -1,3 +1,5 @@
+var settings = require("./settings").settings;
+
 // calculate average level of tanks
 var calculateAvgLvl = exports.calculateAvgLevel = function(vehicles) {
     var level_battles = 0,
@@ -187,6 +189,22 @@ exports.filterByRegion = function(data, region) {
                     res.push(d);
                 break;
         }
+    }
+    return res;
+};
+
+exports.getStatServers = function(id) {
+    var serverId = Math.floor(id / 500000000);
+    if(serverId < 0 || serverId >= settings.statServers.length)
+        return null;
+    var servers = settings.statServers[serverId];
+    if(!servers || servers.length == 0)
+        return null;
+    var res = [ ];
+    for(var i in servers) {
+        var srv = settings.servers[servers[i]];
+        srv.id = servers[i];
+        res.push(srv);
     }
     return res;
 };

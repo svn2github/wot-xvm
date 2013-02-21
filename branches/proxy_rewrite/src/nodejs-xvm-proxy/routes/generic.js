@@ -1,15 +1,11 @@
-var db = require("../db");
+var factoryDb = require("../factoryDb");
 
 exports.stat = function(req, res) {
     var ids = req.params.ids;
 
-    db.getPlayersData(ids, function(error, processData) {
+    factoryDb.getPlayersData(ids, function(error, result) {
 
         //return _onPlayersData(error, processData);
-
-        res.json({
-            ids: ids,
-            db: processData
-        });
+        res.json(error || 200, result);
     });
 };

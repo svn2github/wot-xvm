@@ -7,7 +7,7 @@ var options = {
     poolSize: settings.dbMaxConnections
 };
 
-var db = new mongodb.Db(settings.dbName, new mongodb.Server(settings.mongoServer, settings.mongoPort, options), { w:0 }),
+var db = new mongodb.Db(settings.dbName, new mongodb.Server(settings.mongoServer, settings.mongoPort, options), { w: 0 }),
     players;
 
 db.open(function(error, client) {
@@ -31,24 +31,20 @@ exports.getPlayersData = function(ids, callback) {
             rqData: parsedIds.data
         };
 
-        callback(error ? { statusCode:500, text:error } : null, ret);
+        callback(error ? { statusCode: 500, text: error } : null, ret);
     });
-};
 
-var _getStatServers = function(id) {
-    var serverId = Math.floor(id / 500000000);
-    if (serverId < 0 || serverId >= settings.statServers.length)
-        return null;
-    var servers = settings.statServers[serverId];
-    if (!servers || servers.length == 0)
-        return null;
-    var res = [ ];
-    for(var i in servers) {
-        var srv = settings.servers[servers[i]];
-        srv.id = servers[i];
-        res.push(srv);
-    }
-    return res;
+    /*players.aggregate([
+     { $match: { _id: { $in: parsedIds.ids } } },
+     { $unwind: "$v" }
+     ], function(error, result) {
+     var ret = {
+     dbData: result,
+     rqData: parsedIds.data
+     };
+
+     callback(error ? { statusCode:500, text:error } : null, ret);
+     });*/
 };
 
 var _parseStatRequest = function(ids) {
@@ -59,8 +55,8 @@ var _parseStatRequest = function(ids) {
         var id = parseInt(x[0]);
 
         // Skip wrong id and non-working servers
-        var servers = _getStatServers(id);
-        if (servers) {
+        var servers = utils.getStatServers(id);
+        if(servers) {
             parsedIds.push(id);
             data[id] = { vname: x[1] ? x[1].toUpperCase() : null, servers: servers };
             if(x[2] == "1" && settings.updateUsers == true)
@@ -71,4 +67,18 @@ var _parseStatRequest = function(ids) {
     });
 
     return { ids: parsedIds, data: data };
+};
+
+exports.updatePlayersData = function(id, data) {
+    players.update({ _id: id }, data, { upsert: true });
+};
+
+exports.removeMissed = function(id) {
+    missed.remove({ _id: id }, function(err) {
+        if (err) utils.log("[DB] removeMissed(" + id + ") error: " + err);
+    });
+};
+
+exports.insertMissed = function(id, miss) {
+    missed.insert({ _id: id, missed: miss });
 };
