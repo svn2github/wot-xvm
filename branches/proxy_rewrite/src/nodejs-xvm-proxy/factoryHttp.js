@@ -25,7 +25,6 @@ exports.processRemotes = function(processData, responseCallback) {
                 pdata.cache = {_id: id, st: srv.error};
             processData.dbData[id] = pdata.cache;
             delete processData.rqData[id];
-            process.send({usage: 1, max_conn: 1});
             return;
         }
 
@@ -252,13 +251,11 @@ var _prepareFallbackRes = function(item, id, status) {
     id = parseInt(id);
 
     if (!item.cache) {
-        process.send({usage:1, missed:1});
         if (settings.updateMissed == true)
             db.insertMissed(id, true);
         return {id:id, date:new Date(), status:status};
     }
 
-    process.send({usage:1, updatesFailed:1});
     if (settings.updateMissed == true)
         db.insertMissed(id, false);
     var res = _cacheToResult(item.cache);

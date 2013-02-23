@@ -1,7 +1,5 @@
 (function() {
-    var includer = require("../includer"),
-        assert = require("assert"),
-        worker = require("../worker"),
+    var assert = require("assert"),
         fakeMongo = require("./mock_classes/mongo"),
         fakeHttp = require("./mock_classes/http");
 
@@ -12,19 +10,14 @@
 
     var SERVER_URL = "http://1.2.3.4/xxx/?";
 
-    // Mock ups
-    process.send = function() { };
-    includer.setHttp(fakeHttp);
-    includer.setMongo(fakeMongo);
-    worker.createWorker();
-    makeRequest = includer.http().makeRequest();
-
     suite("Basic functionality", function() {
         setup(function() {
             fakeHttp.resetCounter();
             fakeMongo.resetMongoResult();
 
-            req = { url: "" };
+            makeRequest = require("../routes/generic").stat;
+
+            req = { url: "", params: { } };
             res = {
                 end: function(response) {
                     try {
@@ -32,31 +25,44 @@
                     } catch(e) {
                         lastResponse = response;
                     }
+                },
+                json: function(status, response) {
+                    var resp = typeof status === "number" ? response : status;
+
+                    try {
+                        lastResponse = JSON.parse(resp);
+                    } catch(e) {
+                        lastResponse = resp;
+                    }
                 }
             };
         });
 
-        suite("responses", function() {
-
-            test("test request", function() {
-                req.url = SERVER_URL + "001";
-                makeRequest(req, res);
-
-                var player = lastResponse.players[0];
-
-                assert.equal(player.id, 1);
-                assert.equal(player.status, "ok");
+        suite("diagnostic", function() {
+            setup(function() {
+                makeRequest = require("../routes/generic").test;
             });
 
-            test("wrong request", function() {
-                req.url = SERVER_URL + "wrong_request";
+            test("test request", function() {
+                makeRequest(req, res);
+
+                assert.equal(lastResponse.id, 1);
+                assert.equal(lastResponse.status, "ok");
+            });
+        });
+
+        suite("responses", function() {
+
+            //TODO how to test?
+            /*test("wrong request", function() {
+                req.params = SERVER_URL + "wrong_request";
                 makeRequest(req, res);
 
                 assert.equal(lastResponse, "wrong request: query match error: wrong_request, url=http://1.2.3.4/xxx/?wrong_request\nserver=?");
-            });
+            });*/
 
             test("generic request", function() {
-                req.url = SERVER_URL + "1";
+                req.params.ids = [ "1111" ];
 
                 makeRequest(req, res);
 
@@ -70,7 +76,7 @@
                 assert.equal(player.eff, 525);
             });
 
-            test("request with specific vehicle (update from WG)", function() {
+            /*test("request with specific vehicle (update from WG)", function() {
                 req.url = SERVER_URL + "1=T-28";
                 makeRequest(req, res);
 
@@ -120,10 +126,10 @@
                 makeRequest(req, res);
 
                 assert.ok(lastResponse.indexOf("LVL: 5.81") > -1);
-            });
+            });*/
         });
 
-        suite("mongo DB", function() {
+        /*suite("mongo DB", function() {
             test("update", function() {
                 req.url = SERVER_URL + "1=T-28";
                 makeRequest(req, res);
@@ -143,7 +149,7 @@
                 assert.equal(item.e, 525);
                 assert.equal(item.vname, "T-28");
             });
-        });
+        });*/
 
         // TODO: error handling, statistics(?)
     });

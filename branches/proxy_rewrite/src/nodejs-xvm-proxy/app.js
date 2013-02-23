@@ -56,6 +56,8 @@ app.param(function(name, fn) {
     }
 });
 
+app.get("/TEST", generic.test);
+
 // TODO is it optimal?
 app.param("ids", /(\d+(?:=[\w-]*(?:=[\w-]*)?)?)/g);
 
