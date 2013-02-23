@@ -3,7 +3,6 @@ var async = require("async"),
     http = require("http"),
     httpPool = require("./httpPool"),
     settings = require("./settings").settings,
-    tcalc = require("./tcalc/tcalc"),
     utils = require("./utils");
 
 exports.processRemotes = function(processData, responseCallback) {
@@ -313,7 +312,7 @@ var _parseNewPlayerData = function(id, data) {
 
     // TWR - tourist1984 win rate (aka T-Calc)
     try {
-        pdata.twr = parseFloat(tcalc.calc(pdata, false).result.toFixed(2));
+        pdata.twr = parseFloat(utils.tcalc(pdata, false).result.toFixed(2));
     } catch (e) { utils.log(e); }
 
     pdata.lvl = parseFloat(pdata.lvl.toFixed(3));

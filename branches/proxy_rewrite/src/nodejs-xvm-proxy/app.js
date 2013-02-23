@@ -63,7 +63,8 @@ app.get("/:ids", generic.stat);
 
 app.param("playerId", /^\d+$/g);
 
-app.get("/WN/:playerId", command.WN);
+app.get("/WN/:playerId", command.wn);
+app.get("/INFO/:playerId", command.info);
 
 http.createServer(app).listen(app.get("port"), function() {
     console.log("Express server listening on port " + app.get("port"));

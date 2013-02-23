@@ -31,7 +31,7 @@ exports.getPlayersData = function(ids, callback) {
             rqData: parsedIds.data
         };
 
-        callback(error ? { statusCode: 500, text: error } : null, ret);
+        callback(error ? { statusCode: 500, text: error } : undefined, ret);
     });
 
     /*players.aggregate([

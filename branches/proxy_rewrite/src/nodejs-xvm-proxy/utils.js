@@ -1,4 +1,5 @@
-var settings = require("./settings").settings;
+var settings = require("./settings").settings,
+    tcalc = require("./tcalc/tcalc");
 
 // calculate average level of tanks
 var calculateAvgLvl = exports.calculateAvgLevel = function(vehicles) {
@@ -208,3 +209,5 @@ exports.getStatServers = function(id) {
     }
     return res;
 };
+
+exports.tcalc = tcalc.calc;
