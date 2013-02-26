@@ -1,4 +1,4 @@
-var mongodb = require("mongodb"),
+var mongodb,
     settings = require("./settings").settings,
     utils = require("./utils");
 
@@ -6,19 +6,31 @@ var options = {
     auto_reconnect: true,
     poolSize: settings.dbMaxConnections
 };
-
-var db = new mongodb.Db(settings.dbName, new mongodb.Server(settings.mongoServer, settings.mongoPort, options), { w: 0 }),
+var db,
     players;
 
-db.open(function(error, client) {
-    if(error) {
-        utils.log("DB connection error!");
-        return;
-    }
-    players = new mongodb.Collection(client, settings.playersCollectionName);
-});
+module.exports = function(fakeMongo) {
+    mongodb = mongodb || fakeMongo || require("mongodb");
 
-exports.getPlayersData = function(ids, callback) {
+    db = new mongodb.Db(settings.dbName, new mongodb.Server(settings.mongoServer, settings.mongoPort, options), { w: 0 });
+
+    db.open(function(error, client) {
+        if(error) {
+            utils.log("DB connection error!");
+            return;
+        }
+        players = new mongodb.Collection(client, settings.playersCollectionName);
+    });
+
+    return {
+        getPlayersData: getPlayersData,
+        updatePlayersData: updatePlayersData,
+        removeMissed: removeMissed,
+        insertMissed: insertMissed
+    }
+};
+
+var getPlayersData = function(ids, callback) {
     var parsedIds = _parseStatRequest(ids);
 
     var cursor = players.find(
@@ -69,16 +81,16 @@ var _parseStatRequest = function(ids) {
     return { ids: parsedIds, data: data };
 };
 
-exports.updatePlayersData = function(id, data) {
+var updatePlayersData = function(id, data) {
     players.update({ _id: id }, data, { upsert: true });
 };
 
-exports.removeMissed = function(id) {
+var removeMissed = function(id) {
     missed.remove({ _id: id }, function(err) {
         if (err) utils.log("[DB] removeMissed(" + id + ") error: " + err);
     });
 };
 
-exports.insertMissed = function(id, miss) {
+var insertMissed = function(id, miss) {
     missed.insert({ _id: id, missed: miss });
 };

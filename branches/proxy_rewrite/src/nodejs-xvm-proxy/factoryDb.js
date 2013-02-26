@@ -1,5 +1,5 @@
-var factoryHttp = require("./factoryHttp"),
-    db = require("./db"),
+var factoryHttp = require("./factoryHttp")(),
+    db = require("./db")(),
     settings = require("./settings").settings,
     utils = require("./utils");
 

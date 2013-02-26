@@ -14,5 +14,5 @@ exports.test = function(req, res) {
     res.json({
         id: 1,
         status: "ok"
-    })
+    });
 };

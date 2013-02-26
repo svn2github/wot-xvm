@@ -1,11 +1,19 @@
 var async = require("async"),
-    db = require("./db"),
-    http = require("http"),
+    db = require("./db")(),
+    http,
     httpPool = require("./httpPool"),
     settings = require("./settings").settings,
     utils = require("./utils");
 
-exports.processRemotes = function(processData, responseCallback) {
+module.exports = function(fakeHttp) {
+    http = http || fakeHttp || require("http");
+
+    return {
+        processRemotes: processRemotes
+    }
+};
+
+var processRemotes = function(processData, responseCallback) {
     // FIXIT: why this don't work?
     //    for (var id in processData.rqData) ...
     // symptoms: makeSingleRequest args are wrong (always the last item values)

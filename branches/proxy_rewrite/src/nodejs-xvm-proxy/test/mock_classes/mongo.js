@@ -27,10 +27,17 @@ module.exports = (function(undefined) {
     var Collection = function(client, collectionName) {
         return {
             find: function(query) {
-                if(query && query.$or) {
-                    var playerId = query.$or[1]._id;
+                if(query) {
+                    var playerId;
 
-                    setMongoResult("mongo_" + playerId + ".json");
+                    if(query.$or) {
+                        playerId = query.$or[1]._id;
+                    }
+                    if(query._id && query._id.$in) {
+                        playerId = query._id.$in[0];
+                    }
+                    if(playerId)
+                        setMongoResult("mongo_" + playerId + ".json");
                 }
 
                 return cursor;
@@ -50,7 +57,13 @@ module.exports = (function(undefined) {
     };
 
     var setMongoResult = function(result) {
-        currentMongoResult = JSON.parse(fs.readFileSync("./test/mock_responses/" + result, "utf8"));
+        var path = "./test/mock_responses/" + result;
+
+        if(!fs.existsSync(path)) {
+            currentMongoResult = undefined;
+            return;
+        }
+        currentMongoResult = JSON.parse(fs.readFileSync(path, "utf8"));
         currentMongoResult.dt = new Date();
         currentMongoResult = [currentMongoResult];
     };
@@ -61,6 +74,9 @@ module.exports = (function(undefined) {
         Collection: Collection,
         getLastUpdateRequest: function() {
             return lastUpdateRequest;
+        },
+        resetLastUpdateRequest: function() {
+            lastUpdateRequest = { };
         },
         setMongoResult: setMongoResult,
         resetMongoResult: function() {
