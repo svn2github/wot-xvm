@@ -7,7 +7,8 @@ var options = {
     poolSize: settings.dbMaxConnections
 };
 var db,
-    players;
+    players,
+    missed;
 
 module.exports = function(fakeMongo) {
     mongodb = mongodb || fakeMongo || require("mongodb");
@@ -20,6 +21,7 @@ module.exports = function(fakeMongo) {
             return;
         }
         players = new mongodb.Collection(client, settings.playersCollectionName);
+        missed = new mongodb.Collection(client, settings.missedCollectionName);
     });
 
     return {
@@ -33,11 +35,18 @@ module.exports = function(fakeMongo) {
 var getPlayersData = function(ids, callback) {
     var parsedIds = _parseStatRequest(ids);
 
+    process.send({ usage: 1, mongorq: 1 });
+
     var cursor = players.find(
-        { _id: { $in: parsedIds.ids } },
-        { _id: 1, st: 1, dt: 1, cr: 1, up: 1, nm: 1, b: 1, w: 1, spo: 1, hip: 1, cap: 1, dmg: 1, frg: 1, def: 1, lvl: 1, e: 1, wn: 1, twr: 1, v: 1 }
-    );
+            { _id: { $in: parsedIds.ids } },
+            { _id: 1, st: 1, dt: 1, cr: 1, up: 1, nm: 1, b: 1, w: 1, spo: 1, hip: 1, cap: 1, dmg: 1, frg: 1, def: 1, lvl: 1, e: 1, wn: 1, twr: 1, v: 1 }
+        ),
+        startStamp = new Date();
+
     cursor.toArray(function(error, result) {
+        process.send({ usage: 1, mongorq: -1 });
+        updateDbBalancer(startStamp);
+
         var ret = {
             dbData: result,
             rqData: parsedIds.data
@@ -93,4 +102,30 @@ var removeMissed = function(id) {
 
 var insertMissed = function(id, miss) {
     missed.insert({ _id: id, missed: miss });
+};
+
+var _mongoMaxRq = settings.dbMaxConnections,
+    _mongoMaxRqLastUpdate = null;
+
+var updateDbBalancer = function(startStamp) {
+    var now = new Date(),
+        delta = 0,
+        dtime = 0,
+        duration = now - startStamp;
+
+    if (duration > settings.dbMaxTime) {
+        delta = -3;
+        dtime = 200;
+    } else if (duration < settings.dbMinTime) {
+        delta = 1;
+        dtime = 200;
+    }
+
+    if (!_mongoMaxRqLastUpdate || (now - _mongoMaxRqLastUpdate) > dtime) {
+        _mongoMaxRqLastUpdate = now;
+        var oldvalue = _mongoMaxRq;
+        _mongoMaxRq = Math.max(1, Math.min(settings.dbMaxConnections, _mongoMaxRq + delta));
+        if (_mongoMaxRq != oldvalue)
+            process.send({ usage: 1, mongorq_max: _mongoMaxRq - oldvalue });
+    }
 };

@@ -33,6 +33,9 @@ var processRemotes = function(processData, responseCallback) {
                 pdata.cache = {_id: id, st: srv.error};
             processData.dbData[id] = pdata.cache;
             delete processData.rqData[id];
+
+            process.send({usage: 1, max_conn: 1});
+
             return;
         }
 
@@ -65,6 +68,7 @@ var _makeSingleRequest = function(id, server, callback) {
         callback(null, { __status: "timeout" });
     }, server.timeout);
 
+    process.send({usage: 1, serverId: server.id, connections: 1});
     http.get(options,function(res) {
         if(res.statusCode != 200) {
             clearTimeout(reqTimeout);
@@ -130,6 +134,7 @@ var _asyncCallback = function(err, results, processData, responseCallback) {
     // add processData.dbData items to result
     for(var i in processData.dbData) {
         result.players.push(_cacheToResult(processData.dbData[i]));
+        process.send({usage: 1, cached: 1});
     }
     // TODO for why?
     processData.dbData = null;
@@ -193,6 +198,7 @@ var _asyncCallback = function(err, results, processData, responseCallback) {
 
         // updating db
         db.updatePlayersData(_id, pdata);
+        process.send({usage: 1, updated: 1});
 
         if(settings.updateMissed === true)
             db.removeMissed(_id);
@@ -212,17 +218,22 @@ var _onRequestDone = function(server, error) {
         sst = httpPool.serverStatus[server.id];
 
     sst.connections--;
+    process.send({ usage: 1, serverId: server.id, connections: -1, fail: !!error });
 
     // HTTP connections balancer
     if(!sst.lastMaxConnectionUpdate || (now - sst.lastMaxConnectionUpdate) > (error ? 1000 : 5000)) {
+        var oldMaxConn = sst.maxConnections;
+
         sst.lastMaxConnectionUpdate = now;
         sst.maxConnections = Math.max(1, Math.min(server.maxconn, sst.maxConnections + (error ? -5 : 1)));
+        process.send({usage: 1, serverId: server.id, maxConnections: sst.maxConnections - oldMaxConn});
     }
 
     if(error) {
         sst.lastErrorDate = now;
         if(!sst.error_shown) {
             sst.error_shown = true;
+            process.send({log: 1, msg: "ERROR: " + error});
         }
     }
 };
@@ -250,7 +261,7 @@ var _cacheToResult = function(item) {
         twr: Math.round(item.twr)
     };
 
-    if (item.vname && item.v)
+    if(item.vname && item.v)
         res.v = item.v.name ? item.v : utils.filterVehicleData(item, item.vname);
     return res;
 };
@@ -258,13 +269,15 @@ var _cacheToResult = function(item) {
 var _prepareFallbackRes = function(item, id, status) {
     id = parseInt(id);
 
-    if (!item.cache) {
-        if (settings.updateMissed == true)
+    if(!item.cache) {
+        process.send({usage: 1, missed: 1});
+        if(settings.updateMissed == true)
             db.insertMissed(id, true);
-        return {id:id, date:new Date(), status:status};
+        return {id: id, date: new Date(), status: status};
     }
 
-    if (settings.updateMissed == true)
+    process.send({usage: 1, updatesFailed: 1});
+    if(settings.updateMissed == true)
         db.insertMissed(id, false);
     var res = _cacheToResult(item.cache);
     res.status = status;
@@ -292,7 +305,7 @@ var _parseNewPlayerData = function(id, data) {
     };
 
     // fill vehicle data
-    for (var i in data.vehicles) {
+    for(var i in data.vehicles) {
         var vdata = data.vehicles[i];
         pdata.v[vdata.name.toUpperCase()] = {
             cl: utils.getVehicleType(vdata.class),
@@ -318,7 +331,9 @@ var _parseNewPlayerData = function(id, data) {
     // TWR - tourist1984 win rate (aka T-Calc)
     try {
         pdata.twr = parseFloat(utils.tcalc(pdata, false).result.toFixed(2));
-    } catch (e) { utils.log(e); }
+    } catch(e) {
+        utils.log(e);
+    }
 
     pdata.lvl = parseFloat(pdata.lvl.toFixed(3));
 

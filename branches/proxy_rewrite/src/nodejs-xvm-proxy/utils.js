@@ -117,6 +117,10 @@ var log = exports.log = function(str) {
     console.log(s + ": " + str);
 };
 
+exports.performanceReport = function(perfStat) {
+    log(JSON.stringify(perfStat));
+} ;
+
 // debug
 exports.debug = function(str) {
     log("DEBUG: " + str);

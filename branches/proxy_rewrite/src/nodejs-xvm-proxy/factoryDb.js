@@ -4,6 +4,7 @@ var factoryHttp = require("./factoryHttp")(),
     utils = require("./utils");
 
 exports.getPlayersData = function(ids, callback) {
+    process.send({ usage: 1, requests: 1, players: ids.length });
     db.getPlayersData(ids, function(error, processData) {
         if(error) {
             callback(500, '{"error":"' + error.text + '","server":"' + settings.serverName + '"}');
@@ -52,7 +53,6 @@ var _onPlayersData = function(processData, callback) {
         // rq_data - items for update from statistics host
         factoryHttp.processRemotes(processData, callback);
     } catch(e) {
-        //        response.statusCode = 500;
         callback(500, '{"error":"' + e + '","server":"' + settings.serverName + '"}');
         utils.log("Error: " + e);
     }
@@ -94,7 +94,6 @@ var _recalculateMissed = function(data) {
 
     // updating db
     if(ok && Math.floor(Math.random() * 1) === 0) {
-        //        utils.log("update id=" + data._id);
         db.updatePlayersData(data._id, data);
     }
 };

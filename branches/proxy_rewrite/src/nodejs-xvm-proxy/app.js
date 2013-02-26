@@ -2,12 +2,20 @@
  * Module dependencies.
  */
 
-var express = require("express")
-    , routes = require("./routes")
+var cluster = require('cluster')
+    , express = require("express")
+    //, routes = require("./routes")
     , generic = require("./routes/generic")
     , command = require("./routes/command")
     , http = require("http")
-    , path = require("path");
+    , httpPool = require("./httpPool")
+    , path = require("path")
+    , tcalcBase = require("./tcalc/tcalc_base");
+
+if(cluster.isMaster) {
+    require("./master").main();
+    return;
+}
 
 var app = express();
 
@@ -21,12 +29,6 @@ app.configure(function() {
     app.use(express.methodOverride());
     app.use(app.router);
     app.use(express.static(path.join(__dirname, "public")));
-    /*app.locals({
-        async: require("async"),
-        db: require("./db"),
-        settings: require("./settings"),
-        utils: require("./utils")
-    });*/
 });
 
 app.configure("development", function() {
@@ -67,6 +69,13 @@ app.param("playerId", /^\d+$/g);
 
 app.get("/WN/:playerId", command.wn);
 app.get("/INFO/:playerId", command.info);
+
+process.on("message", function(msg) {
+    if(msg.info)
+        httpPool.info = msg.info;
+    else if(msg.twrbase)
+        tcalcBase.parseTWRBase(msg.twrbase);
+});
 
 http.createServer(app).listen(app.get("port"), function() {
     console.log("Express server listening on port " + app.get("port"));
