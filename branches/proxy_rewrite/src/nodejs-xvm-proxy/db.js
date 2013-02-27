@@ -8,27 +8,34 @@ var options = {
 };
 var db,
     players,
-    missed;
+    missed,
+    performanceLog;
 
 module.exports = function(fakeMongo) {
     mongodb = mongodb || fakeMongo || require("mongodb");
 
-    db = new mongodb.Db(settings.dbName, new mongodb.Server(settings.mongoServer, settings.mongoPort, options), { w: 0 });
+    if(!db) {
+        console.log("Create DB link!!!! FIX ME!!!!");
+        db = new mongodb.Db(settings.dbName, new mongodb.Server(settings.mongoServer, settings.mongoPort, options), { w: 0 });
 
-    db.open(function(error, client) {
-        if(error) {
-            utils.log("DB connection error!");
-            return;
-        }
-        players = new mongodb.Collection(client, settings.playersCollectionName);
-        missed = new mongodb.Collection(client, settings.missedCollectionName);
-    });
+        db.open(function(error, client) {
+            if(error) {
+                utils.log("DB connection error!");
+                return;
+            }
+            players = new mongodb.Collection(client, settings.playersCollectionName);
+            missed = new mongodb.Collection(client, settings.missedCollectionName);
+            performanceLog = new mongodb.Collection(client, settings.performanceLogCollectionName);
+        });
+    }
 
     return {
+        getPerformanceReport: getPerformanceReport,
         getPlayersData: getPlayersData,
-        updatePlayersData: updatePlayersData,
+        insertMissed: insertMissed,
+        insertPerformanceReport: insertPerformanceReport,
         removeMissed: removeMissed,
-        insertMissed: insertMissed
+        updatePlayersData: updatePlayersData
     }
 };
 
@@ -128,4 +135,14 @@ var updateDbBalancer = function(startStamp) {
         if (_mongoMaxRq != oldvalue)
             process.send({ usage: 1, mongorq_max: _mongoMaxRq - oldvalue });
     }
+};
+
+var insertPerformanceReport = function(perfStat) {
+    performanceLog.insert(perfStat);
+};
+
+var getPerformanceReport = function(callback) {
+    var cursor = performanceLog.find().sort({ _id: -1 }).limit(25);
+
+    cursor.toArray(callback);
 };

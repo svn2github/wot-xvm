@@ -1,0 +1,29 @@
+table
+    thead
+        tr
+            th uptime
+            th requests
+            th rq/s
+            th players
+            th pl/s
+            th cached
+            th updated
+            th missed
+            th updfail
+            th max_conn
+            th mongorq
+
+    tbody
+        each record in db
+            tr
+                td #{record.uptime}
+                td #{record.requests}
+                td #{record.req_s_now} (#{record.req_s_total})
+                td #{record.players}
+                td #{record.pl_s}
+                td #{record.cached}%
+                td #{record.updated}%
+                td #{record.missed}%
+                td #{record.updfail}%
+                td #{record.max_conn}%
+                td #{record.mongorq} / #{record.mongorq_max}

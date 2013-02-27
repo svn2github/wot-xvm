@@ -10,6 +10,7 @@ var cluster = require('cluster')
     , http = require("http")
     , httpPool = require("./httpPool")
     , path = require("path")
+    , stat = require("./routes/stat")
     , tcalcBase = require("./tcalc/tcalc_base");
 
 if(cluster.isMaster) {
@@ -69,6 +70,8 @@ app.param("playerId", /^\d+$/g);
 
 app.get("/WN/:playerId", command.wn);
 app.get("/INFO/:playerId", command.info);
+
+app.get("/STAT", stat.performance);
 
 process.on("message", function(msg) {
     if(msg.info)

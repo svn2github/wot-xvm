@@ -19,6 +19,7 @@ exports.settings = {
     playersCollectionName: "players",
     missedCollectionName: "missed",
     usersCollectionName: "users",
+    performanceLogCollectionName: "performance",
     dbMaxConnections: Math.floor(20 / numNodes),
     dbMaxConnections2: Math.floor(10 / numNodes),
     dbMinTime: 1000, // msec
