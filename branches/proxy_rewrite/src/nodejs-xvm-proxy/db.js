@@ -15,7 +15,6 @@ module.exports = function(fakeMongo) {
     mongodb = mongodb || fakeMongo || require("mongodb");
 
     if(!db) {
-        console.log("Create DB link!!!! FIX ME!!!!");
         db = new mongodb.Db(settings.dbName, new mongodb.Server(settings.mongoServer, settings.mongoPort, options), { w: 0 });
 
         db.open(function(error, client) {

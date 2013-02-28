@@ -10,7 +10,7 @@
         lastResponse,
         makeRequest;
 
-    var SERVER_URL = "http://1.2.3.4/xxx/?";
+    process.send = function() { };
 
     suite("Basic functionality", function() {
         setup(function() {

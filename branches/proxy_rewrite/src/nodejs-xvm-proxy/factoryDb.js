@@ -1,5 +1,4 @@
-var factoryHttp = require("./factoryHttp")(),
-    db = require("./db")(),
+var db = require("./db")(),
     settings = require("./settings").settings,
     utils = require("./utils");
 
@@ -51,7 +50,7 @@ var _onPlayersData = function(processData, callback) {
 
         // db_data - cached items
         // rq_data - items for update from statistics host
-        factoryHttp.processRemotes(processData, callback);
+        callback(undefined, processData);
     } catch(e) {
         callback(500, '{"error":"' + e + '","server":"' + settings.serverName + '"}');
         utils.log("Error: " + e);

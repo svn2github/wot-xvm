@@ -1,9 +1,9 @@
-var factoryDb = require("../factoryDb");
+var pipeline = require("../pipeline");
 
 exports.stat = function(req, res) {
     var ids = req.params.ids;
 
-    factoryDb.getPlayersData(ids, function(error, result) {
+    pipeline.generic(ids, function(error, result) {
 
         res.json(error || 200, result);
 
