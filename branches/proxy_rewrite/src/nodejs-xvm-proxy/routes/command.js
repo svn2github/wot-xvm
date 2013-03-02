@@ -2,9 +2,9 @@ var db = require("../db")(),
     utils = require("../utils");
 
 exports.wn = function(req, res) {
-    db.getPlayersData([ "" + req.params.playerId ], function(error, processData) {
+    db.getPlayersData([ parseInt(req.params.playerId) ], function(error, dbData) {
         if(!error) {
-            var db = processData.dbData[0];
+            var db = dbData[0];
             if(db) {
                 db.eff = utils.calculateEfficiency(db);
                 db.neff = utils.calculateNEFF(db.eff);
@@ -34,7 +34,7 @@ exports.wn = function(req, res) {
 };
 
 exports.info = function(req, res) {
-    db.getPlayersData([ "" + req.params.playerId ], function(error, processData) {
+    db.getPlayersData([ parseInt(req.params.playerId) ], function(error, processData) {
         var result = processData.dbData[0] || "Player not found";
 
         res.json(error ? 500 : 200, result);

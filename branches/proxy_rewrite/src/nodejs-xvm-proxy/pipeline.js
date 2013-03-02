@@ -9,15 +9,43 @@ var processData,
     responseCallback;
 
 exports.generic = function(ids, callback) {
+    var parsedIds = _parseStatRequest(ids);
+
     responseCallback = callback;
-    factoryDb.getPlayersData(ids, function(error, procData) {
+
+    factoryDb.getPlayersData(parsedIds, function(error, procData) {
+        processData = procData;
+        processData.rqData = parsedIds.data;
+
         if(error) {
-            responseCallback(error, procData);
+            responseCallback(error, processData);
             return;
         }
-        processData = procData;
+
         factoryHttp.processRemotes(processData, httpCallback);
     });
+};
+
+var _parseStatRequest = function(ids) {
+    var parsedIds = [ ];
+    var data = { };
+    ids.forEach(function(a) {
+        var x = a.split("=");
+        var id = parseInt(x[0]);
+
+        // Skip wrong id and non-working servers
+        var servers = utils.getStatServers(id);
+        if(servers) {
+            parsedIds.push(id);
+            data[id] = { vname: x[1] ? x[1].toUpperCase() : null, servers: servers };
+            if(x[2] == "1" && settings.updateUsers == true)
+                db.updateUsers(id);
+        } else {
+            data[id] = { vname: x[1] ? x[1].toUpperCase() : null, status: "bad_id" };
+        }
+    });
+
+    return { ids: parsedIds, data: data };
 };
 
 var httpCallback = function(err, results) {

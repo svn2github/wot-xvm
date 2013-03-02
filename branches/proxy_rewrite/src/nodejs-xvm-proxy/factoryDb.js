@@ -2,15 +2,20 @@ var db = require("./db")(),
     settings = require("./settings").settings,
     utils = require("./utils");
 
-exports.getPlayersData = function(ids, callback) {
-    process.send({ usage: 1, requests: 1, players: ids.length });
-    db.getPlayersData(ids, function(error, processData) {
+exports.getPlayersData = function(parsedIds, callback) {
+    process.send({ usage: 1, requests: 1, players: parsedIds.ids.length });
+    db.getPlayersData(parsedIds.ids, function(error, dbData) {
         if(error) {
             callback(500, '{"error":"' + error.text + '","server":"' + settings.serverName + '"}');
             return;
         }
 
-        _onPlayersData(processData, callback);
+        var procData = {
+            dbData: dbData,
+            rqData: parsedIds.data
+        };
+
+        _onPlayersData(procData, callback);
     });
 };
 
