@@ -10,6 +10,7 @@ var cluster = require('cluster')
     , http = require("http")
     , httpPool = require("./httpPool")
     , path = require("path")
+    , settings = require("./settings").settings
     , stat = require("./routes/stat")
     , tcalcBase = require("./tcalc/tcalc_base");
 
@@ -21,7 +22,7 @@ if(cluster.isMaster) {
 var app = express();
 
 app.configure(function() {
-    app.set("port", process.env.PORT || 3000);
+    app.set("port", settings.port || 3000);
     app.set("views", __dirname + "/views");
     app.set("view engine", "jade");
     app.use(express.favicon());
@@ -43,18 +44,29 @@ app.configure("production", function() {
 app.param(function(name, fn) {
     if(fn instanceof RegExp) {
         return function(req, res, next, val) {
-            var captures = [],
-                group;
+            var group;
 
-            while((group = fn.exec(String(val))) !== null) {
-                captures.push(group[0])
-            }
-            if(captures.length) {
-                req.params[name] = captures;
-                next();
+            if(fn.global) {
+                var captures = [ ];
+
+                while((group = fn.exec(String(val))) !== null) {
+                    captures.push(group[0]);
+                }
+                if(captures.length) {
+                    req.params[name] = captures;
+                    next();
+                    return;
+                }
             } else {
-                next("route");
+                group = fn.exec(String(val));
+                if(group) {
+                    req.params[name] = group[0];
+                    next();
+                    return;
+                }
             }
+
+            next("route");
         }
     }
 });
@@ -63,13 +75,15 @@ app.get("/TEST", generic.test);
 
 // TODO is it optimal?
 app.param("ids", /(\d+(?:=[\w-]*(?:=[\w-]*)?)?)/g);
-
 app.get("/:ids", generic.stat);
 
-app.param("playerId", /^\d+$/g);
-
+app.param("playerId", /^\d+$/);
 app.get("/WN/:playerId", command.wn);
-app.get("/INFO/:playerId", command.info);
+app.get("/INFO/:playerId", command.infoById);
+
+app.param("playerName", /^\w+/);
+app.param("region", /(RU)|(EU)|(US)|(NA)|(SEA)|(VTC)|(KR)$/);
+app.get("/INFO/:playerName/:region", command.infoByName);
 
 app.get("/STAT", stat.performance);
 

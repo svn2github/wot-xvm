@@ -135,11 +135,31 @@
                 makeRequest(req, res);
 
                 assert.equal(lastResponse.title, "WN");
-                //console.log(lastResponse);
+
                 var resp = lastResponse.db;
+
                 assert.equal(resp.nm, "vitsu");
                 assert.equal(resp.lvl, 5.81);
                 assert.equal(resp.admg, 762);
+            });
+
+            test("INFO by id", function() {
+                makeRequest = require("../routes/command").infoById;
+                req.params.playerId = "1111";
+                makeRequest(req, res);
+
+                assert.equal(lastResponse._id, 1111);
+                assert.equal(lastResponse.nm, "vitsu");
+            });
+
+            test("INFO by name", function() {
+                makeRequest = require("../routes/command").infoByName;
+                req.params.playerName = "vitsu";
+                req.params.region = "RU";
+                makeRequest(req, res);
+
+                assert.equal(lastResponse._id, 1111);
+                assert.equal(lastResponse.nm, "vitsu");
             });
 
         });

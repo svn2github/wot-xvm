@@ -33,9 +33,17 @@ exports.wn = function(req, res) {
     });
 };
 
-exports.info = function(req, res) {
-    db.getPlayersData([ parseInt(req.params.playerId) ], function(error, processData) {
-        var result = processData.dbData[0] || "Player not found";
+exports.infoById = function(req, res) {
+    db.getPlayersData([ parseInt(req.params.playerId) ], function(error, dbData) {
+        var result = dbData[0] || "Player not found";
+
+        res.json(error ? 500 : 200, result);
+    });
+};
+
+exports.infoByName = function(req, res) {
+    db.getPlayerByName(req.params.playerName, req.params.region, function(error, dbData) {
+        var result = dbData[0] || "Player not found";
 
         res.json(error ? 500 : 200, result);
     });

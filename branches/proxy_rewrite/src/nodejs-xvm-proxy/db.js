@@ -30,6 +30,7 @@ module.exports = function(fakeMongo) {
 
     return {
         getPerformanceReport: getPerformanceReport,
+        getPlayerByName: getPlayerByName,
         getPlayersData: getPlayersData,
         insertMissed: insertMissed,
         insertPerformanceReport: insertPerformanceReport,
@@ -65,6 +66,54 @@ var getPlayersData = function(ids, callback) {
 
      callback(error ? { statusCode:500, text:error } : null, ret);
      });*/
+};
+
+var getPlayerByName = function(name, region, callback) {
+    process.send({ usage: 1, mongorq: 1 });
+
+    var minId,
+        maxId;
+
+    switch(region) {
+        case "RU":
+            minId = 1;
+            maxId = 499999999;
+            break;
+        case "EU":
+            minId = 500000000;
+            maxId = 999999999;
+            break;
+        case "NA":
+        case "US":
+            minId = 1000000000;
+            maxId = 1499999999;
+            break;
+        case "SEA":
+            minId = 2000000000;
+            maxId = 2499999999;
+            break;
+        case "VTC":
+            minId = 2500000000;
+            maxId = 2999999999;
+            break;
+        case "KR":
+            minId = 3000000000;
+            maxId = 3499999999;
+            break;
+    }
+// TODO code dup
+    var cursor = players.find({
+                nm: name,
+                _id: { $gte: minId, $lte: maxId }
+            }),
+        startStamp = new Date();
+
+    cursor.toArray(function(error, result) {
+        process.send({ usage: 1, mongorq: -1 });
+        updateDbBalancer(startStamp);
+
+        callback(error ? { statusCode: 500, text: error } : undefined, result);
+    });
 };
 
 var updatePlayersData = function(id, data) {

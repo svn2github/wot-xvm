@@ -28,16 +28,20 @@ module.exports = (function(undefined) {
         return {
             find: function(query) {
                 if(query) {
-                    var playerId;
+                    var playerId,
+                        playerName;
 
                     if(query.$or) {
                         playerId = query.$or[1]._id;
                     }
+                    if(query.nm) {
+                        playerName = query.nm;
+                    }
                     if(query._id && query._id.$in) {
                         playerId = query._id.$in[0];
                     }
-                    if(playerId)
-                        setMongoResult("mongo_" + playerId + ".json");
+                    if(playerId || playerName)
+                        setMongoResult("mongo_" + (playerId || playerName) + ".json");
                 }
 
                 return cursor;

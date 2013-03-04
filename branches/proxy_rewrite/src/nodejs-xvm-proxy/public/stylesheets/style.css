@@ -12,6 +12,6 @@ table {
     text-align: center;
 }
 
-tr {
-    border: 1px solid black;
+tr:nth-child(odd) {
+    background: #d3d3d3;
 }
