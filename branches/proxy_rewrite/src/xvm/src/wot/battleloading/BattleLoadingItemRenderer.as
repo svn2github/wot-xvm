@@ -9,6 +9,7 @@ import wot.utils.GlobalEventDispatcher;
 import wot.utils.IconLoader;
 import wot.utils.Logger;
 import wot.utils.Macros;
+import wot.utils.StatData;
 import wot.utils.StatLoader;
 import wot.utils.PlayerInfo;
 import wot.utils.Utils;
@@ -56,10 +57,8 @@ class wot.battleloading.BattleLoadingItemRenderer extends net.wargaming.controls
     {
         if (Config.s_config.rating.showPlayersStatistics)
         {
-            StatLoader.AddPlayerData(data.id, data.label, data.vehicle, data.icon, team, selected, data.playerID);
+            StatLoader.AddPlayerData(data, team);
             GlobalEventDispatcher.addEventListener("stat_loaded", this, StatLoadedCallback);
-            //if (!StatData.s_loaded && StatLoader.s_players_count === 30)
-            //    StatLoader.StartLoadData(Defines.COMMAND_RUN);
         }
     }
 
@@ -142,7 +141,7 @@ class wot.battleloading.BattleLoadingItemRenderer extends net.wargaming.controls
 
         //Logger.add("update2");
 
-        Macros.RegisterPlayerData(data.label, data);
+        Macros.RegisterPlayerData(Utils.GetNormalizedPlayerName(data.label), data);
 
         var saved_icon = data.icon;
         var saved_label = data.label;
@@ -166,6 +165,8 @@ class wot.battleloading.BattleLoadingItemRenderer extends net.wargaming.controls
         vehicleField.htmlText = Cache.Get(key, function() { return Macros.Format(saved_label,
             team == Defines.TEAM_ALLY ? Config.s_config.battleLoading.formatLeft : Config.s_config.battleLoading.formatRight,
             { }) } );
+
+        //Logger.add(vehicleField.htmlText);
     }
 
     // update delegate
@@ -177,7 +178,7 @@ class wot.battleloading.BattleLoadingItemRenderer extends net.wargaming.controls
 
         var label = data.label;
         var team = this.team;
-        vehicleField.condenseWhite = false;
+        vehicleField.condenseWhite = StatData.s_empty;
         var key = "BL/" + label;
         Cache.Remove(key);
         vehicleField.htmlText = Cache.Get(key, function() { return Macros.Format(label,

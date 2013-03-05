@@ -1,9 +1,5 @@
-/**
- * ...
- * @author sirmax2
- * @author johnp
- */
 import com.xvm.JSON;
+import wot.utils.Comm;
 import wot.utils.Config;
 import wot.utils.Defines;
 import wot.utils.GlobalEventDispatcher;
@@ -17,28 +13,39 @@ class wot.utils.StatLoader
 {
     public static var s_players_count = 0;
     public static var teams = { t1:0, t2:0 };
-    public static var s_loadDataStarted = false;
     private static var s_loading = false;
-    private static var dirty: Boolean = false;
-    private static var requestId: Number = -1;
+    private static var dirty:Boolean = false;
 
-    private static var dummy = Logger.dummy; // avoid import warning
+    private static var __dummy = Logger.dummy; // avoid import warning
 
-    // so we don't have to create it at function execution:
-    // try to retrieve stats after 0.3, 0.8, 1.5, 3 and 5 seconds
-    private static var currentTimeoutId = 0;
-    private static var timeouts = [ 300, 500, 700, 1500, 2000 ];
-
-    public static function AddPlayerData(playerId: Number, playerName: String, vehicle: String, icon: String,
-        team: Number, selected: Boolean, realVehicleId: Number)
+    // data: {
+    //   uid|id|playerId,
+    //   label|playerName,
+    //   vehicle|vehicleName,
+    //   icon|tankIcon,
+    //   himself,
+    //   vehId|playerID,
+    //   vehicleState
+    // }
+    public static function AddPlayerData(data:Object, team:Number)
     {
-        if (playerId <= 0 || !playerName)
+        var id = data.uid || data.id || data.playerId || 0;
+        var label = data.label || data.playerName;
+        var vehicle = data.vehicle || data.vehicleName;
+        var icon = data.icon || data.tankIcon;
+        var vehId = data.vehId || data.playerID || 0;
+        var vehicleState = data.vehicleState || 3; // IS_ALIVE = 1, IS_AVATAR_READY = 2, IS_UNKNOWN = 4
+
+        //Logger.add("AddPlayerData: " + playerName + ", " + vehicle + ", " + icon);
+
+        if (id <= 0 || !label)
             return;
 
-        var pname = Utils.GetNormalizedPlayerName(playerName);
-        var clan = Utils.GetClanName(playerName);
+        if (data.clanAbbrev)
+            label += "[" + data.clanAbbrev + "]";
 
-        //Logger.add("AddPlayerData(" + playerName + "): " + pname);
+        var pname = Utils.GetNormalizedPlayerName(label);
+        var clan = Utils.GetClanName(label);
 
         if (team == Defines.TEAM_ALLY)
             teams.t1 = 1;
@@ -48,172 +55,125 @@ class wot.utils.StatLoader
         if (!StatData.s_data[pname])
             s_players_count++;
         StatData.s_data[pname] = {
-            playerId: playerId,
-            fullPlayerName: playerName.split(" ").join(""),
+            playerId: id,
+            fullPlayerName: label.split(" ").join(""),
             label: pname,
             clanAbbrev: clan,
             vehicle: vehicle,
-            vehicleId: VehicleInfo.getInfo2(icon).name,
+            vehicleKey: VehicleInfo.getInfo2(icon).name.toUpperCase(),
             icon: icon,
             team: team,
-      	    realVehicleId: realVehicleId ? realVehicleId : 0,
-            selected: selected,
-            loaded: StatData.s_data[pname] ? true : false,
+      	    vehicleId: vehId,
+            vehicleState: vehicleState,
+            selected: data.himself,
+            loadstate: !StatData.s_data[pname].loadstate ? Defines.LOADSTATE_NONE : StatData.s_data[pname].loadstate,
             stat: StatData.s_data[pname] ? StatData.s_data[pname].stat : undefined
         };
-        if (!StatData.s_data[pname].loaded)
+        if (StatData.s_data[pname].loadstate == Defines.LOADSTATE_NONE)
             dirty = true;
     }
 
-    public static function StartLoadData(cmd, isRecursiveCall)
+    public static function StartLoadData()
     {
-        //if (!isRecursiveCall)
-        //  Logger.add("StatLoader.StartLoadData(): cmd=" + cmd);
-
-        if (s_loadDataStarted && !isRecursiveCall)
+        if (s_loading)
             return;
-        s_loadDataStarted = true;
+        s_loading= true;
+        //Logger.add("StatLoader.StartLoadData()");
+        StartLoadDataInternal();
+    }
 
-        var command = (isRecursiveCall ? Defines.COMMAND_ADD : Defines.COMMAND_SET) + " ";
-
-        var players_to_load = [];
-        var len = 0;
+    private static function StartLoadDataInternal()
+    {
+        var rq = [];
         for (var pname in StatData.s_data)
         {
             var pdata = StatData.s_data[pname];
-            if (!pdata.loaded)
-            {
-                //Logger.addObject(pdata, pname);
-                var str: String = String(pdata.playerId) + "=" + pdata.fullPlayerName +
-                    "&" + pdata.vehicleId + (pdata.selected ? "&1" : "");
-                if (len + str.length > Defines.MAX_PATH - command.length)
-                    break;
-                pdata.loaded = true;
-                players_to_load.push(str);
-                len += str.length + 1;
+            if (pdata.loadstate != Defines.LOADSTATE_NONE)
+                continue;
+            var pd = {
+                id:pdata.playerId,
+                n:pdata.fullPlayerName,
+                v:pdata.vehicleKey,
+                s:pdata.selected ? 1 : 0,
+                t:pdata.team
             }
+            rq.push(JSON.stringify(pd, "", true));
         }
 
-        if (players_to_load.length > 0)
+        var n = rq.length;
+        for (var i = 0; i < rq.length; ++i)
         {
-            var lv:LoadVars = new LoadVars();
-            lv.onData = function(str: String)
-            {
-                //Logger.add("lv: " + str);
-                if (!str)
-                    return;
-                try
-                {
-                    var response = JSON.parse(str);
-                    StatLoader.requestId = response.resultId;
-                    StatLoader.StartLoadData(cmd, true);
-                }
-                catch (ex)
-                {
-                    StatLoader.requestId = -1;
-                }
-            }
-            lv.load(command + players_to_load.join(","));
-            return;
+            Comm.SyncEncoded(i == 0 ? Defines.COMMAND_SET : Defines.COMMAND_ADD, rq[i], null, function(event) {
+                    n--;
+                    try
+                    {
+                        var response = JSON.parse(event.str);
+                        if (n == 0)
+                            Comm.Async(Defines.COMMAND_GET_ASYNC, response.resultId, null, null, StatLoader.LoadStatDataCallback);
+                        // TODO: what if bad resultId?
+                    }
+                    catch (e)
+                    {
+                        Logger.add("Error parsing response: " + e);
+                        if (n == 0)
+                            StatLoader.LoadStatDataCallback({error:e});
+                    }
+                });
         }
 
         dirty = false;
-        currentTimeoutId = 0;
-        LoadStatData(cmd);
     }
 
-    public static function LoadLastStat(event)
+    private static function LoadStatDataCallback(event)
     {
-        if (event)
-            GlobalEventDispatcher.removeEventListener("config_loaded", StatLoader.LoadLastStat);
-        GlobalEventDispatcher.addEventListener("process_fow", StatLoader.ProcessForFogOfWar);
-        if (Config.s_config.rating.showPlayersStatistics && !StatData.s_loaded)
-            LoadStatData(Defines.COMMAND_GET_LAST_STAT);
-    }
-
-    private static var requestCounter: Number = 0;
-    private static function LoadStatData(command, isRecursiveCall)
-    {
-        //Logger.add("StatLoader.LoadStatData(): command=" + command);
-
-        if (s_loading && !isRecursiveCall)
-            return;
-        s_loading = true;
-
-        var lv:LoadVars = new LoadVars();
-        lv.onData = function(str: String)
+        var finallyBugWorkaround: Boolean = false; // Workaround: finally block have a bug - it can be called twice. Why? How?
+        try
         {
-            //Logger.add("lv: " + str);
-            if (!str)
-                return;
+            var response = JSON.parse(event.str);
 
-            var done = false;
-            var finallyBugWorkaround: Boolean = false; // Workaround: finally block have a bug - it can be called twice. Why? How? F*ck!
-            try
+            if (response.info && response.info.xvm)
+                GlobalEventDispatcher.dispatchEvent({ type: "set_info", ver: response.info.xvm.ver, message: response.info.xvm.message });
+
+            if (response.players)
             {
-                var response = JSON.parse(str);
-                if (response.status == "NOT_READY")
+                var players_length = response.players.length;
+                for (var i = 0; i < players_length; ++i)
                 {
-                    if (StatLoader.currentTimeoutId >= StatLoader.timeouts.length)
-                        return;
-                    var timer:Function = _global.setTimeout(function() { StatLoader.LoadStatData(command, true); },
-                        StatLoader.timeouts[StatLoader.currentTimeoutId]);
-                    StatLoader.currentTimeoutId++;
-                    return;
-                }
-
-                done = true;
-
-                if (response.info && response.info.xvm)
-                    GlobalEventDispatcher.dispatchEvent({ type: "set_info", ver: response.info.xvm.ver, message: response.info.xvm.message });
-
-                if (response.players)
-                {
-                    var players_length = response.players.length;
-                    for (var i = 0; i < players_length; ++i)
+                    var stat = response.players[i];
+                    var name = stat.name.toUpperCase();
+                    stat = StatLoader.CalculateStatValues(stat);
+                    if (!StatData.s_data[name])
                     {
-                        var stat = response.players[i];
-                        var name = stat.name.toUpperCase();
-                        stat = StatLoader.CalculateStatValues(stat);
-                        if (!StatData.s_data[name])
-                        {
-                            StatLoader.s_players_count++;
-                            StatData.s_data[name] = { loaded: true };
-                        }
-                        StatData.s_data[name].stat = stat;
-                        if (StatData.s_data[name].vehicleId == "UNKNOWN")
-                            StatData.s_data[name].loaded = false;
-                        Macros.RegisterStatMacros(stat.name, stat);
-                        //Logger.addObject(stat, stat.name);
+                        StatLoader.s_players_count++;
+                        StatData.s_data[name] = { };
                     }
+                    StatData.s_data[name].stat = stat;
+                    StatData.s_data[name].loadstate = (StatData.s_data[name].vehicleKey == "UNKNOWN")
+                        ? Defines.LOADSTATE_UNKNOWN : Defines.LOADSTATE_DONE;
+                    StatData.s_empty = false;
+                    Macros.RegisterStatMacros(stat.name, stat);
+                    //Logger.addObject(StatData.s_data[name], "s_data[" + name + "]");
                 }
             }
-            catch (ex)
-            {
-                // do nothing
-            }
-            finally
-            {
-                if (finallyBugWorkaround)
-                    return;
-                finallyBugWorkaround = true;
+        }
+        catch (ex)
+        {
+            // do nothing
+        }
+        finally
+        {
+            if (finallyBugWorkaround)
+                return;
+            finallyBugWorkaround = true;
 
-                if (done)
-                {
-                    StatData.s_loaded = true;
-                    StatLoader.s_loadDataStarted = false;
-                    StatLoader.s_loading = false;
-                    //Logger.add("Stat Loaded");
-                    GlobalEventDispatcher.dispatchEvent( { type: "stat_loaded" } );
+            StatData.s_loaded = true;
+            StatLoader.s_loading = false;
+            //Logger.add("Stat Loaded");
+            GlobalEventDispatcher.dispatchEvent( { type: "stat_loaded" } );
 
-                    if (StatLoader.dirty)
-                        var timer = _global.setTimeout(function() { StatLoader.StartLoadData(Defines.COMMAND_RUN_ASYNC); }, 50);
-                }
-            }
-        };
-
-        lv.load(command + ((command == Defines.COMMAND_RUN_ASYNC) ? " " + requestId + " " + requestCounter: ""));
-        requestCounter++;
+            if (StatLoader.dirty)
+                var timer = _global.setTimeout(function() { StatLoader.StartLoadData(); }, 50);
+        }
     }
 
     public static function CalculateStatValues(stat, forceTeff): Object
@@ -265,13 +225,13 @@ class wot.utils.StatLoader
         var vi3 = VehicleInfo.getInfo3(stat.vn);
         if (!vi3 || !vi3.cl || !vi3.l)
         {
-            Logger.add("WARNING: vehicle info (3) missed: " + stat.vn);
+            //Logger.add("WARNING: vehicle info (3) missed: " + stat.vn);
             return stat;
         }
 
         stat.tdv = stat.td == null || stat.td < 0 ? null : Math.round(stat.td / stat.tb / vi3.hp * 10) / 10;
 
-        var EC = Config.s_config.consts.E[vi3.cl][vi3.l - 1];
+        var EC = { CD: 3, CF: 1 };
 //        Logger.addObject(stat);
 //        Logger.addObject(EC);
         if (EC.CD != null && EC.CD > 0 && (stat.tdb == null || stat.tdb <= 0))
@@ -281,8 +241,8 @@ class wot.utils.StatLoader
 
         var dD = stat.tdb - vi3.avgD;
         var dF = stat.tfb - vi3.avgF;
-        var minD = vi3.avgD * Config.s_config.consts.E.Kmin;
-        var minF = vi3.avgF * Config.s_config.consts.E.Kmin;
+        var minD = vi3.avgD * 0.4;
+        var minF = vi3.avgF * 0.4;
         var d = 1 + dD / (vi3.topD - vi3.avgD);
         var f = 1 + dF / (vi3.topF - vi3.avgF);
         var d2 = stat.tdb < vi3.avgD ? stat.tdb / vi3.avgD : d;
@@ -318,6 +278,43 @@ class wot.utils.StatLoader
         return stat;
     }
 
+    public static function LoadLastStat(event)
+    {
+        if (event)
+            GlobalEventDispatcher.removeEventListener("config_loaded", StatLoader.LoadLastStat);
+        GlobalEventDispatcher.addEventListener("process_fow", StatLoader.ProcessForFogOfWar);
+        if (Config.s_config.rating.showPlayersStatistics && !StatData.s_loaded)
+            Comm.Sync(Defines.COMMAND_GET_PLAYERS, null, null, GetPlayersCallback);
+    }
+
+    private static function GetPlayersCallback(event)
+    {
+        try
+        {
+            //Logger.add(event.str);
+            var players = JSON.parse(event.str);
+            for (var i = 0; i < players.length; ++i)
+            {
+                var p = players[i];
+                var vi2 = VehicleInfo.getInfo2("/-" + p.v + ".");
+                AddPlayerData({
+                   uid: p.id,
+                   label: p.n,
+                   vehicle: vi2 ? vi2.name : p.v,
+                   icon: "../maps/icons/vehicle/contour/" + (vi2 ? vi2.nation + "-" + vi2.name : "unknown-" + p.v) + ".png",
+                   himself: p.s,
+                   vehId: 0,
+                   vehicleState: 3
+                }, p.t);
+            }
+            var timer = _global.setTimeout(function() { StatLoader.StartLoadData(); }, 50);
+        }
+        catch (ex)
+        {
+            // do nothing
+        }
+    }
+
     // Fog of War
 
     private static function ProcessForFogOfWar(event)
@@ -331,20 +328,19 @@ class wot.utils.StatLoader
         //Logger.add("ProcessForFogOfWar(): " + data.label);
         //Logger.addObject(data);
 
-        var fullPlayerName = data.label + (data.clanAbbrev ? "[" + data.clanAbbrev + "]" : "");
-        var pname: String = Utils.GetNormalizedPlayerName(fullPlayerName);
-
-        if (StatData.s_data[pname])
+        var pname: String = Utils.GetNormalizedPlayerName(data.label);
+        if (StatData.s_data[pname] && StatData.s_data[pname].loadstate != Defines.LOADSTATE_NONE)
             return;
 
-        AddPlayerData(data.uid, fullPlayerName, data.vehicle, data.icon,
-            data.team == "team1" ? Defines.TEAM_ALLY : Defines.TEAM_ENEMY);
+        AddPlayerData(data, data.team == "team1" ? Defines.TEAM_ALLY : Defines.TEAM_ENEMY);
 
-        var timer = _global.setTimeout(function() { StatLoader.StartLoadData(Defines.COMMAND_RUN_ASYNC); }, 50);
+        var timer = _global.setTimeout(function() { StatLoader.StartLoadData(); }, 50);
     }
 
     public static function LoadUserData(value, isId)
     {
+        //Logger.add("LoadUserData: " + value);
+
         var a:Array = (String(value) + "," + (isId == true ? "ID" : Config.s_game_region)).split("");
         var s:String = "";
         var a_length:Number = a.length;
@@ -355,22 +351,27 @@ class wot.utils.StatLoader
           s += (c.length % 2 == 0 ? "" : "0") + c;
         }
 
-        var lv:LoadVars = new LoadVars();
-        lv.onData = function(str: String)
+        Comm.Async(Defines.COMMAND_INFO_ASYNC, -1, s, null, function(e) { StatLoader.LoadUserDataCallback(e, value, isId); } );
+    }
+
+    private static function LoadUserDataCallback(event, value, isId)
+    {
+        var data = null;
+        if (event.error)
+            data = {error:event.error};
+        else if (!event.str)
+            data = {error:"no data"};
+        else
         {
-            var data = null;
-            if (str) {
-                try
-                {
-                    data = JSON.parse(str);
-                }
-                catch (ex)
-                {
-                    data = {error:ex};
-                }
+            try
+            {
+                data = JSON.parse(event.str);
             }
-            GlobalEventDispatcher.dispatchEvent( { type: "userdata_loaded", data: data } );
+            catch (ex)
+            {
+                data = {error:ex};
+            }
         }
-        lv.load(Defines.COMMAND_INFO + " " + s);
+        GlobalEventDispatcher.dispatchEvent( { type: "userdata_loaded", data: data, request: { value: value, isId: isId } } );
     }
 }

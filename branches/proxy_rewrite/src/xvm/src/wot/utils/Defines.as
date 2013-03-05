@@ -5,11 +5,11 @@
 class wot.utils.Defines
 {
     // Global versions
-    public static var XVM_VERSION: String = "3.4.0-test4";
-    public static var XVM_INTRO: String = "http://www.modxvm.com";
+    public static var XVM_VERSION: String = "3.5.0-test1";
+    public static var XVM_INTRO: String = "www.modxvm.com";
     public static var WOT_VERSION: String = "0.8.4";
     public static var CONFIG_VERSION: String = "1.5.0";
-    public static var EDITOR_VERSION: String = "0.36";
+    public static var EDITOR_VERSION: String = "0.42";
 
     public static var DEFAULT_CONFIG_NAME: String = "XVM.xvmconf";
 
@@ -23,13 +23,12 @@ class wot.utils.Defines
     public static var COMMAND_LOG: String = DOKAN_MP + "@LOG";
     public static var COMMAND_SET: String = DOKAN_MP + "@SET";
     public static var COMMAND_ADD: String = DOKAN_MP + "@ADD";
-    public static var COMMAND_RUN: String = DOKAN_MP + "@RUN";
     public static var COMMAND_VAR: String = DOKAN_MP + "@VAR";
     public static var COMMAND_LOGSTAT: String = DOKAN_MP + "@LOGSTAT";
-    public static var COMMAND_RUN_ASYNC: String = DOKAN_MP + "@RUN_ASYNC";
-    public static var COMMAND_GET_LAST_STAT: String = DOKAN_MP + "@GET_LAST_STAT";
+    public static var COMMAND_GET_ASYNC: String = DOKAN_MP + "@GET_ASYNC";
+    public static var COMMAND_GET_PLAYERS: String = DOKAN_MP + "@GET_PLAYERS";
     public static var COMMAND_GET_VERSION: String = DOKAN_MP + "@GET_VERSION";
-    public static var COMMAND_INFO: String = DOKAN_MP + "@INFO";
+    public static var COMMAND_INFO_ASYNC: String = DOKAN_MP + "@INFO_ASYNC";
 
     // Default path to vehicle icons (relative)
     public static var CONTOUR_ICON_PATH: String = "../maps/icons/vehicle/contour/";
@@ -86,4 +85,10 @@ class wot.utils.Defines
     // Text insert order
     public static var INSERTORDER_BEGIN = DIRECTION_DOWN;
     public static var INSERTORDER_END = DIRECTION_UP;
+
+    // Load states
+    public static var LOADSTATE_NONE = 1;    // not loaded
+    public static var LOADSTATE_LOADING = 2; // loading
+    public static var LOADSTATE_DONE = 3;    // statistics loaded
+    public static var LOADSTATE_UNKNOWN = 4; // unknown vehicle in FogOfWar
 }

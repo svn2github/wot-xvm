@@ -8,8 +8,10 @@
     var textField;
     var vehicleNameField;
     var numberField;
+    var owner;
 
     function configUI();
     function afterSetData();
     function getToolTipData();
+    function updateAfterStateChange();
 }

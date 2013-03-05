@@ -1,3 +1,4 @@
+import wot.Minimap.shapes.Square;
 import wot.Minimap.ExternalDeveloperInterface;
 import wot.utils.Utils;
 import wot.utils.GlobalEventDispatcher;
@@ -31,6 +32,7 @@ class wot.Minimap.Minimap extends net.wargaming.ingame.Minimap
      */
     public static var MAX_DEAD_ZINDEX:Number = 99;
     public static var LOST_UNITS_INDEX:Number = MAX_DEAD_ZINDEX;
+    public static var SQUARE_1KM_INDEX:Number = MAX_DEAD_ZINDEX - 1;
     public static var EXTERNAL_CUSTOM_INDEX:Number = MAX_DEAD_ZINDEX - 1;
     public static var CAMERA_NORMAL_ZINDEX:Number = 100;
     public static var SELF_ZINDEX:Number = 151;
@@ -59,11 +61,11 @@ class wot.Minimap.Minimap extends net.wargaming.ingame.Minimap
      * Shows game related distances and direction.
      */
     private var circles:Circles;
+    private var square:Square;
     private var lines:Lines;
     
     private var isMinimapReady:Boolean = false;
     private var isAllyPlayersPanelReady:Boolean = false;
-    private var isEnemyPlayersPanelReady:Boolean = false;
     private var loadComplete:Boolean = false;
     
     function scaleMarkers(percent)
@@ -81,7 +83,6 @@ class wot.Minimap.Minimap extends net.wargaming.ingame.Minimap
         
         GlobalEventDispatcher.addEventListener(MinimapEvent.MINIMAP_READY, this, onReady);
         GlobalEventDispatcher.addEventListener(MinimapEvent.ALLY_PLAYERS_PANEL_READY, this, onReady);
-        GlobalEventDispatcher.addEventListener(MinimapEvent.ENEMY_PLAYERS_PANEL_READY, this, onReady);
         
         checkLoading();
     }
@@ -103,10 +104,18 @@ class wot.Minimap.Minimap extends net.wargaming.ingame.Minimap
         setCameraAlpha();
     }
     
-    /** Disables minimap size limitation */
+    /** Disables maximum minimap size limitation */
     // override
     function correctSizeIndex(sizeIndex:Number, stageHeight:Number):Number
     {
+        /** super.correctSizeIndex code is omitted to drop limits */
+        
+        /** Do not allow size less than map border */
+        if (sizeIndex < 0)
+        {
+            sizeIndex = 0;
+        }
+        
         return sizeIndex;
     }
     
@@ -115,7 +124,7 @@ class wot.Minimap.Minimap extends net.wargaming.ingame.Minimap
     function sizeUp()
     {
         super.sizeUp();
-        //Logger.add("backgrnd getBytesLoaded " + backgrnd.getBytesTotal());
+        //Logger.addObject(icons, "icons", 3);
     }
     
     // -- Private
@@ -152,12 +161,9 @@ class wot.Minimap.Minimap extends net.wargaming.ingame.Minimap
             case MinimapEvent.ALLY_PLAYERS_PANEL_READY:
                 isAllyPlayersPanelReady = true;
                 break;
-            case MinimapEvent.ENEMY_PLAYERS_PANEL_READY:
-                isEnemyPlayersPanelReady = true;
-                break;
         }
         
-        loadComplete = isMinimapReady && isAllyPlayersPanelReady && isEnemyPlayersPanelReady;
+        loadComplete = isMinimapReady && isAllyPlayersPanelReady;
         
         if (loadComplete)
         {
@@ -236,6 +242,15 @@ class wot.Minimap.Minimap extends net.wargaming.ingame.Minimap
             if (MapConfig.circlesEnabled)
             {
                 circles = new Circles(mapSizeModel.getSide() * 10); /** Total map side distance in meters */
+            }
+            
+            /**
+             * Draw customized circles.
+             * Outlines distance in meters.
+             */
+            if (MapConfig.squareEnabled)
+            {
+                square = new Square(mapSizeModel.getSide() * 10); /** Total map side distance in meters */
             }
             
             /**

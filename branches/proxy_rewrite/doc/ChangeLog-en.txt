@@ -1,17 +1,28 @@
-XVM-3.4.0-test5:
-  * TeamMemberRenderer mod
+XVM-3.5.0-test1:
+  * xvm-stat protocol reworked (XVM Stat 1.3.0 ot higher required)
+  * minimap: xvm-stat.exe is not necessary for map recongnition for RU, NA/EN, CH locales
+  * minimap: world map battle fix
+  * minimap: {{vehicle-name}} macro returns vehicle system name - usa-M24_Chaffee
+  * minimap: smoothed superHeavyTank and all tank wrecks icons
+  * minimap: 1000m square implemented
+  * minimap enabled by default
+  * user statistics in hangar enabled by default
 
-XVM-3.4.0-test4:
-  * UserInfo mod (sorting, per-vehicle efficiency)
+XVM-3.4.2:
+  * minimap fix: minimal map size
+  * minimap fix: map size glitched when WoT window was resized or Alt+Tab-ed
 
-XVM-3.4.0-test1:
-  * adaptation to WoT 0.8.4.CT1
+XVM-3.4.1:
+  * bugfix
+
+XVM-3.4.0:
+  * adaptation to WoT 0.8.4
 
   [MACROS]
   * new macros:
       {{avglvl}} - average level of tanks
       {{wn}}, {{c:wn}} - WN6 rating: http://www.koreanrandom.com/forum/topic/2575-/
-      {{xeff}}, {{xwn}}, {{c:xeff}}, {{c:xwn}} - two-digits ratinf value
+      {{xeff}}, {{xwn}}, {{c:xeff}}, {{c:xwn}} - two-digits rating value
         using "XVM Scale"
         explanation: http://www.koreanrandom.com/forum/topic/2625-/page-15#entry35340 (in Russian)
       {{twr}}, {{c:twr}} - tourist1984 win rate:
@@ -19,13 +30,14 @@ XVM-3.4.0-test1:
       {{vehiclename}} for internal vehicle name like "usa-M24_Chaffee"
         can be used in the text fields:
         "<img src='img://gui/maps/icons/vehicle/contour/{{vehiclename}}.png'>"
+      {{clannb}} - clan name without brackets
 
   [NEW FUNCTIONS]
   * minimap mod
   * UserInfo mod (with functions from morotopitek's mod)
   * TeamMemberRenderer mod
   * FinalStatistic mod (with functions from morotopitek's mod).
-  * new experimental win chance formula by TurinDeNar:
+  * new win chance formula by TurinDeNar:
       http://www.koreanrandom.com/forum/topic/2598-/
 
   [CONFIG]
@@ -39,6 +51,7 @@ XVM-3.4.0-test1:
   [FIXES]
   * fixed {{c:system}} macro
   * fixed {{nick}} macro in the medium2 players panel mode
+  * fixed statistics loading in the Fog Of War mode
 
   [CAPTURE BAR]
   * capture bar: fixed "enabled":false

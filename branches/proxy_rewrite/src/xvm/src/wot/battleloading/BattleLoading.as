@@ -1,10 +1,4 @@
-﻿/**
- * ...
- * @author sirmax2
- */
-import wot.battleloading.TipField;
-import wot.battleloading.RealClock;
-import wot.battleloading.WinChances;
+﻿import wot.utils.Comm;
 import wot.utils.Config;
 import wot.utils.Defines;
 import wot.utils.GlobalEventDispatcher;
@@ -13,6 +7,9 @@ import wot.utils.StatsLogger;
 import wot.utils.StatData;
 import wot.utils.StatLoader;
 import wot.utils.Utils;
+import wot.battleloading.TipField;
+import wot.battleloading.RealClock;
+import wot.battleloading.WinChances;
 
 class wot.battleloading.BattleLoading extends net.wargaming.BattleLoading
 {
@@ -55,9 +52,9 @@ class wot.battleloading.BattleLoading extends net.wargaming.BattleLoading
     function setSize(width, height)
     {
         super.setSize(width, height);
-        (new LoadVars()).load(Defines.COMMAND_VAR + " window_size=" + width + "," + height);
+        Comm.SetVar("window_size", width + "," + height);
     }
-    
+
     // override
     function setMapBG(imgsource:String)
     {
@@ -65,18 +62,18 @@ class wot.battleloading.BattleLoading extends net.wargaming.BattleLoading
          * imgsource arg:
          * ../maps/icons/map/screen/19_monastery.png
          */
-        
+
         /** Extract map name from image source */
         var arr:Array = imgsource.split("/");
         arr = arr[5].split(".");
         var mapName:String = arr[0]; // 45_north_america
-        
+
         /**
          * Save map name for Minimap mod.
          * Best method to define map size without Python so far.
          */
-        (new LoadVars()).load(Defines.COMMAND_VAR + " map_name=" + mapName);
-        
+        Comm.SetVar("map_name", mapName);
+
         super.setMapBG(imgsource);
     }
 
@@ -84,6 +81,10 @@ class wot.battleloading.BattleLoading extends net.wargaming.BattleLoading
     {
         GlobalEventDispatcher.removeEventListener("config_loaded", this, onConfigLoaded);
         traceToProxyTerminal();
+
+        winChances.showChances = Config.s_config.battleLoading.showChances;
+        winChances.showExp = Config.s_config.battleLoading.showChancesExp;
+        winChances.enableLog = Config.s_config.rating.enableStatisticsLog;
 
         if (Config.s_config.rating.showPlayersStatistics)
             loadStatistics();
@@ -98,7 +99,7 @@ class wot.battleloading.BattleLoading extends net.wargaming.BattleLoading
         (
             function() {
                 if (!StatData.s_loaded) {
-                    if (StatLoader.teams.t1 == 0 || StatLoader.teams.t2 == 0) {
+                    if (StatLoader.teams.t1 == 0 /*&& StatLoader.teams.t2 == 0*/) { // t2 disabled because of FogOfWar
                         if (loop * BattleLoading.STAT_PRELOAD_DELAY > 10000) { // 10 sec
                             Logger.add("WARNING: no players data after 10 sec, skip stats loading");
                         } else {
@@ -108,7 +109,7 @@ class wot.battleloading.BattleLoading extends net.wargaming.BattleLoading
                     }
                     else {
                         Logger.add("[BattleLoading] loading stat data (" + StatLoader.s_players_count + " players)");
-                        StatLoader.StartLoadData(Defines.COMMAND_RUN);
+                        StatLoader.StartLoadData();
                     }
                 }
             },

@@ -10,6 +10,8 @@ namespace wot
 {
   class Program
   {
+    public static string PublicKeyToken = String.Empty;
+
     private const string WOT_PROCESS_NAME = "WorldOfTanks";
     private const string WOT_EXE_FILE_NAME = WOT_PROCESS_NAME + ".exe";
 
@@ -40,7 +42,7 @@ namespace wot
       Log("  /noproxy - do not use IE proxy settings");
       Log("  /maximized - maximized game window");
       Log("  /debug - run in debug mode (extended log)");
-      Log("  /server=(RU|EU|US|CN|SEA|VTC|CT) - select server (disable autodetection)");
+      Log("  /server=(RU|EU|US|CN|SEA|VTC|KR|CT) - select server (disable autodetection)");
       Log("  file.wotreplay - play replay");
       Log("Press any key to exit.");
       Console.ReadKey(true);
@@ -80,9 +82,41 @@ namespace wot
       Log(message, true);
     }
 
+    public static void DebugFS(string message)
+    {
+      if (!isDebug)
+        return;
+      lock (_logLock)
+      {
+        try
+        {
+          string logstr = DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss ");
+          string[] lines = message.Split(new string[] { "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+          for (int i = 1; i < lines.Length; i++)
+            lines[i] = lines[i].PadLeft(lines[i].Length + logstr.Length);
+          logstr += string.Join(Environment.NewLine, lines);
+          File.AppendAllText("XVMfs.log", logstr + Environment.NewLine);
+        }
+        catch
+        {
+          // do nothing
+        }
+      }
+    }
+
     public static void LogStat(string message)
     {
-        File.AppendAllText("xvm-stat.log", message + Environment.NewLine);
+      lock (_logLock)
+      {
+        try
+        {
+          File.AppendAllText("xvm-stat.log", message + Environment.NewLine);
+        }
+        catch
+        {
+          // do nothing
+        }
+      }
     }
 
     private static bool CheckArgs(string[] args)
@@ -235,11 +269,14 @@ namespace wot
            (AssemblyInformationalVersionAttribute)Assembly.GetExecutingAssembly()
            .GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false)[0];
 
-        //var a = Assembly.GetExecutingAssembly().GetName();
-        //var p = a.GetPublicKey();
+        var a = Assembly.GetExecutingAssembly().GetName();
+        byte[] pt = a.GetPublicKeyToken();
+        PublicKeyToken = "";
+        for (int i = 0; i < pt.Length; i++)
+          PublicKeyToken += String.Format("{0:x2}", pt[i]);
 
-        Console.Title = "XVM Stat v" + Assembly.GetExecutingAssembly().GetName().Version +
-          " for XVM " + attribute.InformationalVersion + "+";
+        Console.Title = String.Format("XVM Stat v{0} for XVM {1}+",
+          Assembly.GetExecutingAssembly().GetName().Version, attribute.InformationalVersion);
         Log(Console.Title);
 
         // Check args
@@ -266,13 +303,13 @@ namespace wot
         // Clear log file
         ClearLogFile();
 
-        string mp = String.Format("res_mods{0}{1}", Path.DirectorySeparatorChar,
-          Settings.Default.MountPoint);
+        string mp = Settings.Default.MountPoint;
         DokanOptions opt = new DokanOptions()
         {
-          DebugMode = true,
+          VolumeLabel = "XVMfs",
+          DebugMode = false,
           MountPoint = Path.GetFullPath(mp),
-          ThreadCount = 5,
+          ThreadCount = 1,
         };
         Debug("MountPoint: " + opt.MountPoint);
 
@@ -303,12 +340,6 @@ namespace wot
           if (thread.IsAlive)
             thread.Join();
           Directory.Delete(opt.MountPoint);
-        }
-
-        if (isDebug)
-        {
-          Log("Press any key to exit.");
-          Console.ReadKey(true);
         }
       }
       catch (Exception ex)
