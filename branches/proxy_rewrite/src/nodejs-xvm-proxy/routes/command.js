@@ -35,16 +35,18 @@ exports.wn = function(req, res) {
 
 exports.infoById = function(req, res) {
     db.getPlayersData([ parseInt(req.params.playerId) ], function(error, dbData) {
-        var result = dbData[0] || "Player not found";
-
-        res.json(error ? 500 : 200, result);
+        res.json(error ? 500 : 200, dbData);
     });
 };
 
 exports.infoByName = function(req, res) {
     db.getPlayerByName(req.params.playerName, req.params.region, function(error, dbData) {
-        var result = dbData[0] || "Player not found";
+        res.json(error ? 500 : 200, dbData);
+    });
+};
 
-        res.json(error ? 500 : 200, result);
+exports.infoByNameId = function(req, res) {
+    db.getPlayerByNameId(req.params.playerName, function(error, dbData) {
+        res.json(error ? 500 : 200, dbData);
     });
 };

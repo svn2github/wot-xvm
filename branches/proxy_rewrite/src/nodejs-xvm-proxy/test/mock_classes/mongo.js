@@ -32,7 +32,7 @@ module.exports = (function(undefined) {
                         playerName;
 
                     if(query.$or) {
-                        playerId = query.$or[1]._id;
+                        playerId = query.$or[0]._id || query.$or[1]._id;
                     }
                     if(query.nm) {
                         playerName = query.nm;
@@ -40,6 +40,7 @@ module.exports = (function(undefined) {
                     if(query._id && query._id.$in) {
                         playerId = query._id.$in[0];
                     }
+
                     if(playerId || playerName)
                         setMongoResult("mongo_" + (playerId || playerName) + ".json");
                 }

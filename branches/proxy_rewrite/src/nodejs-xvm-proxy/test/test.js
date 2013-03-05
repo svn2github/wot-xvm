@@ -148,8 +148,8 @@
                 req.params.playerId = "1111";
                 makeRequest(req, res);
 
-                assert.equal(lastResponse._id, 1111);
-                assert.equal(lastResponse.nm, "vitsu");
+                assert.equal(lastResponse[0]._id, 1111);
+                assert.equal(lastResponse[0].nm, "vitsu");
             });
 
             test("INFO by name", function() {
@@ -158,8 +158,18 @@
                 req.params.region = "RU";
                 makeRequest(req, res);
 
-                assert.equal(lastResponse._id, 1111);
-                assert.equal(lastResponse.nm, "vitsu");
+                assert.equal(lastResponse[0]._id, 1111);
+                assert.equal(lastResponse[0].nm, "vitsu");
+            });
+
+            test("INFO by name or id", function() {
+                makeRequest = require("../routes/command").infoByNameId;
+                req.params.playerName = "1111";
+                req.params.region = "RU";
+                makeRequest(req, res);
+
+                assert.equal(lastResponse[0]._id, 1111);
+                assert.equal(lastResponse[0].nm, "vitsu");
             });
 
         });

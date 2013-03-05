@@ -31,6 +31,7 @@ module.exports = function(fakeMongo) {
     return {
         getPerformanceReport: getPerformanceReport,
         getPlayerByName: getPlayerByName,
+        getPlayerByNameId: getPlayerByNameId,
         getPlayersData: getPlayersData,
         insertMissed: insertMissed,
         insertPerformanceReport: insertPerformanceReport,
@@ -40,20 +41,12 @@ module.exports = function(fakeMongo) {
 };
 
 var getPlayersData = function(ids, callback) {
-    process.send({ usage: 1, mongorq: 1 });
-    
     var cursor = players.find(
             { _id: { $in: ids } },
             { _id: 1, st: 1, dt: 1, cr: 1, up: 1, nm: 1, b: 1, w: 1, spo: 1, hip: 1, cap: 1, dmg: 1, frg: 1, def: 1, lvl: 1, e: 1, wn: 1, twr: 1, v: 1 }
-        ),
-        startStamp = new Date();
+        );
 
-    cursor.toArray(function(error, result) {
-        process.send({ usage: 1, mongorq: -1 });
-        updateDbBalancer(startStamp);
-
-        callback(error ? { statusCode: 500, text: error } : undefined, result);
-    });
+    _executeDbQuery(cursor, callback);
 
     /*players.aggregate([
      { $match: { _id: { $in: parsedIds.ids } } },
@@ -69,8 +62,6 @@ var getPlayersData = function(ids, callback) {
 };
 
 var getPlayerByName = function(name, region, callback) {
-    process.send({ usage: 1, mongorq: 1 });
-
     var minId,
         maxId;
 
@@ -101,12 +92,36 @@ var getPlayerByName = function(name, region, callback) {
             maxId = 3499999999;
             break;
     }
-// TODO code dup
+
     var cursor = players.find({
-                nm: name,
-                _id: { $gte: minId, $lte: maxId }
-            }),
-        startStamp = new Date();
+            nm: name,
+            _id: { $gte: minId, $lte: maxId }
+        });
+
+    _executeDbQuery(cursor, callback);
+};
+
+var getPlayerByNameId = function(nameId, callback) {
+    var query = { };
+
+    if(/^\d+$/.test("" + nameId)) {
+        query = {
+            $or: [
+                { _id: parseInt(nameId) },
+                { nm: nameId }
+            ]
+        }
+    } else {
+        query = { nm: nameId };
+    }
+
+    _executeDbQuery(players.find(query), callback);
+};
+
+var _executeDbQuery = function(cursor, callback) {
+    var startStamp = new Date();
+
+    process.send({ usage: 1, mongorq: 1 });
 
     cursor.toArray(function(error, result) {
         process.send({ usage: 1, mongorq: -1 });

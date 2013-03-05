@@ -79,11 +79,12 @@ app.get("/:ids", generic.stat);
 
 app.param("playerId", /^\d+$/);
 app.get("/WN/:playerId", command.wn);
-app.get("/INFO/:playerId", command.infoById);
+app.get("/INFO/ID/:playerId", command.infoById);
 
 app.param("playerName", /^\w+/);
 app.param("region", /(RU)|(EU)|(US)|(NA)|(SEA)|(VTC)|(KR)$/);
-app.get("/INFO/:playerName/:region", command.infoByName);
+app.get("/INFO/:region/:playerName", command.infoByName);
+app.get("/INFO/:playerName", command.infoByNameId);
 
 app.get("/STAT", stat.performance);
 
