@@ -891,6 +891,10 @@ namespace wot
         }
 
         s = Encoding.UTF8.GetString(buf.ToArray());
+        if (s.Contains(",")) {
+            string[] sa = s.Split(',');
+            s = sa[1] + "/" + sa[0];
+        }
       }
       catch (Exception ex)
       {
@@ -900,7 +904,7 @@ namespace wot
         return "{{\"status\":\"ERROR\",\"error\":\"EXCEPTION\"}}";
       }
       
-      string key = "@INFO," + s;
+      string key = "@INFO/" + s;
       if (infocache.ContainsKey(key))
         return infocache[key];
 
@@ -910,7 +914,7 @@ namespace wot
         // for example  "?ABC" . So it's must be replace to "%3F" for search.
         s = s.Replace("?", "%3F");
 
-        string response = loadUrl(proxies[(new Random()).Next(proxies.Length)], "0,INFO," + s);
+        string response = loadUrl(proxies[(new Random()).Next(proxies.Length)], "INFO/" + s);
         if (string.IsNullOrEmpty(response))
           return "{{\"status\":\"ERROR\",\"error\":\"NO_DATA\"}}";
         infocache[key] = response;
