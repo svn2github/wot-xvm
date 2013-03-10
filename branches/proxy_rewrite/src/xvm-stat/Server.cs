@@ -583,8 +583,7 @@ namespace wot
         long tmpTime = long.MaxValue;
         try
         {
-          string testId = (version.StartsWith("CN", StringComparison.InvariantCultureIgnoreCase)) ? "test" : "001";
-          loadUrl(tempUrl, testId, out tmpTime, true);
+          loadUrl(tempUrl, "test", out tmpTime, true);
         }
         catch (Exception ex)
         {

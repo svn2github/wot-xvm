@@ -1,29 +1,46 @@
-table
-    thead
-        tr
-            th uptime
-            th requests
-            th rq/s
-            th players
-            th pl/s
-            th cached
-            th updated
-            th missed
-            th updfail
-            th max_conn
-            th mongorq
+//table.table.table-striped.table-bordered.table-hover.table-condensed
 
-    tbody
-        each record in db
-            tr
-                td #{record.uptime}
-                td #{record.requests}
-                td #{record.req_s_now} (#{record.req_s_total})
-                td #{record.players}
-                td #{record.pl_s}
-                td #{record.cached}%
-                td #{record.updated}%
-                td #{record.missed}%
-                td #{record.updfail}%
-                td #{record.max_conn}%
-                td #{record.mongorq} / #{record.mongorq_max}
+div.row
+    div.span1 interval
+    div.span1 uptime
+    div.span1 requests
+    div.span1 rq/s
+    div.span1 players
+    div.span1 pl/s
+    div.span1 cached
+    div.span1 updated
+    div.span1 missed
+    div.span1 updfail
+    div.span1 max_conn
+    div.span1 mongorq
+
+each record in db
+    div(data-toggle="collapse", data-target="."+record.index).row.record
+        div.span1 20s
+        div.span1 #{record.uptime}
+        div.span1 #{record.requests}
+        div.span1 #{record.req_s_now} (#{record.req_s_total})
+        div.span1 #{record.players}
+        div.span1 #{record.pl_s_now} (#{record.pl_s_total})
+        div.span1 #{record.cached}%
+        div.span1 #{record.updated}%
+        div.span1 #{record.missed}%
+        div.span1 #{record.updfail}%
+        div.span1 #{record.max_conn}%
+        div.span1 #{record.mongorq} / #{record.mongorq_max}
+
+    div(class=record.index).row.collapse
+        each connection in record.connections
+            div.span2
+                div.server-stat-caption server:
+                div.server-stat-value: strong #{connection.server}
+                div.server-stat-caption cur:
+                div.server-stat-value #{connection.current}
+                div.server-stat-caption max:
+                div.server-stat-value #{connection.max}
+                div.server-stat-caption total:
+                div.server-stat-value #{connection.total}
+                div.server-stat-caption fail:
+                div.server-stat-value #{connection.fail}
+                div.server-stat-caption rate:
+                div.server-stat-value #{connection.rate}%

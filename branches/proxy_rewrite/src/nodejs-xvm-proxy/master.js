@@ -35,6 +35,7 @@ var usageStat = {
     requests: 0,
     requests_current: 0,
     players: 0,
+    players_current: 0,
     cached: 0,
     updated: 0,
     missed: 0,
@@ -55,8 +56,10 @@ var processWorkerMessage = function(msg) {
             usageStat.requests += msg.requests;
             usageStat.requests_current += msg.requests;
         }
-        if(msg.players)
+        if(msg.players) {
             usageStat.players += msg.players;
+            usageStat.players_current += msg.players;
+        }
         if(msg.cached)
             usageStat.cached += msg.cached;
         if(msg.updated)
@@ -107,6 +110,7 @@ var processWorkerMessage = function(msg) {
 var showUsageStat = function() {
     utils.performanceReport(usageStat);
     usageStat.requests_current = 0;
+    usageStat.players_current = 0;
 };
 
 // setup "info" update interval
