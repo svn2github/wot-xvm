@@ -5,7 +5,7 @@ exports.stat = function(req, res) {
 
     pipeline.generic(ids, function(error, result) {
 
-        res.json(error || 200, result);
+        res.json(result);
 
     });
 };

@@ -15,7 +15,7 @@ div.row
     div.span1 mongorq
 
 each record in db
-    div(data-toggle="collapse", data-target="."+record.index).row.record
+    div(data-toggle="collapse", data-target=".i"+record.index).row.record
         div.span1 20s
         div.span1 #{record.uptime}
         div.span1 #{record.requests}
@@ -29,18 +29,20 @@ each record in db
         div.span1 #{record.max_conn}%
         div.span1 #{record.mongorq} / #{record.mongorq_max}
 
-    div(class=record.index).row.collapse
-        each connection in record.connections
-            div.span2
-                div.server-stat-caption server:
-                div.server-stat-value: strong #{connection.server}
-                div.server-stat-caption cur:
-                div.server-stat-value #{connection.current}
-                div.server-stat-caption max:
-                div.server-stat-value #{connection.max}
-                div.server-stat-caption total:
-                div.server-stat-value #{connection.total}
-                div.server-stat-caption fail:
-                div.server-stat-value #{connection.fail}
-                div.server-stat-caption rate:
-                div.server-stat-value #{connection.rate}%
+    div(class="i"+record.index).row.collapse
+        div.span6
+            div.row
+                div.span1 server
+                div.span1 cur
+                div.span1 max
+                div.span1 total
+                div.span1 fail
+                div.span1 rate
+            each connection in record.connections
+                div.row
+                    div.span1: strong #{connection.server}
+                    div.span1 #{connection.current}
+                    div.span1 #{connection.max}
+                    div.span1 #{connection.total}
+                    div.span1 #{connection.fail}
+                    div.span1 #{connection.rate}%

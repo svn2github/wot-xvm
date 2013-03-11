@@ -76,7 +76,7 @@ var _recalculateMissed = function(data) {
         // WN - WN rating http://forum.worldoftanks.com/index.php?/topic/184017-
         data.wn = utils.calculateWN(data);
         ok = true;
-        utils.log("id=" + data._id + " wn=" + data.wn);
+        //utils.log("id=" + data._id + " wn=" + data.wn);
     }
 
     if(!data.twr) {
@@ -84,7 +84,7 @@ var _recalculateMissed = function(data) {
         try {
             data.twr = parseFloat(utils.tcalc(data, false).result.toFixed(2));
             ok = true;
-            //            utils.log("id=" + data._id + " twr=" + data.twr);
+            //utils.log("id=" + data._id + " twr=" + data.twr);
         } catch(e) {
             utils.log(e);
         }
@@ -93,7 +93,7 @@ var _recalculateMissed = function(data) {
     if(lvl) {
         data.lvl = parseFloat(data.lvl.toFixed(1));
         ok = true;
-        utils.log("id=" + data._id + " lvl=" + data.lvl);
+        //utils.log("id=" + data._id + " lvl=" + data.lvl);
     }
 
     // updating db

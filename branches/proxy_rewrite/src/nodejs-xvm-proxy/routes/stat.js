@@ -12,15 +12,19 @@ exports.performance = function(req, res) {
                 h =((uptime / 3600) % 24).toFixed(),
                 m = ((uptime / 60) % 60).toFixed();
 
-            var connections = item.connections.map(function(conn, index) {
-                return {
-                    server: settings.servers[index].name,
-                    current: conn && conn.cur,
-                    max: conn && conn.max,
-                    total: conn && conn.total,
-                    fail: conn && conn.fail,
-                    rate: conn && (conn.fail / conn.total * 100).toFixed()
-                };
+            var connections = [ ];
+
+            item.connections.forEach(function(conn, index) {
+                if(settings.servers[index].name) {
+                    connections.push({
+                        server: settings.servers[index].name,
+                        current: conn && conn.cur,
+                        max: conn && conn.max,
+                        total: conn && conn.total,
+                        fail: conn && conn.fail,
+                        rate: conn && (conn.fail / conn.total * 100).toFixed()
+                    });
+                }
             });
 
             return {

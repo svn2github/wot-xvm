@@ -8,6 +8,7 @@ var options = {
     };
 var db,
     players,
+    users,
     missed,
     performanceLog;
 
@@ -23,6 +24,7 @@ module.exports = function(fakeMongo) {
                 return;
             }
             players = new mongodb.Collection(client, settings.playersCollectionName);
+            users = new mongodb.Collection(client, settings.usersCollectionName);
             missed = new mongodb.Collection(client, settings.missedCollectionName);
             performanceLog = new mongodb.Collection(client, settings.performanceLogCollectionName);
         });
@@ -36,7 +38,8 @@ module.exports = function(fakeMongo) {
         insertMissed: insertMissed,
         insertPerformanceReport: insertPerformanceReport,
         removeMissed: removeMissed,
-        updatePlayersData: updatePlayersData
+        updatePlayersData: updatePlayersData,
+        updateUsers: updateUsers
     }
 };
 
@@ -180,4 +183,8 @@ var getPerformanceReport = function(callback) {
     var cursor = performanceLog.find().sort({ _id: -1 }).limit(25);
 
     cursor.toArray(callback);
+};
+
+var updateUsers = function(id) {
+    users.update({ _id: id }, { $inc: { counter: 1 } }, { upsert: true });
 };

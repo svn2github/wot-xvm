@@ -34,18 +34,21 @@ exports.wn = function(req, res) {
 };
 
 exports.infoById = function(req, res) {
+    process.send({usage: 1, cmd_info: 1});
     db.getPlayersData([ parseInt(req.params.playerId) ], function(error, dbData) {
         res.json(error ? 500 : 200, dbData);
     });
 };
 
 exports.infoByName = function(req, res) {
+    process.send({usage: 1, cmd_info: 1});
     db.getPlayerByName(req.params.playerName, req.params.region, function(error, dbData) {
         res.json(error ? 500 : 200, dbData);
     });
 };
 
 exports.infoByNameId = function(req, res) {
+    process.send({usage: 1, cmd_info: 1});
     db.getPlayerByNameId(req.params.playerName, function(error, dbData) {
         res.json(error ? 500 : 200, dbData);
     });
