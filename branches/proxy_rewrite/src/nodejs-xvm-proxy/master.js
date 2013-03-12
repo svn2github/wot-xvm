@@ -12,7 +12,6 @@ exports.main = function() {
         w.on('message', processWorkerMessage);
     }
 
-    //showUsageStat();
     setInterval(showUsageStat, settings.usageStatShowPeriod);
 
     getInfoContent();
@@ -46,11 +45,10 @@ var usageStat = {
     connections: []
 };
 
-var _lastLogMsg = "";
-var _skipLogMsgCounter = 0;
+var _lastLogMsg = "",
+    _skipLogMsgCounter = 0;
 
 var processWorkerMessage = function(msg) {
-//utils.log(JSON.stringify(msg));
     if(msg.usage == 1) {
         if(msg.requests) {
             usageStat.requests += msg.requests;
@@ -76,6 +74,8 @@ var processWorkerMessage = function(msg) {
             usageStat.mongorq_max += msg.mongorq_max;
             utils.log("mongorq_max: " + usageStat.mongorq_max);
         }
+        if(msg.cmd_info)
+            usageStat.cmd_info += msg.cmd_info;
         if(msg.connections) {
             if (!usageStat.connections[msg.serverId])
                 usageStat.connections[msg.serverId] = {cur:0, max:settings.servers[msg.serverId].maxconn, total:0, fail:0};
@@ -123,7 +123,7 @@ var getInfoContent = function() {
         path: "/svn/wiki/ReleaseInfo.wiki"
     };
 
-    var request = http.get(options, function(res) {
+    http.get(options, function(res) {
         var responseData = "";
         res.setEncoding("utf8");
         res.on("data", function(chunk) {
@@ -154,7 +154,7 @@ var getTWRBaseContent = function() {
         path: "/svn/wiki/TWRBase.wiki"
     };
 
-    var request = http.get(options, function(res) {
+    http.get(options, function(res) {
         if (res.statusCode != 200) {
             utils.log("[getTWRBaseContent] ERROR: bad status code: " + res.statusCode);
             return;
