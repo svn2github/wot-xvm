@@ -64,7 +64,7 @@ var usageStat = {
     connections: []
 };
 
-var _lastLogMsg = "";
+var _lastLogMsgs = [];
 var _skipLogMsgCounter = 0;
 
 var processWorkerMessage = function(msg) {
@@ -113,12 +113,9 @@ var processWorkerMessage = function(msg) {
             usageStat.connections[msg.serverId].max = Math.max(0, usageStat.connections[msg.serverId].max + msg.maxConnections);
         }
     } else if(msg.log == 1) {
-        if (msg.msg != _lastLogMsg) {
-            if (_skipLogMsgCounter > 0)
-                utils.log("(skipped " + _skipLogMsgCounter + " message" + (_skipLogMsgCounter == 1 ? "" : "s") +")");
+        if (_lastLogMsgs.indexOf(msg.msg) == -1) {
             utils.log(msg.msg);
-            _lastLogMsg = msg.msg;
-            _skipLogMsgCounter = 0;
+            _lastLogMsgs.push(msg.msg);
         } else {
             _skipLogMsgCounter++;
         }
@@ -146,6 +143,12 @@ var showUsageStat = function() {
     var d = (uptime / (60 * 60 * 24)).toFixed();
     var h = lpad(((uptime / 3600) % 24).toFixed(), "0", 2);
     var m = lpad(((uptime / 60) % 60).toFixed(), "0", 2);
+
+    if (_skipLogMsgCounter > 0)
+        utils.log("(skipped " + _skipLogMsgCounter + " message" + (_skipLogMsgCounter == 1 ? "" : "s") +")");
+    _lastLogMsgs = [];
+    _skipLogMsgCounter = 0;
+
     utils.log("> uptime  requests     rq/s   players  pl/s  cached updated  missed updfail max_conn max_db mongorq cmd_info w");
 
     var s = (d > 9 ? "" : ">");
