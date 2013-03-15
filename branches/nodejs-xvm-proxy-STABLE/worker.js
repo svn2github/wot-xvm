@@ -2,14 +2,17 @@
 // Worker thread
 
 module.exports = (function() {
-    var includer = require("./includer"),
-        settings = includer.settings(),
-        utils = includer.utils(),
-        status = includer.status(),
-        db = includer.db(),
-        tcalc_base = includer.tcalcBase();
+    var settings = require("./settings").settings,
+        utils = require("./utils"),
+        status = require("./worker_status"),
+        db = require("./worker_db"),
+        tcalc_base = require("./tcalc/tcalc_base"),
+        http;
 
-    var createWorker = function() {
+    var createWorker = function(fakeMongo, fakeHttp) {
+        // fakes is for test applications only
+        http = fakeHttp || require("http");
+
         //handler for messages from master thread
         process.on("message", function(msg) {
             if(msg.info)
@@ -20,16 +23,16 @@ module.exports = (function() {
 
         // initialize submodules
         status.initialize();
-        db.initialize(_createHttpServer);
+        db.initialize(_createHttpServer, fakeMongo);
     };
 
     var _createHttpServer = function() {
         // Set max client connections (5 by default)
-        includer.http().globalAgent.maxSockets = settings.maxSockets;
+        http.globalAgent.maxSockets = settings.maxSockets;
 
-        var worker_req = includer.req();
+        var worker_req = require("./worker_req");
 
-        includer.http().createServer(worker_req.processRequest).listen(settings.port, settings.host);
+        http.createServer(worker_req.processRequest).listen(settings.port, settings.host);
         utils.log("Server running at http://" + settings.host + ":" + settings.port + "/");
     };
 

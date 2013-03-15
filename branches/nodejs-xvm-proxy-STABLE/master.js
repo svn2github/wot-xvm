@@ -13,6 +13,21 @@ exports.main = function() {
         w.on('message', processWorkerMessage);
     }
 
+    cluster.on('exit', function(worker, code, signal) {
+        var exitCode = worker.process.exitCode;
+        workers_log += '\nworker ' + worker.process.pid + ' died (' + exitCode + '). restarting...';
+
+        for (var i = 0; i < workers.length; ++i)
+        {
+            if (workers[i].process.pid == worker.process.pid)
+                workers.splice(i, 1);
+        }
+
+        var w = cluster.fork();
+        workers.push(w);
+        w.on('message', processWorkerMessage);
+    });
+
     //showUsageStat();
     setInterval(showUsageStat, settings.usageStatShowPeriod);
 
@@ -28,6 +43,7 @@ exports.main = function() {
 var settings = require("./settings").settings,
     utils = require("./utils");
 
+var workers_log = "";
 var workers = [ ];
 
 // usage stat
@@ -94,7 +110,7 @@ var processWorkerMessage = function(msg) {
         if(msg.maxConnections) {
             if (!usageStat.connections[msg.serverId])
                 usageStat.connections[msg.serverId] = {cur:0, max:settings.servers[msg.serverId].maxconn, total:0, fail:0};
-            usageStat.connections[msg.serverId].max += msg.maxConnections;
+            usageStat.connections[msg.serverId].max = Math.max(0, usageStat.connections[msg.serverId].max + msg.maxConnections);
         }
     } else if(msg.log == 1) {
         if (msg.msg != _lastLogMsg) {
@@ -130,7 +146,7 @@ var showUsageStat = function() {
     var d = (uptime / (60 * 60 * 24)).toFixed();
     var h = lpad(((uptime / 3600) % 24).toFixed(), "0", 2);
     var m = lpad(((uptime / 60) % 60).toFixed(), "0", 2);
-    utils.log("> uptime  requests     rq/s   players  pl/s  cached updated  missed updfail max_conn max_db mongorq cmd_info");
+    utils.log("> uptime  requests     rq/s   players  pl/s  cached updated  missed updfail max_conn max_db mongorq cmd_info w");
 
     var s = (d > 9 ? "" : ">");
     // uptime
@@ -159,7 +175,12 @@ var showUsageStat = function() {
     s += lpad(usageStat.mongorq + "/" + usageStat.mongorq_max, " ", 8);
     // cmd_info
     s += lpad((usageStat.cmd_info / usageStat.requests * 100).toFixed(2) + "%", " ", 9);
+    // w
+    s += " " + workers.length;
     utils.log(s);
+
+    if (workers_log != "")
+        utils.log(workers_log);
 
     utils.log("> connections: cur max    total     fail");
     //        "  api.worldoftanks-sea.com   0  52"
@@ -240,7 +261,7 @@ var getTWRBaseContent = function() {
                 }
             } catch(e) {
                 utils.debug("> [getTWRBaseContent] ERROR: " + e +
-                    "\nlength=" + responseData.length + ", data=" + responseData, "");
+                    "\nlength=" + responseData.length + ", data=" + responseData.substr(0, 512), "");
             }
         });
     });

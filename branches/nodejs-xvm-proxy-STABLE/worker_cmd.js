@@ -62,6 +62,9 @@ var cmd_INFO = function(response, pl, args) {
         }
     }
 
+    // FIXIT: disabled to decrease db load
+    //response.end('{"error":"INFO command is disabled due high server load","server":"' + settings.serverName + '"}'); return;
+
     var query = {$or:[]};
     var itemName = {nm:pl};
     var itemId = {_id:isFinite(pl) ? parseInt(pl) : 0};

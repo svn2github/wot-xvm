@@ -1,12 +1,12 @@
 module.exports = (function() {
-    var includer = require("./includer"),
-        settings = includer.settings(),
-        utils = includer.utils(),
-        db = includer.db(),
-        url = includer.url(),
-        worker_cmd = includer.cmd(),
-        worker_get = includer.get(),
-        tcalc = includer.tcalc();
+    var settings = require("./settings").settings,
+        utils = require("./utils"),
+        db = require("./worker_db"),
+        url = require("url"),
+        worker_cmd = require("./worker_cmd"),
+        worker_get = require("./worker_get"),
+        tcalc = require("./tcalc/tcalc"),
+        fakeHttp; // for test application
 
     // Get stat command:
     //   111111
@@ -16,14 +16,15 @@ module.exports = (function() {
     // Custom commands:
     //   0,WN=nick
     //   0,TWR=nick
-    var processRequest = function(request, response) {
+    var processRequest = function(request, response, fakeHttp) {
         var times = [
             { "n": "start", "t": new Date() }
         ];
 
+        fakeHttp = fakeHttp; // sirmax: ???
         try {
             var query = url.parse(request.url).query;
-            if (!query || !query.match(/^((\d)|(\d[\dA-Za-z_\-,=/]*))$/))
+            if (!query || !query.match(/^((\d)|(\d[\dA-Za-z_\-,=/&]*))$/))
                 throw "query match error: " + query;
 
             if (query == "001" || query == "test") {
@@ -31,7 +32,10 @@ module.exports = (function() {
                 return;
             }
 
-            var qarr = query.split(",");
+            var qargs = query.split("&");
+            var token = qargs[1];
+            //utils.log(token);
+            var qarr = qargs[0].split(",");
             if (qarr[0] == "0") {
                 qarr.shift();
                 worker_cmd.processCommand(response, qarr);
@@ -60,7 +64,8 @@ module.exports = (function() {
                 dbData: db_data,
                 rqData: rq.data,
                 response: response,
-                times: times
+                times: times,
+                fakeHttp: fakeHttp
             };
 
             return _onPlayersData(error, processData);

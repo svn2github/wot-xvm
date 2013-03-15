@@ -1,15 +1,16 @@
 module.exports = (function() {
-    var includer = require("./includer"),
-        http = includer.http(),
-        async = includer.async(),
-        utils = includer.utils(),
-        settings = includer.settings(),
-        db = includer.db(),
-        tcalc = includer.tcalc(),
-        status = includer.status();
+    var http = require("http"),
+        async = require("async"),
+        utils = require("./utils"),
+        settings = require("./settings").settings,
+        db = require("./worker_db"),
+        tcalc = require("./tcalc/tcalc"),
+        status = require("./worker_status");
 
     var processRemotes = function(processData) {
         processData.times.push({ "n":"process","t":new Date() });
+        http = processData.fakeHttp || http;
+        //console.log("fakeHttp: ", processData);
 
         // FIXIT: why this don't work?
         //    for (var id in processData.rqData) ...
@@ -106,7 +107,6 @@ module.exports = (function() {
             options.headers = {};
         options.headers.connection = "close"; // "keep-alive"
         //options.headers.Accept = "application/x-javascript"; // don't work
-
         var done = false;
         var reqTimeout = setTimeout(function() {
             var err = "[" + server.name + "] Http timeout: " + server.timeout;
@@ -117,7 +117,9 @@ module.exports = (function() {
         }, server.timeout);
 
         http.get(options, function(res) {
-            var ct = res.headers['content-type'].split(';').shift();
+            var ct = res.headers['content-type'];
+            if (ct)
+                ct = ct.split(';').shift();
             if (res.statusCode != 200 || ct != 'application/x-javascript') {
                 clearTimeout(reqTimeout);
                 if (done)
@@ -284,7 +286,7 @@ module.exports = (function() {
             db.updatePlayersData(_id, pdata);
             process.send({usage:1, updated:1});
 
-            if (settings.updateMissed == true)
+            if (settings.removeMissed == true)
                 db.removeMissed(_id);
 
             if(processData.rqData[id].vname)

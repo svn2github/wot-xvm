@@ -4,6 +4,7 @@ var numNodes = 2, // use X CPU core(s)
 exports.settings = {
     numNodes: numNodes,
     updateMissed: false,
+    removeMissed: false,
     updateUsers: false,
     fixData: true,
     host: "127.0.0.1",
@@ -15,12 +16,10 @@ exports.settings = {
     mongoServer: "localhost",
     mongoPort: 27017,
     dbName: "xvm", // for players database
-    dbName2: "xvm2", // for users and missed
     playersCollectionName: "players",
     missedCollectionName: "missed",
     usersCollectionName: "users",
     dbMaxConnections: Math.floor(20 / numNodes),
-    dbMaxConnections2: Math.floor(10 / numNodes),
     dbMinTime: 1000, // msec
     dbMaxTime: 5000, // msec
     servers: [

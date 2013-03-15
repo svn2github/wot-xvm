@@ -74,7 +74,7 @@ exports.calculateWN = function(data) {
 exports.calculateNEFF = function(value) {
     var res = value < 440 ? 0 :
         Math.round(Math.max(0, Math.min(100,
-            value * (value * (value * (value * (value * (value *
+            value * (value * (value * (value * (value * (value * 
             0.00000000000000004787
             - 0.00000000000035544)
             + 0.00000000102606)

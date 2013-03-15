@@ -1,9 +1,8 @@
 module.exports = (function() {
-    var includer = require("./includer"),
-        settings = includer.settings(),
-        utils = includer.utils(),
-        _mongo,
+    var settings = require("./settings").settings,
+        utils = require("./utils"),
         _open_callback = null,
+        _mongo = null,
         _mongoRq = 0,
         _mongoMaxRq = settings.dbMaxConnections,
         _mongoMaxRqLastUpdate = null,
@@ -12,9 +11,9 @@ module.exports = (function() {
         missed = null,
         users = null;
 
-    var initialize = function(callback) {
-        _mongo = includer.mongo();
+    var initialize = function(callback, mongo) {
         _open_callback = callback;
+        _mongo = mongo || require("mongodb");
 
         // Connect to database
         var options = {
@@ -64,8 +63,8 @@ module.exports = (function() {
         process.send({ usage: 1, mongorq: 1 });
         var start = new Date();
         var cursor = players.find(
-            { _id: { $in: ids } },
-            { _id: 1, st: 1, dt: 1, cr: 1, up: 1, nm: 1, b: 1, w: 1, spo: 1, hip: 1, cap: 1, dmg: 1, frg: 1, def: 1, lvl: 1, e: 1, wn: 1, twr: 1, v: 1 });
+            {_id:{$in:ids}},
+            {_id:1, st: 1, dt:1, cr:1, up:1, nm:1, b:1, w:1, spo:1, hip:1, cap:1, dmg:1, frg:1, def:1, lvl:1, e:1, wn:1, twr:1, v:1 });
         cursor.toArray(function(error, result) {
             _mongoRq--;
             process.send({ usage: 1, mongorq: -1 });
@@ -101,19 +100,9 @@ module.exports = (function() {
         }
         utils.log("MongoDB connected: " + settings.dbName);
         players = new _mongo.Collection(client, settings.playersCollectionName);
-
-        var options = {
-            auto_reconnect: true,
-            poolSize: settings.dbMaxConnections2
-        };
-
-        var db = new _mongo.Db(settings.dbName2, new _mongo.Server(settings.mongoServer, settings.mongoPort, options), { w:0 });
-        db.open(function(error2, client2) {
-            utils.log("MongoDB connected: " + settings.dbName2);
-            missed = new _mongo.Collection(client2, settings.missedCollectionName);
-            users = new _mongo.Collection(client2, settings.usersCollectionName);
-            _open_callback();
-        });
+        missed = new _mongo.Collection(client, settings.missedCollectionName);
+        users = new _mongo.Collection(client, settings.usersCollectionName);
+        _open_callback();
     };
 
     // DB connections balancer
