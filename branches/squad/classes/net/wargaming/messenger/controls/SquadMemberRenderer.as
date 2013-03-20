@@ -10,6 +10,10 @@
 	var nation:String;
 	var status:String;
 	var statusString;
+	var romanNumb:Boolean;
+	var startSeparator:String;
+	var midSeparator:String;
+	var endSeparator:String;
 	
 	function SquadMemberRenderer();
 	function afterSetData();

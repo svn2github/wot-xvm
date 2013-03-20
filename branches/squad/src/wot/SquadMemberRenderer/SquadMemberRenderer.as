@@ -11,9 +11,11 @@ class wot.SquadMemberRenderer.SquadMemberRenderer extends net.wargaming.messenge
 {
 	function defineTankInfo(vehName:String):String
 	{
-		var startSeparator:String = "";
-		var midSeparator:String = "";
-		var endSeparator:String = "";
+		startSeparator = "";
+		midSeparator = "";
+		endSeparator = "";
+		romanNumb = true;
+		
 		switch (vehName) {
 			//level 1
 			case "МС-1": 
@@ -634,7 +636,7 @@ class wot.SquadMemberRenderer.SquadMemberRenderer extends net.wargaming.messenge
 				tankName = "china_Ch22_113";  break;
 			
 			default: return "";
-		}
+		} // End of switch
 		var pos = tankName.indexOf("_");
         tankName2 =  (pos < 0) ? tankName : Utils.trim(tankName.slice(pos+1,tankName.length)).toLowerCase();
 		//Logger.add(tankName);
@@ -643,34 +645,88 @@ class wot.SquadMemberRenderer.SquadMemberRenderer extends net.wargaming.messenge
 		battleLevels = VehicleInfoData.data[tankName].tiers[0].toString() + "-" + VehicleInfoData.data[tankName].tiers[1].toString();
 		//Logger.add(lvl);
 		//Logger.add(battleLevels);
+		if(romanNumb) 
+		switch (lvl)
+        {
+            case "1":
+            {
+                lvl = ("I");
+                break;
+            } 
+            case "2":
+            {
+                lvl = ("II");
+                break;
+            } 
+            case "3":
+            {
+                lvl = ("III");
+                break;
+            } 
+            case "4":
+            {
+                lvl = ("IV");
+                break;
+            } 
+            case "5":
+            {
+                lvl = ("V");
+                break;
+            } 
+            case "6":
+            {
+                lvl = ("VI");
+                break;
+            } 
+            case "7":
+            {
+                lvl = ("VII");
+                break;
+            } 
+            case "8":
+            {
+                lvl = ("VIII");
+                break;
+            } 
+            case "9":
+            {
+                lvl = ("IX");
+                break;
+            } 
+            case "10":
+            {
+                lvl = ("X");
+                break;
+            } 
+        } // End of switch
 		switch (VehicleInfoData2.data[tankName2].type.toString())
+		{
+			case "HT":
 			{
-				case "HT":
-				{
-					type = ("ТТ");
-					break;
-				} 
-				case "MT":
-				{
-					type = ("СТ");
-					break;
-				} 
-				case "LT":
-				{
-					type = ("ЛТ");
-					break;
-				} 
-				case "TD":
-				{
-					type = ("ПТ");
-					break;
-				} 
-				case "SPG":
-				{
-					type = ("САУ");
-					break;
-				} 
-			}
+				type = ("ТТ");
+				break;
+			} 
+			case "MT":
+			{
+				type = ("СТ");
+				break;
+			} 
+			case "LT":
+			{
+				type = ("ЛТ");
+				break;
+			} 
+			case "TD":
+			{
+				type = ("ПТ");
+				break;
+			} 
+			case "SPG":
+			{
+				type = ("САУ");
+				break;
+			} 
+		} // End of switch
 		switch (VehicleInfoData2.data[tankName2].nation.toString())
         {
             case "ussr":
@@ -703,15 +759,17 @@ class wot.SquadMemberRenderer.SquadMemberRenderer extends net.wargaming.messenge
                 nation = ("Китай");
                 break;
             } 
-        }
+        } // End of switch
 		//todo: align
 		var i:Number = 1;
-        while (i < 21 - (data.vehicleName + midSeparator + lvl + endSeparator).length)
+        while (0<(10-(startSeparator+data.vehicleName).length))
         {
             startSeparator += " ";
 			i++;
+			//Logger.add("i=" + i);
+			//Logger.add("length="+(startSeparator+data.vehicleName).length);
         }
-		return startSeparator + midSeparator + lvl + endSeparator;
+		return startSeparator + "\t " + midSeparator + lvl + endSeparator;
 	}
 	function SquadMemberRenderer()
 	{
