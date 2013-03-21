@@ -2,6 +2,8 @@
  * ...
  * @author Mr.A
  */
+import wot.utils.Config;
+import wot.utils.GlobalEventDispatcher;
 import wot.utils.Utils;
 import wot.utils.Logger;
 import wot.utils.VehicleInfoData;
@@ -9,13 +11,59 @@ import wot.utils.VehicleInfoData2;
 
 class wot.SquadMemberRenderer.SquadMemberRenderer extends net.wargaming.messenger.controls.SquadMemberRenderer
 {
+	private var tankName:String;
+	private var tankNameWONation:String;
+	private var tankLvl:String;
+	private var tankBattleLevels:String;
+	private var tankType:String;
+	private var tankNation:String;
+	private var supportSeparator:String;
+	private var leftLvlBorder:String;
+	//private var rightLvlBorder:String;
+	private var romanNumb:Boolean;
+	private var showClan:Boolean;
+	private var enabledInfo:Boolean;
+	
+	private static var dummy = Logger.dummy;
+	
+	function SquadMemberRenderer()
+	{
+		Utils.TraceXvmModule("Squad");
+		
+		super();
+		
+		_global.gfxExtensions = true;
+		
+		Logger.add("SquadMemberRenderer- start");
+		Config.LoadConfig("SquadMemberRenderer.as");
+		romanNumb = Config.s_config.squad.romanNumb;
+		showClan = Config.s_config.squad.showClan;
+		leftLvlBorder = Config.s_config.squad.leftLvlBorder;
+		enabledInfo = Config.s_config.squad.enabled;
+		Logger.add("enabled=" + enabledInfo+", roman="+romanNumb+", clan="+showClan+", leftLvlBorder=\""+leftLvlBorder+"\".");
+		Logger.add("SquadMemberRenderer- end");
+	}
+	
+	/*function onEnterFrame()
+	{
+		if (!Config.s_loaded){
+		this.nextFrame();
+		if (_currentframe == _totalframes)
+		{
+			this.stop();
+			delete this.onEnterFrame;
+		}} // end if
+	} // End of the function*/
+	
 	function defineTankInfo(vehName:String):String
 	{
-		startSeparator = "";
-		midSeparator = "";
-		endSeparator = "";
-		romanNumb = true;
-		
+		Logger.add("defineTankInfo");
+		/*if (Config.s_config.squad.enabled != true)
+            return "";*/
+		romanNumb = Config.s_config.squad.romanNumb;
+		showClan = Config.s_config.squad.showClan;
+		leftLvlBorder = Config.s_config.squad.leftLvlBorder;
+		Logger.add("enabled=" + enabledInfo+", roman="+romanNumb+", clan="+showClan+", leftLvlBorder=\""+leftLvlBorder+"\".");
 		switch (vehName) {
 			//level 1
 			case "МС-1": 
@@ -638,173 +686,180 @@ class wot.SquadMemberRenderer.SquadMemberRenderer extends net.wargaming.messenge
 			default: return "";
 		} // End of switch
 		var pos = tankName.indexOf("_");
-        tankName2 =  (pos < 0) ? tankName : Utils.trim(tankName.slice(pos+1,tankName.length)).toLowerCase();
+        tankNameWONation =  (pos < 0) ? tankName : Utils.trim(tankName.slice(pos+1,tankName.length)).toLowerCase();
 		//Logger.add(tankName);
-		//Logger.add(tankName2);
-		lvl = VehicleInfoData2.data[tankName2].level.toString();
-		battleLevels = VehicleInfoData.data[tankName].tiers[0].toString() + "-" + VehicleInfoData.data[tankName].tiers[1].toString();
-		//Logger.add(lvl);
+		//Logger.add(tankNameWONation);
+		tankLvl = VehicleInfoData2.data[tankNameWONation].level.toString();
+		tankBattleLevels = VehicleInfoData.data[tankName].tiers[0].toString() + "-" + VehicleInfoData.data[tankName].tiers[1].toString();
+		//Logger.add(tankLvl);
 		//Logger.add(battleLevels);
-		if(romanNumb) 
-		switch (lvl)
+		if(romanNumb) {
+		switch (tankLvl)
         {
             case "1":
             {
-                lvl = ("I");
+                tankLvl = ("I");
                 break;
             } 
             case "2":
             {
-                lvl = ("II");
+                tankLvl = ("II");
                 break;
             } 
             case "3":
             {
-                lvl = ("III");
+                tankLvl = ("III");
                 break;
             } 
             case "4":
             {
-                lvl = ("IV");
+                tankLvl = ("IV");
                 break;
             } 
             case "5":
             {
-                lvl = ("V");
+                tankLvl = ("V");
                 break;
             } 
             case "6":
             {
-                lvl = ("VI");
+                tankLvl = ("VI");
                 break;
             } 
             case "7":
             {
-                lvl = ("VII");
+                tankLvl = ("VII");
                 break;
             } 
             case "8":
             {
-                lvl = ("VIII");
+                tankLvl = ("VIII");
                 break;
             } 
             case "9":
             {
-                lvl = ("IX");
+                tankLvl = ("IX");
                 break;
             } 
             case "10":
             {
-                lvl = ("X");
+                tankLvl = ("X");
                 break;
             } 
         } // End of switch
-		switch (VehicleInfoData2.data[tankName2].type.toString())
+		}
+		switch (VehicleInfoData2.data[tankNameWONation].type.toString())
 		{
 			case "HT":
 			{
-				type = ("ТТ");
+				tankType = ("ТТ");
 				break;
 			} 
 			case "MT":
 			{
-				type = ("СТ");
+				tankType = ("СТ");
 				break;
 			} 
 			case "LT":
 			{
-				type = ("ЛТ");
+				tankType = ("ЛТ");
 				break;
 			} 
 			case "TD":
 			{
-				type = ("ПТ");
+				tankType = ("ПТ");
 				break;
 			} 
 			case "SPG":
 			{
-				type = ("САУ");
+				tankType = ("САУ");
 				break;
 			} 
 		} // End of switch
-		switch (VehicleInfoData2.data[tankName2].nation.toString())
+		switch (VehicleInfoData2.data[tankNameWONation].nation.toString())
         {
             case "ussr":
             {
-                nation = ("СССР");
+                tankNation = ("СССР");
                 break;
             } 
             case "germany":
             {
-                nation = ("Германия");
+                tankNation = ("Германия");
                 break;
             } 
             case "usa":
             {
-                nation = ("США");
+                tankNation = ("США");
                 break;
             } 
             case "france":
             {
-                nation = ("Франция");
+                tankNation = ("Франция");
                 break;
             } 
             case "uk":
             {
-                nation = ("Великобритания");
+                tankNation = ("Великобритания");
                 break;
             } 
             case "china":
             {
-                nation = ("Китай");
+                tankNation = ("Китай");
                 break;
             } 
         } // End of switch
 		//todo: align
 		var i:Number = 1;
-        while (0<(10-(startSeparator+data.vehicleName).length))
+		supportSeparator = "";
+        while (0<(10-(supportSeparator+data.vehicleName).length))
         {
-            startSeparator += " ";
+            supportSeparator += " ";
 			i++;
 			//Logger.add("i=" + i);
 			//Logger.add("length="+(startSeparator+data.vehicleName).length);
         }
-		return startSeparator + "\t " + midSeparator + lvl + endSeparator;
+		return supportSeparator + "\t" + leftLvlBorder + tankLvl;
 	}
-	function SquadMemberRenderer()
-	{
-		Utils.TraceXvmModule("Squad");
-		super();
-		_global.gfxExtensions = true;
-	}
+	
 	function configUI()
     {
-		//Logger.add("function configUI");
+		Logger.add("configUI");
 		super.configUI();
 		//vehicleNameField.autoSize = "right";
     }
+	
 	function afterSetData()
 	{
-		//Logger.add("function afterSetData");
-		if(data.vehicleName != "")
-			data.vehicleName = data.vehicleName + defineTankInfo(data.vehicleName);
+		//Logger.addObject(data);
+		Logger.add("afterSetData");
+		if (Config.s_loaded and !Config.s_config.rating.showPlayersStatistics and !showClan) {
+			data.displayName = Utils.GetPlayerName(data.displayName);}
+		if(Config.s_loaded and enabledInfo and data.vehicleName != ""){
+			data.vehicleName = data.vehicleName + defineTankInfo(data.vehicleName);}
 		super.afterSetData();
 	}
+	
 	function updateAfterStateChange()
 	{
-		//Logger.add("function updateAfterStateChange");
-		if(data.vehicleName != "")
+		Logger.add("updateAfterStateChange");
+		if (Config.s_loaded and !Config.s_config.rating.showPlayersStatistics and !showClan)
+			data.displayName = Utils.GetPlayerName(data.displayName);
+		if(Config.s_loaded and enabledInfo and data.vehicleName != "")
 			data.vehicleName = data.vehicleName + defineTankInfo(data.vehicleName);
 		super.updateAfterStateChange();
 	}
+	
 	function getToolTipData()
 	{
+		Logger.add("getToolTipData");
+		if(enabledInfo){
 		defineTankInfo(data.vehicleName);
 		if (this.statusString != null)
         {
             if (this.statusString == "ready" || this.statusString == "inBattle")
             {
-                return ("Нация: " + nation + "\n" + "Тип: " + type + "\n" + "Ур. боев: " + battleLevels);
+                return ("Нация: " + tankNation + "\n" + "Тип: " + tankType + "\n" + "Ур. боев: " + tankBattleLevels);
             }
             else
             {
@@ -815,6 +870,7 @@ class wot.SquadMemberRenderer.SquadMemberRenderer extends net.wargaming.messenge
         {
             return (null);
         } // end else if
+		}
 	}
 	
 }
