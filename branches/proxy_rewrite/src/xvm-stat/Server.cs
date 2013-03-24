@@ -544,7 +544,7 @@ namespace wot
           results[resultId].thread = new Thread(() => { threadFunc(resultId, p.Length < 3 ? "" : p[2]); });
           results[resultId].thread.Start();
         }
-        return String.Format("{{\"status\":\"NOT_READY\",\"resultId\":{0}}}", results.Count - 1);
+        return String.Format("{{\"status\":\"NOT_READY\",\"resultId\":{0}}}", resultId);
       }
     }
 
