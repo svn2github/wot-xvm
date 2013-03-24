@@ -517,7 +517,7 @@ namespace wot
     }
     #endregion
 
-    #region        AsyncWrapper
+    #region AsyncWrapper
 
     private string AsyncWrapper(string parameters, Action<int, string> threadFunc)
     {
@@ -727,7 +727,7 @@ namespace wot
       foreach (PlayerData pd in req.players)
       {
         string cacheKey = String.Format("{0}={1}", pd.id, pd.v);
-        if (cache.ContainsKey(cacheKey))
+        if (cache.ContainsKey(cacheKey) && pd.s != 1)
           continue;
 
         // playerId=vname,... || playerId,...
