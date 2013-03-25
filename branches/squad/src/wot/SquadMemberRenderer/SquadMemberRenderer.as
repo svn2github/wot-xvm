@@ -63,7 +63,7 @@ class wot.SquadMemberRenderer.SquadMemberRenderer extends net.wargaming.messenge
 		showClan = Config.s_config.squad.showClan;
 		leftLvlBorder = Config.s_config.squad.leftLvlBorder;
 		//Logger.add("enabled=" + enabledInfo + ", roman=" + romanNumb + ", clan=" + showClan + ", leftLvlBorder=\"" + leftLvlBorder + "\".");
-		if (!Config.s_loaded && Config.s_config.squad.enabled != true)
+		if (!Config.s_loaded || Config.s_config.squad.enabled != true)
             return "";
 		if (data.displayName != "" && !showClan)
 			data.displayName = Utils.GetPlayerName(data.displayName);
