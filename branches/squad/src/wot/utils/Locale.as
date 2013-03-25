@@ -111,6 +111,20 @@ class wot.utils.Locale
         // crew
         tr["PutOwnCrew"] = "Родной экипаж";
         tr["PutBestCrew"] = "Лучший экипаж";
+		
+		//squad
+		tr["Battle levels"] = "Ур. боёв";
+		tr["ussr"] = "СССР";
+		tr["germany"] = "Германия";
+		tr["usa"] = "США";
+		tr["france"] = "Франция";
+		tr["uk"] = "Великобритания";
+		tr["china"] = "Китай";
+		tr["HT"] = "ТТ";
+		tr["MT"] = "СТ";
+		tr["LT"] = "ЛТ";
+		tr["TD"] = "ПТ";
+		tr["SPG"] = "САУ";
     }
 
     public static function setRegion(value: String)

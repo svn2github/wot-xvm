@@ -4,7 +4,6 @@
 	var vehicleNameField;
 	var statusString;
 	
-	function configUI();
 	function afterSetData();
 	function getToolTipData();
 	function updateAfterStateChange();
