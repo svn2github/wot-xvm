@@ -39,6 +39,19 @@ class wot.utils.Locale
         // crew
         tr["PutOwnCrew"] = "Put own crew";
         tr["PutBestCrew"] = "Put best crew";
+		
+		// squad
+		tr["ussr"] = "USSR";
+		tr["germany"] = "Germany";
+		tr["usa"] = "USA";
+		tr["france"] = "France";
+		tr["uk"] = "UK";
+		tr["china"] = "China";
+		tr["HT"] = "HT";
+		tr["MT"] = "MT";
+		tr["LT"] = "LT";
+		tr["TD"] = "TD";
+		tr["SPG"] = "SPG";
 
         // RU
         tr = _translations["RU"];

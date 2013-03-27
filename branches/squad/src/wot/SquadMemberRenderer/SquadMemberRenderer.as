@@ -63,10 +63,10 @@ class wot.SquadMemberRenderer.SquadMemberRenderer extends net.wargaming.messenge
 		showClan = Config.s_config.squad.showClan;
 		leftLvlBorder = Config.s_config.squad.leftLvlBorder;
 		//Logger.add("enabled=" + enabledInfo + ", roman=" + romanNumb + ", clan=" + showClan + ", leftLvlBorder=\"" + leftLvlBorder + "\".");
-		if (!Config.s_loaded || Config.s_config.squad.enabled != true)
-            return "";
-		if (data.displayName != "" && !showClan)
+		if (Config.s_loaded && data.displayName != "" && !showClan)
 			data.displayName = Utils.GetPlayerName(data.displayName);
+		if (!Config.s_loaded || (Config.s_config.squad.enabled != true) || (data.vehicleName = ""))
+            return "";
 
 		switch (vehName) {
 			//level 1
@@ -764,16 +764,14 @@ class wot.SquadMemberRenderer.SquadMemberRenderer extends net.wargaming.messenge
 	{
 		//Logger.addObject(data);
 		//Logger.add("afterSetData");
-		if(data.vehicleName != "")
-			data.vehicleName = data.vehicleName + defineTankInfo(data.vehicleName);
+		data.vehicleName = data.vehicleName + defineTankInfo(data.vehicleName);
 		super.afterSetData();
 	}
 	
 	function updateAfterStateChange()
 	{
 		//Logger.add("updateAfterStateChange");
-		if(data.vehicleName != "")
-			data.vehicleName = data.vehicleName + defineTankInfo(data.vehicleName);
+		data.vehicleName = data.vehicleName + defineTankInfo(data.vehicleName);
 		super.updateAfterStateChange();
 	}
 	
