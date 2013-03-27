@@ -63,11 +63,10 @@ class wot.SquadMemberRenderer.SquadMemberRenderer extends net.wargaming.messenge
 		showClan = Config.s_config.squad.showClan;
 		leftLvlBorder = Config.s_config.squad.leftLvlBorder;
 		//Logger.add("enabled=" + enabledInfo + ", roman=" + romanNumb + ", clan=" + showClan + ", leftLvlBorder=\"" + leftLvlBorder + "\".");
-		if (Config.s_loaded && data.displayName != "" && !showClan)
+		if (Config.s_loaded && !(data.displayName == "") && !showClan && enabledInfo)
 			data.displayName = Utils.GetPlayerName(data.displayName);
-		if (!Config.s_loaded || (Config.s_config.squad.enabled != true) || (data.vehicleName = ""))
+		if (!Config.s_loaded || (enabledInfo != true) || (data.vehicleName == ""))
             return "";
-
 		switch (vehName) {
 			//level 1
 			case "МС-1": 
@@ -163,7 +162,7 @@ class wot.SquadMemberRenderer.SquadMemberRenderer extends net.wargaming.messenge
 			case "Marder II": 
 				tankName = "germany_G20_Marder_II";  break;
 			case "Pz S35": 
-				tankName = "";  break;//todo
+				tankName = "germany_Pz38t";  break;//todo
 			case "Pz38t": 
 				tankName = "germany_Pz38t";  break;
 			case "T-15": 
@@ -690,10 +689,10 @@ class wot.SquadMemberRenderer.SquadMemberRenderer extends net.wargaming.messenge
 			default: return "";
 		} // End of switch
 		var pos = tankName.indexOf("_");
-        tankNameWONation =  (pos < 0) ? tankName : Utils.trim(tankName.slice(pos+1,tankName.length)).toLowerCase();
+        tankNameWONation =  (pos < 0) ? tankName : Utils.trim(tankName.slice(pos + 1, tankName.length)).toLowerCase();
 		tankLvl = VehicleInfoData2.data[tankNameWONation].level.toString();
 		tankBattleLevels = VehicleInfoData.data[tankName].tiers[0].toString() + "-" + VehicleInfoData.data[tankName].tiers[1].toString();
-		if(romanNumb)
+		if(romanNumb) {
 			switch (tankLvl)
 			{
 				case "1":
@@ -747,6 +746,7 @@ class wot.SquadMemberRenderer.SquadMemberRenderer extends net.wargaming.messenge
 					break;
 				} 
 			} // End of switch
+		}
 		tankType = Locale.get(VehicleInfoData2.data[tankNameWONation].type.toString());
 		tankNation = Locale.get(VehicleInfoData2.data[tankNameWONation].nation.toString());
 		//todo: align
@@ -764,14 +764,14 @@ class wot.SquadMemberRenderer.SquadMemberRenderer extends net.wargaming.messenge
 	{
 		//Logger.addObject(data);
 		//Logger.add("afterSetData");
-		data.vehicleName = data.vehicleName + defineTankInfo(data.vehicleName);
+		data.vehicleName += defineTankInfo(data.vehicleName);
 		super.afterSetData();
 	}
 	
 	function updateAfterStateChange()
 	{
 		//Logger.add("updateAfterStateChange");
-		data.vehicleName = data.vehicleName + defineTankInfo(data.vehicleName);
+		data.vehicleName += defineTankInfo(data.vehicleName);
 		super.updateAfterStateChange();
 	}
 	
@@ -780,7 +780,7 @@ class wot.SquadMemberRenderer.SquadMemberRenderer extends net.wargaming.messenge
 		//Logger.add("getToolTipData");
 		if (this.statusString != null)
         {
-            if ((this.statusString == "ready" || this.statusString == "inBattle") && Config.s_config.squad.enabled)
+            if ((this.statusString == "ready" || this.statusString == "inBattle") && enabledInfo)
             {
 				defineTankInfo(data.vehicleName);
                 return (Locale.get("Nation")+ ": " + tankNation + "\n" + Locale.get("Type") + ": " + tankType + "\n" + Locale.get("Battle levels") + ": " + tankBattleLevels);
