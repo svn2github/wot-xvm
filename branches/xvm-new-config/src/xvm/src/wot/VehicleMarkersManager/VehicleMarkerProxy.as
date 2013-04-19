@@ -111,7 +111,7 @@ class wot.VehicleMarkersManager.VehicleMarkerProxy extends gfx.core.UIComponent 
             //   register config load complete event
             GlobalEventDispatcher.addEventListener("config_loaded", this, onConfigLoaded);
             //   start config loading
-            Config.LoadConfig("VehicleMarkerProxy.as", undefined, true);
+            Config.LoadConfig("VehicleMarkerProxy.as", true);
         }
         else
         {
