@@ -1,0 +1,58 @@
+--- orig\FinalStatistic.xml	2013-04-18 15:44:21.090468700 +0400
++++ FinalStatistic.xml	2013-04-18 15:44:21.435488500 +0400
+@@ -85467,8 +85467,8 @@
+               <String value="charAt"/>
+               <String value=" "/>
+               <String value="\"/>
+-              <String value=""/>
+-              <String value=""/>
++              <String value=" "/>
++              <String value=" "/>
+               <String value="&#10;"/>
+               <String value="&#13;"/>
+               <String value="&#9;"/>
+@@ -104480,7 +104480,7 @@
+         <actions>
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.hangar.FinalStatistic.TeamStats"/>
++              <StackString value="wot.FinalStatistic.TeamStats"/>
+             </items>
+           </PushData>
+           <GetVariable/>
+@@ -104558,7 +104558,7 @@
+         <actions>
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.hangar.FinalStatistic.view.TeamMemberItemRenderer"/>
++              <StackString value="wot.FinalStatistic.TeamMemberItemRenderer"/>
+             </items>
+           </PushData>
+           <GetVariable/>
+@@ -104584,7 +104584,7 @@
+         <actions>
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.hangar.FinalStatistic.view.TeamMemberItemRenderer"/>
++              <StackString value="wot.FinalStatistic.TeamMemberItemRenderer"/>
+             </items>
+           </PushData>
+           <GetVariable/>
+@@ -104662,7 +104662,7 @@
+         <actions>
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.hangar.FinalStatistic.view.DetailsBlock"/>
++              <StackString value="wot.FinalStatistic.DetailsBlock"/>
+             </items>
+           </PushData>
+           <GetVariable/>
+@@ -104818,7 +104818,7 @@
+         <actions>
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.hangar.FinalStatistic.FinalStatisticForm"/>
++              <StackString value="wot.FinalStatistic.FinalStatisticForm"/>
+             </items>
+           </PushData>
+           <GetVariable/>
