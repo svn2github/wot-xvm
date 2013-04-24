@@ -4,8 +4,8 @@
         "message": "  * адаптация к WoT 0.8.5\n  * оптимизация кода\n  * улучшения и исправления"
     },
     "EU": {
-        "ver": "3.4.2",
-        "message": "  * for WoT 0.8.4\n  * code optimization\n  * improvements and bugfixes"
+        "ver": "3.5.0",
+        "message": "  * for WoT 0.8.5\n  * code optimization\n  * improvements and bugfixes"
     },
     "US": {
         "ver": "3.4.2",
@@ -16,8 +16,8 @@
         "message": "  * for WoT 0.8.4\n  * code optimization\n  * improvements and bugfixes"
     },
     "VTC": {
-        "ver": "3.4.2",
-        "message": "  * for WoT 0.8.4\n  * code optimization\n  * improvements and bugfixes"
+        "ver": "3.5.0",
+        "message": "  * for WoT 0.8.5\n  * code optimization\n  * improvements and bugfixes"
     },
-    "CT":  { "ver": "3.3.1", "message": "" }
+    "CT":  { "ver": "3.5.0", "message": "" }
 }
