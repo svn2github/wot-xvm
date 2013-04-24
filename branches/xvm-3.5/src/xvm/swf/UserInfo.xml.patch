@@ -1,0 +1,22 @@
+--- orig\UserInfo.xml	2013-04-18 15:44:25.699732400 +0400
++++ UserInfo.xml	2013-04-18 15:44:25.897743700 +0400
+@@ -57215,8 +57215,8 @@
+               <String value="charAt"/>
+               <String value=" "/>
+               <String value="\"/>
+-              <String value=""/>
+-              <String value=""/>
++              <String value=" "/>
++              <String value=" "/>
+               <String value="&#10;"/>
+               <String value="&#13;"/>
+               <String value="&#9;"/>
+@@ -62141,7 +62141,7 @@
+         <actions>
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.profile.UserInfo"/>
++              <StackString value="wot.UserInfo.UserInfo"/>
+             </items>
+           </PushData>
+           <GetVariable/>

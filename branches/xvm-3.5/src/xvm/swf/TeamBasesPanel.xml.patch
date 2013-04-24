@@ -1,0 +1,20 @@
+--- orig\TeamBasesPanel.xml	2013-04-18 15:44:22.982577000 +0400
++++ TeamBasesPanel.xml	2013-04-18 15:44:23.051580900 +0400
+@@ -18273,7 +18273,7 @@
+         <actions>
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.ingame.TeamBasesPanel"/>
++              <StackString value="wot.TeamBasesPanel.TeamBasesPanel"/>
+             </items>
+           </PushData>
+           <GetVariable/>
+@@ -18299,7 +18299,7 @@
+         <actions>
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.ingame.CaptureBar"/>
++              <StackString value="wot.TeamBasesPanel.CaptureBar"/>
+             </items>
+           </PushData>
+           <GetVariable/>

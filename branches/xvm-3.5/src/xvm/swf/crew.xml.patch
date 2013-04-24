@@ -1,0 +1,20 @@
+--- orig\crew.xml	2013-04-18 15:44:26.376771100 +0400
++++ crew.xml	2013-04-18 15:44:26.777794000 +0400
+@@ -127284,7 +127284,7 @@
+         <actions>
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.tankmen.CrewItemRenderer"/>
++              <StackString value="wot.crew.tankmen.CrewItemRenderer"/>
+             </items>
+           </PushData>
+           <GetVariable/>
+@@ -127466,7 +127466,7 @@
+         <actions>
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.tankmen.Crew"/>
++              <StackString value="wot.crew.tankmen.Crew"/>
+             </items>
+           </PushData>
+           <GetVariable/>

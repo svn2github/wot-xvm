@@ -1,0 +1,29 @@
+--- orig\TeamRenderer.xml	2013-04-18 15:44:25.369713500 +0400
++++ TeamRenderer.xml	2013-04-18 15:44:25.496720800 +0400
+@@ -41224,7 +41224,7 @@
+         <actions>
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.messenger.controls.PlayerItemRenderer"/>
++              <StackString value="wot.TeamRenderer.PlayerItemRenderer"/>
+             </items>
+           </PushData>
+           <GetVariable/>
+@@ -41250,7 +41250,7 @@
+         <actions>
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.messenger.controls.TeamRenderer"/>
++              <StackString value="wot.TeamRenderer.TeamRenderer"/>
+             </items>
+           </PushData>
+           <GetVariable/>
+@@ -41302,7 +41302,7 @@
+         <actions>
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.messenger.controls.TeamRenderer"/>
++              <StackString value="wot.TeamRenderer.TeamRenderer"/>
+             </items>
+           </PushData>
+           <GetVariable/>
