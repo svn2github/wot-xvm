@@ -1,0 +1,26 @@
+--- orig\TeamMemberRenderer.xml	2013-04-23 15:48:39.383239200 +0300
++++ TeamMemberRenderer.xml	2013-04-23 15:48:39.543239200 +0300
+@@ -15,4 +15,7 @@
+         </color>
+       </SetBackgroundColor>
++      <ImportAssets2 url="xvm.swf" reserved1="1" reserved2="0">
++        <symbols/>
++      </ImportAssets2>
+       <DefineBitsLossless2 objectID="1" format="5" width="15" height="15">
+         <data>
+@@ -38940,6 +38943,6 @@
+               <String value=" "/>
+               <String value="\"/>
+-              <String value=""/>
+-              <String value=""/>
++              <String value=" "/>
++              <String value=" "/>
+               <String value="&#10;"/>
+               <String value="&#13;"/>
+@@ -47793,5 +47796,5 @@
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.messenger.controls.TeamMemberRenderer"/>
++              <StackString value="wot.wrapper.TeamMemberRenderer.TeamMemberRenderer"/>
+             </items>
+           </PushData>
