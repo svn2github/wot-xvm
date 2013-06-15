@@ -7,7 +7,7 @@ import com.xvm.Logger;
 class wot.Minimap.view.MarkerScaling
 {
     private static var STATIC_DECALS_NAME:String = "base";
-    private static var ORIGINAL_MARKERS_SCALING:Number = 0.5;
+    private static var ORIGINAL_MARKERS_SCALING_FACTOR:Number = 0.5;
     
     public function MarkerScaling() 
     {
@@ -23,7 +23,7 @@ class wot.Minimap.view.MarkerScaling
         else
         {
             /** Original WG scaling behaviour */
-            MinimapProxy.base.scaleMarkers(ORIGINAL_MARKERS_SCALING);
+            MinimapProxy.base.scaleMarkers(ORIGINAL_MARKERS_SCALING_FACTOR);
         }
     }
     
@@ -41,7 +41,7 @@ class wot.Minimap.view.MarkerScaling
         scaleFactor = scaleFactor + (100 - scaleFactor);
         
         var moddedScale:Number = scaleFactor * MapConfig.iconScale;
-        var originalScale:Number = scaleFactor * ORIGINAL_MARKERS_SCALING;
+        var originalScale:Number = scaleFactor * ORIGINAL_MARKERS_SCALING_FACTOR;
         
         for (var i in icons)
         {
