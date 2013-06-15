@@ -71,19 +71,12 @@ class wot.Minimap.view.MarkerScaling
     
     private function rescaleAttachments():Void
     {
-        /**
-         * WTF?
-         * ########
-         * TODO: Clean up
-         */
         var entries:Array = IconsProxy.allEntries;
-        var len:Number = entries.length;
-        for (var i:Number = 0; i < len; ++i)
+        for (var i in entries)
         {
             var entry:MinimapEntry = entries[i];
             entry.rescaleAttachments();
         }
-        /** See MinimapEntry.rescaleAttachments() */
     }
     
     private function get icons():MovieClip
