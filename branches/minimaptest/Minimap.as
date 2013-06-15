@@ -135,7 +135,11 @@ class wot.Minimap.Minimap
     
     function scaleMarkersImpl(factor:Number)
     {
-        features.scaleMarkersImpl(factor);
+        /**
+         * Argument is useless.
+         * WG bullshit.
+         */
+        features.scaleMarkersImpl();
     }
     
     function updatePlayerMessangersPanelImpl(stageHeight)

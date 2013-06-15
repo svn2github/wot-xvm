@@ -7,63 +7,68 @@ import com.xvm.Logger;
 class wot.Minimap.view.MarkerScaling
 {
     private static var STATIC_DECALS_NAME:String = "base";
+    private static var ORIGINAL_MARKERS_SCALING:Number = 0.5;
     
     public function MarkerScaling() 
     {
-        /**
-         * Setup minimap icon size.
-         * Read value from config.
-         * Default by WG is 0.5.
-         * Default by XVM is 1.
-         */
-        net.wargaming.ingame.Minimap.MARKERS_SCALING = MapConfig.iconScale;
-        scale(net.wargaming.ingame.Minimap.MARKERS_SCALING);
+        scale();
     }
     
-    public function scale(factor:Number):Void
+    public function scale():Void
     {
-        MinimapProxy.base.scaleMarkers(factor);
-        revertStaticItemsSize(getStaticItems());
+        /**
+         * ###########################################
+         * TODO: omit when enabled: false
+         * #########
+         */
+        
+        /**
+         * Original WG scaling behaviour
+         * plus static entries omitting.
+         * 
+         * icons._xscale is changed by minimap resize
+         */
+        var scaleFactor:Number = 10000 / icons._xscale;
+        scaleFactor = scaleFactor + (100 - scaleFactor);
+        
+        var moddedScale:Number = scaleFactor * MapConfig.iconScale;
+        var originalScale:Number = scaleFactor * ORIGINAL_MARKERS_SCALING;
+        
+        for (var i in icons)
+        {
+            if (icons[i] instanceof net.wargaming.ingame.MinimapEntry)
+            {
+                var entry = icons[i];
+                if (entry._currentframe != 5 && entry._currentframe != 6)
+                {
+                    if (entry.entryName == STATIC_DECALS_NAME)
+                    {
+                        /**
+                         * Capture bases and respawn point
+                         * should not be alternatively scaled.
+                         */
+                        entry._xscale = entry._yscale = originalScale;
+                    }
+                    else
+                    {
+                        entry._xscale = entry._yscale = moddedScale;
+                    }
+                }
+            }
+        }
+        
         rescaleAttachments();
     }
     
     // -- Private
     
-    /**
-     * Respawn or capture point items
-     */
-    private function getStaticItems():Array
-    {
-        var statics:Array = [];
-        var icons = MinimapProxy.wrapper.icons;
-        for (var i in icons)
-        {
-            var icon = icons[i];
-            if (icon.entryName == STATIC_DECALS_NAME)
-            {
-                statics.push(icon);
-            }
-        }
-        
-        return statics;
-    }
-    
-    private function revertStaticItemsSize(statics:Array):Void
-    {
-        /**
-         * Revert capture base and
-         * start position icons size
-         * to original size.
-         */
-        for (var i in statics)
-        {
-            var base = statics[i];
-            base._xscale = base._yscale = 100;
-        }
-    }
-    
     private function rescaleAttachments():Void
     {
+        /**
+         * WTF?
+         * ########
+         * TODO: Clean up
+         */
         var entries:Array = IconsProxy.allEntries;
         var len:Number = entries.length;
         for (var i:Number = 0; i < len; ++i)
@@ -72,5 +77,10 @@ class wot.Minimap.view.MarkerScaling
             entry.rescaleAttachments();
         }
         /** See MinimapEntry.rescaleAttachments() */
+    }
+    
+    private function get icons():MovieClip
+    {
+        return MinimapProxy.wrapper.icons;
     }
 }
