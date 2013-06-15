@@ -16,6 +16,7 @@ import wot.Minimap.model.iconTracker.AutoUpdate;
 import wot.Minimap.model.mapSize.MapSizeModel;
 import wot.Minimap.model.externalProxy.IconsProxy;
 import wot.Minimap.model.externalProxy.MapConfig;
+import wot.Minimap.MinimapProxy;
 
 /**
  * @author ilitvinov87@gmail.com
@@ -27,7 +28,7 @@ class wot.Minimap.Minimap
     // wrapped methods
 
     public var wrapper:net.wargaming.ingame.Minimap;
-    private var base:net.wargaming.ingame.Minimap;
+    public var base:net.wargaming.ingame.Minimap;
 
     public function Minimap(wrapper:net.wargaming.ingame.Minimap, base:net.wargaming.ingame.Minimap)
     {
@@ -133,7 +134,7 @@ class wot.Minimap.Minimap
     
     function scaleMarkersImpl(percent)
     {
-        base.scaleMarkers(percent);
+        MinimapProxy.base.scaleMarkers(percent);
         revertBasesIconSize(percent);
         rescaleAttachments();
     }
