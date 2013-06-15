@@ -133,9 +133,9 @@ class wot.Minimap.Minimap
     private var loadComplete:Boolean = false;
     private var mapExtended:Boolean = false;
     
-    function scaleMarkersImpl(percent)
+    function scaleMarkersImpl(factor:Number)
     {
-        features.scaleMarkersImpl(percent);
+        features.scaleMarkersImpl(factor);
     }
     
     function updatePlayerMessangersPanelImpl(stageHeight)

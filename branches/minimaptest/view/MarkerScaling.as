@@ -20,17 +20,14 @@ class wot.Minimap.view.MarkerScaling
         scale(net.wargaming.ingame.Minimap.MARKERS_SCALING);
     }
     
-    public function scale(percent:Number):Void
+    public function scale(factor:Number):Void
     {
-        MinimapProxy.base.scaleMarkers(percent);
-        revertBasesIconSize(percent);
+        MinimapProxy.base.scaleMarkers(factor);
+        revertBasesIconSize();
         rescaleAttachments();
-        
-        // ##########
-        Logger.add("############# scale(" + percent);
     }
     
-    private function revertBasesIconSize(percent:Number):Void
+    private function revertBasesIconSize():Void
     {
         /**
          * Revert capture base and

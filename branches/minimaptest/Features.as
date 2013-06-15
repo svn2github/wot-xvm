@@ -9,9 +9,9 @@ class wot.Minimap.Features
         markerScaling = new MarkerScaling();
     }
     
-    public function scaleMarkersImpl(percent):Void
+    public function scaleMarkersImpl(factor:Number):Void
     {
-        markerScaling.scale(percent);
+        markerScaling.scale(factor);
     }
     
     public function applyMod():Void
