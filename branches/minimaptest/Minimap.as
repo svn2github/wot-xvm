@@ -34,6 +34,7 @@ class wot.Minimap.Minimap
     {
         this.wrapper = wrapper;
         this.base = base;
+        MinimapProxy.setReferences(base, wrapper);
         
         wrapper.xvm_worker = this;
 
