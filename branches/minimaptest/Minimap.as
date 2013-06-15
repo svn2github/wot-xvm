@@ -170,17 +170,13 @@ class wot.Minimap.Minimap
     {
         Logger.add("wot.Minimap.Minimap sizeIndex " + sizeIndex);
         
-        features.disableMapWindowSizeRestriction(sizeIndex);
+        var featureSizeIndex:Number = features.disableMapWindowSizeRestriction(sizeIndex);
+        Logger.add("wot.Minimap.Minimap featureSizeIndex " + featureSizeIndex);
         
-        /** base.correctSizeIndex code is omitted to drop limits */
-
-        /** Do not allow size less than map border */
-        if (sizeIndex < 0)
-        {
-            sizeIndex = 0;
-        }
-
-        return sizeIndex;
+        return sizeIndex; // Если эту закоментить, всё ломается. Логгеры оба пустые.
+                          // Не коментить - оба логгера со значением.
+        
+        return featureSizeIndex;
     }
 
     /** Suitable for manual debug tracing by pushing "=" button */
