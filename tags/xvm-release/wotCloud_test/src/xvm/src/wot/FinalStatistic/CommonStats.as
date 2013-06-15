@@ -2,6 +2,7 @@ import com.xvm.Config;
 import com.xvm.GlobalEventDispatcher;
 import com.xvm.Locale;
 import com.xvm.Utils;
+import com.xvm.Logger;
 
 class wot.FinalStatistic.CommonStats
 {
@@ -30,16 +31,19 @@ class wot.FinalStatistic.CommonStats
 		loadReplayBtn.label = "Сделать из боя видео";
 		loadReplayBtn.autoSize = true;
 		detailsMc.wotCloudBtn.addEventListener("click", this, "onLoadReplayClick");
+		Logger.add("BtnCreated");
 	}
 	
 	function onLoadReplayClick()
 	{
 		var data = this.__get__parent().__get__data();
 		showMyReplaysUploader(data.common.arenaCreateTimeStr);
+		Logger.add("onLoadReplayClick()");
 	}
 	
 	function showMyReplaysUploader(time)
     {
+		Logger.add("showMyReplaysUploader(): " + time);
         var _loc3 = net.wargaming.managers.WindowManager.__get__instance().getWindow("wotCloudUploaderWnd");
         if (_loc3 != undefined)
         {
