@@ -22,6 +22,7 @@ class wot.Minimap.view.MarkerScaling
         }
         else
         {
+            /** Original WG scaling behaviour */
             MinimapProxy.base.scaleMarkers(ORIGINAL_MARKERS_SCALING);
         }
     }
@@ -30,12 +31,6 @@ class wot.Minimap.view.MarkerScaling
     
     private function xvmScale():Void
     {
-        /**
-         * ###########################################
-         * TODO: omit when enabled: false
-         * #########
-         */
-        
         /**
          * Original WG scaling behaviour
          * plus static entries omitting.
