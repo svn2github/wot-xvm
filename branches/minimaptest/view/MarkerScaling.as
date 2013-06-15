@@ -16,6 +16,20 @@ class wot.Minimap.view.MarkerScaling
     
     public function scale():Void
     {
+        if (MapConfig.enabled)
+        {
+            xvmScale();
+        }
+        else
+        {
+            MinimapProxy.base.scaleMarkers(ORIGINAL_MARKERS_SCALING);
+        }
+    }
+    
+    // -- Private
+    
+    private function xvmScale():Void
+    {
         /**
          * ###########################################
          * TODO: omit when enabled: false
@@ -59,8 +73,6 @@ class wot.Minimap.view.MarkerScaling
         
         rescaleAttachments();
     }
-    
-    // -- Private
     
     private function rescaleAttachments():Void
     {
