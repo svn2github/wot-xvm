@@ -1,6 +1,8 @@
 import wot.Minimap.MinimapProxy;
 import wot.Minimap.model.externalProxy.IconsProxy;
 import wot.Minimap.MinimapEntry;
+import wot.Minimap.model.externalProxy.MapConfig;
+import com.xvm.Logger;
 
 class wot.Minimap.view.MarkerScaling
 {
@@ -8,7 +10,14 @@ class wot.Minimap.view.MarkerScaling
     
     public function MarkerScaling() 
     {
-        
+        /**
+         * Setup minimap icon size.
+         * Read value from config.
+         * Default by WG is 0.5.
+         * Default by XVM is 1.
+         */
+        net.wargaming.ingame.Minimap.MARKERS_SCALING = MapConfig.iconScale;
+        scale(net.wargaming.ingame.Minimap.MARKERS_SCALING);
     }
     
     public function scale(percent:Number):Void
@@ -16,6 +25,9 @@ class wot.Minimap.view.MarkerScaling
         MinimapProxy.base.scaleMarkers(percent);
         revertBasesIconSize(percent);
         rescaleAttachments();
+        
+        // ##########
+        Logger.add("############# scale(" + percent);
     }
     
     private function revertBasesIconSize(percent:Number):Void

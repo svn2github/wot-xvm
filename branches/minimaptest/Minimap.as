@@ -223,17 +223,9 @@ class wot.Minimap.Minimap
 
     private function startExtendedProcedure():Void
     {
-        features = new Features(this);
+        features = new Features();
         features.applyMod();
         
-        /**
-         * Setup minimap icon size.
-         * Read val from config.
-         * Default by WG is 0.5.
-         */
-        net.wargaming.ingame.Minimap.MARKERS_SCALING = MapConfig.iconScale;
-        scaleMarkers(net.wargaming.ingame.Minimap.MARKERS_SCALING);
-
         /** Zoom map on key press */
         if (MapConfig.zoomEnabled)
         {
