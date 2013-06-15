@@ -139,7 +139,7 @@ class wot.Minimap.Minimap
          * Argument is useless.
          * WG bullshit.
          */
-        features.scaleMarkersImpl();
+        features.scaleMarkers();
     }
     
     function updatePlayerMessangersPanelImpl(stageHeight)
@@ -168,6 +168,10 @@ class wot.Minimap.Minimap
     /** Disables maximum minimap size limitation */
     function correctSizeIndexImpl(sizeIndex:Number, stageHeight:Number):Number
     {
+        Logger.add("wot.Minimap.Minimap sizeIndex " + sizeIndex);
+        
+        features.disableMapWindowSizeRestriction(sizeIndex);
+        
         /** base.correctSizeIndex code is omitted to drop limits */
 
         /** Do not allow size less than map border */
