@@ -31,6 +31,13 @@
 +              <StackString value="wot.wrapper.FinalStatistic.DetailsBlock"/>
              </items>
            </PushData>
+@@ -107245,5 +107248,5 @@
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.hangar.FinalStatistic.CommonStats"/>
++              <StackString value="wot.wrapper.FinalStatistic.CommonStats"/>
+             </items>
+           </PushData>           
 @@ -107271,5 +107274,5 @@
            <PushData>
              <items>
