@@ -23,23 +23,42 @@ class wot.Minimap.view.MarkerScaling
     public function scale(factor:Number):Void
     {
         MinimapProxy.base.scaleMarkers(factor);
-        revertBasesIconSize();
+        revertStaticItemsSize(getStaticItems());
         rescaleAttachments();
     }
     
-    private function revertBasesIconSize():Void
+    // -- Private
+    
+    /**
+     * Respawn or capture point items
+     */
+    private function getStaticItems():Array
+    {
+        var statics:Array = [];
+        var icons = MinimapProxy.wrapper.icons;
+        for (var i in icons)
+        {
+            var icon = icons[i];
+            if (icon.entryName == STATIC_DECALS_NAME)
+            {
+                statics.push(icon);
+            }
+        }
+        
+        return statics;
+    }
+    
+    private function revertStaticItemsSize(statics:Array):Void
     {
         /**
          * Revert capture base and
          * start position icons size
          * to original size.
          */
-        var icons = MinimapProxy.wrapper.icons;
-        for (var i in icons)
+        for (var i in statics)
         {
-            var icon = icons[i];
-            if (icon.entryName == STATIC_DECALS_NAME)
-                icon._xscale = icon._yscale = 100;
+            var base = statics[i];
+            base._xscale = base._yscale = 100;
         }
     }
     
