@@ -5,6 +5,8 @@ class wot.Minimap.Features
 {
     private static var instanceField:Features;
     
+    private static var MAP_BORDER_SIZE_INDEX:Number = 0;
+    
     private var markerScaling:MarkerScaling;
     
     public static function get instance():Features
@@ -28,14 +30,12 @@ class wot.Minimap.Features
     
     public function disableMapWindowSizeRestriction(sizeIndex:Number):Number
     {
-        Logger.add("wot.Minimap.Features sizeIndex " + sizeIndex);
-        
         /** base.correctSizeIndex code is omitted to drop limits */
 
         /** Do not allow size less than map border */
-        if (sizeIndex < 0)
+        if (sizeIndex < MAP_BORDER_SIZE_INDEX)
         {
-            sizeIndex = 0;
+            sizeIndex = MAP_BORDER_SIZE_INDEX;
         }
         
         return sizeIndex;

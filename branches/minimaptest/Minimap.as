@@ -172,13 +172,7 @@ class wot.Minimap.Minimap
     /** Disables maximum minimap size limitation */
     function correctSizeIndexImpl(sizeIndex:Number, stageHeight:Number):Number
     {
-        Logger.add("wot.Minimap.Minimap sizeIndex " + sizeIndex);
-        
         var featureSizeIndex:Number = Features.instance.disableMapWindowSizeRestriction(sizeIndex);
-        Logger.add("wot.Minimap.Minimap featureSizeIndex " + featureSizeIndex);
-        
-        return sizeIndex; // Если эту закоментить, всё ломается. Логгеры оба пустые.
-                          // Не коментить - оба логгера со значением.
         
         return featureSizeIndex;
     }
