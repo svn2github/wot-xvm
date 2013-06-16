@@ -65,7 +65,6 @@ class wot.Minimap.Minimap
     
     function updatePlayerMessangersPanel() /** Typo by WG */
     {
-        Logger.add("updatePlayerMessangersPanel");
         return this.updatePlayerMessangersPanelImpl.apply(this, arguments);
     }
 
@@ -97,8 +96,6 @@ class wot.Minimap.Minimap
     public static var CAMERA_NORMAL_ZINDEX:Number = 100;
     public static var SELF_ZINDEX:Number = 151;
     
-    private var features:Features;
-
     /** Simplified minimap interface for communication with other Python or Flash mods */
     public var externalDeveloperInterface:ExternalDeveloperInterface;
 
@@ -135,16 +132,23 @@ class wot.Minimap.Minimap
     
     function scaleMarkersImpl(factor:Number)
     {
-        /**
-         * Argument is useless.
-         * WG bullshit.
-         */
-        features.scaleMarkers();
+        if (MapConfig.enabled)
+        {
+            Features.instance.scaleMarkers();
+        }
+        else
+        {
+            /** Original WG scaling behaviour */
+            base.scaleMarkers(factor);
+        }
     }
     
     function updatePlayerMessangersPanelImpl(stageHeight)
     {
-        Logger.add("stageHeight " + stageHeight);
+        /**
+         * TODO: Find out what this code does.
+         * +comment
+         */
         stageHeight = 0;
         base.updatePlayerMessangersPanel.apply(stageHeight);
     }
@@ -170,7 +174,7 @@ class wot.Minimap.Minimap
     {
         Logger.add("wot.Minimap.Minimap sizeIndex " + sizeIndex);
         
-        var featureSizeIndex:Number = features.disableMapWindowSizeRestriction(sizeIndex);
+        var featureSizeIndex:Number = Features.instance.disableMapWindowSizeRestriction(sizeIndex);
         Logger.add("wot.Minimap.Minimap featureSizeIndex " + featureSizeIndex);
         
         return sizeIndex; // Если эту закоментить, всё ломается. Логгеры оба пустые.
@@ -228,9 +232,6 @@ class wot.Minimap.Minimap
 
     private function startExtendedProcedure():Void
     {
-        features = new Features();
-        features.applyMod();
-        
         /** Zoom map on key press */
         if (MapConfig.zoomEnabled)
         {

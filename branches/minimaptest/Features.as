@@ -3,15 +3,26 @@ import com.xvm.Logger;
 
 class wot.Minimap.Features
 {
+    private static var instanceField:Features;
+    
     private var markerScaling:MarkerScaling;
     
-    public function Features() 
+    public static function get instance():Features
     {
-        markerScaling = new MarkerScaling();
+        if (!instanceField)
+        {
+            instanceField = new Features();
+        }
+        
+        return instanceField;
     }
     
     public function scaleMarkers():Void
     {
+        if (!markerScaling)
+        {
+            markerScaling = new MarkerScaling();
+        }
         markerScaling.scale();
     }
     
@@ -28,10 +39,5 @@ class wot.Minimap.Features
         }
         
         return sizeIndex;
-    }
-    
-    public function applyMod():Void
-    {
-        
     }
 }
