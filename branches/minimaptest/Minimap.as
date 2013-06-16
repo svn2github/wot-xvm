@@ -62,11 +62,6 @@ class wot.Minimap.Minimap
     {
         return this.scaleMarkersImpl.apply(this, arguments);
     }
-    
-    function updatePlayerMessangersPanel() /** Typo by WG */
-    {
-        return this.updatePlayerMessangersPanelImpl.apply(this, arguments);
-    }
 
     // wrapped methods
     /////////////////////////////////////////////////////////////////
@@ -141,16 +136,6 @@ class wot.Minimap.Minimap
             /** Original WG scaling behaviour */
             base.scaleMarkers(factor);
         }
-    }
-    
-    function updatePlayerMessangersPanelImpl(stageHeight)
-    {
-        /**
-         * TODO: Find out what this code does.
-         * +comment
-         */
-        stageHeight = 0;
-        base.updatePlayerMessangersPanel.apply(stageHeight);
     }
 
     function onEntryInitedImpl()
@@ -228,6 +213,9 @@ class wot.Minimap.Minimap
         /** Zoom map on key press */
         if (MapConfig.zoomEnabled)
         {
+            /**
+             * TODO: fix messages at right side while zoomed
+             */
             zoom = new Zoom(this);
 
             var key:Number = MapConfig.zoomKey;
