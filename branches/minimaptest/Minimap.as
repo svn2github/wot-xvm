@@ -169,10 +169,9 @@ class wot.Minimap.Minimap
         setCameraAlpha();
     }
 
-    /** Disables maximum minimap size limitation */
     function correctSizeIndexImpl(sizeIndex:Number, stageHeight:Number):Number
     {
-        var featureSizeIndex:Number = Features.instance.disableMapWindowSizeRestriction(sizeIndex);
+        var featureSizeIndex:Number = Features.instance.disableMapWindowSizeLimitation(sizeIndex);
         
         return featureSizeIndex;
     }

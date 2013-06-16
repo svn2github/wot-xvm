@@ -28,7 +28,7 @@ class wot.Minimap.Features
         markerScaling.scale();
     }
     
-    public function disableMapWindowSizeRestriction(sizeIndex:Number):Number
+    public function disableMapWindowSizeLimitation(sizeIndex:Number):Number
     {
         /** base.correctSizeIndex code is omitted to drop limits */
 
