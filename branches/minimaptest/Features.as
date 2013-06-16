@@ -1,5 +1,6 @@
 import wot.Minimap.view.MarkerScaling;
 import com.xvm.Logger;
+import wot.Minimap.Zoom;
 
 class wot.Minimap.Features
 {
@@ -8,6 +9,7 @@ class wot.Minimap.Features
     private static var MAP_BORDER_SIZE_INDEX:Number = 0;
     
     private var markerScaling:MarkerScaling;
+    private var zoom:Zoom;
     
     public static function get instance():Features
     {
@@ -39,5 +41,10 @@ class wot.Minimap.Features
         }
         
         return sizeIndex;
+    }
+    
+    public function applyMajorMods():Void
+    {
+        zoom = new Zoom();
     }
 }

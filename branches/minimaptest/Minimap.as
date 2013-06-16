@@ -210,19 +210,8 @@ class wot.Minimap.Minimap
 
     private function startExtendedProcedure():Void
     {
-        /** Zoom map on key press */
-        if (MapConfig.zoomEnabled)
-        {
-            /**
-             * TODO: fix messages at right side while zoomed
-             */
-            zoom = new Zoom(this);
-
-            var key:Number = MapConfig.zoomKey;
-            net.wargaming.managers.BattleInputHandler.instance.addHandler(key, false, zoom, "onZoomKeyClick");
-            net.wargaming.managers.BattleInputHandler.instance.addHandler(key, true, zoom, "onZoomKeyClick");
-        }
-
+        Features.instance.applyMajorMods();
+        
         sync = new SyncModel();
         sync.updateIconsExtension();
 

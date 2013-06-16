@@ -1,6 +1,7 @@
 import com.xvm.Logger;
 import wot.Minimap.Minimap;
 import wot.Minimap.model.externalProxy.MapConfig;
+import wot.Minimap.MinimapProxy;
 
 /**
  * Handles minimap windows zoom and center positioning
@@ -17,10 +18,17 @@ class wot.Minimap.Zoom
     /** Stores state for switcher */
     var currentState:Boolean;
 
-    public function Zoom(minimap:Minimap)
+    /**
+     * #################
+     * TODO: fix messages at right side while zoomed
+     */
+    
+    public function Zoom()
     {
-        this.minimap = minimap;
-        currentState = true;
+        if (MapConfig.zoomEnabled)
+        {
+            init();
+        }
     }
 
     public function onZoomKeyClick(event):Void
@@ -44,6 +52,15 @@ class wot.Minimap.Zoom
     }
 
     // -- Private
+    
+    private function init():Void
+    {
+        var key:Number = MapConfig.zoomKey;
+        net.wargaming.managers.BattleInputHandler.instance.addHandler(key, false, this, "onZoomKeyClick");
+        net.wargaming.managers.BattleInputHandler.instance.addHandler(key, true, this, "onZoomKeyClick");
+        
+        currentState = true;
+    }
 
     private function holdBehaviour(isZoomKeyDown:Boolean):Void
     {
@@ -89,34 +106,39 @@ class wot.Minimap.Zoom
     private function centerPosition():Void
     {
         /** Position map bottom right corner at center */
-        minimap.wrapper._x = Stage.width / 2;
-        minimap.wrapper._y = Stage.height / 2;
+        minimap._x = Stage.width / 2;
+        minimap._y = Stage.height / 2;
 
         /** Offset position taking map center into account */
-        minimap.wrapper._x += minimap.wrapper.width / 2;
-        minimap.wrapper._y += minimap.wrapper.height / 2;
+        minimap._x += minimap.width / 2;
+        minimap._y += minimap.height / 2;
     }
 
     private function bottomRightPosition():Void
     {
         /** Position map bottom right corner at bottom right of Stage */
-        minimap.wrapper._x = Stage.width;
-        minimap.wrapper._y = Stage.height;
+        minimap._x = Stage.width;
+        minimap._y = Stage.height;
     }
 
     private function increaseSize():Void
     {
         var side:Number = Stage.height - MapConfig.zoomPixelsBack;
-        minimap.wrapper.setSize(side, side);
+        minimap.setSize(side, side);
     }
 
     private function restoreSize():Void
     {
-        minimap.wrapper.setupSize(minimap.wrapper.m_sizeIndex, Stage.height);
+        minimap.setupSize(minimap.m_sizeIndex, Stage.height);
     }
     
     private function get userIsUsingChat():Boolean
     {
         return _root.messenger.messageInput._focused;
+    }
+    
+    private function get minimap()
+    {
+        return MinimapProxy.wrapper;
     }
 }
