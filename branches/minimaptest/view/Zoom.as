@@ -7,7 +7,7 @@ import wot.Minimap.MinimapProxy;
  * Handles minimap windows zoom and center positioning
  * by key pressing
  */
-class wot.Minimap.Zoom
+class wot.Minimap.view.Zoom
 {
     /** This is the subject of resize reposition */
     private var minimap:Minimap;
