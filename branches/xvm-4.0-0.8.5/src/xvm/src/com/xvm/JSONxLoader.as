@@ -55,6 +55,7 @@ class com.xvm.JSONxLoader
             if (!--me.loadingCount)
                 me.LoadFileCallback.call(me);
         }
+        //Logger.add("lv.load: " + rootPath + filename);
         lv.load(rootPath + filename);
     }
     
@@ -66,6 +67,7 @@ class com.xvm.JSONxLoader
             //Logger.addObject(rootObj, "rootObj", 5);
             //Logger.addObject(rootObj.markers.ally.alive.normal, "marker", 10);
             rootObj = Deref(rootObj);
+            //Logger.addObject(pendingFiles, "pendingFiles", 2);
             if (pendingFiles.length > 0)
                 LoadFiles();
             else
@@ -83,6 +85,7 @@ class com.xvm.JSONxLoader
 
     private function Deref(data:Object, level:Number, file:Object)
     {
+        //Logger.addObject(data, "Deref", 2);
         if (level == null)
             level = 0;
 
@@ -158,7 +161,8 @@ class com.xvm.JSONxLoader
                 if (obj_cache[fn] == null)
                     throw { type: "NO_FILE", message: "file is missing: " + fn };
                 var value = getValue(obj_cache[fn], data.$ref.path);
-                if (value == undefined)
+                //Logger.add(data.$ref.path + ": " + String(value));
+                if (value === undefined)
                     throw { type: "BAD_REF", message: "bad reference:\n    ${\"" + data.$ref.file + "\":\"" + data.$ref.path + "\"}" };
 
                 // override referenced values
@@ -188,7 +192,9 @@ class com.xvm.JSONxLoader
 
     private function getValue(obj:Object, path: String)
     {
-        if (obj == null)
+        //Logger.add("getValue: " + path);
+
+        if (obj === undefined)
             return undefined;
 
         if (path == "." || path == "")
@@ -203,7 +209,7 @@ class com.xvm.JSONxLoader
                 return undefined;
             o = o[p[i]];
         }
-        return clone(o);
+        return o == null ? null : clone(o);
     }
     
     private function clone(obj:Object):Object

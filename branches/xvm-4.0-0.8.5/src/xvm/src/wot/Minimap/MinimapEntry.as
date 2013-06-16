@@ -1,4 +1,9 @@
+import com.xvm.Config;
+import com.xvm.ColorsManager;
+import com.xvm.DefaultConfig;
+import com.xvm.GraphicsUtil;
 import com.xvm.Utils;
+import wot.RootComponents;
 import wot.Minimap.model.externalProxy.MapConfig;
 import wot.Minimap.staticUtils.LabelAppend;
 import wot.Minimap.dataTypes.Player;
@@ -38,6 +43,16 @@ class wot.Minimap.MinimapEntry
     function lightPlayer()
     {
         return this.lightPlayerImpl.apply(this, arguments);
+    }
+
+    function init()
+    {
+        return this.initImpl.apply(this, arguments);
+    }
+
+    function invalidate()
+    {
+        return this.invalidateImpl.apply(this, arguments);
     }
 
     // wrapped methods
@@ -105,11 +120,77 @@ class wot.Minimap.MinimapEntry
         }
     }
 
+    function initImpl()
+    {
+        base.init.apply(base, arguments);
+        colorizeMarker();
+    }
+
+    function invalidateImpl()
+    {
+        base.invalidate();
+        colorizeMarker();
+    }
+
     // -- Private
+
+    private function colorizeMarker()
+    {
+        if (wrapper.m_type == null || wrapper.vehicleClass == null || wrapper.entryName == null)
+            return;
+
+        //if (wrapper.entryName != "ally" && wrapper.entryName != "enemy")
+        //    com.xvm.Logger.add("type=" + wrapper.m_type + " entryName=" + wrapper.entryName + " vehicleClass=" + wrapper.vehicleClass);
+
+        if (wrapper.entryName == "control")
+            return;
+
+        if (wrapper.m_type == "player" && wrapper.entryName == "postmortemCamera")
+            return;
+
+        var color = null;
+        if (Config.s_config.battle.useStandardMarkers)
+        {
+            if (wrapper.entryName == "base")
+                return;
+            var schemeName = wrapper.entryName != "spawn" ? wrapper.colorSchemeName
+                : (wrapper.vehicleClass == "red") ? "vm_enemy" : (wrapper.vehicleClass == "blue") ? "vm_ally" : null;
+            if (!schemeName)
+                return;
+            color = wrapper.colorsManager.getRGB(schemeName);
+        }
+        else
+        {
+            // use standard team bases if color is not changed
+            if (wrapper.entryName == "base")
+            {
+                var aa = Config.s_config.colors.system["ally_alive"];
+                var aad = DefaultConfig.config.colors.system["ally_alive"];
+                if (wrapper.vehicleClass == "blue" && aa == aad)
+                    return;
+                var ea = Config.s_config.colors.system["enemy_alive"];
+                var ead = DefaultConfig.config.colors.system["enemy_alive"];
+                if (wrapper.vehicleClass == "red" && ea == ead)
+                    return;
+            }
+            var entryName = (wrapper.entryName != "base" && wrapper.entryName != "spawn") ? wrapper.entryName
+                : (wrapper.vehicleClass == "red") ? "enemy" : (wrapper.vehicleClass == "blue") ? "ally" : null;
+            if (entryName != null)
+                color = ColorsManager.getSystemColor(entryName, wrapper.isDead);
+            if (wrapper.entryName == "base")
+                wrapper.setEntryName("control");
+        }
+
+        if (color != null)
+        {
+            GraphicsUtil.colorize(wrapper.player || wrapper.teamPoint, color,
+                wrapper.player ? Config.s_config.consts.VM_COEFF_MM_PLAYER : Config.s_config.consts.VM_COEFF_MM_BASE);
+        }
+    }
 
     private function initExtendedBehaviour():Void
     {
-        uid = minimap.xvm_worker.sync.getTestUid();
+        uid = RootComponents.minimap.xvm_worker.sync.getTestUid();
 
         if (MapConfig.revealedEnabled)
         {
@@ -122,11 +203,6 @@ class wot.Minimap.MinimapEntry
 
     private function get syncProcedureInProgress():Boolean
     {
-        return minimap.xvm_worker.sync.syncProcedureInProgress;
-    }
-
-    private function get minimap():net.wargaming.ingame.Minimap
-    {
-        return net.wargaming.ingame.Minimap(_root.minimap);
+        return RootComponents.minimap.xvm_worker.sync.syncProcedureInProgress;
     }
 }

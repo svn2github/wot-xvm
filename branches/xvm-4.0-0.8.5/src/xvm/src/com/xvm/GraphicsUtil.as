@@ -3,6 +3,7 @@
  * @author sirmax2
  */
 import flash.geom.ColorTransform;
+import flash.filters.ColorMatrixFilter;
 import flash.filters.DropShadowFilter;
 import com.xvm.Config;
 import com.xvm.Defines;
@@ -13,7 +14,7 @@ class com.xvm.GraphicsUtil
     public static function createShadowFilter(distance:Number, angle:Number, color:Number,
         alpha:Number, size:Number, strength:Number):DropShadowFilter
     {
-        if (!alpha || !strength || !size)
+        if (alpha == null || strength == null || size == null)
             return null;
         return new DropShadowFilter(distance, angle, color, alpha * 0.01, size, size, strength * 0.01, 3);
     }
@@ -45,6 +46,21 @@ class com.xvm.GraphicsUtil
             tr.blueOffset *= ratio;
         }
 
+        item.transform.colorTransform = tr;
+    }
+
+    // require 2-colored black and white source image (mask).
+    public static function colorize(item:Object, col:Number, multiplicator:Number)
+    {
+        if (multiplicator == null)
+            multiplicator = 1;
+        var tr:flash.geom.ColorTransform = new flash.geom.ColorTransform();
+        tr.redMultiplier = ((col >> 16) & 0xFF) / 255 * multiplicator;
+        tr.greenMultiplier = ((col >> 8) & 0xFF) / 255 * multiplicator;
+        tr.blueMultiplier = (col & 0xFF) / 255 * multiplicator;
+        tr.redOffset = 0;
+        tr.greenOffset = 0;
+        tr.blueOffset = 0;
         item.transform.colorTransform = tr;
     }
 
@@ -236,12 +252,20 @@ class com.xvm.GraphicsUtil
         var cfg: Array;
         switch (type)
         {
-          case Defines.DYNAMIC_ALPHA_HP:
-              cfg = cfg_root.hp;
-              break;
-          case Defines.DYNAMIC_ALPHA_HP_RATIO:
-              cfg = cfg_root.hp_ratio;
-              break;
+            case Defines.DYNAMIC_ALPHA_HP:              cfg = cfg_root.hp; break;
+            case Defines.DYNAMIC_ALPHA_HP_RATIO:        cfg = cfg_root.hp_ratio; break;
+            case Defines.DYNAMIC_ALPHA_EFF:             cfg = cfg_root.eff; break;
+            case Defines.DYNAMIC_ALPHA_E:               cfg = cfg_root.e; break;
+            case Defines.DYNAMIC_ALPHA_WN:              cfg = cfg_root.wn; break;
+            case Defines.DYNAMIC_ALPHA_X:               cfg = cfg_root.x; break;
+            case Defines.DYNAMIC_ALPHA_TWR:             cfg = cfg_root.twr; break;
+            case Defines.DYNAMIC_ALPHA_RATING:          cfg = cfg_root.rating; break;
+            case Defines.DYNAMIC_ALPHA_KB:              cfg = cfg_root.kb; break;
+            case Defines.DYNAMIC_ALPHA_TBATTLES:        cfg = cfg_root.t_battles; break;
+            case Defines.DYNAMIC_ALPHA_TDB:             cfg = cfg_root.tdb; break;
+            case Defines.DYNAMIC_ALPHA_TDV:             cfg = cfg_root.tdv; break;
+            case Defines.DYNAMIC_ALPHA_TFB:             cfg = cfg_root.tfb; break;
+            case Defines.DYNAMIC_ALPHA_TSB:             cfg = cfg_root.tsb; break;
           default:
               return 102;
         }

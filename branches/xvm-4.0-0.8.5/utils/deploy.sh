@@ -33,6 +33,7 @@ RES_MODS_DIR="$WOT_DIRECTORY/res_mods"
 SWF_DIR="$RES_MODS_DIR/$GAME_VER/gui/flash"
 
 mkdir -p "$SWF_DIR"
+mkdir -p "$RES_MODS_DIR/xvm"
 
 copy_file()
 {

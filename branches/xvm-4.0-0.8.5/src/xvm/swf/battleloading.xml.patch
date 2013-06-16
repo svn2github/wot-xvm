@@ -1,5 +1,5 @@
---- orig\battleloading.xml	2013-04-24 00:06:13.969677000 +0300
-+++ battleloading.xml	2013-04-24 00:06:14.150687300 +0300
+--- orig\battleloading.xml	2013-06-16 16:37:30.931264100 +0300
++++ battleloading.xml	2013-06-16 16:37:31.102864400 +0300
 @@ -67,8 +67,8 @@
        <DefineShape5 objectID="4" nonScalingStrokes="0" scalingStrokes="1">
          <bounds>

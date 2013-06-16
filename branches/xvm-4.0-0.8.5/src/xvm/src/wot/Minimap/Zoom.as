@@ -1,3 +1,4 @@
+import com.xvm.Logger;
 import wot.Minimap.Minimap;
 import wot.Minimap.model.externalProxy.MapConfig;
 
@@ -24,26 +25,29 @@ class wot.Minimap.Zoom
 
     public function onZoomKeyClick(event):Void
     {
-        /**
-         * Zoom while key is on hold
-         * or switch zoom when key is clicked
-         */
-        var isKeyDown:Boolean = event.details.value == "keyDown";
-        if (MapConfig.zoomHold)
+        if (!userIsUsingChat)
         {
-            holdBehaviour(isKeyDown);
-        }
-        else if (isKeyDown)
-        {
-            switchBehaviour();
+            /**
+             * Zoom while key is on hold
+             * or switch zoom when key is clicked
+             */
+            var isZoomKeyDown:Boolean = event.details.value == "keyDown";
+            if (MapConfig.zoomHold)
+            {
+                holdBehaviour(isZoomKeyDown);
+            }
+            else if (isZoomKeyDown)
+            {
+                switchBehaviour();
+            }
         }
     }
 
     // -- Private
 
-    private function holdBehaviour(isKeyDown:Boolean):Void
+    private function holdBehaviour(isZoomKeyDown:Boolean):Void
     {
-        if (isKeyDown)
+        if (isZoomKeyDown)
         {
             zoomIn();
         }
@@ -109,5 +113,10 @@ class wot.Minimap.Zoom
     private function restoreSize():Void
     {
         minimap.wrapper.setupSize(minimap.wrapper.m_sizeIndex, Stage.height);
+    }
+    
+    private function get userIsUsingChat():Boolean
+    {
+        return _root.messenger.messageInput._focused;
     }
 }

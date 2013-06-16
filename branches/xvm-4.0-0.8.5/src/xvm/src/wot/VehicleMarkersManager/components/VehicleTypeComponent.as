@@ -1,4 +1,6 @@
-import wot.VehicleMarkersManager.ColorsManager;
+import com.xvm.Config;
+import com.xvm.ColorsManager;
+import com.xvm.GraphicsUtil;
 import wot.VehicleMarkersManager.ErrorHandler;
 import wot.VehicleMarkersManager.components.VehicleTypeProxy;
 
@@ -76,7 +78,7 @@ class wot.VehicleMarkersManager.components.VehicleTypeComponent
     public function updateMarkerLabel()
     {
         //com.xvm.Logger.add("updateMarkerLabel: " + m_markerLabel + " " + m_markerState);
-        var aliasColor = ColorsManager.getMarkerColorAlias(proxy.entityName, proxy.isColorBlindMode);
+        var aliasColor = ColorsManager.getMarkerColorAlias(proxy.entityName);
         if (m_markerLabel == aliasColor)
             return;
 
@@ -119,23 +121,21 @@ class wot.VehicleMarkersManager.components.VehicleTypeComponent
         
         for (var childName in proxy.marker.marker)
         {
-            //if (childName == "marker_shadow")
-            //  return;
-
-            var icon: MovieClip = proxy.marker.marker[childName];
+            var obj = proxy.marker.marker[childName];
+            if (typeof obj != "movieclip")
+                continue;
+            
+            var icon:MovieClip = obj;
             icon._x = x;
             icon._y = y;
             icon._xscale = icon._yscale = cfg.maxScale;
-
-            //var ms: MovieClip = icon.duplicateMovieClip("marker_shadow", icon.getNextHighestDepth());
-            //ms.gotoAndStop(icon._currentframe);
-            //ms.filters = [ new DropShadowFilter(0, 0, 0, 1, 1, 1, 10, 1, false, true) ];
-            //GraphicsUtil.setColor(icon, systemColor);
         }
-
 
         proxy.marker._x = cfg.x //* cfg.maxScale / 100;
         proxy.marker._y = cfg.y //* cfg.maxScale / 100;
         proxy.marker._alpha = proxy.formatDynamicAlpha(cfg.alpha);
+        // filters are not applicable to the MovieClip in Scaleform. Only ColorTransform can be used.
+        GraphicsUtil.colorize(proxy.marker, proxy.formatDynamicColor(proxy.formatStaticColorText(cfg.color)),
+            Config.s_config.consts.VM_COEFF_VMM); // darker to improve appearance
     }
 }

@@ -112,7 +112,7 @@ class com.xvm.DefaultConfig
                 // Show the clock on the Debug Panel (near FPS).
                 // Format: Y:year, M:month, D:day, H:hour, N:minutes, S:seconds.
                 clockFormat: "H:N",
-                clanIconsFolder: "clanicons", // Folder with clan icons
+                clanIconsFolder: "clanicons/", // Folder with clan icons
                 // Visual elements
                 elements: {
                     // x - X position
@@ -490,7 +490,7 @@ class com.xvm.DefaultConfig
             },
             hitLog: {
                 visible: true,
-                hpLeft: false,
+                hpLeft: true,
                 x: 270,
                 y: 5,
                 w: 500,
@@ -626,30 +626,18 @@ class com.xvm.DefaultConfig
             },
             colors: {
                 system: {
-                    ally_alive_normal:		"0x96FF00",
-                    ally_alive_blind:		"0x96FF00",
-                    ally_dead_normal:		"0x009900",
-                    ally_dead_blind:		"0x009900",
-                    ally_blowedup_normal:	"0x007700",
-                    ally_blowedup_blind:	"0x007700",
-                    squadman_alive_normal:	"0xFFB964",
-                    squadman_alive_blind:	"0xFFFF00",
-                    squadman_dead_normal:	"0xCA7000",
-                    squadman_dead_blind:	"0xAAAA00",
-                    squadman_blowedup_normal:	"0xA45A00",
-                    squadman_blowedup_blind:	"0x888800",
-                    teamKiller_alive_normal:	"0x00EAFF",
-                    teamKiller_alive_blind:	"0x00EAFF",
-                    teamKiller_dead_normal:	"0x097783",
-                    teamKiller_dead_blind:	"0x097783",
-                    teamKiller_blowedup_normal:	"0x096A75",
-                    teamKiller_blowedup_blind:	"0x096A75",
-                    enemy_alive_normal:		"0xF50800",
-                    enemy_alive_blind:		"0x8379FE",
-                    enemy_dead_normal:		"0x840500",
-                    enemy_dead_blind:		"0x47407A",
-                    enemy_blowedup_normal:	"0x5A0401",
-                    enemy_blowedup_blind:	"0x3B365F"
+                    ally_alive:			"0x96FF00",
+                    ally_dead:			"0x009900",
+                    ally_blowedup:		"0x007700",
+                    squadman_alive:		"0xFFB964",
+                    squadman_dead:		"0xCA7000",
+                    squadman_blowedup:		"0xA45A00",
+                    teamKiller_alive:		"0x00EAFF",
+                    teamKiller_dead:		"0x097783",
+                    teamKiller_blowedup:	"0x096A75",
+                    enemy_alive:		"0xF50800",
+                    enemy_dead:			"0x840500",
+                    enemy_blowedup:		"0x5A0401"
                 },
                 // src: ally, squadman, enemy, unknown, player
                 // dst: ally, squadman, allytk, enemytk, enemy
@@ -861,21 +849,6 @@ class com.xvm.DefaultConfig
             },
             alpha: {
                 // values - from min to max, transparency are for values 'lesser then ...'
-                eff: [
-                    { value: 900,  alpha: 100 },
-                    { value: 1200, alpha: 100 },
-                    { value: 9999, alpha: 100 }
-                ],
-                rating: [
-                    { value: 49,  alpha: 100 },
-                    { value: 53,  alpha: 100 },
-                    { value: 101, alpha: 100 }
-                ],
-                kb: [
-                    { value: 2,   alpha: 100 },
-                    { value: 10,  alpha: 100 },
-                    { value: 999, alpha: 100 }
-                ],
                 hp: [
                     { value: 200,  alpha: 100 },
                     { value: 400,  alpha: 80 },
@@ -887,6 +860,78 @@ class com.xvm.DefaultConfig
                     { value: 25,  alpha: 80 },
                     { value: 50,  alpha: 60 },
                     { value: 101, alpha: 40 }
+                ],
+                x: [
+                    { value: 30,  alpha: 100 },
+                    { value: 50, alpha: 80 },
+                    { value: 70, alpha: 60 },
+                    { value: 9999, alpha: 40 }
+                ],
+                eff: [
+                    { value: 900,  alpha: 100 },
+                    { value: 1200, alpha: 80 },
+                    { value: 1500, alpha: 60 },
+                    { value: 9999, alpha: 40 }
+                ],
+                wn: [
+                    { value: 900,  alpha: 100 },
+                    { value: 1200, alpha: 80 },
+                    { value: 1500, alpha: 60 },
+                    { value: 9999, alpha: 40 }
+                ],
+                rating: [
+                    { value: 49,  alpha: 100 },
+                    { value: 53,  alpha: 80 },
+                    { value: 60,  alpha: 60 },
+                    { value: 101, alpha: 40 }
+                ],
+                twr: [
+                    { value: 49,  alpha: 100 },
+                    { value: 53,  alpha: 80 },
+                    { value: 60,  alpha: 60 },
+                    { value: 101, alpha: 40 }
+                ],
+                e: [
+                    { value: 5,  alpha: 100 },
+                    { value: 7,  alpha: 80 },
+                    { value: 9,  alpha: 60 },
+                    { value: 20, alpha: 40 }
+                ],
+                kb: [
+                    { value: 2,   alpha: 100 },
+                    { value: 10,  alpha: 80 },
+                    { value: 20,  alpha: 60 },
+                    { value: 999, alpha: 40 }
+                ],
+                t_battles: [
+                    { value: 250,  alpha: 100 },
+                    { value: 500, alpha: 80 },
+                    { value: 1000, alpha: 60 },
+                    { value: 99999, alpha: 40 }
+                ],
+                tdb: [
+                    { value: 1,   alpha: 100 },
+                    { value: 500,  alpha: 80 },
+                    { value: 1000,  alpha: 60 },
+                    { value: 9999, alpha: 40 }
+                ],
+                tdv: [
+                    { value: 0.6,   alpha: 100 },
+                    { value: 1.0,  alpha: 80 },
+                    { value: 1.3,  alpha: 60 },
+                    { value: 15, alpha: 40 }
+                ],
+                tfb: [
+                    { value: 0.6,   alpha: 100 },
+                    { value: 1.0,  alpha: 80 },
+                    { value: 1.3,  alpha: 60 },
+                    { value: 15, alpha: 40 }
+                ],
+                tsb: [
+                    { value: 0.6,   alpha: 100 },
+                    { value: 1.0,  alpha: 80 },
+                    { value: 1.3,  alpha: 60 },
+                    { value: 15, alpha: 40 }
                 ]
             },
             // Text substitutions
@@ -910,10 +955,10 @@ class com.xvm.DefaultConfig
               }
             },*/
             iconset: {
-                battleLoading: "contour",
-                statisticForm: "contour",
-                playersPanel:  "contour",
-                vehicleMarker: "contour"
+                battleLoading: "contour/",
+                statisticForm: "contour/",
+                playersPanel:  "contour/",
+                vehicleMarker: "contour/"
             },
             consts: consts,
             vehicleNames: VehicleInfo.getVehicleNamesData()
@@ -1217,7 +1262,11 @@ class com.xvm.DefaultConfig
             AVG_GWR: 48,  // Average GWR. Source: http://wot-news.com/stat/server/ru/norm/en
             AVG_XVMSCALE: 30, // Average XVM Scale. Source: http://www.koreanrandom.com/forum/topic/2625-/
             AVG_BATTLES: 2000, // Averate number of battles. Source: http://wot-news.com/stat/server/ru/norm/en
-            MAX_EBN: 200 // Maximum Ebn value for win-chance formula
+            MAX_EBN: 200, // Maximum Ebn value for win-chance formula
+            VM_COEFF_VMM: 0.88,
+            VM_COEFF_MM_PLAYER: 0.93,
+            VM_COEFF_MM_BASE: 0.8,
+            VM_COEFF_TBP: 0.93
         };
     }
 }

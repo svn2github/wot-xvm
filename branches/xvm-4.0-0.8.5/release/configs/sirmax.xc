@@ -1,5 +1,5 @@
 {
-  "configVersion": "1.5.0",
+  "configVersion": "4.0.0",
   "def": {
     //"standardMarkers": true,
     "standardMarkers": false,
@@ -9,11 +9,21 @@
     "markersStat": "<b><font face='Symbol' color='#CCCCCC' size='11'><font color='{{c:t-battles}}'>·</font> <font color='{{c:e}}'>·</font> <font color='{{c:xeff}}'>·</font> <font color='{{c:xwn}}'>·</font></font></b>",
     "markersStatAlt": "<b><font face='$FieldFont' size='12'><font color='{{c:t-battles}}'>{{t-hb}}</font> <font color='{{c:e}}'>{{teff}}</font> <font color='{{c:xeff}}'>{{xeff}}</font> <font color='{{c:xwn}}'>{{xwn}}</font> <font color='{{c:rating}}'>{{rating}}</font> <font color='{{c:twr}}'>{{twr}}</font></font></b>",
 
-    "damageMessageAlive": "{{dmg}} <img src='xvmres://icons/fire.png' width='30' height='30'>",
-    "damageMessageAllyDead": "({{dmg}}) <img src='xvmres://icons/fire.png' width='30' height='30'>",
-    "damageMessageEnemyDead": "<textformat leading='-5'>({{dmg}}) <img src='xvmres://icons/fire.png' width='30' height='30'><br>{{vehicle}}</textformat>",
+    "damageMessageAlive": "{{dmg}}",
+    "damageMessageAllyDead": "({{dmg}})",
+    "damageMessageEnemyDead": "<textformat leading='-5'>({{dmg}})<br>{{vehicle}}</textformat>",
 
     "pingServers": { "enabled": true },
+
+    "markers": {
+      "vehicleIconColor": null,
+      //"vehicleIconColor": "{{c:xwn}}",
+      "ally": {
+      },
+      "enemy": {
+
+      }
+    },
 
     "__stub__": null
   },
@@ -120,7 +130,7 @@
     }
   },
   "finalStatistic": {
-    "startPage": 2,
+    "startPage": 3,
     "sortColumn": 6,
     "showChances": true,
     "showChancesExp": true
@@ -180,7 +190,8 @@
       "alive": {
         "normal": {
           "vehicleIcon": {
-            "maxScale": 100
+            "maxScale": 100,
+            "color": ${"def.markers.vehicleIconColor"}
           },
           "contourIcon": {
             "visible": false,
@@ -217,6 +228,7 @@
               "name": "Rating marks",
               "x": 0, "y": -35,
               "shadow": { "alpha": 100, "color": "0x000000", "angle": 0, "strength": 150, "distance": 0, "size": 3 },
+              "font": { "name": "Symbol" },
               "format": ${"def.markersStat"}
             },
             {
@@ -230,7 +242,8 @@
         },
         "extended": {
           "vehicleIcon": {
-            "maxScale": 100
+            "maxScale": 100,
+            "color": ${"def.markers.vehicleIconColor"}
           },
           "contourIcon": {
             "visible": false,
@@ -287,7 +300,8 @@
       "dead": {
         "normal": {
           "vehicleIcon": {
-            "maxScale": 80
+            "maxScale": 80,
+            "color": ${"def.markers.vehicleIconColor"}
           },
           "damageText": {
             "y": -55,
@@ -300,7 +314,8 @@
         },
         "extended": {
           "vehicleIcon": {
-            "maxScale": 80
+            "maxScale": 80,
+            "color": ${"def.markers.vehicleIconColor"}
           },
           "damageText": {
             "y": -55,
@@ -333,7 +348,8 @@
       "alive": {
         "normal": {
           "vehicleIcon": {
-            "maxScale": 100
+            "maxScale": 100,
+            "color": ${"def.markers.vehicleIconColor"}
           },
           "contourIcon": {
             "visible": false,
@@ -370,6 +386,7 @@
               "name": "Rating marks",
               "x": 0, "y": -35,
               "shadow": { "alpha": 100, "color": "0x000000", "angle": 0, "strength": 150, "distance": 0, "size": 3 },
+              "font": { "name": "Symbol" },
               "format": ${"def.markersStat"}
             },
             {
@@ -383,7 +400,8 @@
         },
         "extended": {
           "vehicleIcon": {
-            "maxScale": 100
+            "maxScale": 100,
+            "color": ${"def.markers.vehicleIconColor"}
           },
           "contourIcon": {
             "visible": false,
@@ -440,7 +458,8 @@
       "dead": {
         "normal": {
           "vehicleIcon": {
-            "maxScale": 80
+            "maxScale": 80,
+            "color": ${"def.markers.vehicleIconColor"}
           },
           "damageText": {
             "y": -65,
@@ -453,7 +472,8 @@
         },
         "extended": {
           "vehicleIcon": {
-            "maxScale": 80
+            "maxScale": 80,
+            "color": ${"def.markers.vehicleIconColor"}
           },
           "damageText": {
             "y": -55,
@@ -495,5 +515,6 @@
     "statisticForm": "contour/HARDicons",
     "playersPanel":  "contour/HARDicons",
     "vehicleMarker": "contour/Aslain/iconset2"
-  }
+  }//,
+//  "colors": ${"sirmax-colors.xc":"colors"}
 }
