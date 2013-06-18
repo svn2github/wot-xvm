@@ -214,14 +214,7 @@ class wot.Minimap.Minimap
         }
 
         Features.instance.setBGMapImageAlpha();
-
-        /**
-         * Setup alpha for icon of player himself.
-         * Looks like white arrow.
-         * Does not affect attached shapes.
-         */
-        var selfIcon:MinimapEntry = IconsProxy.selfEntry;
-        selfIcon.wrapper.selfIcon._alpha = MapConfig.selfIconAlpha;
+        Features.instance.setPlayerIconAlpha();
 
         /**
          * Defines real map size in meters.

@@ -63,6 +63,17 @@ class wot.Minimap.Features
         MinimapProxy.wrapper.backgrnd._alpha = MapConfig.mapBackgroundImageAlpha;
     }
     
+    /**
+     * Setup alpha for icon of player himself.
+     * Looks like white arrow.
+     * Does not affect attached shapes.
+     */
+    public function setPlayerIconAlpha():Void
+    {
+        var selfIcon:MinimapEntry = IconsProxy.selfEntry;
+        selfIcon.wrapper.selfIcon._alpha = MapConfig.selfIconAlpha;
+    }
+    
     public function applyMajorMods():Void
     {
         zoom = new Zoom();
