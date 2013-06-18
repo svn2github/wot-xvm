@@ -46,7 +46,7 @@ class wot.Minimap.Features
     /**
      * Setup alpha for camera of player himself.
      * Looks like green highlighted corner.
-     * Does not affect attached shapes.
+     * TODO: Detach camera line
      */
     public function setCameraAlpha():Void
     {
