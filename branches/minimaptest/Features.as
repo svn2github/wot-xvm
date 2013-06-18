@@ -54,6 +54,15 @@ class wot.Minimap.Features
         camera.wrapper._alpha = MapConfig.cameraAlpha;
     }
     
+    /**
+     * Set alpha of background map image.
+     * Does not affect markers
+     */
+    public function setBGMapImageAlpha():Void
+    {
+        MinimapProxy.wrapper.backgrnd._alpha = MapConfig.mapBackgroundImageAlpha;
+    }
+    
     public function applyMajorMods():Void
     {
         zoom = new Zoom();

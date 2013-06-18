@@ -213,11 +213,7 @@ class wot.Minimap.Minimap
             lostMarkers = new LostMarkers(wrapper.icons);
         }
 
-        /**
-         * Set alpha of background map image.
-         * Does not affect markers
-         */
-        wrapper.backgrnd._alpha = MapConfig.mapBackgroundImageAlpha;
+        Features.instance.setBGMapImageAlpha();
 
         /**
          * Setup alpha for icon of player himself.
