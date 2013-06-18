@@ -1,7 +1,5 @@
-import com.xvm.Logger;
-import wot.Minimap.Minimap;
-import wot.Minimap.model.externalProxy.MapConfig;
-import wot.Minimap.MinimapProxy;
+import wot.Minimap.*;
+import wot.Minimap.model.externalProxy.*;
 
 /**
  * Handles minimap windows zoom and center positioning

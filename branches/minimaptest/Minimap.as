@@ -1,22 +1,10 @@
-import com.xvm.GlobalEventDispatcher;
-import com.xvm.Logger;
-import com.xvm.Utils;
-import wot.Minimap.Features;
-import wot.Minimap.view.Zoom;
-import wot.Minimap.shapes.Square;
-import wot.Minimap.ExternalDeveloperInterface;
-import wot.Minimap.MapSizeLabel;
-import wot.Minimap.LostMarkers;
-import wot.Minimap.MinimapEntry;
-import wot.Minimap.MinimapEvent;
-import wot.Minimap.shapes.Lines;
-import wot.Minimap.shapes.Circles;
-import wot.Minimap.model.iconTracker.SyncModel;
-import wot.Minimap.model.iconTracker.AutoUpdate;
-import wot.Minimap.model.mapSize.MapSizeModel;
-import wot.Minimap.model.externalProxy.IconsProxy;
-import wot.Minimap.model.externalProxy.MapConfig;
-import wot.Minimap.MinimapProxy;
+import com.xvm.*;
+import wot.Minimap.*;
+import wot.Minimap.model.externalProxy.*;
+import wot.Minimap.model.iconTracker.*;
+import wot.Minimap.model.mapSize.*;
+import wot.Minimap.shapes.*;
+import wot.Minimap.view.*;
 
 /**
  * @author ilitvinov87@gmail.com
@@ -151,7 +139,7 @@ class wot.Minimap.Minimap
          * Camera object reconstruction occurs sometimes and all its previous props are lost.
          * Check if alpha is set.
          */
-        setCameraAlpha();
+        Features.instance.setCameraAlpha();
     }
 
     function correctSizeIndexImpl(sizeIndex:Number, stageHeight:Number):Number
@@ -240,13 +228,6 @@ class wot.Minimap.Minimap
         selfIcon.wrapper.selfIcon._alpha = MapConfig.selfIconAlpha;
 
         /**
-         * Setup alpha for camera of player himself.
-         * Looks like green highlighted corner.
-         * Does not affect attached shapes.
-         */
-        setCameraAlpha();
-
-        /**
          * Defines real map size in meters.
          */
         mapSizeModel = new MapSizeModel();
@@ -288,11 +269,5 @@ class wot.Minimap.Minimap
                 lines = new Lines(mapSizeModel.getSide() * 10); /** Total map side distance in meters  */
             }
         }
-    }
-
-    private function setCameraAlpha():Void
-    {
-        var camera:MinimapEntry = IconsProxy.cameraEntry;
-        camera.wrapper._alpha = MapConfig.cameraAlpha;
     }
 }

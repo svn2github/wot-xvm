@@ -1,6 +1,6 @@
-import wot.Minimap.view.MarkerScaling;
-import com.xvm.Logger;
-import wot.Minimap.view.Zoom;
+import wot.Minimap.*;
+import wot.Minimap.model.externalProxy.*;
+import wot.Minimap.view.*;
 
 class wot.Minimap.Features
 {
@@ -41,6 +41,17 @@ class wot.Minimap.Features
         }
         
         return sizeIndex;
+    }
+    
+    /**
+     * Setup alpha for camera of player himself.
+     * Looks like green highlighted corner.
+     * Does not affect attached shapes.
+     */
+    public function setCameraAlpha():Void
+    {
+        var camera:MinimapEntry = IconsProxy.cameraEntry;
+        camera.wrapper._alpha = MapConfig.cameraAlpha;
     }
     
     public function applyMajorMods():Void
