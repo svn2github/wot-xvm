@@ -1,6 +1,6 @@
 import wot.Minimap.view.MarkerScaling;
 import com.xvm.Logger;
-import wot.Minimap.Zoom;
+import wot.Minimap.view.Zoom;
 
 class wot.Minimap.Features
 {

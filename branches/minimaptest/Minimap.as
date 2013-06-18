@@ -2,7 +2,7 @@ import com.xvm.GlobalEventDispatcher;
 import com.xvm.Logger;
 import com.xvm.Utils;
 import wot.Minimap.Features;
-import wot.Minimap.Zoom;
+import wot.Minimap.view.Zoom;
 import wot.Minimap.shapes.Square;
 import wot.Minimap.ExternalDeveloperInterface;
 import wot.Minimap.MapSizeLabel;
