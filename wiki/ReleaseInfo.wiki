@@ -4,8 +4,8 @@
         "message": "  * адаптация к WoT 0.8.6\n  * новые возможности\n  * улучшения и исправления"
     },
     "EU": {
-        "ver": "3.5.0",
-        "message": "  * for WoT 0.8.5\n  * code optimization\n  * improvements and bugfixes"
+        "ver": "4.0.0",
+        "message": "  * for WoT 0.8.6\n  * new features\n  * improvements and bugfixes"
     },
     "US": {
         "ver": "3.5.0",
