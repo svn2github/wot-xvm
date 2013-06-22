@@ -1,9 +1,9 @@
 import com.xvm.*;
 import wot.Minimap.*;
-import wot.Minimap.model.SyncModel;
 import wot.Minimap.model.externalProxy.*;
 import wot.Minimap.model.iconTracker.*;
 import wot.Minimap.model.mapSize.*;
+import wot.Minimap.model.SyncModel;
 import wot.Minimap.shapes.*;
 import wot.Minimap.view.*;
 

@@ -1,11 +1,9 @@
-import com.xvm.Config;
-import com.xvm.ColorsManager;
-import com.xvm.GraphicsUtil;
 import com.xvm.Utils;
-import wot.RootComponents;
+import wot.Minimap.dataTypes.Player;
 import wot.Minimap.model.externalProxy.MapConfig;
 import wot.Minimap.staticUtils.LabelAppend;
-import wot.Minimap.dataTypes.Player;
+import wot.Minimap.view.MarkerColor;
+import wot.RootComponents;
 
 /**
  * MinimapEntry represent individual object on map.
@@ -122,56 +120,16 @@ class wot.Minimap.MinimapEntry
     function initImpl()
     {
         base.init.apply(base, arguments);
-        colorizeMarker();
+        MarkerColor.setColor();
     }
 
     function invalidateImpl()
     {
         base.invalidate();
-        colorizeMarker();
+        MarkerColor.setColor(wrapper);
     }
 
     // -- Private
-
-    private function colorizeMarker()
-    {
-        if (wrapper.m_type == null || wrapper.vehicleClass == null || wrapper.entryName == null)
-            return;
-
-        //if (wrapper.entryName != "ally" && wrapper.entryName != "enemy")
-        //    com.xvm.Logger.add("type=" + wrapper.m_type + " entryName=" + wrapper.entryName + " vehicleClass=" + wrapper.vehicleClass);
-
-        if (wrapper.entryName == "control")
-            return;
-
-        if (wrapper.m_type == "player" && wrapper.entryName == "postmortemCamera")
-            return;
-
-        var color = null;
-        if (Config.s_config.battle.useStandardMarkers)
-        {
-            var schemeName = (wrapper.entryName != "base" && wrapper.entryName != "spawn") ? wrapper.colorSchemeName
-                : (wrapper.vehicleClass == "red") ? "vm_enemy" : (wrapper.vehicleClass == "blue") ? "vm_ally" : null;
-
-            if (!schemeName)
-                return;
-
-            color = wrapper.colorsManager.getRGB(schemeName);
-        }
-        else
-        {
-            var entryName = (wrapper.entryName != "base" && wrapper.entryName != "spawn") ? wrapper.entryName
-                : (wrapper.vehicleClass == "red") ? "enemy" : (wrapper.vehicleClass == "blue") ? "ally" : null;
-            if (entryName != null)
-                color = ColorsManager.getSystemColor(entryName, wrapper.isDead);
-        }
-
-        if (color != null)
-        {
-            GraphicsUtil.colorize(wrapper.player || wrapper.teamPoint, color,
-                wrapper.player ? Config.s_config.consts.VM_COEFF_MM_PLAYER : Config.s_config.consts.VM_COEFF_MM_BASE); // darker to improve appearance
-        }
-    }
 
     private function initExtendedBehaviour():Void
     {
