@@ -132,14 +132,18 @@ class wot.Minimap.Minimap
         base.onEntryInited();
 
         SyncModel.instance.updateIconUids();
-
-        GlobalEventDispatcher.dispatchEvent(new MinimapEvent(MinimapEvent.ON_ENTRY_INITED));
-
-        /**
-         * Camera object reconstruction occurs sometimes and all its previous props are lost.
-         * Check if alpha is set.
-         */
-        Features.instance.setCameraAlpha();
+        
+        if (mapExtended)
+        {
+            
+            // TODO: place here SyncModel.instance.updateIconUids();
+            /**
+             * Camera object reconstruction occurs sometimes and all its previous props are lost.
+             * Check if alpha is set.
+             */
+            GlobalEventDispatcher.dispatchEvent(new MinimapEvent(MinimapEvent.ON_ENTRY_INITED));
+            Features.instance.setCameraAlpha();
+        }
     }
 
     function correctSizeIndexImpl(sizeIndex:Number, stageHeight:Number):Number
@@ -199,6 +203,8 @@ class wot.Minimap.Minimap
     private function startExtendedProcedure():Void
     {
         Features.instance.applyMajorMods();
+        
+        SyncModel.instance.updateIconUids();
 
         if (MapConfig.lostEnemyEnabled)
         {

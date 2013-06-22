@@ -1,3 +1,4 @@
+import com.xvm.Logger;
 import com.xvm.Utils;
 import wot.Minimap.model.externalProxy.PlayersPanelProxy;
 import wot.Minimap.model.externalProxy.IconsProxy;
@@ -52,7 +53,7 @@ class wot.Minimap.model.SyncModel
         for (var i in unassignedUids)
         {
             testUid = unassignedUids[i];
-            touchPlayer(testUid);
+            touchPlayer(unassignedUids[i]);
         }
         isSyncProcedureInProgress = false;
     }

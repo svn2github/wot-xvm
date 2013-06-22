@@ -50,8 +50,11 @@ class wot.Minimap.Features
      */
     public function setCameraAlpha():Void
     {
-        var camera:MinimapEntry = IconsProxy.cameraEntry;
-        camera.wrapper._alpha = MapConfig.cameraAlpha;
+        if (MapConfig.enabled)
+        {
+            var camera:MinimapEntry = IconsProxy.cameraEntry;
+            camera.wrapper._alpha = MapConfig.cameraAlpha;
+        }
     }
     
     /**

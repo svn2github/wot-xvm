@@ -8,9 +8,6 @@ import com.xvm.Logger;
  */
 class wot.Minimap.view.Zoom
 {
-    /** This is the subject of resize reposition */
-    private var minimap:Minimap;
-
     /** Temporary place to store last normal map size value before resize procedure by zoom */
     private var prevSizeIndex:Number;
 
