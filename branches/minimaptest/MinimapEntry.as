@@ -12,10 +12,9 @@ import wot.RootComponents;
  * MinimapEntry object at Minimap is called icon.
  *
  * Extended behaviour:
- * ) Appending extra information about unit like level, type, nick etc.
- *   This aspect is handled by Minimap class also.
- * ) Remain disappeared icons to indicate last enemy position.
- *   Only this class handles this aspect.
+ * ) Append extra text information about unit like level, type, nick etc.
+ * ) Rescale child MovieClips to prevent inappropriate scale propagation.
+ * ) Colorize icon.
  *
  * @author ilitvinov87@gmail.com
  */
