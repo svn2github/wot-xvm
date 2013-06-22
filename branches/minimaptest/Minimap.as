@@ -1,5 +1,6 @@
 import com.xvm.*;
 import wot.Minimap.*;
+import wot.Minimap.model.SyncModel;
 import wot.Minimap.model.externalProxy.*;
 import wot.Minimap.model.iconTracker.*;
 import wot.Minimap.model.mapSize.*;
@@ -130,8 +131,10 @@ class wot.Minimap.Minimap
     {
         base.onEntryInited();
 
-        if (sync && MapConfig.enabled)
+        if (sync)
+        {
            sync.updateIconsExtension();
+        }
 
         GlobalEventDispatcher.dispatchEvent(new MinimapEvent(MinimapEvent.ON_ENTRY_INITED));
 
@@ -200,8 +203,10 @@ class wot.Minimap.Minimap
     {
         Features.instance.applyMajorMods();
         
-        sync = new SyncModel();
-        sync.updateIconsExtension();
+        if (MapConfig.enabled)
+        {
+            sync = new SyncModel();
+        }
 
         if (MapConfig.lostEnemyEnabled)
         {

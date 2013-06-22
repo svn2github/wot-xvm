@@ -10,7 +10,7 @@ import wot.Minimap.model.externalProxy.IconsProxy;
  * @author ilitvinov87@gmail.com
  */
 
-class wot.Minimap.model.iconTracker.SyncModel
+class wot.Minimap.model.SyncModel
 {
     /**
      * Testing uid during delegate event lighting cycle stored here.
@@ -34,7 +34,7 @@ class wot.Minimap.model.iconTracker.SyncModel
         for (var i in unassignedUids)
         {
             testUid = unassignedUids[i];
-            touchPlayer(unassignedUids[i]);
+            touchPlayer(testUid);
         }
         syncProcedureInProgress = false;
     }
