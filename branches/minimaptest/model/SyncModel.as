@@ -80,6 +80,6 @@ class wot.Minimap.model.SyncModel
          * Lighting event is used at Minimap to define icon-user relation.
          */
         var player:Object = PlayersPanelProxy.getPlayerInfo(uid);
-        gfx.io.GameDelegate.call("minimap.lightPlayer", [player.vehId, true]);
+        gfx.io.GameDelegate.call("minimap.lightPlayer", [player.vehId, false]);
     }
 }

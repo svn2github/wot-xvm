@@ -131,12 +131,10 @@ class wot.Minimap.Minimap
     {
         base.onEntryInited();
 
-        SyncModel.instance.updateIconUids();
-        
         if (mapExtended)
         {
+            SyncModel.instance.updateIconUids();
             
-            // TODO: place here SyncModel.instance.updateIconUids();
             /**
              * Camera object reconstruction occurs sometimes and all its previous props are lost.
              * Check if alpha is set.
