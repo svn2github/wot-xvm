@@ -1,6 +1,7 @@
 import com.xvm.Utils;
 import wot.Minimap.model.externalProxy.PlayersPanelProxy;
 import wot.Minimap.model.externalProxy.IconsProxy;
+import wot.Minimap.model.externalProxy.MapConfig;
 
 /**
  * SyncModel class
@@ -12,6 +13,14 @@ import wot.Minimap.model.externalProxy.IconsProxy;
 
 class wot.Minimap.model.SyncModel
 {
+    private static var _instance:SyncModel;
+    
+    /**
+     * Temporary behavior alteration switch.
+     * Allows original icon highlighting behavior.
+     */
+    public var isSyncProcedureInProgress:Boolean;
+    
     /**
      * Testing uid during delegate event lighting cycle stored here.
      * Is set before light delegate event.
@@ -19,12 +28,21 @@ class wot.Minimap.model.SyncModel
      * this var is considered actula uid of icon:MinimapEntry.
      */
     private var testUid:Number;
-
-    /**
-     * Temporary behavior alteration switch.
-     * Allows original icon highlighting behavior.
-     */
-    public var isSyncProcedureInProgress:Boolean;
+    
+    public function SyncModel()
+    {
+        updateIconUids();
+    }
+    
+    public static function get instance():SyncModel
+    {
+        if (!_instance && MapConfig.enabled)
+        {
+            _instance = new SyncModel();
+        }
+        
+        return _instance;
+    }
 
     /** Invoked by Minimap when its ready */
     public function updateIconUids():Void

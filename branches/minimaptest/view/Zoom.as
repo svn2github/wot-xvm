@@ -1,5 +1,6 @@
 import wot.Minimap.*;
 import wot.Minimap.model.externalProxy.*;
+import com.xvm.Logger;
 
 /**
  * Handles minimap windows zoom and center positioning
@@ -132,7 +133,13 @@ class wot.Minimap.view.Zoom
     
     private function get userIsUsingChat():Boolean
     {
-        return _root.messenger.messageInput._focused;
+        var ret:Boolean = _root.messenger.messageInput._focused;
+        if (ret == null)
+        {
+            Logger.add("## ERROR wot.Minimap.view.Zoom: _root.messenger.messageInput._focused == null");
+        }
+        
+        return ret;
     }
     
     private function get minimap()

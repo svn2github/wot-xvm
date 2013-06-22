@@ -1,3 +1,5 @@
+import com.xvm.Logger;
+import wot.Minimap.model.SyncModel;
 import com.xvm.Utils;
 import wot.Minimap.dataTypes.Player;
 import wot.Minimap.model.externalProxy.MapConfig;
@@ -122,7 +124,7 @@ class wot.Minimap.MinimapEntry
     function initImpl()
     {
         base.init.apply(base, arguments);
-        MarkerColor.setColor();
+        MarkerColor.setColor(wrapper);
     }
 
     function invalidateImpl()
@@ -135,7 +137,7 @@ class wot.Minimap.MinimapEntry
 
     private function initExtendedBehaviour():Void
     {
-        uid = RootComponents.minimap.xvm_worker.sync.getTestUid();
+        uid = SyncModel.instance.getTestUid();
 
         if (MapConfig.revealedEnabled)
         {
@@ -148,6 +150,12 @@ class wot.Minimap.MinimapEntry
 
     private function get isSyncProcedureInProgress():Boolean
     {
-        return RootComponents.minimap.xvm_worker.sync.isSyncProcedureInProgress;
+        var ret:Boolean = SyncModel.instance.isSyncProcedureInProgress;
+        if (ret == null)
+        {
+            Logger.add("## ERROR wot.Minimap.MinimapEntry: SyncModel.instance.isSyncProcedureInProgress == null");
+        }
+        
+        return ret;
     }
 }

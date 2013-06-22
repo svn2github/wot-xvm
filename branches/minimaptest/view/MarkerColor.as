@@ -1,6 +1,7 @@
 import com.xvm.Config;
 import com.xvm.ColorsManager;
 import com.xvm.GraphicsUtil;
+import wot.Minimap.MinimapProxy;
 
 /**
  * @author sirmax

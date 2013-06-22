@@ -1,4 +1,6 @@
 import wot.Minimap.dataTypes.Player;
+import com.xvm.Logger;
+
 /**
  * PlayersPanelProxy class
  * provides simple wrapper to PlayersPanel.m_list._dataProvider Array
@@ -37,7 +39,13 @@ class wot.Minimap.model.externalProxy.PlayersPanelProxy
 {
     public static function get leftPanel():net.wargaming.ingame.PlayersPanel
     {
-        return net.wargaming.ingame.PlayersPanel(_root.leftPanel);
+        var ret:net.wargaming.ingame.PlayersPanel = _root.leftPanel;
+        if (ret == null)
+        {
+            Logger.add("## ERROR wot.Minimap.model.externalProxy.PlayersPanelProxy: _root.leftPanel == null");
+        }
+        
+        return ret;
     }
 
     public static function get rightPanel():net.wargaming.ingame.PlayersPanel

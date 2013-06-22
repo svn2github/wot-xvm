@@ -131,10 +131,7 @@ class wot.Minimap.Minimap
     {
         base.onEntryInited();
 
-        if (sync)
-        {
-           sync.updateIconUids();
-        }
+        SyncModel.instance.updateIconUids();
 
         GlobalEventDispatcher.dispatchEvent(new MinimapEvent(MinimapEvent.ON_ENTRY_INITED));
 
@@ -202,11 +199,6 @@ class wot.Minimap.Minimap
     private function startExtendedProcedure():Void
     {
         Features.instance.applyMajorMods();
-        
-        if (MapConfig.enabled)
-        {
-            sync = new SyncModel();
-        }
 
         if (MapConfig.lostEnemyEnabled)
         {
