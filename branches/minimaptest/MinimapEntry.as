@@ -105,8 +105,11 @@ class wot.Minimap.MinimapEntry
 
     function lightPlayerImpl(visibility)
     {
-        /** Behavior is altered temporarily so original icon highlighting works */
-        if (syncProcedureInProgress)
+        /**
+         * Behavior of original icon highlighting is altered temporarily
+         * while sync flag is raised.
+         */
+        if (isSyncProcedureInProgress)
         {
             initExtendedBehaviour();
         }
@@ -143,7 +146,7 @@ class wot.Minimap.MinimapEntry
         rescaleAttachments();
     }
 
-    private function get syncProcedureInProgress():Boolean
+    private function get isSyncProcedureInProgress():Boolean
     {
         return RootComponents.minimap.xvm_worker.sync.isSyncProcedureInProgress;
     }
