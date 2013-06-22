@@ -4,7 +4,7 @@ import flash.geom.Point;
 import wot.Minimap.dataTypes.Player;
 import wot.Minimap.model.externalProxy.PlayersPanelProxy;
 
-class wot.Minimap.staticUtils.LabelAppend
+class wot.Minimap.view.LabelAppend
 {
     public static function append(container:MovieClip, uid:Number, entryName:String, vehicleClass:String):TextField
     {

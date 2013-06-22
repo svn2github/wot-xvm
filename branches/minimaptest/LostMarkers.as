@@ -1,7 +1,7 @@
 import wot.Minimap.dataTypes.Icon;
 import com.xvm.GlobalEventDispatcher;
 import wot.Minimap.MinimapEvent;
-import wot.Minimap.staticUtils.LabelAppend;
+import wot.Minimap.view.LabelAppend;
 
 class wot.Minimap.LostMarkers
 {

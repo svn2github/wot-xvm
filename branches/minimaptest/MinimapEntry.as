@@ -1,7 +1,7 @@
 import com.xvm.Utils;
 import wot.Minimap.dataTypes.Player;
 import wot.Minimap.model.externalProxy.MapConfig;
-import wot.Minimap.staticUtils.LabelAppend;
+import wot.Minimap.view.LabelAppend;
 import wot.Minimap.view.MarkerColor;
 import wot.RootComponents;
 
