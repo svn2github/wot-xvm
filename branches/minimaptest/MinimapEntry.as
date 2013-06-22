@@ -188,6 +188,6 @@ class wot.Minimap.MinimapEntry
 
     private function get syncProcedureInProgress():Boolean
     {
-        return RootComponents.minimap.xvm_worker.sync.syncProcedureInProgress;
+        return RootComponents.minimap.xvm_worker.sync.isSyncProcedureInProgress;
     }
 }

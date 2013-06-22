@@ -133,7 +133,7 @@ class wot.Minimap.Minimap
 
         if (sync)
         {
-           sync.updateIconsExtension();
+           sync.updateIconUids();
         }
 
         GlobalEventDispatcher.dispatchEvent(new MinimapEvent(MinimapEvent.ON_ENTRY_INITED));

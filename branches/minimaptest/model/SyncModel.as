@@ -24,19 +24,19 @@ class wot.Minimap.model.SyncModel
      * Temporary behavior alteration switch.
      * Allows original icon highlighting behavior.
      */
-    public var syncProcedureInProgress:Boolean;
+    public var isSyncProcedureInProgress:Boolean;
 
     /** Invoked by Minimap when its ready */
-    public function updateIconsExtension():Void
+    public function updateIconUids():Void
     {
-        syncProcedureInProgress = true;
+        isSyncProcedureInProgress = true;
         var unassignedUids:Array = getUnassignedUids();
         for (var i in unassignedUids)
         {
             testUid = unassignedUids[i];
             touchPlayer(testUid);
         }
-        syncProcedureInProgress = false;
+        isSyncProcedureInProgress = false;
     }
 
     /** Used at MinimapEntry to define uid if syncronization succeeded */
