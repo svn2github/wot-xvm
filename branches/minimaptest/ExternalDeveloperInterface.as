@@ -8,8 +8,6 @@ import wot.Minimap.MinimapProxy;
  * ilitvinov87@gmail.com
  *
  * http://www.koreanrandom.com/forum/topic/2601-pythonflash-coders-interface/
- * 
- * Let me know if this does not work.
  */
  
 class wot.Minimap.ExternalDeveloperInterface
