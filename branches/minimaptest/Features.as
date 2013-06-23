@@ -2,10 +2,11 @@ import wot.Minimap.model.iconTracker.*;
 import wot.Minimap.*;
 import wot.Minimap.model.externalProxy.*;
 import wot.Minimap.view.*;
+import wot.Minimap.model.mapSize.MapSizeModel;
 
 class wot.Minimap.Features
 {
-    private static var instanceField:Features;
+    private static var _instance:Features;
     
     private static var MAP_BORDER_SIZE_INDEX:Number = 0;
     
@@ -20,12 +21,12 @@ class wot.Minimap.Features
     
     public static function get instance():Features
     {
-        if (!instanceField)
+        if (!_instance)
         {
-            instanceField = new Features();
+            _instance = new Features();
         }
         
-        return instanceField;
+        return _instance;
     }
     
     /**
@@ -83,7 +84,11 @@ class wot.Minimap.Features
         /** With enable switch */
         lostMarkersFeature();
         zoomFeature();
-        mapSizeFeature();
+        /** And dependent on successful map size recognition */
+        if (MapSizeModel.instance.getCellSide())
+        {
+            mapSizeFeature();
+        }
     }
     
     //-- Private

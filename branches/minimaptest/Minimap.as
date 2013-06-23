@@ -197,13 +197,8 @@ class wot.Minimap.Minimap
         
         Features.instance.applyMajorMods();
 
-        /**
-         * Defines real map size in meters.
-         */
-        var fullSize:Number = MapSizeModel.instance.getFullSide();
-
         /** Map size dependent */
-        if (fullSize)
+        if (MapSizeModel.instance.getFullSide())
         {
             /**
              * Draw customized circles.
@@ -211,7 +206,7 @@ class wot.Minimap.Minimap
              */
             if (MapConfig.circlesEnabled)
             {
-                circles = new Circles(fullSize); /** Total map side distance in meters */
+                circles = new Circles(); /** Total map side distance in meters */
             }
 
             /**
@@ -220,7 +215,7 @@ class wot.Minimap.Minimap
              */
             if (MapConfig.squareEnabled)
             {
-                square = new Square(fullSize); /** Total map side distance in meters */
+                square = new Square(); /** Total map side distance in meters */
             }
 
             /**
@@ -230,7 +225,7 @@ class wot.Minimap.Minimap
              */
             if (MapConfig.linesEnabled)
             {
-                lines = new Lines(fullSize); /** Total map side distance in meters  */
+                lines = new Lines(); /** Total map side distance in meters  */
             }
         }
     }
