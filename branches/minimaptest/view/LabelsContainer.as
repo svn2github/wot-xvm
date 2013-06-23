@@ -25,8 +25,8 @@ class wot.Minimap.view.LabelsContainer
     public function createLabel(pos:Point):MovieClip
     {
         var depth:Number = holder.getNextHighestDepth();
-        var label:MovieClip = holder.createEmptyMovieClip("lostLabel" + depth, depth);
-        /** Set lost position */
+        var label:MovieClip = holder.createEmptyMovieClip("label" + depth, depth);
+        
         label._x = pos.x;
         label._y = pos.y;
         
