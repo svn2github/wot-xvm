@@ -1,3 +1,4 @@
+import wot.Minimap.shapes.*;
 import wot.Minimap.model.iconTracker.*;
 import wot.Minimap.*;
 import wot.Minimap.model.externalProxy.*;
@@ -13,6 +14,14 @@ class wot.Minimap.Features
     private var markerScaling:MarkerScaling;
     private var zoom:Zoom;
     private var mapSizeLabel:MapSizeLabel
+    
+    /**
+     * Shape to icon attachments.
+     * Shows game related distances and direction.
+     */
+    private var circles:Circles;
+    private var square:Square;
+    private var lines:Lines;
 
     /** Defines lost enemy positions */
     private var autoUpdate:AutoUpdate;
@@ -88,6 +97,7 @@ class wot.Minimap.Features
         if (MapSizeModel.instance.getCellSide())
         {
             mapSizeFeature();
+            shapesFeatures();
         }
     }
     
@@ -141,6 +151,37 @@ class wot.Minimap.Features
         if (MapConfig.mapSizeLabelEnabled)
         {
             mapSizeLabel = new MapSizeLabel();
+        }
+    }
+    
+    private function shapesFeatures():Void
+    {
+        /**
+         * Draw customized circles.
+         * Outlines distance in meters.
+         */
+        if (MapConfig.circlesEnabled)
+        {
+            circles = new Circles(); /** Total map side distance in meters */
+        }
+
+        /**
+         * Draw customized circles.
+         * Outlines distance in meters.
+         */
+        if (MapConfig.squareEnabled)
+        {
+            square = new Square(); /** Total map side distance in meters */
+        }
+
+        /**
+         * Draw customized lines.
+         * Outlines vehicle direction, gun horizontal traverse angle
+         * and possibly distance in meters.
+         */
+        if (MapConfig.linesEnabled)
+        {
+            lines = new Lines(); /** Total map side distance in meters  */
         }
     }
 }

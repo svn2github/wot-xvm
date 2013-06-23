@@ -64,7 +64,7 @@ class wot.Minimap.shapes.Square extends ShapeAttach
 
         /** Uper line */
         mc.moveTo(-offset,  offset);
-        mc.lineTo( -offset, -offset);
+        mc.lineTo(-offset, -offset);
     }
 
     private function updatePosition(mc:MovieClip):Void

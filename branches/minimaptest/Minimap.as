@@ -1,9 +1,7 @@
 import com.xvm.*;
 import wot.Minimap.*;
-import wot.Minimap.model.externalProxy.*;
-import wot.Minimap.model.mapSize.*;
+import wot.Minimap.model.externalProxy.MapConfig;
 import wot.Minimap.model.SyncModel;
-import wot.Minimap.shapes.*;
 import wot.Minimap.view.*;
 
 /**
@@ -81,26 +79,6 @@ class wot.Minimap.Minimap
     
     /** Simplified minimap interface for communication with other Python or Flash mods */
     public var externalDeveloperInterface:ExternalDeveloperInterface;
-
-    /** Used at MinimapEntry to get testUid */
-    public var sync:SyncModel;
-
-    /**
-     * Defines real map side size in meters.
-     * Common values are 1km, 600m
-     */
-    private var mapSizeModel:MapSizeModel;
-    private var mapSizeLabel:MapSizeLabel;
-
-    /**
-     * Shape to icon attachments.
-     * Shows game related distances and direction.
-     */
-    private var circles:Circles;
-    private var square:Square;
-    private var lines:Lines;
-
-    private var zoom:Zoom;
 
     private var isMinimapReady:Boolean = false;
     private var isPanelReady:Boolean = false;
@@ -196,37 +174,5 @@ class wot.Minimap.Minimap
         SyncModel.instance.updateIconUids();
         
         Features.instance.applyMajorMods();
-
-        /** Map size dependent */
-        if (MapSizeModel.instance.getFullSide())
-        {
-            /**
-             * Draw customized circles.
-             * Outlines distance in meters.
-             */
-            if (MapConfig.circlesEnabled)
-            {
-                circles = new Circles(); /** Total map side distance in meters */
-            }
-
-            /**
-             * Draw customized circles.
-             * Outlines distance in meters.
-             */
-            if (MapConfig.squareEnabled)
-            {
-                square = new Square(); /** Total map side distance in meters */
-            }
-
-            /**
-             * Draw customized lines.
-             * Outlines vehicle direction, gun horizontal traverse angle
-             * and possibly distance in meters.
-             */
-            if (MapConfig.linesEnabled)
-            {
-                lines = new Lines(); /** Total map side distance in meters  */
-            }
-        }
     }
 }
