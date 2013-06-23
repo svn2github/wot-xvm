@@ -28,7 +28,8 @@ class wot.Minimap.LostMarkers
         for (var i in lostMarkersTracking)
         {
             var tf:TextField = lostMarkersTracking[i];
-            tf.removeTextField();
+            var label:MovieClip = tf._parent;
+            label.removeMovieClip();
         }
     }
 
@@ -38,12 +39,7 @@ class wot.Minimap.LostMarkers
         for (var i in lost)
         {
             var lostGuy:Icon = lost[i];
-
-            var depth:Number = labelsContainer.getNextHighestDepth();
-            var label:MovieClip = labelsContainer.createEmptyMovieClip("lostLabel" + depth, depth);
-            /** Set lost position */
-            label._x = lostGuy.pos.x;
-            label._y = lostGuy.pos.y;
+            var label:MovieClip = labelsContainer.createLabel(lostGuy.pos);
 
             /* New TextField is attached to Minimap at this moment */
             var tf:TextField = LabelAppend.append(label, lostGuy.uid, wot.Minimap.MinimapEntry.MINIMAP_ENTRY_NAME_LOST, lostGuy.vehicleClass);
@@ -56,8 +52,8 @@ class wot.Minimap.LostMarkers
         }
     }
     
-    private function get labelsContainer():MovieClip
+    private function get labelsContainer():LabelsContainer
     {
-        return LabelsContainer.instance.holder;
+        return LabelsContainer.instance;
     }
 }
