@@ -9,7 +9,19 @@ import wot.Minimap.model.mapSize.MapSizeBase;
 
 class wot.Minimap.model.mapSize.MapSizeModel
 {
+    private static var _instance:MapSizeModel;
+    
     private var cellSide:Number;
+    
+    public static function get instance():MapSizeModel
+    {
+        if (!_instance)
+        {
+            _instance = new MapSizeModel();
+        }
+        
+        return _instance;
+    }
 
     public function MapSizeModel()
     {

@@ -200,9 +200,8 @@ class wot.Minimap.Minimap
         /**
          * Defines real map size in meters.
          */
-        mapSizeModel = new MapSizeModel();
-        var cellSize:Number = mapSizeModel.getCellSide();
-        var fullSize:Number = mapSizeModel.getFullSide();
+        var cellSize:Number = MapSizeModel.instance.getCellSide();
+        var fullSize:Number = MapSizeModel.instance.getFullSide();
 
         /** Map size dependent */
         if (cellSize)
