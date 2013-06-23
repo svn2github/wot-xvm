@@ -11,6 +11,7 @@ class wot.Minimap.Features
     
     private var markerScaling:MarkerScaling;
     private var zoom:Zoom;
+    private var mapSizeLabel:MapSizeLabel
 
     /** Defines lost enemy positions */
     private var autoUpdate:AutoUpdate;
@@ -82,6 +83,7 @@ class wot.Minimap.Features
         /** With enable switch */
         lostMarkersFeature();
         zoomFeature();
+        mapSizeFeature();
     }
     
     //-- Private
@@ -125,6 +127,15 @@ class wot.Minimap.Features
         if (MapConfig.zoomEnabled)
         {
             zoom = new Zoom();
+        }
+    }
+    
+    private function mapSizeFeature():Void
+    {
+        /** Draw map size at map corner */
+        if (MapConfig.mapSizeLabelEnabled)
+        {
+            mapSizeLabel = new MapSizeLabel();
         }
     }
 }

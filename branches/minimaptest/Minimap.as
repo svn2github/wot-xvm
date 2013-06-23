@@ -205,12 +205,6 @@ class wot.Minimap.Minimap
         /** Map size dependent */
         if (fullSize)
         {
-            /** Draw map size at map corner */
-            if (MapConfig.mapSizeLabelEnabled)
-            {
-                mapSizeLabel = new MapSizeLabel();
-            }
-
             /**
              * Draw customized circles.
              * Outlines distance in meters.
