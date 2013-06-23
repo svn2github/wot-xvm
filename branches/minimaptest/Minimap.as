@@ -71,7 +71,7 @@ class wot.Minimap.Minimap
      *  'cell': 153 }
      */
     public static var MAX_DEAD_ZINDEX:Number = 99;
-    public static var LOST_UNITS_INDEX:Number = MAX_DEAD_ZINDEX;
+    public static var LABELS:Number = MAX_DEAD_ZINDEX;
     public static var SQUARE_1KM_INDEX:Number = MAX_DEAD_ZINDEX - 1;
     public static var EXTERNAL_CUSTOM_INDEX:Number = MAX_DEAD_ZINDEX - 1;
     public static var CAMERA_NORMAL_ZINDEX:Number = 100;

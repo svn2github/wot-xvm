@@ -1,17 +1,15 @@
-import wot.Minimap.MinimapProxy;
 import wot.Minimap.dataTypes.Icon;
 import com.xvm.GlobalEventDispatcher;
 import wot.Minimap.MinimapEvent;
 import wot.Minimap.view.LabelAppend;
+import wot.Minimap.view.LabelsContainer;
 
 class wot.Minimap.LostMarkers
 {
-    private var markersContainer:MovieClip;
     private var lostMarkersTracking:Array;
 
     public function LostMarkers()
     {
-        this.markersContainer = icons.createEmptyMovieClip("lostMarkers", wot.Minimap.Minimap.LOST_UNITS_INDEX)//);
         GlobalEventDispatcher.addEventListener(MinimapEvent.LOST_PLAYERS_UPDATE, this, onLost);
         lostMarkersTracking = [];
     }
@@ -41,14 +39,14 @@ class wot.Minimap.LostMarkers
         {
             var lostGuy:Icon = lost[i];
 
-            var depth:Number = markersContainer.getNextHighestDepth();
-            var marker:MovieClip = markersContainer.createEmptyMovieClip("marker" + depth, depth);
+            var depth:Number = labelsContainer.getNextHighestDepth();
+            var label:MovieClip = labelsContainer.createEmptyMovieClip("lostLabel" + depth, depth);
             /** Set lost position */
-            marker._x = lostGuy.pos.x;
-            marker._y = lostGuy.pos.y;
+            label._x = lostGuy.pos.x;
+            label._y = lostGuy.pos.y;
 
             /* New TextField is attached to Minimap at this moment */
-            var tf:TextField = LabelAppend.append(marker, lostGuy.uid, wot.Minimap.MinimapEntry.MINIMAP_ENTRY_NAME_LOST, lostGuy.vehicleClass);
+            var tf:TextField = LabelAppend.append(label, lostGuy.uid, wot.Minimap.MinimapEntry.MINIMAP_ENTRY_NAME_LOST, lostGuy.vehicleClass);
 
             /**
              * Pointer to its address is tracked to handle proper remove
@@ -58,8 +56,8 @@ class wot.Minimap.LostMarkers
         }
     }
     
-    private function get icons():MovieClip
+    private function get labelsContainer():MovieClip
     {
-        return MinimapProxy.wrapper.icons;
+        return LabelsContainer.instance.holder;
     }
 }
