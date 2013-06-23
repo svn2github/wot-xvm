@@ -1,2 +1,5 @@
 * рефакторинг кода
+* исправлена работа миникарты при одном игроке во вражеской команде
+
 * code refactoring
+* fixed minimap work when there is only one player in enemy team
