@@ -1,3 +1,5 @@
 * рефакторинг кода
+* некоторые объекты интерфейса более не перекрывают увеличенную миникарту
 
 * code refactoring
+* some interface object are no longer overlapping zoomed minimap

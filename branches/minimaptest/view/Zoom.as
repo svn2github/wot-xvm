@@ -1,5 +1,7 @@
-import wot.Minimap.*;
-import wot.Minimap.model.externalProxy.*;
+import gfx.core.UIComponent;
+import net.wargaming.ingame.Minimap;
+import wot.Minimap.MinimapProxy;
+import wot.Minimap.model.externalProxy.MapConfig;
 import com.xvm.Logger;
 
 /**
@@ -88,12 +90,15 @@ class wot.Minimap.view.Zoom
         {
             centerPosition();
         }
+        swapDepth();
+        // TODO: try to move death log here
     }
 
     private function zoomOut():Void
     {
         bottomRightPosition();
         restoreSize();
+        swapDepth();
     }
 
     private function centerPosition():Void
@@ -125,6 +130,16 @@ class wot.Minimap.view.Zoom
         minimap.setupSize(minimap.m_sizeIndex, Stage.height);
     }
     
+    /**
+     * Moves zoomed minimap back and forth
+     * relative to other overlapping clips.
+     * Overlapping clips prevent minimap sector click.
+     */
+    private function swapDepth():Void
+    {
+        minimap.swapDepths(battleStartTimerClip);
+    }
+    
     private function get userIsUsingChat():Boolean
     {
         var ret:Boolean = _root.messenger.messageInput._focused;
@@ -136,8 +151,13 @@ class wot.Minimap.view.Zoom
         return ret;
     }
     
-    private function get minimap()
+    private function get minimap():Minimap
     {
         return MinimapProxy.wrapper;
+    }
+    
+    private function get battleStartTimerClip():MovieClip
+    {
+        return _root.timerBig;
     }
 }
