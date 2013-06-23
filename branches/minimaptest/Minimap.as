@@ -211,7 +211,7 @@ class wot.Minimap.Minimap
              * sends event on lost units change.
              */
             autoUpdate = new AutoUpdate();
-            lostMarkers = new LostMarkers(wrapper.icons);
+            lostMarkers = new LostMarkers();
         }
 
         Features.instance.setBGMapImageAlpha();

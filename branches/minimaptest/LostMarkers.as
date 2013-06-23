@@ -1,3 +1,4 @@
+import wot.Minimap.MinimapProxy;
 import wot.Minimap.dataTypes.Icon;
 import com.xvm.GlobalEventDispatcher;
 import wot.Minimap.MinimapEvent;
@@ -6,13 +7,10 @@ import wot.Minimap.view.LabelAppend;
 class wot.Minimap.LostMarkers
 {
     private var markersContainer:MovieClip;
-    private var icons:MovieClip;
-
     private var lostMarkersTracking:Array;
 
-    public function LostMarkers(icons:MovieClip)
+    public function LostMarkers()
     {
-        this.icons = icons;
         this.markersContainer = icons.createEmptyMovieClip("lostMarkers", wot.Minimap.Minimap.LOST_UNITS_INDEX)//);
         GlobalEventDispatcher.addEventListener(MinimapEvent.LOST_PLAYERS_UPDATE, this, onLost);
         lostMarkersTracking = [];
@@ -58,5 +56,10 @@ class wot.Minimap.LostMarkers
              */
             lostMarkersTracking.push(tf);
         }
+    }
+    
+    private function get icons():MovieClip
+    {
+        return MinimapProxy.wrapper.icons;
     }
 }
