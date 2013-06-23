@@ -211,7 +211,7 @@ class wot.Minimap.Minimap
             /** Draw map size at map corner */
             if (MapConfig.mapSizeLabelEnabled)
             {
-                mapSizeLabel = new MapSizeLabel(wrapper.backgrnd, mapSizeModel.getSide());
+                mapSizeLabel = new MapSizeLabel(mapSizeModel.getSide());
             }
 
             /**

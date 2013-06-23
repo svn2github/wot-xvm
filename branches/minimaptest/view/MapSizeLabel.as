@@ -1,3 +1,4 @@
+import wot.Minimap.MinimapProxy;
 import flash.geom.Point;
 import wot.Minimap.model.externalProxy.MapConfig;
 
@@ -7,12 +8,12 @@ class wot.Minimap.view.MapSizeLabel
 
     private var side:Number;
 
-    public function MapSizeLabel(mc:MovieClip, side:Number)
+    public function MapSizeLabel(side:Number)
     {
         this.side = side;
 
         var offset:Point = MapConfig.mapSizeLabelOffset;
-        var tf:TextField = mc.createTextField("mapSize", mc.getNextHighestDepth(),
+        var tf:TextField = bg.createTextField("mapSize", bg.getNextHighestDepth(),
             offset.x, offset.y, MapConfig.mapSizeLabelWidth, MapConfig.mapSizeLabelHeight);
         tf.antiAliasType = "advanced";
         tf.html = true;
@@ -44,5 +45,10 @@ class wot.Minimap.view.MapSizeLabel
         }
 
         return format;
+    }
+    
+    private function get bg():MovieClip
+    {
+        return MinimapProxy.wrapper.backgrnd;
     }
 }
