@@ -1,3 +1,4 @@
+import wot.Minimap.model.iconTracker.*;
 import wot.Minimap.*;
 import wot.Minimap.model.externalProxy.*;
 import wot.Minimap.view.*;
@@ -10,6 +11,11 @@ class wot.Minimap.Features
     
     private var markerScaling:MarkerScaling;
     private var zoom:Zoom;
+
+    /** Defines lost enemy positions */
+    private var autoUpdate:AutoUpdate;
+    /** Places and removes lost enemy positions on minimap */
+    private var lostMarkers:LostMarkers;
     
     public static function get instance():Features
     {
@@ -80,5 +86,15 @@ class wot.Minimap.Features
     public function applyMajorMods():Void
     {
         zoom = new Zoom();
+        
+        if (MapConfig.lostEnemyEnabled)
+        {
+            /**
+             * Defines lost enemy units and
+             * sends event on lost units change.
+             */
+            autoUpdate = new AutoUpdate();
+            lostMarkers = new LostMarkers();
+        }
     }
 }

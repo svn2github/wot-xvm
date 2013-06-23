@@ -1,7 +1,6 @@
 import com.xvm.*;
 import wot.Minimap.*;
 import wot.Minimap.model.externalProxy.*;
-import wot.Minimap.model.iconTracker.*;
 import wot.Minimap.model.mapSize.*;
 import wot.Minimap.model.SyncModel;
 import wot.Minimap.shapes.*;
@@ -85,12 +84,6 @@ class wot.Minimap.Minimap
 
     /** Used at MinimapEntry to get testUid */
     public var sync:SyncModel;
-
-    /** Defines lost enemy positions */
-    private var autoUpdate:AutoUpdate;
-
-    /** Places and removes lost enemy positions on minimap */
-    private var lostMarkers:LostMarkers;
 
     /**
      * Defines real map side size in meters.
@@ -200,19 +193,9 @@ class wot.Minimap.Minimap
 
     private function startExtendedProcedure():Void
     {
-        Features.instance.applyMajorMods();
-        
         SyncModel.instance.updateIconUids();
-
-        if (MapConfig.lostEnemyEnabled)
-        {
-            /**
-             * Defines lost enemy units and
-             * sends event on lost units change.
-             */
-            autoUpdate = new AutoUpdate();
-            lostMarkers = new LostMarkers();
-        }
+        
+        Features.instance.applyMajorMods();
 
         Features.instance.setBGMapImageAlpha();
         Features.instance.setPlayerIconAlpha();
