@@ -197,9 +197,6 @@ class wot.Minimap.Minimap
         
         Features.instance.applyMajorMods();
 
-        Features.instance.setBGMapImageAlpha();
-        Features.instance.setPlayerIconAlpha();
-
         /**
          * Defines real map size in meters.
          */

@@ -27,6 +27,10 @@ class wot.Minimap.Features
         return instanceField;
     }
     
+    /**
+     * Have to be public.
+     * Invoked each time minimap.scaleMarkers is called.
+     */
     public function scaleMarkers():Void
     {
         if (!markerScaling)
@@ -36,6 +40,10 @@ class wot.Minimap.Features
         markerScaling.scale();
     }
     
+    /**
+     * Have to be public.
+     * Invoked each time minimap.correctSizeIndexImpl is called.
+     */
     public function disableMapWindowSizeLimitation(sizeIndex:Number):Number
     {
         /** base.correctSizeIndex code is omitted to drop limits */
@@ -53,6 +61,9 @@ class wot.Minimap.Features
      * Setup alpha for camera of player himself.
      * Looks like green highlighted corner.
      * TODO: Detach camera line
+     * 
+     * Have to be public.
+     * Invoked each time minimap.onEntryInited is called.
      */
     public function setCameraAlpha():Void
     {
@@ -63,11 +74,23 @@ class wot.Minimap.Features
         }
     }
     
+    public function applyMajorMods():Void
+    {
+        setBGMapImageAlpha();
+        setPlayerIconAlpha();
+        
+        /** With enable switch */
+        lostMarkersFeature();
+        zoomFeature();
+    }
+    
+    //-- Private
+    
     /**
      * Set alpha of background map image.
      * Does not affect markers
      */
-    public function setBGMapImageAlpha():Void
+    private function setBGMapImageAlpha():Void
     {
         MinimapProxy.wrapper.backgrnd._alpha = MapConfig.mapBackgroundImageAlpha;
     }
@@ -76,17 +99,16 @@ class wot.Minimap.Features
      * Setup alpha for icon of player himself.
      * Looks like white arrow.
      * Does not affect attached shapes.
+     * TODO: check when swithing in spec mode
      */
-    public function setPlayerIconAlpha():Void
+    private function setPlayerIconAlpha():Void
     {
         var selfIcon:MinimapEntry = IconsProxy.selfEntry;
         selfIcon.wrapper.selfIcon._alpha = MapConfig.selfIconAlpha;
     }
     
-    public function applyMajorMods():Void
+    private function lostMarkersFeature():Void
     {
-        zoom = new Zoom();
-        
         if (MapConfig.lostEnemyEnabled)
         {
             /**
@@ -95,6 +117,14 @@ class wot.Minimap.Features
              */
             autoUpdate = new AutoUpdate();
             lostMarkers = new LostMarkers();
+        }
+    }
+    
+    private function zoomFeature():Void
+    {
+        if (MapConfig.zoomEnabled)
+        {
+            zoom = new Zoom();
         }
     }
 }

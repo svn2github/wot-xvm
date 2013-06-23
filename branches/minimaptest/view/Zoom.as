@@ -21,10 +21,7 @@ class wot.Minimap.view.Zoom
     
     public function Zoom()
     {
-        if (MapConfig.zoomEnabled)
-        {
-            init();
-        }
+        init();
     }
 
     public function onZoomKeyClick(event):Void
