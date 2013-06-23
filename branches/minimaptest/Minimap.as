@@ -171,7 +171,6 @@ class wot.Minimap.Minimap
 
     private function startExtendedProcedure():Void
     {
-        Logger.add("########### startExtendedProcedure");
         SyncModel.instance.updateIconUids();
         
         Features.instance.applyMajorMods();
