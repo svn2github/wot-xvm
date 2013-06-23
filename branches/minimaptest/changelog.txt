@@ -1,5 +1,7 @@
-* рефакторинг кода
-* некоторые объекты интерфейса более не перекрывают увеличенную миникарту
+* миникарта: рефакторинг кода
+* миникарта: некоторые объекты интерфейса более не перекрывают увеличенную миникарту
+* миникарта: исправлено позиционирование лога смертей игроков при увеличенной миникарте
 
-* code refactoring
-* some interface object are no longer overlapping zoomed minimap
+* minimap: code refactoring
+* minimap: some interface object are no longer overlapping zoomed minimap
+* minimap: fixed players death log list positioning while minimap is zoomed

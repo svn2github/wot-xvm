@@ -14,8 +14,10 @@ class wot.Minimap.view.Zoom
     private var prevSizeIndex:Number;
 
     /** Stores state for switcher */
-    var currentState:Boolean;
+    private var currentState:Boolean;
 
+    private var timer;
+    private static var DELAY_BEFORE_DEATH_LOG_FIX:Number = 10;
     /**
      * #################
      * TODO: fix messages at right side while zoomed
@@ -91,7 +93,9 @@ class wot.Minimap.view.Zoom
             centerPosition();
         }
         swapDepth();
-        // TODO: try to move death log here
+        
+        /** Without timer fix is reverted immediately */
+        timer = _global.setInterval(this, "fixDeathLogPosition", DELAY_BEFORE_DEATH_LOG_FIX);;
     }
 
     private function zoomOut():Void
@@ -138,6 +142,19 @@ class wot.Minimap.view.Zoom
     private function swapDepth():Void
     {
         minimap.swapDepths(battleStartTimerClip);
+    }
+    
+    /**
+     * Death log list position is moved to the top of minimap
+     * each time minimap size changes.
+     * List position becomes too high while minimap is zoomed.
+     * 
+     * Fix is here.
+     */
+    private function fixDeathLogPosition():Void
+    {
+        _global.clearInterval(timer);
+        _root.playerMessangersPanel._y = Stage.height;
     }
     
     private function get userIsUsingChat():Boolean
