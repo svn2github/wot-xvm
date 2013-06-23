@@ -201,14 +201,16 @@ class wot.Minimap.Minimap
          * Defines real map size in meters.
          */
         mapSizeModel = new MapSizeModel();
+        var cellSize:Number = mapSizeModel.getCellSide();
+        var fullSize:Number = mapSizeModel.getFullSide();
 
         /** Map size dependent */
-        if (mapSizeModel.getSide())
+        if (cellSize)
         {
             /** Draw map size at map corner */
             if (MapConfig.mapSizeLabelEnabled)
             {
-                mapSizeLabel = new MapSizeLabel(mapSizeModel.getSide());
+                mapSizeLabel = new MapSizeLabel(cellSize);
             }
 
             /**
@@ -217,7 +219,7 @@ class wot.Minimap.Minimap
              */
             if (MapConfig.circlesEnabled)
             {
-                circles = new Circles(mapSizeModel.getSide() * 10); /** Total map side distance in meters */
+                circles = new Circles(fullSize); /** Total map side distance in meters */
             }
 
             /**
@@ -226,7 +228,7 @@ class wot.Minimap.Minimap
              */
             if (MapConfig.squareEnabled)
             {
-                square = new Square(mapSizeModel.getSide() * 10); /** Total map side distance in meters */
+                square = new Square(fullSize); /** Total map side distance in meters */
             }
 
             /**
@@ -236,7 +238,7 @@ class wot.Minimap.Minimap
              */
             if (MapConfig.linesEnabled)
             {
-                lines = new Lines(mapSizeModel.getSide() * 10); /** Total map side distance in meters  */
+                lines = new Lines(fullSize); /** Total map side distance in meters  */
             }
         }
     }

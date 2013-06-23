@@ -6,11 +6,11 @@ class wot.Minimap.view.MapSizeLabel
 {
     private static var CELLSIZE_MACRO:String = "{{cellsize}}";
 
-    private var side:Number;
+    private var cellSize:Number;
 
-    public function MapSizeLabel(side:Number)
+    public function MapSizeLabel(cellSize:Number)
     {
-        this.side = side;
+        this.cellSize = cellSize;
 
         var offset:Point = MapConfig.mapSizeLabelOffset;
         var tf:TextField = bg.createTextField("mapSize", bg.getNextHighestDepth(),
@@ -41,7 +41,7 @@ class wot.Minimap.view.MapSizeLabel
         var formatArr:Array = format.split(CELLSIZE_MACRO);
         if (formatArr.length > 1)
         {
-            format = formatArr.join(side.toString());
+            format = formatArr.join(cellSize.toString());
         }
 
         return format;

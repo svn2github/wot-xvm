@@ -45,8 +45,13 @@ class wot.Minimap.model.mapSize.MapSizeModel
 
     }
 
-    public function getSide():Number
+    public function getCellSide():Number
     {
         return cellSide;
+    }
+    
+    public function getFullSide():Number
+    {
+        return cellSide * 10;
     }
 }
