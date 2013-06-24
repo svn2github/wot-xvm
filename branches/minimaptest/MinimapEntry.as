@@ -142,20 +142,28 @@ class wot.Minimap.MinimapEntry
 
         if (MapConfig.revealedEnabled)
         {
-            label = labelsContainer.createLabel();
-            LabelAppend.appendTextField(label, uid, wrapper.entryName, wrapper.vehicleClass);
-            wrapper.onEnterFrame = function()
-            {
-                /**
-                 * No FPS drop discovered
-                 */
-                this.xvm_worker.label._x = this._x;
-                this.xvm_worker.label._y = this._y;
-            }
+            createLabel();
+            setLabelToMimicEntryMoves();
         }
-
-        // TODO: remove?
-        // rescaleAttachments();
+    }
+    
+    private function createLabel():Void
+    {
+        label = labelsContainer.createLabel();
+        LabelAppend.appendTextField(label, uid, wrapper.entryName, wrapper.vehicleClass);
+    }
+    
+    private function setLabelToMimicEntryMoves():Void
+    {
+        wrapper.onEnterFrame = function()
+        {
+            /**
+             * No FPS drop discovered.
+             * Okay.
+             */
+            this.xvm_worker.label._x = this._x;
+            this.xvm_worker.label._y = this._y;
+        }
     }
 
     private function get isSyncProcedureInProgress():Boolean
