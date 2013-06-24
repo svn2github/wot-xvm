@@ -6,7 +6,7 @@ class wot.Minimap.view.LabelsContainer
 {
     private static var _instance:LabelsContainer;
     
-    public var holder:MovieClip;
+    public var holderMc:MovieClip;
     
     public static function get instance():LabelsContainer
     {
@@ -18,15 +18,15 @@ class wot.Minimap.view.LabelsContainer
         return _instance;
     }
     
-    public function LabelsContainer() 
+    public function LabelsContainer()
     {
-        holder = icons.createEmptyMovieClip("labelsContainer", wot.Minimap.Minimap.LABELS);
+        holderMc = icons.createEmptyMovieClip("labelsContainer", wot.Minimap.Minimap.LABELS);
     }
     
     public function createLabel(pos:Point, uid:Number, entryName:String, vehicleClass:String):MovieClip
     {
-        var depth:Number = holder.getNextHighestDepth();
-        var labelMc:MovieClip = holder.createEmptyMovieClip("label" + depth, depth);
+        var depth:Number = holderMc.getNextHighestDepth();
+        var labelMc:MovieClip = holderMc.createEmptyMovieClip("label" + depth, depth);
         
         labelMc._x = pos.x;
         labelMc._y = pos.y;
