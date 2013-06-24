@@ -8,16 +8,9 @@ class wot.Minimap.view.LabelAppend
 {
     public static function appendTextField(container:MovieClip, uid:Number, entryName:String, vehicleClass:String):Void
     {
-        /**
-         * Skip creation of textFields with "undefined" string.
-         * Happens for oneSelf icon at replay rewind.
-         */
-
         var offset:Point = MapConfig.unitLabelOffset(entryName);
 
-        var player:Player = PlayersPanelProxy.getPlayerInfo(uid);
-
-        var textField:TextField = container.createTextField("textField-" + player.uid + entryName, container.getNextHighestDepth(), offset.x, offset.y, 100, 40);
+        var textField:TextField = container.createTextField("textField-" + uid + entryName, container.getNextHighestDepth(), offset.x, offset.y, 100, 40);
         textField.antiAliasType = "advanced";
         textField.html = true;
         textField.multiline = true;
@@ -27,9 +20,14 @@ class wot.Minimap.view.LabelAppend
         style.parseCSS(MapConfig.unitLabelCss(entryName));
         textField.styleSheet = style;
 
+        var player:Player = PlayersPanelProxy.getPlayerInfo(uid);
         var text:String = getText(entryName, player, vehicleClass);
         if (text == "undefined" || !text)
         {
+            /**
+             * Skip creation of textFields with "undefined" string.
+             * Happens for oneSelf icon at replay rewind.
+             */
             text = "";
         }
         textField.htmlText = text;

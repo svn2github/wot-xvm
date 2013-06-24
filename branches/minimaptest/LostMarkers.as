@@ -38,10 +38,12 @@ class wot.Minimap.LostMarkers
         for (var i in lost)
         {
             var lostGuy:Icon = lost[i];
-            var label:MovieClip = labelsContainer.createLabel(lostGuy.pos);
-
-            /* New TextField is attached to Minimap at this moment */
-            LabelAppend.appendTextField(label, lostGuy.uid, wot.Minimap.MinimapEntry.MINIMAP_ENTRY_NAME_LOST, lostGuy.vehicleClass);
+            var label:MovieClip = labelsContainer.createLabel(
+                lostGuy.pos,
+                lostGuy.uid,
+                wot.Minimap.MinimapEntry.MINIMAP_ENTRY_NAME_LOST,
+                lostGuy.vehicleClass
+            );
 
             /**
              * Pointer to its address is tracked to handle proper remove

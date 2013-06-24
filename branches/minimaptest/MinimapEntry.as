@@ -69,6 +69,8 @@ class wot.Minimap.MinimapEntry
     public static var MINIMAP_ENTRY_VEH_CLASS_TD:String = "AT-SPG";
     public static var MINIMAP_ENTRY_VEH_CLASS_SPG:String = "SPG";
     public static var MINIMAP_ENTRY_VEH_CLASS_SUPER:String = "superheavyTank";
+    
+    private static var OFFMAP_COORDINATE:Number = 500;
 
     /**
      * Subject of PlayersPanel <-> Minimap syncronization.
@@ -149,8 +151,14 @@ class wot.Minimap.MinimapEntry
     
     private function createLabel():Void
     {
-        label = labelsContainer.createLabel();
-        LabelAppend.appendTextField(label, uid, wrapper.entryName, wrapper.vehicleClass);
+        /**
+         * Label stays at creation point some time before first move.
+         * It makes unpleasant label on map at round start.
+         * Workaround.
+         */
+        var offmapPoint:Point = new Point(OFFMAP_COORDINATE, OFFMAP_COORDINATE);
+        
+        label = labelsContainer.createLabel(offmapPoint, uid, wrapper.entryName, wrapper.vehicleClass);
     }
     
     private function setLabelToMimicEntryMoves():Void

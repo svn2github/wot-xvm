@@ -1,7 +1,9 @@
+* миникарта: надписи откреплены от иконок на нижний слой
 * миникарта: рефакторинг кода
 * миникарта: некоторые объекты интерфейса более не перекрывают увеличенную миникарту
 * миникарта: исправлено позиционирование лога смертей игроков при увеличенной миникарте
 
+* minimap: labels are detached from icons to lower layer
 * minimap: code refactoring
 * minimap: some interface object are no longer overlapping zoomed minimap
 * minimap: fixed players death log list positioning while minimap is zoomed

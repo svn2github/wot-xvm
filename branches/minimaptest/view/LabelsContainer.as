@@ -1,3 +1,4 @@
+import wot.Minimap.view.LabelAppend;
 import flash.geom.Point;
 import wot.Minimap.MinimapProxy;
 
@@ -22,23 +23,17 @@ class wot.Minimap.view.LabelsContainer
         holder = icons.createEmptyMovieClip("labelsContainer", wot.Minimap.Minimap.LABELS);
     }
     
-    public function createLabel(pos:Point):MovieClip
+    public function createLabel(pos:Point, uid:Number, entryName:String, vehicleClass:String):MovieClip
     {
-        if (!pos)
-        {
-            /**
-             * Start position does not matter at that case.
-             * It is updated frequently anyway.
-             */
-            pos = new Point(0, 0);
-        }
-        
         var depth:Number = holder.getNextHighestDepth();
         var label:MovieClip = holder.createEmptyMovieClip("label" + depth, depth);
         
         label._x = pos.x;
         label._y = pos.y;
         
+        LabelAppend.appendTextField(label, uid, entryName, vehicleClass);
+        
+        // TODO: move label management here
         return label;
     }
     
