@@ -1,6 +1,6 @@
-import wot.Minimap.view.LabelAppend;
 import flash.geom.Point;
 import wot.Minimap.MinimapProxy;
+import wot.Minimap.view.LabelAppend;
 
 class wot.Minimap.view.LabelsContainer
 {
@@ -26,15 +26,15 @@ class wot.Minimap.view.LabelsContainer
     public function createLabel(pos:Point, uid:Number, entryName:String, vehicleClass:String):MovieClip
     {
         var depth:Number = holder.getNextHighestDepth();
-        var label:MovieClip = holder.createEmptyMovieClip("label" + depth, depth);
+        var labelMc:MovieClip = holder.createEmptyMovieClip("label" + depth, depth);
         
-        label._x = pos.x;
-        label._y = pos.y;
+        labelMc._x = pos.x;
+        labelMc._y = pos.y;
         
-        LabelAppend.appendTextField(label, uid, entryName, vehicleClass);
+        LabelAppend.appendTextField(labelMc, uid, entryName, vehicleClass);
         
         // TODO: move label management here
-        return label;
+        return labelMc;
     }
     
     //-- Private

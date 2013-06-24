@@ -1,7 +1,6 @@
 import com.xvm.GlobalEventDispatcher;
 import wot.Minimap.dataTypes.Icon;
 import wot.Minimap.MinimapEvent;
-import wot.Minimap.view.LabelAppend;
 import wot.Minimap.view.LabelsContainer;
 
 class wot.Minimap.LostMarkers
@@ -27,8 +26,8 @@ class wot.Minimap.LostMarkers
     {
         for (var i in lostMarkersTracking)
         {
-            var label:MovieClip = lostMarkersTracking[i];
-            label.removeMovieClip();
+            var labelMc:MovieClip = lostMarkersTracking[i];
+            labelMc.removeMovieClip();
         }
     }
 
@@ -38,7 +37,7 @@ class wot.Minimap.LostMarkers
         for (var i in lost)
         {
             var lostGuy:Icon = lost[i];
-            var label:MovieClip = labelsContainer.createLabel(
+            var labelMc:MovieClip = labelsContainer.createLabel(
                 lostGuy.pos,
                 lostGuy.uid,
                 wot.Minimap.MinimapEntry.MINIMAP_ENTRY_NAME_LOST,
@@ -52,7 +51,7 @@ class wot.Minimap.LostMarkers
              * TODO: tracking below may be deleted
              * after labelsContainer auto remove routine?
              */
-            lostMarkersTracking.push(label);
+            lostMarkersTracking.push(labelMc);
         }
     }
     

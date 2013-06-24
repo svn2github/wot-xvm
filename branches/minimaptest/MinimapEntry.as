@@ -4,7 +4,6 @@ import flash.geom.Point;
 import wot.Minimap.dataTypes.Player;
 import wot.Minimap.model.externalProxy.MapConfig;
 import wot.Minimap.model.SyncModel;
-import wot.Minimap.view.LabelAppend;
 import wot.Minimap.view.LabelsContainer;
 import wot.Minimap.view.MarkerColor;
 
@@ -83,7 +82,7 @@ class wot.Minimap.MinimapEntry
     /** Used only for camera entry to define if entry is processed with Lines class */
     public var cameraExtendedToken:Boolean;
 
-    public var label:MovieClip;
+    public var labelMc:MovieClip;
 
     /**
      * All attachments container: TextFiels(Labels), Shapes.
@@ -158,7 +157,7 @@ class wot.Minimap.MinimapEntry
          */
         var offmapPoint:Point = new Point(OFFMAP_COORDINATE, OFFMAP_COORDINATE);
         
-        label = labelsContainer.createLabel(offmapPoint, uid, wrapper.entryName, wrapper.vehicleClass);
+        labelMc = labelsContainer.createLabel(offmapPoint, uid, wrapper.entryName, wrapper.vehicleClass);
     }
     
     private function setLabelToMimicEntryMoves():Void
@@ -169,8 +168,9 @@ class wot.Minimap.MinimapEntry
              * No FPS drop discovered.
              * Okay.
              */
-            this.xvm_worker.label._x = this._x;
-            this.xvm_worker.label._y = this._y;
+            var entry:wot.Minimap.MinimapEntry = this.xvm_worker;
+            entry.labelMc._x = this._x;
+            entry.labelMc._y = this._y;
         }
     }
 
