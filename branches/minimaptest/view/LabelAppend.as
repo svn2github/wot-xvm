@@ -10,7 +10,7 @@ class wot.Minimap.view.LabelAppend
     {
         var offset:Point = MapConfig.unitLabelOffset(entryName);
 
-        var textField:TextField = container.createTextField("textField-" + uid + entryName, container.getNextHighestDepth(), offset.x, offset.y, 100, 40);
+        var textField:TextField = container.createTextField("textField", container.getNextHighestDepth(), offset.x, offset.y, 100, 40);
         textField.antiAliasType = "advanced";
         textField.html = true;
         textField.multiline = true;

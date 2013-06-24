@@ -1,3 +1,4 @@
+import com.xvm.Logger;
 import flash.geom.Point;
 import wot.Minimap.MinimapProxy;
 import wot.Minimap.view.LabelAppend;
@@ -5,6 +6,9 @@ import wot.Minimap.view.LabelAppend;
 class wot.Minimap.view.LabelsContainer
 {
     private static var _instance:LabelsContainer;
+    
+    private static var CONTAINER_NAME:String = "labelsContainer";
+    private static var LABEL_PREFIX:String = "lost";
     
     public var holderMc:MovieClip;
     
@@ -21,13 +25,13 @@ class wot.Minimap.view.LabelsContainer
     public function LabelsContainer()
     {
         var icons:MovieClip = MinimapProxy.wrapper.icons;
-        holderMc = icons.createEmptyMovieClip("labelsContainer", wot.Minimap.Minimap.LABELS);
+        holderMc = icons.createEmptyMovieClip(CONTAINER_NAME, wot.Minimap.Minimap.LABELS);
     }
     
     public function createLabel(pos:Point, uid:Number, entryName:String, vehicleClass:String):MovieClip
     {
         var depth:Number = holderMc.getNextHighestDepth();
-        var labelMc:MovieClip = holderMc.createEmptyMovieClip("label" + depth, depth);
+        var labelMc:MovieClip = holderMc.createEmptyMovieClip(LABEL_PREFIX + uid, depth);
         
         labelMc._x = pos.x;
         labelMc._y = pos.y;
@@ -36,5 +40,21 @@ class wot.Minimap.view.LabelsContainer
         
         // TODO: move label management here
         return labelMc;
+    }
+    
+    public function removeLabel(uid:Number):Void
+    {
+        var label:MovieClip = holderMc[LABEL_PREFIX + uid];
+        var tf:TextField = label["textField"];
+        tf.removeTextField();
+        label.removeMovieClip();
+        if (tf)
+        {
+            Logger.add("stays");
+        }
+        else
+        {
+            Logger.add("removed");
+        }
     }
 }

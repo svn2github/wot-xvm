@@ -53,15 +53,11 @@ class wot.Minimap.model.iconTracker.LostPlayers
 
         if (!areLostListsEqual(lostPrev, lost))
         {
-            GlobalEventDispatcher.dispatchEvent(new MinimapEvent(MinimapEvent.LOST_PLAYERS_UPDATE, lost));
-            
-            // New code
-            Logger.addObject(lostPrev, "lostPrev", 3);
-            Logger.addObject(lost, "lost", 3);
             var newLost:Array = getTrackingOnesideDiff(lost, lostPrev);
             var found:Array = getTrackingOnesideDiff(lostPrev, lost);
             var payload:Object = { newLost: newLost, found: found };
-            Logger.addObject(payload, "payload", 3);
+            
+            GlobalEventDispatcher.dispatchEvent(new MinimapEvent(MinimapEvent.LOST_PLAYERS_UPDATE, payload));
             
             lostPrev = lost;
         }
@@ -74,9 +70,6 @@ class wot.Minimap.model.iconTracker.LostPlayers
         /** are minuend (a) − subtrahend (b) = difference */
         var minuend:Array = a.concat();
         var subtrahend:Array = b.concat();
-        
-        //Logger.addObject(minuend, "minuend", 3);
-        //Logger.addObject(subtrahend, "subtrahend", 3);
         
         for (var i in minuend)
         {
