@@ -20,6 +20,7 @@ class wot.Minimap.view.LabelsContainer
     
     public function LabelsContainer()
     {
+        var icons:MovieClip = MinimapProxy.wrapper.icons;
         holderMc = icons.createEmptyMovieClip("labelsContainer", wot.Minimap.Minimap.LABELS);
     }
     
@@ -35,12 +36,5 @@ class wot.Minimap.view.LabelsContainer
         
         // TODO: move label management here
         return labelMc;
-    }
-    
-    //-- Private
-    
-    private function get icons():MovieClip
-    {
-        return MinimapProxy.wrapper.icons;
     }
 }
