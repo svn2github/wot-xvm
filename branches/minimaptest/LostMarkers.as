@@ -1,5 +1,5 @@
-import wot.Minimap.dataTypes.Icon;
 import com.xvm.GlobalEventDispatcher;
+import wot.Minimap.dataTypes.Icon;
 import wot.Minimap.MinimapEvent;
 import wot.Minimap.view.LabelAppend;
 import wot.Minimap.view.LabelsContainer;
@@ -27,8 +27,7 @@ class wot.Minimap.LostMarkers
     {
         for (var i in lostMarkersTracking)
         {
-            var tf:TextField = lostMarkersTracking[i];
-            var label:MovieClip = tf._parent;
+            var label:MovieClip = lostMarkersTracking[i];
             label.removeMovieClip();
         }
     }
@@ -42,13 +41,16 @@ class wot.Minimap.LostMarkers
             var label:MovieClip = labelsContainer.createLabel(lostGuy.pos);
 
             /* New TextField is attached to Minimap at this moment */
-            var tf:TextField = LabelAppend.append(label, lostGuy.uid, wot.Minimap.MinimapEntry.MINIMAP_ENTRY_NAME_LOST, lostGuy.vehicleClass);
+            LabelAppend.appendTextField(label, lostGuy.uid, wot.Minimap.MinimapEntry.MINIMAP_ENTRY_NAME_LOST, lostGuy.vehicleClass);
 
             /**
              * Pointer to its address is tracked to handle proper remove
              * and to avoid unnecessary new identical TextField creation.
+             * 
+             * TODO: tracking below may be deleted
+             * after labelsContainer auto remove routine?
              */
-            lostMarkersTracking.push(tf);
+            lostMarkersTracking.push(label);
         }
     }
     

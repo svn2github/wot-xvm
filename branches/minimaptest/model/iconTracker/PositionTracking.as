@@ -1,3 +1,4 @@
+import com.xvm.Logger;
 import com.xvm.GlobalEventDispatcher;
 import wot.Minimap.MinimapEntry;
 import wot.Minimap.MinimapEvent;

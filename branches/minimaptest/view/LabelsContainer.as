@@ -24,6 +24,15 @@ class wot.Minimap.view.LabelsContainer
     
     public function createLabel(pos:Point):MovieClip
     {
+        if (!pos)
+        {
+            /**
+             * Start position does not matter at that case.
+             * It is updated frequently anyway.
+             */
+            pos = new Point(0, 0);
+        }
+        
         var depth:Number = holder.getNextHighestDepth();
         var label:MovieClip = holder.createEmptyMovieClip("label" + depth, depth);
         

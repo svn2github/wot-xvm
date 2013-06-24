@@ -6,7 +6,7 @@ import wot.PlayersPanel.PlayersPanelProxy;
 
 class wot.Minimap.view.LabelAppend
 {
-    public static function append(container:MovieClip, uid:Number, entryName:String, vehicleClass:String):TextField
+    public static function appendTextField(container:MovieClip, uid:Number, entryName:String, vehicleClass:String):Void
     {
         /**
          * Skip creation of textFields with "undefined" string.
@@ -40,8 +40,6 @@ class wot.Minimap.view.LabelAppend
         }
 
         textField._alpha = MapConfig.unitLabelAlpha(entryName);
-
-        return textField;
     }
 
     // -- Private

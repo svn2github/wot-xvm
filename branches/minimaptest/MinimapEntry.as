@@ -1,11 +1,12 @@
 import com.xvm.Logger;
-import wot.Minimap.model.SyncModel;
 import com.xvm.Utils;
+import flash.geom.Point;
 import wot.Minimap.dataTypes.Player;
 import wot.Minimap.model.externalProxy.MapConfig;
+import wot.Minimap.model.SyncModel;
 import wot.Minimap.view.LabelAppend;
+import wot.Minimap.view.LabelsContainer;
 import wot.Minimap.view.MarkerColor;
-import wot.RootComponents;
 
 /**
  * MinimapEntry represent individual object on map.
@@ -80,7 +81,7 @@ class wot.Minimap.MinimapEntry
     /** Used only for camera entry to define if entry is processed with Lines class */
     public var cameraExtendedToken:Boolean;
 
-    public var label:TextField;
+    public var label:MovieClip;
 
     /**
      * All attachments container: TextFiels(Labels), Shapes.
@@ -141,11 +142,20 @@ class wot.Minimap.MinimapEntry
 
         if (MapConfig.revealedEnabled)
         {
-            /** Attach revealed icon info */
-            label = LabelAppend.append(attachments, uid, wrapper.entryName, wrapper.vehicleClass);
+            label = labelsContainer.createLabel();
+            LabelAppend.appendTextField(label, uid, wrapper.entryName, wrapper.vehicleClass);
+            wrapper.onEnterFrame = function()
+            {
+                /**
+                 * No FPS drop discovered
+                 */
+                this.xvm_worker.label._x = this._x;
+                this.xvm_worker.label._y = this._y;
+            }
         }
 
-        rescaleAttachments();
+        // TODO: remove?
+        // rescaleAttachments();
     }
 
     private function get isSyncProcedureInProgress():Boolean
@@ -157,5 +167,10 @@ class wot.Minimap.MinimapEntry
         }
         
         return ret;
+    }
+    
+    private function get labelsContainer():LabelsContainer
+    {
+        return LabelsContainer.instance;
     }
 }
