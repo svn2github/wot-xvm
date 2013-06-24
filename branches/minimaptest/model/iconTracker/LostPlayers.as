@@ -1,3 +1,4 @@
+import com.xvm.Logger;
 import com.xvm.Utils;
 import wot.Minimap.MinimapEvent;
 import com.xvm.GlobalEventDispatcher;
@@ -52,12 +53,58 @@ class wot.Minimap.model.iconTracker.LostPlayers
 
         if (!areLostListsEqual(lostPrev, lost))
         {
-            lostPrev = lost;
             GlobalEventDispatcher.dispatchEvent(new MinimapEvent(MinimapEvent.LOST_PLAYERS_UPDATE, lost));
+            
+            // New code
+            Logger.addObject(lostPrev, "lostPrev", 3);
+            Logger.addObject(lost, "lost", 3);
+            var newLost:Array = getTrackingOnesideDiff(lost, lostPrev);
+            var found:Array = getTrackingOnesideDiff(lostPrev, lost);
+            var payload:Object = { newLost: newLost, found: found };
+            Logger.addObject(payload, "payload", 3);
+            
+            lostPrev = lost;
         }
     }
 
     // -- Private
+    
+    private function getTrackingOnesideDiff(a:Array, b:Array):Array
+    {
+        /** are minuend (a) − subtrahend (b) = difference */
+        var minuend:Array = a.concat();
+        var subtrahend:Array = b.concat();
+        
+        //Logger.addObject(minuend, "minuend", 3);
+        //Logger.addObject(subtrahend, "subtrahend", 3);
+        
+        for (var i in minuend)
+        {
+            for (var j in subtrahend)
+            {
+                if (minuend[i] == subtrahend[j])
+                {
+                    /**
+                     * Common uid found.
+                     * Mark it as irrelevat.
+                     */
+                    minuend[i] = null;
+                    break;
+                }
+            }
+        }
+        
+        var diff:Array = [];
+        for (var i in minuend)
+        {
+            if (minuend[i])
+            {
+                diff.push(minuend[i]);
+            }
+        }
+        
+        return diff;
+    }
 
     /** We do not need to count dead players as lost on minimap */
     private function filterDead(all:Array):Array
