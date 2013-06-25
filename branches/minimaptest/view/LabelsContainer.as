@@ -67,6 +67,11 @@ class wot.Minimap.view.LabelsContainer
         for (var i in lost)
         {
             var lostGuy:Icon = lost[i];
+            
+            /**
+             * recreate() not just create().
+             * Dont know why.
+             */
             recreateLabel(
                 lostGuy.pos,
                 lostGuy.uid,
