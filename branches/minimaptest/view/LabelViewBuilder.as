@@ -8,7 +8,7 @@ class wot.Minimap.view.LabelViewBuilder
 {
     public static var TEXT_FIELD_PREFIX:String = "textField";
     
-    public static function createTextField(container:MovieClip, uid:Number, entryName:String, vehicleClass:String):Void
+    public static function createTextField(container:MovieClip, status:Number, player:Player, entryName:String, vehicleClass:String):Void
     {
         var offset:Point = MapConfig.unitLabelOffset(entryName);
 
@@ -22,7 +22,6 @@ class wot.Minimap.view.LabelViewBuilder
         style.parseCSS(MapConfig.unitLabelCss(entryName));
         textField.styleSheet = style;
 
-        var player:Player = PlayersPanelProxy.getPlayerInfo(uid);
         var text:String = getText(entryName, player, vehicleClass);
         if (text == "undefined" || !text)
         {

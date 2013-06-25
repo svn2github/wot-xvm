@@ -63,7 +63,10 @@ class wot.Minimap.MinimapEntry
     public static var MINIMAP_ENTRY_NAME_ALLY:String = "ally";
     public static var MINIMAP_ENTRY_NAME_SQUAD:String = "squadman";
     public static var MINIMAP_ENTRY_NAME_SELF:String = ""; /** Type of player himself and ? */
-    public static var MINIMAP_ENTRY_NAME_LOST:String = "lostenemy"; /** New type for last enemy position markers */
+    public static var MINIMAP_ENTRY_NAME_LOST_ENEMY:String = "lostenemy"; /** New type for last enemy position markers */
+    public static var MINIMAP_ENTRY_NAME_LOST_ALLY:String = "lostally"; /** New type for last ally position markers */
+    public static var MINIMAP_ENTRY_NAME_LOST_SQUAD:String = "lostsquad"; /** New type for last ally position markers */
+    
     public static var MINIMAP_ENTRY_VEH_CLASS_LIGHT:String = "lightTank";
     public static var MINIMAP_ENTRY_VEH_CLASS_MEDIUM:String = "mediumTank";
     public static var MINIMAP_ENTRY_VEH_CLASS_HEAVY:String = "heavyTank";
@@ -152,7 +155,7 @@ class wot.Minimap.MinimapEntry
     
     private function getLabel():Void
     {
-        labelMc = labelsContainer.getNormalLabel(uid, wrapper.entryName, wrapper.vehicleClass);
+        labelMc = labelsContainer.getLabel(uid, wrapper.entryName, wrapper.vehicleClass);
     }
     
     private function setLabelToMimicEntryMoves():Void
