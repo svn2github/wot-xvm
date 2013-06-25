@@ -24,6 +24,7 @@ class wot.Minimap.Features
     private var lines:Lines;
 
     /** Defines lost enemy positions */
+    // TODO: move out
     private var autoUpdate:AutoUpdate;
     
     public static function get instance():Features

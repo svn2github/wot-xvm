@@ -1,9 +1,12 @@
+import com.xvm.GlobalEventDispatcher;
+import wot.Minimap.MinimapEvent;
 import wot.PlayersPanel.PlayersPanelProxy;
 import wot.Minimap.model.iconTracker.PositionTracking;
 import wot.Minimap.model.iconTracker.LostPlayers;
 
 /**
- * Minimap icon position tracking to show disappeared vehicles last position
+ * Minimap icons status tracking by uid.
+ * Alive? Dead? Lost?
  */
 
 class wot.Minimap.model.iconTracker.AutoUpdate
@@ -29,6 +32,8 @@ class wot.Minimap.model.iconTracker.AutoUpdate
 
         // TODO: why is it here? cut out?
         /** Refreshes enemy spotted feature */
+        // TODO: translate to Event; move out from Minimap?
+        GlobalEventDispatcher.dispatchEvent(new MinimapEvent(MinimapEvent.TICK));
         PlayersPanelProxy.rightPanel.xvm_worker.updateSpotStatusMarkers();
     }
 

@@ -11,7 +11,6 @@ class wot.Minimap.view.LabelsContainer
     private static var _instance:LabelsContainer;
     
     private static var CONTAINER_NAME:String = "labelsContainer";
-    private static var LABEL_PREFIX:String = "label";
     private static var OFFMAP_COORDINATE:Number = 500;
     
     public var holderMc:MovieClip;
@@ -30,29 +29,30 @@ class wot.Minimap.view.LabelsContainer
     {
         var icons:MovieClip = MinimapProxy.wrapper.icons;
         holderMc = icons.createEmptyMovieClip(CONTAINER_NAME, wot.Minimap.Minimap.LABELS);
-        GlobalEventDispatcher.addEventListener(MinimapEvent.LOST_PLAYERS_UPDATE, this, onLost);
+        GlobalEventDispatcher.addEventListener(MinimapEvent.TICK, this, onTimerTick);
     }
     
-    public function getLabel(uid:Number, entryName:String, vehicleClass:String):MovieClip
+    public function getNormalLabel(uid:Number, entryName:String, vehicleClass:String):MovieClip
     {
-        if (!holderMc[LABEL_PREFIX + uid])
+        if (!holderMc[uid])
         {
-            return createLabel(uid, entryName, vehicleClass);
+            createNormalLabel(uid, entryName, vehicleClass);
         }
         else
         {
-            // changeViewToNormal()
+            // getLabel()
+            // changeLabelViewToNormal()
         }
         
-        return holderMc[LABEL_PREFIX + uid];
+        return holderMc[uid];
     }
     
     // -- Private
     
-    private function createLabel(uid:Number, entryName:String, vehicleClass:String):MovieClip
+    private function createNormalLabel(uid:Number, entryName:String, vehicleClass:String):MovieClip
     {
         var depth:Number = holderMc.getNextHighestDepth();
-        var labelMc:MovieClip = holderMc.createEmptyMovieClip(LABEL_PREFIX + uid, depth);
+        var labelMc:MovieClip = holderMc.createEmptyMovieClip("" + uid, depth);
         
         /**
          * Label stays at creation point some time before first move.
@@ -68,24 +68,39 @@ class wot.Minimap.view.LabelsContainer
         return labelMc;
     }
     
-    private function onLost(event:MinimapEvent):Void
+    private function onTimerTick(event:MinimapEvent):Void
     {
-        return;
-        //############
-        var lost:Array = event.payload.newLost;
-        for (var i in lost)
+        checkStatusForEveryLabelOwner();
+    }
+    
+    private function checkStatusForEveryLabelOwner():Void
+    {
+        for (var uidStr:String in holderMc)
         {
-            var lostGuy:Icon = lost[i];
-            
-            /**
-             * recreate() not just create().
-             * Dont know why.
-             */
-            getLabel(
+            var uid:Number = parseInt(uidStr);
+            if (uid)
+            {
+                /**
+                 * Have to check for uid value consistency
+                 * because we are iterating through MovieClip props not Array.
+                 * There are four keys except movie clips named by uid:
+                 * enabled, tweenFrom, tweenEnd, tweenTo.
+                 * 
+                 */
+                checkUidStatus(uid);
+            }
+        }
+        
+        /*
+         getNormalLabel(
                 lostGuy.uid,
                 wot.Minimap.MinimapEntry.MINIMAP_ENTRY_NAME_LOST,
                 lostGuy.vehicleClass
-            );
-        }
+            );*/
+    }
+    
+    private function checkUidStatus(uid:Number):Void
+    {
+        Logger.add("check " + uid);
     }
 }

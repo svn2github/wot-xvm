@@ -152,7 +152,7 @@ class wot.Minimap.MinimapEntry
     
     private function getLabel():Void
     {
-        labelMc = labelsContainer.getLabel(uid, wrapper.entryName, wrapper.vehicleClass);
+        labelMc = labelsContainer.getNormalLabel(uid, wrapper.entryName, wrapper.vehicleClass);
     }
     
     private function setLabelToMimicEntryMoves():Void
