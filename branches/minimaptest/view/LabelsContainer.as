@@ -1,3 +1,4 @@
+import com.xvm.Logger;
 import com.xvm.GlobalEventDispatcher;
 import flash.geom.Point;
 import wot.Minimap.dataTypes.Icon;

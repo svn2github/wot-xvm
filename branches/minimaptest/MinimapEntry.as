@@ -1,7 +1,9 @@
+import com.xvm.GlobalEventDispatcher;
 import com.xvm.Logger;
 import com.xvm.Utils;
-import flash.geom.Point;
 import wot.Minimap.dataTypes.Player;
+import wot.Minimap.MinimapEntry;
+import wot.Minimap.MinimapEvent;
 import wot.Minimap.model.externalProxy.MapConfig;
 import wot.Minimap.model.SyncModel;
 import wot.Minimap.view.LabelsContainer;
@@ -138,6 +140,8 @@ class wot.Minimap.MinimapEntry
     private function initExtendedBehaviour():Void
     {
         uid = SyncModel.instance.getTestUid();
+        /** Inform PlayersPanel */
+        GlobalEventDispatcher.dispatchEvent(new MinimapEvent(MinimapEvent.ENEMY_REVEALED, uid));
 
         if (MapConfig.revealedEnabled)
         {

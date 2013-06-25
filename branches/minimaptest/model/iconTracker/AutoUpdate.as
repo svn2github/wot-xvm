@@ -14,19 +14,8 @@ class wot.Minimap.model.iconTracker.AutoUpdate
     private var flashTimer;
     private var destructionTimer:Number;
 
-    private var lost:LostPlayers;
-
-    /**
-     * Position tracking array.
-     * uid -> minimap coordinates
-     * posTrack[1234567] = Point(50, 60)
-     */
-    private var posTrack:PositionTracking;
-
     public function AutoUpdate()
     {
-        posTrack = new PositionTracking();
-        lost = new LostPlayers(posTrack.getArray());
         destructionTimer = 0;
         flashTimer = _global.setInterval(this, "update", TICK_INTERVAL_MS);
     }
@@ -38,10 +27,7 @@ class wot.Minimap.model.iconTracker.AutoUpdate
     {
         timeSelfDestruct();
 
-        posTrack.update();
-
-        lost.find();
-
+        // TODO: why is it here? cut out?
         /** Refreshes enemy spotted feature */
         PlayersPanelProxy.rightPanel.xvm_worker.updateSpotStatusMarkers();
     }
