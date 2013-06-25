@@ -46,15 +46,15 @@ class wot.Minimap.view.LabelsContainer
         return labelMc;
     }
     
-    public function removeLabel(uid:Number):Void
+    // -- Private
+    
+    private function removeLabel(uid:Number):Void
     {
         var label:MovieClip = holderMc[LABEL_PREFIX + uid];
         var tf:TextField = label[LabelAppend.TEXT_FIELD_PREFIX];
         tf.removeTextField();
         label.removeMovieClip();
     }
-    
-    // -- Private
     
     private function onLost(event:MinimapEvent):Void
     {
