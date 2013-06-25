@@ -1,9 +1,9 @@
 import com.xvm.GlobalEventDispatcher;
 import flash.geom.Point;
+import wot.Minimap.dataTypes.Icon;
 import wot.Minimap.MinimapEvent;
 import wot.Minimap.MinimapProxy;
 import wot.Minimap.view.LabelAppend;
-import wot.Minimap.dataTypes.Icon;
 
 class wot.Minimap.view.LabelsContainer
 {

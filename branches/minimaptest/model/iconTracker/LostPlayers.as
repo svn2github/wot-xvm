@@ -1,7 +1,6 @@
-import com.xvm.Logger;
+import com.xvm.GlobalEventDispatcher;
 import com.xvm.Utils;
 import wot.Minimap.MinimapEvent;
-import com.xvm.GlobalEventDispatcher;
 import wot.Minimap.model.externalProxy.IconsProxy;
 import wot.PlayersPanel.PlayersPanelProxy;
 

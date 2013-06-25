@@ -1,7 +1,7 @@
-import wot.Minimap.staticUtils.MinimapMacro;
-import wot.Minimap.model.externalProxy.MapConfig;
 import flash.geom.Point;
 import wot.Minimap.dataTypes.Player;
+import wot.Minimap.model.externalProxy.MapConfig;
+import wot.Minimap.staticUtils.MinimapMacro;
 import wot.PlayersPanel.PlayersPanelProxy;
 
 class wot.Minimap.view.LabelAppend
