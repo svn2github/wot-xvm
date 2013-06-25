@@ -87,6 +87,20 @@ class wot.Minimap.model.externalProxy.IconsProxy
     {
         _icons.onEnterFrame = func;
     }
+    
+    public static function isIconIsPresentAtMinimap(uid:Number):Boolean
+    {
+        var presentUids:Array = syncedUids;
+        for (var i in presentUids)
+        {
+            if (presentUids[i] == uid)
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 
     // -- Private
 

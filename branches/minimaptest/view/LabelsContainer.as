@@ -1,3 +1,5 @@
+import wot.PlayersPanel.PlayersPanelProxy;
+import wot.Minimap.model.externalProxy.IconsProxy;
 import com.xvm.Logger;
 import com.xvm.GlobalEventDispatcher;
 import flash.geom.Point;
@@ -12,6 +14,13 @@ class wot.Minimap.view.LabelsContainer
     
     private static var CONTAINER_NAME:String = "labelsContainer";
     private static var OFFMAP_COORDINATE:Number = 500;
+    
+    /**#####################
+     * TODO: LOST ALLY!! 
+     */
+    private static var PLAYER_DISPLAYED:Number = 1;
+    private static var PLAYER_LOST:Number = 0;
+    private static var PLAYER_DEAD:Number = -1;
     
     public var holderMc:MovieClip;
     
@@ -87,7 +96,10 @@ class wot.Minimap.view.LabelsContainer
                  * enabled, tweenFrom, tweenEnd, tweenTo.
                  * 
                  */
-                checkUidStatus(uid);
+                var previousStatus:Number = getPresenceStatus(uid);
+                //isAlly();
+                //isSquad();
+                // TODO: avoid unnecesary style swaps
             }
         }
         
@@ -99,8 +111,27 @@ class wot.Minimap.view.LabelsContainer
             );*/
     }
     
-    private function checkUidStatus(uid:Number):Void
+    private function getPresenceStatus(uid:Number):Number
     {
-        Logger.add("check " + uid);
+        if (IconsProxy.isIconIsPresentAtMinimap(uid))
+        {
+            return PLAYER_DISPLAYED;
+        }
+        else
+        {
+            /**
+             * Guy is not present on minimap.
+             * He is either dead or lost.
+             * Uids that has never been seen are not passed to this method.
+             */
+            if (PlayersPanelProxy.isDead(uid))
+            {
+                return PLAYER_DEAD;
+            }
+            else 
+            {
+                return PLAYER_LOST;
+            }
+        }
     }
 }
