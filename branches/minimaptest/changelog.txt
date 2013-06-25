@@ -7,3 +7,10 @@
 * minimap: code refactoring
 * minimap: some interface object are no longer overlapping zoomed minimap
 * minimap: fixed players death log list positioning while minimap is zoomed
+
+TODO: поскольку лейблы уже таскаются отдельно от иконки,
+ то можно уходить от алгоритма забора позиции каждый 300мс для лоста на упрощёку.
+ 300мс -> хозяин лейбла виден? жив? -> сhange view
+ либо -> onEntryInited -> возможно dead
+ либо dead из уха
+ есть ли событие removeIcon миникарты ? кажись нет
