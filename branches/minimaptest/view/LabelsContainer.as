@@ -11,6 +11,7 @@ class wot.Minimap.view.LabelsContainer
     
     private static var CONTAINER_NAME:String = "labelsContainer";
     private static var LABEL_PREFIX:String = "label";
+    private static var OFFMAP_COORDINATE:Number = 500;
     
     public var holderMc:MovieClip;
     
@@ -31,11 +32,11 @@ class wot.Minimap.view.LabelsContainer
         GlobalEventDispatcher.addEventListener(MinimapEvent.LOST_PLAYERS_UPDATE, this, onLost);
     }
     
-    public function getLabel(pos:Point, uid:Number, entryName:String, vehicleClass:String):MovieClip
+    public function getLabel(uid:Number, entryName:String, vehicleClass:String):MovieClip
     {
         if (!holderMc[LABEL_PREFIX + uid])
         {
-            return createLabel(pos, uid, entryName, vehicleClass);
+            return createLabel(uid, entryName, vehicleClass);
         }
         
         return holderMc[LABEL_PREFIX + uid];
@@ -43,13 +44,19 @@ class wot.Minimap.view.LabelsContainer
     
     // -- Private
     
-    private function createLabel(pos:Point, uid:Number, entryName:String, vehicleClass:String):MovieClip
+    private function createLabel(uid:Number, entryName:String, vehicleClass:String):MovieClip
     {
         var depth:Number = holderMc.getNextHighestDepth();
         var labelMc:MovieClip = holderMc.createEmptyMovieClip(LABEL_PREFIX + uid, depth);
         
-        labelMc._x = pos.x;
-        labelMc._y = pos.y;
+        /**
+         * Label stays at creation point some time before first move.
+         * It makes unpleasant label positioning at map center on round start.
+         * Workaround.
+         */
+        var offmapPoint:Point = new Point(OFFMAP_COORDINATE, OFFMAP_COORDINATE);
+        labelMc._x = offmapPoint.x;
+        labelMc._y = offmapPoint.y;
         
         LabelAppend.appendTextField(labelMc, uid, entryName, vehicleClass);
         
@@ -70,7 +77,6 @@ class wot.Minimap.view.LabelsContainer
              * Dont know why.
              */
             getLabel(
-                lostGuy.pos,
                 lostGuy.uid,
                 wot.Minimap.MinimapEntry.MINIMAP_ENTRY_NAME_LOST,
                 lostGuy.vehicleClass
