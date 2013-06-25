@@ -4,11 +4,11 @@ import wot.Minimap.model.externalProxy.MapConfig;
 import wot.Minimap.staticUtils.MinimapMacro;
 import wot.PlayersPanel.PlayersPanelProxy;
 
-class wot.Minimap.view.LabelAppend
+class wot.Minimap.view.LabelViewBuilder
 {
     public static var TEXT_FIELD_PREFIX:String = "textField";
     
-    public static function appendTextField(container:MovieClip, uid:Number, entryName:String, vehicleClass:String):Void
+    public static function createTextField(container:MovieClip, uid:Number, entryName:String, vehicleClass:String):Void
     {
         var offset:Point = MapConfig.unitLabelOffset(entryName);
 

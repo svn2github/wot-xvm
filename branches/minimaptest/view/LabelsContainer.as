@@ -4,7 +4,7 @@ import flash.geom.Point;
 import wot.Minimap.dataTypes.Icon;
 import wot.Minimap.MinimapEvent;
 import wot.Minimap.MinimapProxy;
-import wot.Minimap.view.LabelAppend;
+import wot.Minimap.view.LabelViewBuilder;
 
 class wot.Minimap.view.LabelsContainer
 {
@@ -39,6 +39,10 @@ class wot.Minimap.view.LabelsContainer
         {
             return createLabel(uid, entryName, vehicleClass);
         }
+        else
+        {
+            // changeViewToNormal()
+        }
         
         return holderMc[LABEL_PREFIX + uid];
     }
@@ -52,14 +56,14 @@ class wot.Minimap.view.LabelsContainer
         
         /**
          * Label stays at creation point some time before first move.
-         * It makes unpleasant label positioning at map center on round start.
+         * It makes unpleasant label positioning at map center.
          * Workaround.
          */
         var offmapPoint:Point = new Point(OFFMAP_COORDINATE, OFFMAP_COORDINATE);
         labelMc._x = offmapPoint.x;
         labelMc._y = offmapPoint.y;
         
-        LabelAppend.appendTextField(labelMc, uid, entryName, vehicleClass);
+        LabelViewBuilder.createTextField(labelMc, uid, entryName, vehicleClass);
         
         return labelMc;
     }
