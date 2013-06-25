@@ -28,8 +28,10 @@ class wot.Minimap.view.LabelsContainer
         holderMc = icons.createEmptyMovieClip(CONTAINER_NAME, wot.Minimap.Minimap.LABELS);
     }
     
-    public function createLabel(pos:Point, uid:Number, entryName:String, vehicleClass:String):MovieClip
+    public function recreateLabel(pos:Point, uid:Number, entryName:String, vehicleClass:String):MovieClip
     {
+        removeLabel(uid);
+        
         var depth:Number = holderMc.getNextHighestDepth();
         var labelMc:MovieClip = holderMc.createEmptyMovieClip(LABEL_PREFIX + uid, depth);
         
@@ -38,23 +40,14 @@ class wot.Minimap.view.LabelsContainer
         
         LabelAppend.appendTextField(labelMc, uid, entryName, vehicleClass);
         
-        // TODO: move label management here
         return labelMc;
     }
     
     public function removeLabel(uid:Number):Void
     {
         var label:MovieClip = holderMc[LABEL_PREFIX + uid];
-        var tf:TextField = label["textField"];
+        var tf:TextField = label[LabelAppend.TEXT_FIELD_PREFIX];
         tf.removeTextField();
         label.removeMovieClip();
-        if (tf)
-        {
-            Logger.add("stays");
-        }
-        else
-        {
-            Logger.add("removed");
-        }
     }
 }

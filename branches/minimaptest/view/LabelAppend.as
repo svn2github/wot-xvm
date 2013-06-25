@@ -6,11 +6,13 @@ import wot.PlayersPanel.PlayersPanelProxy;
 
 class wot.Minimap.view.LabelAppend
 {
+    public static var TEXT_FIELD_PREFIX:String = "textField";
+    
     public static function appendTextField(container:MovieClip, uid:Number, entryName:String, vehicleClass:String):Void
     {
         var offset:Point = MapConfig.unitLabelOffset(entryName);
 
-        var textField:TextField = container.createTextField("textField", container.getNextHighestDepth(), offset.x, offset.y, 100, 40);
+        var textField:TextField = container.createTextField(TEXT_FIELD_PREFIX, container.getNextHighestDepth(), offset.x, offset.y, 100, 40);
         textField.antiAliasType = "advanced";
         textField.html = true;
         textField.multiline = true;

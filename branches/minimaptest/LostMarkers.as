@@ -1,3 +1,4 @@
+import com.xvm.Logger;
 import com.xvm.GlobalEventDispatcher;
 import wot.Minimap.dataTypes.Icon;
 import wot.Minimap.MinimapEvent;
@@ -15,9 +16,11 @@ class wot.Minimap.LostMarkers
     private function onLost(event:MinimapEvent):Void
     {
         var lost:Array = event.payload.newLost;
-        var found:Array = event.payload.found;
+        Logger.add("");
+        Logger.addObject(lost, "lost", 2);
+        //Logger.addObject(found, "found", 2);
         createLabels(lost);
-        removeLabels(found);
+        //removeLabels(found);
     }
 
     private function createLabels(lost:Array):Void
@@ -25,12 +28,13 @@ class wot.Minimap.LostMarkers
         for (var i in lost)
         {
             var lostGuy:Icon = lost[i];
-            labelsContainer.createLabel(
+            labelsContainer.recreateLabel(
                 lostGuy.pos,
                 lostGuy.uid,
                 wot.Minimap.MinimapEntry.MINIMAP_ENTRY_NAME_LOST,
                 lostGuy.vehicleClass
             );
+            Logger.add("+ " + lostGuy.uid);
         }
     }
     
@@ -40,6 +44,7 @@ class wot.Minimap.LostMarkers
         {
             var foundGuy:Icon = found[i];
             labelsContainer.removeLabel(foundGuy.uid);
+            Logger.add("- " + foundGuy.uid);
         }
     }
     

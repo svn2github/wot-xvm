@@ -54,8 +54,7 @@ class wot.Minimap.model.iconTracker.LostPlayers
         if (!areLostListsEqual(lostPrev, lost))
         {
             var newLost:Array = getTrackingOnesideDiff(lost, lostPrev);
-            var found:Array = getTrackingOnesideDiff(lostPrev, lost);
-            var payload:Object = { newLost: newLost, found: found };
+            var payload:Object = { newLost: newLost };
             
             GlobalEventDispatcher.dispatchEvent(new MinimapEvent(MinimapEvent.LOST_PLAYERS_UPDATE, payload));
             
