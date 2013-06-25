@@ -35,6 +35,13 @@ class wot.Minimap.view.LabelsContainer
     {
         removeLabel(uid);
         
+        return createLabel(pos, uid, entryName, vehicleClass);
+    }
+    
+    // -- Private
+    
+    private function createLabel(pos:Point, uid:Number, entryName:String, vehicleClass:String):MovieClip
+    {
         var depth:Number = holderMc.getNextHighestDepth();
         var labelMc:MovieClip = holderMc.createEmptyMovieClip(LABEL_PREFIX + uid, depth);
         
@@ -45,8 +52,6 @@ class wot.Minimap.view.LabelsContainer
         
         return labelMc;
     }
-    
-    // -- Private
     
     private function removeLabel(uid:Number):Void
     {
