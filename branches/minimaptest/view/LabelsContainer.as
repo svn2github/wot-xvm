@@ -1,7 +1,9 @@
-import com.xvm.Logger;
+import com.xvm.GlobalEventDispatcher;
 import flash.geom.Point;
+import wot.Minimap.MinimapEvent;
 import wot.Minimap.MinimapProxy;
 import wot.Minimap.view.LabelAppend;
+import wot.Minimap.dataTypes.Icon;
 
 class wot.Minimap.view.LabelsContainer
 {
@@ -26,6 +28,7 @@ class wot.Minimap.view.LabelsContainer
     {
         var icons:MovieClip = MinimapProxy.wrapper.icons;
         holderMc = icons.createEmptyMovieClip(CONTAINER_NAME, wot.Minimap.Minimap.LABELS);
+        GlobalEventDispatcher.addEventListener(MinimapEvent.LOST_PLAYERS_UPDATE, this, onLost);
     }
     
     public function recreateLabel(pos:Point, uid:Number, entryName:String, vehicleClass:String):MovieClip
@@ -49,5 +52,22 @@ class wot.Minimap.view.LabelsContainer
         var tf:TextField = label[LabelAppend.TEXT_FIELD_PREFIX];
         tf.removeTextField();
         label.removeMovieClip();
+    }
+    
+    // -- Private
+    
+    private function onLost(event:MinimapEvent):Void
+    {
+        var lost:Array = event.payload.newLost;
+        for (var i in lost)
+        {
+            var lostGuy:Icon = lost[i];
+            recreateLabel(
+                lostGuy.pos,
+                lostGuy.uid,
+                wot.Minimap.MinimapEntry.MINIMAP_ENTRY_NAME_LOST,
+                lostGuy.vehicleClass
+            );
+        }
     }
 }
