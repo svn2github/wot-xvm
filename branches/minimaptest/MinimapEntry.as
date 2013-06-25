@@ -143,12 +143,12 @@ class wot.Minimap.MinimapEntry
 
         if (MapConfig.revealedEnabled)
         {
-            createLabel();
+            getLabel();
             setLabelToMimicEntryMoves();
         }
     }
     
-    private function createLabel():Void
+    private function getLabel():Void
     {
         /**
          * Label stays at creation point some time before first move.
@@ -157,7 +157,7 @@ class wot.Minimap.MinimapEntry
          */
         var offmapPoint:Point = new Point(OFFMAP_COORDINATE, OFFMAP_COORDINATE);
         
-        labelMc = labelsContainer.recreateLabel(offmapPoint, uid, wrapper.entryName, wrapper.vehicleClass);
+        labelMc = labelsContainer.getLabel(offmapPoint, uid, wrapper.entryName, wrapper.vehicleClass);
     }
     
     private function setLabelToMimicEntryMoves():Void

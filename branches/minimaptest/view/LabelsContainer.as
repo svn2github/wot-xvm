@@ -31,12 +31,14 @@ class wot.Minimap.view.LabelsContainer
         GlobalEventDispatcher.addEventListener(MinimapEvent.LOST_PLAYERS_UPDATE, this, onLost);
     }
     
-    public function recreateLabel(pos:Point, uid:Number, entryName:String, vehicleClass:String):MovieClip
+    public function getLabel(pos:Point, uid:Number, entryName:String, vehicleClass:String):MovieClip
     {
-        removeLabel(uid);
+        if (!holderMc[LABEL_PREFIX + uid])
+        {
+            return createLabel(pos, uid, entryName, vehicleClass);
+        }
         
-        /** Return val is used by MinimapEntry to reposition onEnterFrame */
-        return createLabel(pos, uid, entryName, vehicleClass);
+        return holderMc[LABEL_PREFIX + uid];
     }
     
     // -- Private
@@ -54,16 +56,10 @@ class wot.Minimap.view.LabelsContainer
         return labelMc;
     }
     
-    private function removeLabel(uid:Number):Void
-    {
-        var label:MovieClip = holderMc[LABEL_PREFIX + uid];
-        var tf:TextField = label[LabelAppend.TEXT_FIELD_PREFIX];
-        tf.removeTextField();
-        label.removeMovieClip();
-    }
-    
     private function onLost(event:MinimapEvent):Void
     {
+        return;
+        //############
         var lost:Array = event.payload.newLost;
         for (var i in lost)
         {
@@ -73,7 +69,7 @@ class wot.Minimap.view.LabelsContainer
              * recreate() not just create().
              * Dont know why.
              */
-            recreateLabel(
+            getLabel(
                 lostGuy.pos,
                 lostGuy.uid,
                 wot.Minimap.MinimapEntry.MINIMAP_ENTRY_NAME_LOST,
