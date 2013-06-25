@@ -10,7 +10,7 @@ class wot.Minimap.view.LabelsContainer
     private static var _instance:LabelsContainer;
     
     private static var CONTAINER_NAME:String = "labelsContainer";
-    private static var LABEL_PREFIX:String = "lost";
+    private static var LABEL_PREFIX:String = "label";
     
     public var holderMc:MovieClip;
     

@@ -14,3 +14,4 @@ TODO: поскольку лейблы уже таскаются отдельно
  либо -> onEntryInited -> возможно dead
  либо dead из уха
  есть ли событие removeIcon миникарты ? кажись нет
+ позволит удалить\упростить сложные LostPlayers и PositionTracking
