@@ -35,6 +35,7 @@ class wot.Minimap.view.LabelsContainer
     {
         removeLabel(uid);
         
+        /** Return val is used by MinimapEntry to reposition onEnterFrame */
         return createLabel(pos, uid, entryName, vehicleClass);
     }
     
