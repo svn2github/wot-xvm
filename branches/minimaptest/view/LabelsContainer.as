@@ -13,8 +13,17 @@ class wot.Minimap.view.LabelsContainer
 {
     private static var _instance:LabelsContainer;
     
+    /**
+     * References to labelMc properties.
+     * Cannot extend MovieClip class due to AS2 being crap language\framework\API.
+     */
+    public static var STATUS_FIELD_NAME:String = "lastStatus";
+    public static var PLAYER_INFO_FIELD_NAME:String = "playerInfo";
+    public static var ENTRY_NAME_FIELD_NAME:String = "entryName";
+    public static var VEHICLE_CLASS_FIELD_NAME:String = "vehicleClass";
+    
     private static var CONTAINER_NAME:String = "labelsContainer";
-    private static var LAST_STATUS_FIELD_NAME:String = "lastStatus";
+    
     private static var OFFMAP_COORDINATE:Number = 500;
     
     public var holderMc:MovieClip;
@@ -61,6 +70,16 @@ class wot.Minimap.view.LabelsContainer
         var labelMc:MovieClip = holderMc.createEmptyMovieClip("" + uid, depth);
         
         /**
+         * References to labelMc properties.
+         * Cannot extend MovieClip class due to AS2 being crap language\framework\API.
+         */
+        var playerInfo = PlayersPanelProxy.getPlayerInfo(uid);
+        labelMc[PLAYER_INFO_FIELD_NAME] = playerInfo;
+        labelMc[ENTRY_NAME_FIELD_NAME] = entryName;
+        labelMc[VEHICLE_CLASS_FIELD_NAME] = vehicleClass;
+        labelMc[STATUS_FIELD_NAME] = Player.PLAYER_REVEALED;
+        
+        /**
          * Label stays at creation point some time before first move.
          * It makes unpleasant label positioning at map center.
          * Workaround.
@@ -69,21 +88,15 @@ class wot.Minimap.view.LabelsContainer
         labelMc._x = offmapPoint.x;
         labelMc._y = offmapPoint.y;
         
-        var status:Number = Player.PLAYER_REVEALED;
-        labelMc[LAST_STATUS_FIELD_NAME] = status;
-        
-        var playerInfo = PlayersPanelProxy.getPlayerInfo(uid);
-        
-        recreateTextField(status, labelMc, playerInfo, entryName, vehicleClass);
+        recreateTextField(labelMc);
     }
     
-    private function recreateTextField(status:Number, labelMc:MovieClip, playerInfo:Player,
-                                       entryName:String, vehicleClass:String):Void
+    private function recreateTextField(labelMc:MovieClip):Void
     {
-        var tf:TextField = labelMc[LabelViewBuilder.TEXT_FIELD_PREFIX];
+        var tf:TextField = labelMc[LabelViewBuilder.TEXT_FIELD_NAME];
         tf.removeTextField();
         
-        LabelViewBuilder.createTextField(labelMc, status, playerInfo, entryName, vehicleClass);
+        LabelViewBuilder.createTextField(labelMc);
     }
     
     private function onTimerTick(event:MinimapEvent):Void
@@ -97,29 +110,25 @@ class wot.Minimap.view.LabelsContainer
         {
             var uid:Number = parseInt(uidStr);
             /**
-                 * Have to check for uid value consistency
-                 * because we are iterating through MovieClip props not Array.
-                 * There are four keys except movie clips named by uid:
-                 * enabled, tweenFrom, tweenEnd, tweenTo.
-                 */
+             * Have to check for uid value consistency
+             * because we are iterating through MovieClip props not Array.
+             * There are four keys except movie clips named by uid:
+             * enabled, tweenFrom, tweenEnd, tweenTo.
+             */
             if (uid)
             {
                 var labelMc:MovieClip = holderMc[uidStr];
-                Logger.add("labelMc[LAST_STATUS_FIELD_NAME] " + labelMc[LAST_STATUS_FIELD_NAME]);
-                //var currStatus:Number = getPresenceStatus(uid)
-                //var previousStatus:Number = ;
-                //isAlly();
-                //isSquad();
-                // TODO: avoid unnecesary style swaps
+                
+                var previousStatus:Number = labelMc[STATUS_FIELD_NAME];
+                var actualStatus:Number = getPresenceStatus(uid);
+                
+                if (previousStatus != actualStatus)
+                {
+                    labelMc[STATUS_FIELD_NAME] = actualStatus;
+                    recreateTextField(labelMc);
+                }
             }
         }
-        
-        /*
-         getNormalLabel(
-                lostGuy.uid,
-                wot.Minimap.MinimapEntry.MINIMAP_ENTRY_NAME_LOST,
-                lostGuy.vehicleClass
-            );*/
     }
     
     private function getPresenceStatus(uid:Number):Number

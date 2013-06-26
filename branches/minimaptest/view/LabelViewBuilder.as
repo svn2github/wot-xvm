@@ -1,3 +1,5 @@
+import com.xvm.Logger;
+import wot.Minimap.view.LabelsContainer;
 import flash.geom.Point;
 import wot.Minimap.dataTypes.Player;
 import wot.Minimap.model.externalProxy.MapConfig;
@@ -6,13 +8,19 @@ import wot.PlayersPanel.PlayersPanelProxy;
 
 class wot.Minimap.view.LabelViewBuilder
 {
-    public static var TEXT_FIELD_PREFIX:String = "textField";
+    public static var TEXT_FIELD_NAME:String = "textField";
     
-    public static function createTextField(container:MovieClip, status:Number, player:Player, entryName:String, vehicleClass:String):Void
+    public static function createTextField(label:MovieClip):Void
     {
+        var status:String = label[LabelsContainer.STATUS_FIELD_NAME];
+        var playerInfo:Player = label[LabelsContainer.PLAYER_INFO_FIELD_NAME];
+        var entryName:String = label[LabelsContainer.ENTRY_NAME_FIELD_NAME];
+        var vehicleClass:String = label[LabelsContainer.VEHICLE_CLASS_FIELD_NAME];
+        
+        
         var offset:Point = MapConfig.unitLabelOffset(entryName);
 
-        var textField:TextField = container.createTextField(TEXT_FIELD_PREFIX, container.getNextHighestDepth(), offset.x, offset.y, 100, 40);
+        var textField:TextField = label.createTextField(TEXT_FIELD_NAME, label.getNextHighestDepth(), offset.x, offset.y, 100, 40);
         textField.antiAliasType = "advanced";
         textField.html = true;
         textField.multiline = true;
@@ -22,7 +30,7 @@ class wot.Minimap.view.LabelViewBuilder
         style.parseCSS(MapConfig.unitLabelCss(entryName));
         textField.styleSheet = style;
 
-        var text:String = getText(entryName, player, vehicleClass);
+        var text:String = getText(entryName, playerInfo, vehicleClass);
         if (text == "undefined" || !text)
         {
             /**
