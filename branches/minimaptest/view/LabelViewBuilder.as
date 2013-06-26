@@ -16,7 +16,12 @@ class wot.Minimap.view.LabelViewBuilder
         var playerInfo:Player = label[LabelsContainer.PLAYER_INFO_FIELD_NAME];
         var entryName:String = label[LabelsContainer.ENTRY_NAME_FIELD_NAME];
         var vehicleClass:String = label[LabelsContainer.VEHICLE_CLASS_FIELD_NAME];
-        
+        Logger.add("status " + status);
+        Logger.addObject(playerInfo, "playerInfo", 2);
+        Logger.add("entryName " + entryName);
+        Logger.add("vehicleClass " + vehicleClass);
+        Logger.add("");
+        Logger.add("");
         
         var offset:Point = MapConfig.unitLabelOffset(entryName);
 
