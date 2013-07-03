@@ -83,8 +83,8 @@ namespace wot.Dossier
 
         dossier.dossierVersion = (int)((raw as object[])[0]);
 
-        if (dossier.dossierVersion != 16)
-          throw new Exception("Unsupported dossier cache version: " + dossier.dossierVersion);
+        //if (dossier.dossierVersion != 16)
+        //    throw new Exception("Unsupported dossier cache version: " + dossier.dossierVersion + "\n" + filename);
 
         string[] base32name = Encoding.ASCII.GetString(Utils.FromBase32String(Path.GetFileNameWithoutExtension(filename))).Split(new char[] { ';' }, 2);
         dossier.server = base32name[0];
@@ -94,7 +94,7 @@ namespace wot.Dossier
         foreach (DictionaryEntry item in vehicleitems)
         {
           DossierVehicleData vd = new DossierVehicleData();
-          vd.vid = (int)((item.Key as object[])[1]);
+          vd.vid = (int)((item.Key as object[])[1]) & 0xFFFFF0;
           byte[] data = Encoding.ASCII.GetBytes((item.Value as object[])[1] as string);
           byte vehicleVersion = data[0];
           switch (vehicleVersion)

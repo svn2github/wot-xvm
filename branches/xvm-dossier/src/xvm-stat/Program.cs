@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Dokan;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading;
-using Dokan;
 using wot.Properties;
 
 namespace wot
@@ -28,7 +28,21 @@ namespace wot
 
     static Program()
     {
+      AppDomain.CurrentDomain.AssemblyResolve += Resolver;
       AppDomain.CurrentDomain.UnhandledException += UnhandledException;
+    }
+
+    static Assembly Resolver(object sender, ResolveEventArgs args)
+    {
+      Assembly a1 = Assembly.GetExecutingAssembly();
+      string resName = "";
+      if (args.Name.StartsWith("Community.CsharpSqlite"))
+        resName = "wot.Sqlite.Community.CsharpSqlite.dll";
+      Stream s = a1.GetManifestResourceStream(resName);
+      byte[] block = new byte[s.Length];
+      s.Read(block, 0, block.Length);
+      Assembly a2 = Assembly.Load(block);
+      return a2;
     }
 
     private static void Usage()

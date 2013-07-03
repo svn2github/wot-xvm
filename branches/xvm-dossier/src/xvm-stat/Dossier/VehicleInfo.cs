@@ -16,7 +16,7 @@ namespace wot.Dossier
 
     static VehicleInfo()
     {
-      JsonData vi = JsonMapper.ToObject(Utils.GetResource("wot.Resources.VehicleInfo.json"));
+      JsonData vi = JsonMapper.ToObject(Utils.GetResourceAsString("wot.Resources.VehicleInfo.json"));
       data = new List<VehicleInfoData>();
       for (int i = 0; i < vi.Count; ++i)
       {

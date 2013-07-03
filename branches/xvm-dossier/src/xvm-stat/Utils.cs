@@ -241,7 +241,7 @@ namespace wot
       return temp;
     }
 
-    public static string GetResource(string resourceName)
+    public static string GetResourceAsString(string resourceName)
     {
       var assembly = Assembly.GetExecutingAssembly();
       
@@ -249,6 +249,17 @@ namespace wot
       {
         using (StreamReader reader = new StreamReader(stream))
           return reader.ReadToEnd();
+      }
+    }
+
+    public static byte[] GetResourceAsBytes(string resourceName)
+    {
+      var assembly = Assembly.GetExecutingAssembly();
+
+      using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+      {
+        using (BinaryReader reader = new BinaryReader(stream))
+          return reader.ReadBytes((int)(stream.Length));
       }
     }
   }
