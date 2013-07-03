@@ -37,6 +37,11 @@ namespace wot.Dossier
       }
     }
 
+    public static VehicleInfoData ByVid(int vid)
+    {
+      return data.Find(x => x.vid == vid);
+    }
+
     public static int ToIntClass(string vclass)
     {
       switch (vclass.ToUpper())
@@ -77,5 +82,10 @@ namespace wot.Dossier
     public int vclass;
     public bool premium;
     public int hp;
+
+    public int vid
+    {
+      get { return (vehicleId << 8) + (nation << 4); }
+    }
   }
 }

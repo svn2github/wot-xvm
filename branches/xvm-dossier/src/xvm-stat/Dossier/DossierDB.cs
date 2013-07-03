@@ -131,6 +131,7 @@ namespace wot.Dossier
 
       if (dossier.vehicles != null)
       {
+        Program.Log("UpdateDossierData: " + dossier.playerName);
         foreach (DossierVehicleData vd in dossier.vehicles)
         {
           if (vd.lastBattleTime <= lastBattleTime)
@@ -138,6 +139,15 @@ namespace wot.Dossier
 
           if (vd.lastBattleTime > newLastBattleTime)
             newLastBattleTime = vd.lastBattleTime;
+
+          VehicleInfoData vi = VehicleInfo.ByVid(vd.vid);
+          if (vi == null)
+          {
+            Program.Log("WARNING: no data for vid=" + vd.vid);
+            continue;
+          }
+
+          Program.Log("  " + DateTime.FromFileTime((long)vd.lastBattleTime * 100000) + ": " + vi.vname + " (" + vd.tankdata_battlesCount + " battles)");
           
           ExecuteNonQuery(String.Format("INSERT OR REPLACE INTO VehicleStat VALUES (\"{0}\", {1}, {2}, \"{3}\", \"{4}\", \"{5}\")",
             dossier.playerName, 
