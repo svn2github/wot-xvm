@@ -1,0 +1,26 @@
+--- orig\battle.xml	2013-06-09 23:48:14.398058700 +0300
++++ battle.xml	2013-06-09 23:48:15.068859900 +0300
+@@ -16,4 +16,7 @@
+       </SetBackgroundColor>
+       <ScriptLimits maxRecursionDepth="256" timeout="30"/>
++      <ImportAssets2 url="xvm.swf" reserved1="1" reserved2="0">
++        <symbols/>
++      </ImportAssets2>
+       <DefineBitsJPEG3 objectID="1" offset_to_alpha="2724">
+         <data>
+@@ -133369,6 +133372,6 @@
+               <String value=" "/>
+               <String value="\"/>
+-              <String value=""/>
+-              <String value=""/>
++              <String value=" "/>
++              <String value=" "/>
+               <String value="&#10;"/>
+               <String value="&#13;"/>
+@@ -287266,5 +287269,5 @@
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.ingame.Minimap"/>
++              <StackString value="Broken.to.force.minimap.load.from.Minimap.swf"/>
+             </items>
+           </PushData>
