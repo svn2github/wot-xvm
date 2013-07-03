@@ -96,6 +96,8 @@ namespace wot.Dossier
           DossierVehicleData vd = new DossierVehicleData();
           vd.vid = (int)((item.Key as object[])[1]) & 0xFFFFF0;
           byte[] data = Encoding.ASCII.GetBytes((item.Value as object[])[1] as string);
+          if (data == null || data.Length == 0)
+            continue;
           byte vehicleVersion = data[0];
           switch (vehicleVersion)
           {
@@ -134,9 +136,9 @@ namespace wot.Dossier
 
         return dossier;
       }
-      catch
+      catch (Exception ex)
       {
-        throw;
+        throw new Exception("", ex);
       }
     }
   }
