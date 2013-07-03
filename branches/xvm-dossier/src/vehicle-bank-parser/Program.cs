@@ -52,6 +52,9 @@ class Program
                         continue;
                     if (tags.InnerText.Contains("observer"))
                         continue;
+                    XmlNode tankId = node.SelectSingleNode("id");
+                    if (tankId == null)
+                      continue;
                     XmlNode level = node.SelectSingleNode("level");
                     if (level == null)
                         continue;
@@ -66,6 +69,7 @@ class Program
 
                     Vehicle vehicle = new Vehicle(vdata)
                     {
+                        tankId = int.Parse(tankId.InnerText),
                         name = node.Name,
                         nation = country,
                         level = int.Parse(level.InnerText),
@@ -92,6 +96,7 @@ class Program
             });
 
             Export.generateAS2code(vehicles);
+            Export.generateJSON(vehicles);
         }
         catch (Exception ex)
         {

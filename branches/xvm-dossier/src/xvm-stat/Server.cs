@@ -344,7 +344,7 @@ namespace wot
             parameters = cmd[1];
           }
 
-          if (!command.StartsWith("@LOG") && command != "@SET" && command != "@ADD" && command != "@PING")
+          if (!command.StartsWith("@LOG") && command != "@SET" && command != "@ADD" && command != "@PING" && command != "@DOSSIER")
             Log(String.Format("=> {0} {1}", command, parameters));
 
           ProcessCommand(command, parameters);
@@ -414,6 +414,11 @@ namespace wot
 
         case "@PING": // no args
           _result = PingWotServers.Instance.Ping();
+          //Debug("_result: " + _result);
+          break;
+
+        case "@DOSSIER": // no args
+          _result = Dossier.Dossier.Instance.GetDossierInfo(parameters);
           //Debug("_result: " + _result);
           break;
 

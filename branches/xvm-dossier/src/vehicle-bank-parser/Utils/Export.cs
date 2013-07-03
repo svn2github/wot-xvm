@@ -23,6 +23,16 @@ static class Export
         file.Close();
     }
 
+    public static void generateJSON(List<Vehicle> vehList)
+    {
+      string s = "{";
+      foreach (Vehicle veh in vehList)
+        s += "\n  " + veh.ToJsonString() + ",";
+      s += "\n  \"observer\": { \"level\": 0, \"name\": \"Observer\" }," +
+           "\n  \"unknown\": { \"level\": 0, \"name\": \"UNKNOWN\" }\n}\n";
+      File.WriteAllText(Settings.Default.EXPORT_FILEPATH_JSON, s);
+    }
+
     private static void writeHeader(StreamWriter file)
     {
         file.WriteLine(
@@ -54,7 +64,7 @@ class com.xvm.VehicleInfoData2
                 level = veh.level;
                 file.WriteLine("\n        // level " + level);
             }
-            file.WriteLine("        " + veh.ToJsonString() + ",");
+            file.WriteLine("        " + veh.ToAS2tring() + ",");
         }
     }
 

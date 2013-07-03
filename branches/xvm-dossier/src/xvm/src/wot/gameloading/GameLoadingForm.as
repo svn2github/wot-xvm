@@ -1,8 +1,9 @@
-﻿import com.xvm.Components.PingServers.PingServers;
-import com.xvm.Config;
+﻿import com.xvm.Config;
 import com.xvm.Defines;
 import com.xvm.GlobalEventDispatcher;
 import com.xvm.Utils;
+import com.xvm.Components.PingServers.PingServers;
+//import com.xvm.Components.Dossier.Dossier;
 
 class wot.gameloading.GameLoadingForm
 {
@@ -47,6 +48,9 @@ class wot.gameloading.GameLoadingForm
     private function onConfigLoaded()
     {
         GlobalEventDispatcher.removeEventListener("config_loaded", this, onConfigLoaded);
+
+        //var dossierHolder = wrapper.createEmptyMovieClip("dossierHolder", wrapper.getNextHighestDepth());
+        //Dossier.initialize(Config.s_config.hangar.dossier, dossierHolder);
 
         // Send first ping as early as possible, to be ready on login screen.
         if (Config.s_config.login.pingServers.enabled || Config.s_config.hangar.pingServers.enabled);

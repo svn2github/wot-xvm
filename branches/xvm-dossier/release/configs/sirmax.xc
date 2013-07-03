@@ -43,7 +43,9 @@
     "pingServers": {
       "$ref": { "path":"def.pingServers" },
       "x": 5
-    }
+    },
+    "dossier": { "enabled": false }
+//    "dossier": { "enabled": true }
   },
   "userInfo": {
      "inHangarFilterEnabled": true,
@@ -146,6 +148,7 @@
         ]
     },
     "lines": {
+      "enabled": true,
       "vehicle": [
          { "enabled": true, "from": -50, "to": 150,  "inmeters": true, "thickness": 1.2,  "alpha": 65, "color": "0xFFFFFF"}
        ],
@@ -157,16 +160,10 @@
          { "enabled": true, "from": 706, "to": 707,   "inmeters": true, "thickness": 3,    "alpha": 65, "color": "0x00BBFF"}
        ],
        "traverseAngle": [
-         { "enabled": true, "from": 50,  "to": 1463,  "inmeters": true, "thickness": 0.5,   "alpha": 65, "color": "0xFFFFFF"}
+         { "enabled": true, "from": 20,  "to": 300, "inmeters": false, "thickness": 0.4, "alpha": 75, "color": "0xFFCC66"}
        ]
     },
-    "square" : {
-      "enabled": true,
-      "artilleryEnabled": false,
-      "thickness": 0.7,
-      "alpha": 40,
-      "color": "0xFFFFFF"
-    }
+    "square" : { "enabled": true }
   },
   "hitLog": {
     "visible": true,

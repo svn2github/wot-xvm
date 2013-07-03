@@ -283,6 +283,8 @@ namespace wot
         Debug("Change dir: " + game_dir);
         Directory.SetCurrentDirectory(game_dir);
 
+        Dossier.Dossier.Instance.GetDossierInfo("");
+
         // Check for another instance started
         bool ok;
         Mutex m = new Mutex(true, "xvm-stat", out ok);

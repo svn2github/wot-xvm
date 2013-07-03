@@ -2,6 +2,7 @@
 import com.xvm.Config;
 import com.xvm.GlobalEventDispatcher;
 import com.xvm.Utils;
+import com.xvm.Components.Dossier.Dossier;
 
 class wot.LangBarPanel.LanguageBar
 {
@@ -32,12 +33,14 @@ class wot.LangBarPanel.LanguageBar
     /////////////////////////////////////////////////////////////////
 
     private var currentLoadingName:String;
-    private var holder:MovieClip;
+    private var pingHolder:MovieClip;
+    private var dossierHolder:MovieClip;
     
     public function LanguageBarCtor()
     {
         currentLoadingName = "";
-        holder = null;
+        pingHolder = null;
+        dossierHolder = null;
 
         GlobalEventDispatcher.addEventListener("config_loaded", this, onConfigLoaded);
         Config.LoadConfig("LanguageBar.as");
@@ -48,11 +51,11 @@ class wot.LangBarPanel.LanguageBar
         GlobalEventDispatcher.removeEventListener("config_loaded", this, onConfigLoaded);
 
         var me = this;
-        _global.setInterval(function() { me.pingInitializationTimer.call(me); }, 1000);
-        pingInitializationTimer();
+        _global.setInterval(function() { me.onTimer.call(me); }, 1000);
+        onTimer();
     }
 
-    private function pingInitializationTimer()
+    private function onTimer()
     {
         //Logger.add(_root.loadingName);
         if (currentLoadingName == _root.loadingName)
@@ -61,30 +64,62 @@ class wot.LangBarPanel.LanguageBar
 
         // "startgamevideo", "login", "hangar"
 
-        if (holder != null)
-            holder.removeMovieClip();
+        if (pingHolder != null)
+        {
+            pingHolder.removeMovieClip();
+            pingHolder = null;
+        }
+        if (dossierHolder != null)
+        {
+            dossierHolder.removeMovieClip();
+            dossierHolder = null;
+        }
         
-        if (currentLoadingName == "hangar")
-        {
-            var header:MovieClip = _root.header;
-            holder = header.createEmptyMovieClip("pingHolder", header.getNextHighestDepth());
-            PingServers.initFeature(Config.s_config.hangar.pingServers, holder);
-        }
-        else if (currentLoadingName == "startgamevideo" || currentLoadingName == "login")
-        {
-            var main:MovieClip = _root.contentHolder.main;
-            holder = main.createEmptyMovieClip("pingHolder", main.getNextHighestDepth());
-            // _root.contentHolder.main is fixed size (1024x768), so create holder and place it at the top left corner of screen.
-            holder._x = Math.round((1024 - main.__width) / 2);
-            holder._y = Math.round((768 - main.__height) / 2);
-            //holder._x = 512;
-            //holder._y = 384;
-            PingServers.initFeature(Config.s_config.login.pingServers, holder);
-        }
+        if (currentLoadingName == "startgamevideo" || currentLoadingName == "login")
+            initLogin();
+        else if (currentLoadingName == "hangar")
+            initHangar();
     }
     
     function initImpl()
     {
         //Logger.add("LanguageBar.init()");
+    }
+    
+    // PRIVATE
+    
+    private function initHangar()
+    {
+        var header:MovieClip = _root.header;
+
+        // PingServers component
+        pingHolder = header.createEmptyMovieClip("pingHolder", header.getNextHighestDepth());
+        PingServers.initFeature(Config.s_config.hangar.pingServers, pingHolder);
+        
+        // Dossier component
+        if (Config.s_config.hangar.dossier.enabled == true)
+        {
+            dossierHolder = header.createEmptyMovieClip("dossierHolder", header.getNextHighestDepth());
+            Dossier.initialize(Config.s_config.hangar.dossier, dossierHolder);
+        }
+    }
+
+    private function initLogin()
+    {
+        var main:MovieClip = _root.contentHolder.main;
+
+        // PingServers component
+        pingHolder = main.createEmptyMovieClip("pingHolder", main.getNextHighestDepth());
+        // _root.contentHolder.main is fixed size (1024x768), so create holder and place it at the top left corner of screen.
+        pingHolder._x = Math.round((1024 - main.__width) / 2);
+        pingHolder._y = Math.round((768 - main.__height) / 2);
+        PingServers.initFeature(Config.s_config.login.pingServers, pingHolder);
+
+        // Dossier component
+        if (Config.s_config.hangar.dossier.enabled == true)
+        {
+            dossierHolder = main.createEmptyMovieClip("dossierHolder", main.getNextHighestDepth());
+            Dossier.initialize(Config.s_config.hangar.dossier, dossierHolder);
+        }
     }
 }

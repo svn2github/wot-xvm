@@ -21,8 +21,10 @@ class com.xvm.Components.PingServers.PingServers
         if (instance == null)
             instance = new PingServers();
         instance.view = new PingServersView(cfg, holder);
+
         if (instance.pingTimer != null)
             _global.clearInterval(instance.pingTimer);
+
         instance.pingTimer = _global.setInterval(
             function() { PingServers.instance.showPing.call(PingServers.instance) },
             cfg.updateInterval);

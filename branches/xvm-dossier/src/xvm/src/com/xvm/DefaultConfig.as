@@ -63,6 +63,13 @@ class com.xvm.DefaultConfig
             hangar: {
                 hideTutorial: false,
                 xwnInCompany: true,
+                dossier: {
+                  enabled: true,
+                  x: 400,
+                  y: 100,
+                  alpha: 60,
+                  activeAlpha: 100
+                },
                 // Show ping to the servers
                 pingServers: {
                     enabled: false,

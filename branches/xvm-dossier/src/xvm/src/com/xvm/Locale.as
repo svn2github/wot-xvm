@@ -145,6 +145,14 @@ class com.xvm.Locale
         tr["LT"] = "ЛТ";
         tr["TD"] = "ПТ";
         tr["SPG"] = "САУ";
+        
+        // dossier
+        tr["Day"] = "День";
+        tr["Today"] = "Сегодня";
+        tr["Y day"] = "Вчера";
+        tr["Week"] = "Неделя";
+        tr["Month"] = "Месяц";
+        tr["Year"] = "Год";
     }
 
     public static function setRegion(value: String)

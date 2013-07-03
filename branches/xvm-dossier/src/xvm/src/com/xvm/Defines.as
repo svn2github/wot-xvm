@@ -45,6 +45,7 @@ class com.xvm.Defines
     public static var COMMAND_GET_VERSION:String = DOKAN_MP + "@GET_VERSION";
     public static var COMMAND_INFO_ASYNC:String = DOKAN_MP + "@INFO_ASYNC";
     public static var COMMAND_PING:String = DOKAN_MP + "@PING";
+    public static var COMMAND_DOSSIER:String = DOKAN_MP + "@DOSSIER";
 
     // Default path to vehicle icons (relative)
     public static var WG_CONTOUR_ICON_PATH:String = "../maps/icons/vehicle/contour/";
