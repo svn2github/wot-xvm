@@ -155,7 +155,9 @@ public class Unpickler : IDisposable {
 			load_string();
 			break;
 		case Opcodes.BINSTRING:
-			load_binstring();
+			// sirmax - fix - load_binstring() produce broken data
+			//load_binstring();
+			load_binbytes();
 			break;
 		case Opcodes.SHORT_BINSTRING:
 			load_short_binstring();

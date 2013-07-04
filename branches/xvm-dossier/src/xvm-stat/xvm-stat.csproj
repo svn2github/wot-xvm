@@ -98,7 +98,6 @@
     <Compile Include="Dossier\VehicleInfo.cs" />
     <Compile Include="Pickle\InvalidOpcodeException.cs" />
     <Compile Include="Pickle\IObjectConstructor.cs" />
-    <Compile Include="Pickle\IObjectPickler.cs" />
     <Compile Include="Pickle\Objects\AnyClassConstructor.cs" />
     <Compile Include="Pickle\Objects\ArrayConstructor.cs" />
     <Compile Include="Pickle\Objects\ByteArrayConstructor.cs" />
@@ -110,9 +109,7 @@
     <Compile Include="Pickle\Objects\StringConstructor.cs" />
     <Compile Include="Pickle\Opcodes.cs" />
     <Compile Include="Pickle\PickleException.cs" />
-    <Compile Include="Pickle\Pickler.cs" />
     <Compile Include="Pickle\PickleUtils.cs" />
-    <Compile Include="Pickle\PrettyPrint.cs" />
     <Compile Include="Pickle\PythonException.cs" />
     <Compile Include="Pickle\Unpickler.cs" />
     <Compile Include="Pickle\UnpickleStack.cs" />

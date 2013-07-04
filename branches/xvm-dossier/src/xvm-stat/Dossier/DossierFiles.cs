@@ -48,8 +48,10 @@ namespace wot.Dossier
           foreach (string file in files)
           {
             FileInfo fi = new FileInfo(file);
+            if (fi.Extension.ToLower() != ".dat")
+              continue;
 
-            int dbTime = DossierDB.GetDossierFilePasram(fi.Name, "modified");
+            int dbTime = DossierDB.GetDossierFileParam(fi.Name, "modified");
             int time = (int)(fi.LastWriteTimeUtc.ToFileTimeUtc() / 1000000);
 
             if (time != dbTime)
@@ -95,7 +97,7 @@ namespace wot.Dossier
         {
           DossierVehicleData vd = new DossierVehicleData();
           vd.vid = (int)((item.Key as object[])[1]) & 0xFFFFF0;
-          byte[] data = Encoding.ASCII.GetBytes((item.Value as object[])[1] as string);
+          byte[] data = (item.Value as object[])[1] as byte[];
           if (data == null || data.Length == 0)
             continue;
           byte vehicleVersion = data[0];

@@ -86,7 +86,7 @@ namespace wot.Dossier
       foreach (VehicleInfoData vd in VehicleInfo.data)
       {
         ExecuteNonQuery(String.Format("INSERT OR REPLACE INTO VehicleInfo VALUES ({0}, \"{1}\", {2}, {3}, {4}, {5})",
-          (vd.vehicleId << 8) + (vd.nation << 4), vd.vname, vd.level, vd.vclass, vd.premium ? 1 : 0, vd.hp));
+          vd.vid, vd.vname, vd.level, vd.vclass, vd.premium ? 1 : 0, vd.hp));
       }
     }
     #endregion
@@ -115,7 +115,7 @@ namespace wot.Dossier
     }
     #endregion
 
-    public static int GetDossierFilePasram(string filename, string paramName, int defaultValue = 0)
+    public static int GetDossierFileParam(string filename, string paramName, int defaultValue = 0)
     {
       string value = ExecuteScalar("SELECT " + paramName + " FROM DossierCacheFiles WHERE filename='" + filename + "'");
       if (string.IsNullOrEmpty(value))
@@ -126,7 +126,7 @@ namespace wot.Dossier
 
     public static void UpdateDossierData(string filename, int modified, DossierData dossier)
     {
-      int lastBattleTime = DossierDB.GetDossierFilePasram(filename, "lastBattleTime");
+      int lastBattleTime = DossierDB.GetDossierFileParam(filename, "lastBattleTime");
       int newLastBattleTime = lastBattleTime;
 
       if (dossier.vehicles != null)

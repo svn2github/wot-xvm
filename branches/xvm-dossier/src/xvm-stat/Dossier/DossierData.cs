@@ -464,7 +464,7 @@ namespace wot.Dossier
     #endregion
   }
 
-  #region tankdata_version = 20 TODO
+  #region tankdata_version = 20
   [StructLayout(LayoutKind.Explicit)]
   public struct VehicleData_20
   {
@@ -580,7 +580,7 @@ namespace wot.Dossier
   }
   #endregion
 
-  #region tankdata_version = 22 TODO
+  #region tankdata_version = 22
   [StructLayout(LayoutKind.Explicit)]
   public struct VehicleData_22
   {
@@ -702,7 +702,7 @@ namespace wot.Dossier
   }
   #endregion
 
-  #region tankdata_version = 24 TODO
+  #region tankdata_version = 24
   [StructLayout(LayoutKind.Explicit)]
   public struct VehicleData_24
   {
@@ -825,7 +825,7 @@ namespace wot.Dossier
   }
   #endregion
 
-  #region tankdata_version = 26 TODO
+  #region tankdata_version = 26
   [StructLayout(LayoutKind.Explicit)]
   public struct VehicleData_26
   {
