@@ -99,8 +99,9 @@ class wot.LangBarPanel.LanguageBar
         // Dossier component
         if (Config.s_config.hangar.dossier.enabled == true)
         {
+            var playerName = _level0.header.tankPanel.account_name.text;
             dossierHolder = header.createEmptyMovieClip("dossierHolder", header.getNextHighestDepth());
-            Dossier.initialize(Config.s_config.hangar.dossier, dossierHolder);
+            Dossier.initialize(Config.s_config.hangar.dossier, dossierHolder, playerName);
         }
     }
 
@@ -115,11 +116,11 @@ class wot.LangBarPanel.LanguageBar
         pingHolder._y = Math.round((768 - main.__height) / 2);
         PingServers.initFeature(Config.s_config.login.pingServers, pingHolder);
 
-        // Dossier component
-        if (Config.s_config.hangar.dossier.enabled == true)
-        {
-            dossierHolder = main.createEmptyMovieClip("dossierHolder", main.getNextHighestDepth());
-            Dossier.initialize(Config.s_config.hangar.dossier, dossierHolder);
-        }
+        // Dossier component TESTING ONLY
+        //if (Config.s_config.hangar.dossier.enabled == true)
+        //{
+        //    dossierHolder = main.createEmptyMovieClip("dossierHolder", main.getNextHighestDepth());
+        //    Dossier.initialize(Config.s_config.hangar.dossier, dossierHolder, "sirmax2");
+        //}
     }
 }

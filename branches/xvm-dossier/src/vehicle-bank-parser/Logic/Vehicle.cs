@@ -24,6 +24,7 @@ class Vehicle
     */
     public const short STOCK_TURRET_NO_TOP_GUN = 2;
 
+    public int vid;
     public int tankId;
     public string name;
     public string nation;

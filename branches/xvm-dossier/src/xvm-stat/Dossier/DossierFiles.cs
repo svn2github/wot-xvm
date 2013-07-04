@@ -3,8 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
@@ -13,7 +11,7 @@ namespace wot.Dossier
   public class DossierFiles: Singleton<DossierFiles>
   {
     // TODO: Use FAM?
-    private const int FILE_SCAN_PERIOD = 5000; // msec
+    private const int FILE_SCAN_INTERVAL = 5000; // msec
 
     #region private ctor()
     private DossierFiles()
@@ -33,14 +31,14 @@ namespace wot.Dossier
     {
       string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Wargaming.net/WorldOfTanks/dossier_cache";
 
-      int counter = FILE_SCAN_PERIOD;
+      int counter = FILE_SCAN_INTERVAL;
       try
       {
         while (true)
         {
           Thread.Sleep(100);
           counter += 100;
-          if (counter < FILE_SCAN_PERIOD)
+          if (counter < FILE_SCAN_INTERVAL)
             continue;
           counter = 0;
 
@@ -52,7 +50,7 @@ namespace wot.Dossier
               continue;
 
             int dbTime = DossierDB.GetDossierFileParam(fi.Name, "modified");
-            int time = (int)(fi.LastWriteTimeUtc.ToFileTimeUtc() / 1000000);
+            int time = fi.LastWriteTimeUtc.ToUnixTime();
 
             if (time != dbTime)
               UpdateDossierFile(fi);
@@ -72,7 +70,7 @@ namespace wot.Dossier
         using (FileStream fs = fi.OpenRead())
         {
           DossierData dossier = ParseDossierRawData(fi.Name, unpickler.load(fs));
-          DossierDB.UpdateDossierData(fi.Name, (int)(fi.LastWriteTime.ToFileTimeUtc() / 1000000), dossier);
+          DossierDB.UpdateDossierData(fi.Name, fi.LastWriteTimeUtc.ToUnixTime(), dossier);
         }
       }
     }

@@ -6,12 +6,14 @@ import com.xvm.Controls.Panel;
 import com.xvm.Controls.Chart;
 import com.xvm.Controls.Grid;
 import com.xvm.Controls.Label;
+import com.xvm.Controls.Progress;
 
 class com.xvm.Components.Dossier.DossierView
 {
     private var cfg:Object;
     private var holder:MovieClip;
     private var panel:Panel;
+    private var progress:Progress;
     private var chartDay:Chart;
     private var chartWeek:Chart;
     private var chartYear:Chart;
@@ -36,6 +38,8 @@ class com.xvm.Components.Dossier.DossierView
 
         panel = Panel.Create(holder, "panel", 0,   0,   410, 200, 0x000000, 60, 1, 0xCCCCCC, 50);
 
+        progress = Progress.Create(panel.mc, "progress");
+        
         Label.Create(panel.mc, "labelDay",              10,  10,  100, 20,  Defines.UICOLOR_DEFAULT2, 100, "$FieldFont", 13, Locale.get("Day"));
         chartDay = Chart.Create(panel.mc, "chartDay",   10,  30,  100, 40,  0x000000, 60, 0xCCCCCC, 1, 0x008000, 50);
         
@@ -65,6 +69,11 @@ class com.xvm.Components.Dossier.DossierView
         //test.SetText(com.xvm.JSONx.stringify(data));
     }
 
+    public function updateIdle(pos:Number)
+    {
+        progress.SetPos(pos);
+    }
+    
     private var mouseDown:Boolean = false;
     private var mouseX:Number;
     private var mouseY:Number;

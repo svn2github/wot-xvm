@@ -1,12 +1,12 @@
 ﻿using LitJson;
 using System;
 using System.Diagnostics;
-using System.Net;
-using wot.Properties;
 using System.IO;
-using System.Text;
-using System.Runtime.InteropServices;
+using System.Net;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
+using wot.Properties;
 
 namespace wot
 {
@@ -261,6 +261,18 @@ namespace wot
         using (BinaryReader reader = new BinaryReader(stream))
           return reader.ReadBytes((int)(stream.Length));
       }
+    }
+
+    public static int ToUnixTime(this DateTime date)
+    {
+      DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+      return Convert.ToInt32((date - origin).TotalSeconds);
+    }
+
+    public static DateTime ToUnixDateTime(this int timestamp)
+    {
+      DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+      return origin.AddSeconds(timestamp);
     }
   }
 }

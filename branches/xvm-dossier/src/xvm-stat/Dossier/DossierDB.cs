@@ -3,8 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
+using System.IO;
+using wot.Properties;
 
 namespace wot.Dossier
 {
@@ -16,8 +16,6 @@ namespace wot.Dossier
     }
     #endregion
 
-    private const string DB_FILE_NAME = "xvm-stat.db";
-
     private const string VAR_DB_VERSION = "DB_VERSION";
     private const string DB_VERSION = "1";
 
@@ -26,15 +24,19 @@ namespace wot.Dossier
       "CREATE TABLE Vars (key TEXT PRIMARY KEY, value TEXT)",
       "INSERT INTO Vars VALUES ('" + VAR_DB_VERSION + "', '" + DB_VERSION + "')",
 
-      "CREATE TABLE VehicleInfo (vid INT, vname TEXT, level INT, class INT, premium INT, hp INT, PRIMARY KEY(vid))",
-      "CREATE INDEX idx_VehicleInfo_vname ON VehicleInfo (vname)",
-
-      "CREATE TABLE VehicleStat (playerName TEXT, vid INT, dt INT, data TEXT, company TEXT, clan TEXT, PRIMARY KEY(playerName, vid, dt))",
-      "CREATE INDEX idx_VehicleStat_playerName_dt ON VehicleStat (playerName, dt)",
-
-      "CREATE TABLE Summary (playerName TEXT, dt INT, battles INT, wins INT, losses INT, survived INT, xp INT, avgXp INT, maxXp INT, PRIMARY KEY(playerName, dt))",
+      "CREATE TABLE Players (playerName TEXT PRIMARY KEY, start INT, last INT)",
 
       "CREATE TABLE DossierCacheFiles (filename TEXT PRIMARY KEY, modified INT, lastBattleTime INT)",
+
+      "CREATE TABLE VehicleInfo (vid INT, vname TEXT, level INT, class INT, premium INT, hp INT, localizedName TEXT, icon TEXT, PRIMARY KEY(vid))",
+      "CREATE INDEX idx_VehicleInfo_vname ON VehicleInfo (vname)",
+
+      "CREATE TABLE VehicleStat (playerName TEXT, dt INT, vid INT, data TEXT, company TEXT, clan TEXT, PRIMARY KEY(playerName, dt, vid))",
+      "CREATE INDEX idx_VehicleStat_playerName_dt ON VehicleStat (playerName, dt)",
+
+      "CREATE VIEW v_CurrentStat AS SELECT playerName, vid, data, company, clan FROM VehicleStat GROUP BY playerName, vid HAVING dt = MAX(dt)"
+
+      //"CREATE TABLE Summary (playerName TEXT, dt INT, battles INT, wins INT, losses INT, survived INT, xp INT, avgXp INT, maxXp INT, PRIMARY KEY(playerName, dt))",
     };
     #endregion
 
@@ -53,16 +55,17 @@ namespace wot.Dossier
 
     public void initialize()
     {
-      db = new SQLiteDatabase(DB_FILE_NAME);
+      Directory.CreateDirectory(Path.GetDirectoryName(Settings.Default.XvmDbFileName));
+      db = new SQLiteDatabase(Settings.Default.XvmDbFileName);
       for (int i = 0; i < PRAGMA_Commands.Length; i++)
         db.ExecuteNonQuery(PRAGMA_Commands[i]);
-
+                                                      
       ArrayList tables = db.GetTables();
       if (tables.Count == 0)
         CreateDatabase();
       else
       {
-        string ver = db.ExecuteQuery("SELECT value FROM Vars WHERE key='" + VAR_DB_VERSION + "'").Rows[0][0].ToString();
+        string ver = GetVar(VAR_DB_VERSION);
         if (ver != DB_VERSION)
           UpgradeDatabase(ver);
       }
@@ -85,39 +88,68 @@ namespace wot.Dossier
     {
       foreach (VehicleInfoData vd in VehicleInfo.data)
       {
-        ExecuteNonQuery(String.Format("INSERT OR REPLACE INTO VehicleInfo VALUES ({0}, \"{1}\", {2}, {3}, {4}, {5})",
-          vd.vid, vd.vname, vd.level, vd.vclass, vd.premium ? 1 : 0, vd.hp));
+        ExecuteNonQuery(String.Format("INSERT OR REPLACE INTO VehicleInfo VALUES ({0}, {1}, {2}, {3}, {4}, {5}, '', '')",
+          vd.vid, Q(vd.vname), vd.level, vd.vclass, vd.premium ? 1 : 0, vd.hp));
       }
     }
     #endregion
 
-    #region Exec functions
-    public static void ExecuteNonQuery(string query)
+    #region quote functions
+    public static string q(string str)
     {
-      Instance.db.ExecuteNonQuery(query);
+      return str.Replace("\"", "\"\"");
     }
 
-    public static DataTable Execute(string query)
+    public static string Q(string str)
     {
-      return Instance.db.ExecuteQuery(query);
+      return String.Format("\"{0}\"", q(str));
+    }
+    #endregion
+
+    #region Execute* functions  (private static)
+
+    private static object _executeLock = new object();
+
+    private static void ExecuteNonQuery(string query)
+    {
+      lock (_executeLock)
+        Instance.db.ExecuteNonQuery(query);
     }
 
-    public static DataRow ExecuteRow(string query)
+    private static DataTable Execute(string query)
+    {
+      lock (_executeLock)
+        return Instance.db.ExecuteQuery(query);
+    }
+
+    private static DataRow ExecuteRow(string query)
     {
       DataTable t = Execute(query);
       return t != null && t.Rows.Count > 0 ? t.Rows[0] : null;
     }
 
-    public static String ExecuteScalar(string query)
+    private static String ExecuteScalar(string query)
     {
       DataRow r = ExecuteRow(query);
       return r != null && r.ItemArray.Length > 0 ? r[0].ToString() : null;
     }
     #endregion
 
+    #region GetVar / SetVar (public static)
+    public static string GetVar(string var)
+    {
+      return ExecuteScalar("SELECT value FROM Vars WHERE key=" + Q(var));
+    }
+
+    public static void SetVar(string var, string value)
+    {
+      ExecuteNonQuery("INSERT OR REPLACE Vars VALUES ("+ Q(var) + ", " + Q(value) + ")");
+    }
+    #endregion
+
     public static int GetDossierFileParam(string filename, string paramName, int defaultValue = 0)
     {
-      string value = ExecuteScalar("SELECT " + paramName + " FROM DossierCacheFiles WHERE filename='" + filename + "'");
+      string value = ExecuteScalar("SELECT " + paramName + " FROM DossierCacheFiles WHERE filename=" + Q(filename));
       if (string.IsNullOrEmpty(value))
         return defaultValue;
       int res;
@@ -127,39 +159,69 @@ namespace wot.Dossier
     public static void UpdateDossierData(string filename, int modified, DossierData dossier)
     {
       int lastBattleTime = DossierDB.GetDossierFileParam(filename, "lastBattleTime");
-      int newLastBattleTime = lastBattleTime;
+      int newLastBattleTime = dossier.maxLastBattleTime;
+      ExecuteNonQuery(String.Format("INSERT OR REPLACE INTO DossierCacheFiles VALUES ({0}, {1}, {2})", Q(filename), modified, newLastBattleTime));
 
-      if (dossier.vehicles != null)
+      if (newLastBattleTime <= 0)
+        return;
+
+      // update periods
+      DataRow playerDataRow = ExecuteRow("SELECT 1 FROM Players WHERE playerName=" + Q(dossier.playerName));
+      if (playerDataRow == null)
+        ExecuteNonQuery(String.Format("INSERT INTO Players VALUES({0}, {1}, {1})", Q(dossier.playerName), newLastBattleTime));
+      else
+        ExecuteNonQuery(String.Format("UPDATE Players SET last={1} WHERE playerName={0}", Q(dossier.playerName), newLastBattleTime));
+
+      // update vehicle stat
+      if (dossier.vehicles == null)
+        return;
+
+      Program.Log("UpdateDossierData: " + dossier.playerName);
+      foreach (DossierVehicleData vd in dossier.vehicles)
       {
-        Program.Log("UpdateDossierData: " + dossier.playerName);
-        foreach (DossierVehicleData vd in dossier.vehicles)
+        if (vd.lastBattleTime <= lastBattleTime)
+          continue;
+
+        VehicleInfoData vi = VehicleInfo.ByVid(vd.vid);
+        if (vi == null)
         {
-          if (vd.lastBattleTime <= lastBattleTime)
-            continue;
-
-          if (vd.lastBattleTime > newLastBattleTime)
-            newLastBattleTime = vd.lastBattleTime;
-
-          VehicleInfoData vi = VehicleInfo.ByVid(vd.vid);
-          if (vi == null)
-          {
-            Program.Log("WARNING: no data for vid=" + vd.vid);
-            continue;
-          }
-
-          Program.Log("  " + DateTime.FromFileTime((long)vd.lastBattleTime * 100000) + ": " + vi.vname + " (" + vd.tankdata_battlesCount + " battles)");
-          
-          ExecuteNonQuery(String.Format("INSERT OR REPLACE INTO VehicleStat VALUES (\"{0}\", {1}, {2}, \"{3}\", \"{4}\", \"{5}\")",
-            dossier.playerName, 
-            vd.vid, 
-            vd.lastBattleTime,
-            vd.TankDataToJson().Replace("\"", "\"\""),
-            vd.CompanyDataToJson().Replace("\"", "\"\""),
-            vd.ClanDataToJson().Replace("\"", "\"\"")));
+          Program.Log("WARNING: no data for vid=" + vd.vid);
+          continue;
         }
-      }
 
-      ExecuteNonQuery(String.Format("INSERT OR REPLACE INTO DossierCacheFiles VALUES (\"{0}\", {1}, {2})", filename, modified, newLastBattleTime));
+        Program.Log("  " + vd.lastBattleTime.ToUnixDateTime() + ": " + vi.vname + " (" + vd.tankdata_battlesCount + " battles)");
+
+        ExecuteNonQuery(String.Format("INSERT OR REPLACE INTO VehicleStat VALUES ({0}, {1}, {2}, {3}, {4}, {5})",
+          Q(dossier.playerName),
+          vd.lastBattleTime,
+          vd.vid,
+          Q(vd.TankDataToJson()),
+          Q(vd.CompanyDataToJson()),
+          Q(vd.ClanDataToJson())));
+      }
+    }
+
+    public static List<DossierVehicleResult> GetDataForPeriod(string playerName, long period)
+    {
+      DataTable dt = Execute(String.Format(
+        "SELECT vid, data, company, clan" +
+        " FROM VehicleStat vs" +
+        //" JOIN VehicleInfo vi ON vs.vid = vi.vid" +
+        " WHERE playerName={0} AND dt <= {1} GROUP BY vs.vid HAVING dt = MAX(dt)",
+        Q(playerName), period));
+      List<DossierVehicleResult> res = new List<DossierVehicleResult>();
+      foreach (DataRow dr in dt.Rows)
+      {
+        DossierVehicleResult vr = new DossierVehicleResult()
+        {
+          vid = (int)((long)dr[0]),
+          data = (string)dr[1],
+          company = (string)dr[2],
+          clan = (string)dr[3],
+        };
+        res.Add(vr);
+      }
+      return res;
     }
   }
 }

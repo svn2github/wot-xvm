@@ -44,8 +44,8 @@
       "$ref": { "path":"def.pingServers" },
       "x": 5
     },
-    "dossier": { "enabled": false }
-//    "dossier": { "enabled": true }
+//    "dossier": { "enabled": false }
+    "dossier": { "enabled": true }
   },
   "userInfo": {
      "inHangarFilterEnabled": true,

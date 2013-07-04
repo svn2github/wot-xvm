@@ -66,7 +66,7 @@ class com.xvm.DefaultConfig
                 dossier: {
                   enabled: true,
                   x: 400,
-                  y: 100,
+                  y: 150,
                   alpha: 60,
                   activeAlpha: 100
                 },

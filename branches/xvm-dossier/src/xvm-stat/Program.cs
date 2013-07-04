@@ -64,7 +64,7 @@ namespace wot
     public static void Log(string message, bool debug = false)
     {
       if (!debug || isDebug)
-      Console.WriteLine((debug ? "DEBUG: " : "") + message);
+        Console.WriteLine((debug ? "DEBUG: " : "") + message);
       if (!Logger.IsActive)
         return;
      
@@ -297,7 +297,9 @@ namespace wot
         Debug("Change dir: " + game_dir);
         Directory.SetCurrentDirectory(game_dir);
 
-        Dossier.Dossier.Instance.GetDossierInfo("");
+        // --- DEBUG ----------------------------------------
+        //Dossier.Dossier.Instance.GetDossierInfo("1;sirmax2;381374000;3600;24;1;battle_count,wins;;");
+        // --- DEBUG ----------------------------------------
 
         // Check for another instance started
         bool ok;

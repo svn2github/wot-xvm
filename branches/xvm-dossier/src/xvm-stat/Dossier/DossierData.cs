@@ -1,21 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace wot.Dossier
 {
+  #region DossierPeriodData
+
+  public class DossierResult: Dictionary<long, DossierVehicleResult[]>
+  {
+  }
+
+  public class DossierVehicleResult
+  {
+    public int vid;
+    public string data;
+    public string company;
+    public string clan;
+  }
+
+  #endregion
+
+  #region DossierData
   public class DossierData
   {
     public int dossierVersion;
 
     public string playerName;
     public string server;
-    
+
     public List<DossierVehicleData> vehicles;
 
-    public string error;
+    public int maxLastBattleTime
+    {
+      get
+      {
+        if (vehicles == null)
+          return 0;
+        int res = 0;
+        foreach (DossierVehicleData vd in vehicles)
+          res = Math.Max(res, vd.lastBattleTime);
+        return res;
+      }
+    }
   }
 
   public class DossierVehicleData
@@ -463,6 +489,7 @@ namespace wot.Dossier
 
     #endregion
   }
+  #endregion
 
   #region tankdata_version = 20
   [StructLayout(LayoutKind.Explicit)]

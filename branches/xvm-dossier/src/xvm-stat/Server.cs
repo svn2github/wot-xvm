@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dokan;
+using LitJson;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -7,8 +9,6 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Xml;
-using Dokan;
-using LitJson;
 using wot.Properties;
 
 namespace wot
@@ -418,8 +418,8 @@ namespace wot
           break;
 
         case "@DOSSIER": // no args
-          _result = Dossier.Dossier.Instance.GetDossierInfo(parameters);
-          //Debug("_result: " + _result);
+          _result = Dossier.Dossier.Instance.GetDossierInfo(CollectParts(parameters));
+          Debug("@DOSSIER: _result: " + _result.Length + " bytes");
           break;
 
         default:
