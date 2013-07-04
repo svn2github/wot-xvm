@@ -16,8 +16,8 @@
         "message": "  * for WoT 0.8.6\n  * new features\n  * improvements and bugfixes"
     },
     "VTC": {
-        "ver": "3.5.0",
-        "message": "  * for WoT 0.8.5\n  * code optimization\n  * improvements and bugfixes"
+        "ver": "4.0.0",
+        "message": "  * for WoT 0.8.6\n  * new features\n  * improvements and bugfixes"
     },
     "CT":  { "ver": "4.0.0", "message": "" }
 }
