@@ -1,8 +1,10 @@
 ﻿import com.xvm.Components.PingServers.PingServers;
 import com.xvm.Config;
 import com.xvm.GlobalEventDispatcher;
+import com.xvm.Locale;
 import com.xvm.Utils;
 import com.xvm.Components.Dossier.Dossier;
+import com.xvm.Components.Dossier.WidgetsSettingsDialog;
 
 class wot.LangBarPanel.LanguageBar
 {
@@ -99,12 +101,30 @@ class wot.LangBarPanel.LanguageBar
         // Dossier component
         if (Config.s_config.hangar.dossier.enabled == true)
         {
-            var playerName = _level0.header.tankPanel.account_name.text;
+            var bar:gfx.core.UIComponent = _root.header.buttonsBlock.bar;
+            //com.xvm.Logger.addObject(_root.header.buttonsBlock.bar._dataProvider, "", 3);
+            if (bar["xvm_initialized"] != true)
+            {
+                bar["xvm_initialized"] = true;
+                var dp:Array = bar["dataProvider"];
+                dp.push({ value: "widget", label: Locale.get("Widgets") });
+                bar["dataProvider"] = dp;
+                bar.addEventListener("itemClick", this, "menuBarSelectEvent");
+            }
+
+            var playerName = _root.header.tankPanel.account_name.text;
             dossierHolder = header.createEmptyMovieClip("dossierHolder", header.getNextHighestDepth());
             Dossier.initialize(Config.s_config.hangar.dossier, dossierHolder, playerName);
         }
     }
 
+    private function menuBarSelectEvent(event)
+    {
+        if (event.item.value != "widget")
+            return;
+        var wsd = new WidgetsSettingsDialog(_root.header);
+    }
+    
     private function initLogin()
     {
         var main:MovieClip = _root.contentHolder.main;
@@ -117,10 +137,11 @@ class wot.LangBarPanel.LanguageBar
         PingServers.initFeature(Config.s_config.login.pingServers, pingHolder);
 
         // Dossier component TESTING ONLY
-        //if (Config.s_config.hangar.dossier.enabled == true)
-        //{
-        //    dossierHolder = main.createEmptyMovieClip("dossierHolder", main.getNextHighestDepth());
-        //    Dossier.initialize(Config.s_config.hangar.dossier, dossierHolder, "sirmax2");
-        //}
+        if (Config.s_config.hangar.dossier.enabled == true)
+        {
+            var wsd = new WidgetsSettingsDialog(main);
+            //dossierHolder = main.createEmptyMovieClip("dossierHolder", main.getNextHighestDepth());
+            //Dossier.initialize(Config.s_config.hangar.dossier, dossierHolder, "sirmax2");
+        }
     }
 }

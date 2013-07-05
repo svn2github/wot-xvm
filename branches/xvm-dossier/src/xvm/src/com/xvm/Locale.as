@@ -147,6 +147,16 @@ class com.xvm.Locale
         tr["SPG"] = "САУ";
         
         // dossier
+        tr["Widgets"] = "Виджеты";
+        tr["Widgets Settings"] = "Настройка виджетов";
+        tr["Small"] = "Маленький";
+        tr["Medium"] = "Средний";
+        tr["Switcher"] = "Переключатель";
+        tr["Label"] = "Метка";
+        tr["Hide all widgets"] = "Спрятать все виджеты";
+        tr["Select Mode 1"] = "Выбрать режим 1";
+        tr["Select Mode 2"] = "Выбрать режим 2";
+        tr["Show detailed info window"] = "Показать окно детальной информации";
         tr["Day"] = "День";
         tr["Today"] = "Сегодня";
         tr["Y day"] = "Вчера";

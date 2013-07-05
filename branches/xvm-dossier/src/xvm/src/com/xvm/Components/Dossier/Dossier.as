@@ -47,13 +47,16 @@ class com.xvm.Components.Dossier.Dossier
     {
         var now = (new Date()).getTime();
         if (!lastUpdateCall)
-            lastUpdateCall = 0;
-        if (now - lastUpdateCall > 10000)
+        {
+            lastUpdateCall = now - 59000;
+            update();
+        }
+        if (now - lastUpdateCall > 60000)
         {
             lastUpdateCall = now;
             update();
         }
-        view.updateIdle((now - lastUpdateCall) / 10000);
+        view.updateIdle((now - lastUpdateCall) / 60000);
     }
     
     private function update()

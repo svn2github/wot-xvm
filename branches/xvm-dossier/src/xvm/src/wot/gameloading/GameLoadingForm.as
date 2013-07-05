@@ -49,8 +49,9 @@ class wot.gameloading.GameLoadingForm
     {
         GlobalEventDispatcher.removeEventListener("config_loaded", this, onConfigLoaded);
 
-        //var dossierHolder = wrapper.createEmptyMovieClip("dossierHolder", wrapper.getNextHighestDepth());
-        //Dossier.initialize(Config.s_config.hangar.dossier, dossierHolder);
+        // ------------------ DEBUG ------------------
+        var wsd = new com.xvm.Components.Dossier.WidgetsSettingsDialog(_root.header);
+        // ------------------ DEBUG ------------------
 
         // Send first ping as early as possible, to be ready on login screen.
         if (Config.s_config.login.pingServers.enabled || Config.s_config.hangar.pingServers.enabled);

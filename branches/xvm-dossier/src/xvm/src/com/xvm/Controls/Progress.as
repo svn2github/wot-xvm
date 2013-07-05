@@ -9,7 +9,7 @@ class com.xvm.Controls.Progress extends ControlBase
 {
     public static function Create(parent:MovieClip, name:String):Progress
     {
-        var mc:MovieClip = ControlBase.Create(parent, name, 0, -1, parent.width, 2, 0x7FC9FF, 80);
+        var mc:MovieClip = ControlBase.Create(parent, name, 0, -1, parent.width, 2, 0x7FC9FF, 50);
         return new Progress(mc);
     }
 
