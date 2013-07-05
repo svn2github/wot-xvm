@@ -53,6 +53,8 @@ class com.xvm.Locale
         tr = _translations["RU"];
 
         // common
+        tr["Enable"] = "Включить";
+        tr["Disable"] = "Выключить";
         tr["enabled"] = "включено";
         tr["disabled"] = "выключено";
         
@@ -153,10 +155,12 @@ class com.xvm.Locale
         tr["Medium"] = "Средний";
         tr["Switcher"] = "Переключатель";
         tr["Label"] = "Метка";
+        tr["Modes"] = "Режимы";
         tr["Hide all widgets"] = "Спрятать все виджеты";
         tr["Select Mode 1"] = "Выбрать режим 1";
         tr["Select Mode 2"] = "Выбрать режим 2";
         tr["Show detailed info window"] = "Показать окно детальной информации";
+        tr["Update interval, sec"] = "Интервал обновления, с";
         tr["Day"] = "День";
         tr["Today"] = "Сегодня";
         tr["Y day"] = "Вчера";

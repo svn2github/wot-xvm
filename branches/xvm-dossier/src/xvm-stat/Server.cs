@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Xml;
+using wot.Dossier;
 using wot.Properties;
 
 namespace wot
@@ -363,6 +364,10 @@ namespace wot
       }
     }
 
+    #endregion
+
+    #region Process command
+    
     private void ProcessCommand(String command, String parameters)
     {
       switch (command)
@@ -417,9 +422,17 @@ namespace wot
           //Debug("_result: " + _result);
           break;
 
-        case "@DOSSIER": // no args
+        case "@DOSSIER":
           _result = Dossier.Dossier.Instance.GetDossierInfo(CollectParts(parameters));
           Debug("@DOSSIER: _result: " + _result.Length + " bytes");
+          break;
+
+        case "@SAVE_SETTINGS": // args: key;value (encoded)
+          ProcessSaveSettings(parameters);
+          break;
+
+        case "@LOAD_SETTINGS":  // args: key (encoded)
+          ProcessLoadSettings(parameters);
           break;
 
         default:
@@ -514,6 +527,24 @@ namespace wot
                     //Debug("Loaded: " + resultId);
                   }
                 });
+    }
+
+    private void ProcessSaveSettings(string parameters)
+    {
+      string value = CollectParts(parameters);
+      if (String.IsNullOrEmpty(value))
+        return;
+      string[] settings = value.Split(new char[] { ';' }, 2);
+      if (settings.Length == 2)
+        DossierDB.SaveSettings(settings[0], settings[1]);
+    }
+
+    private void ProcessLoadSettings(string parameters)
+    {
+      string value = CollectParts(parameters);
+      if (String.IsNullOrEmpty(value))
+        return;
+      _result = DossierDB.LoadSettings(parameters);
     }
 
     private string _lastReadFileFilenameAndOffset = "";

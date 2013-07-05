@@ -1,7 +1,5 @@
 ﻿intrinsic class gfx.controls.ButtonBar extends gfx.core.UIComponent
 {
-    function get disabled();
-    function set disabled(value);
     function get dataProvider();
     function set dataProvider(value);
     function get itemRenderer();

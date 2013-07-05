@@ -1,7 +1,5 @@
 ﻿intrinsic class net.wargaming.controls.Window extends gfx.core.UIComponent
 {
-    var _name, background, titleBtn, hit, constraints, iconMovie, closeBtn, minimizeBtn, resizeBtn;
-    var _channelData, modalBackground, waiting, target, owner, message, waiting_fade_in_id, form;
     function minimize();
     function get formSource();
     function set formSource(value);

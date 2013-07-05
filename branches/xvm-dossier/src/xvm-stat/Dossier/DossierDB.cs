@@ -24,6 +24,8 @@ namespace wot.Dossier
       "CREATE TABLE Vars (key TEXT PRIMARY KEY, value TEXT)",
       "INSERT INTO Vars VALUES ('" + VAR_DB_VERSION + "', '" + DB_VERSION + "')",
 
+      "CREATE TABLE Settings (key TEXT PRIMARY KEY, value TEXT)",
+
       "CREATE TABLE Players (playerName TEXT PRIMARY KEY, start INT, last INT)",
 
       "CREATE TABLE DossierCacheFiles (filename TEXT PRIMARY KEY, modified INT, lastBattleTime INT)",
@@ -144,6 +146,18 @@ namespace wot.Dossier
     public static void SetVar(string var, string value)
     {
       ExecuteNonQuery("INSERT OR REPLACE Vars VALUES ("+ Q(var) + ", " + Q(value) + ")");
+    }
+    #endregion
+
+    #region LoadSettings / SaveSettings (public static)
+    public static string LoadSettings(string key)
+    {
+      return ExecuteScalar("SELECT value FROM Vars WHERE key=" + Q(key));
+    }
+
+    public static void SaveSettings(string key, string value)
+    {
+      ExecuteNonQuery("INSERT OR REPLACE Vars VALUES (" + Q(key) + ", " + Q(value) + ")");
     }
     #endregion
 

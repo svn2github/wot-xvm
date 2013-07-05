@@ -1,9 +1,12 @@
 import gfx.controls.Button;
 import gfx.controls.ButtonBar;
 import gfx.controls.CheckBox;
+import gfx.controls.NumericStepper;
 import gfx.controls.RadioButton;
 import gfx.controls.ScrollingList;
 import gfx.controls.TextInput;
+import gfx.core.UIComponent;
+import gfx.data.DataProvider;
 import net.wargaming.managers.WindowManager;
 import net.wargaming.controls.Window;
 import net.wargaming.managers.Localization;
@@ -26,26 +29,24 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     
     public function WidgetsSettingsDialog(main_mc:MovieClip) 
     {
+        Logger.add("WidgetsSettingsDialog()");
+//return;        
         this.main_mc = main_mc;
 
-        wnd = WindowManager.instance.getWindow(windowName);
-        
-        if (wnd == null)
-        {
-            var wopt = { _y: 150, _x: 400,  _title: Locale.get("Widgets Settings"), allowResize: false, _minWidth: 600, _minHeight: 400,
-                _formSource: "none", _formType: "symbol", _offsetLeft: 10, _offsetTop: 40, _offsetRight: 10, _offsetBottom: 30,
-                _visible: true, topmostLevel: false};
-            WindowManager.instance.close(windowName, true);
-            wnd = WindowManager.instance.open("Window", "widgets_settings", wopt);
-            wnd.addEventListener("confirmFormComplete", this, "onConfirmFormComplete")
-            wnd.addEventListener("close", this, "onClose");
-        }
+        WindowManager.instance.close(windowName, true);
+        var wopt = { _y: 150, _x: 400,  _title: Locale.get("Widgets Settings"), allowResize: false, _minWidth: 600, _minHeight: 400,
+            _formSource: "none", _formType: "symbol", _offsetLeft: 10, _offsetTop: 40, _offsetRight: 10, _offsetBottom: 30,
+            _visible: true, topmostLevel: true};
+        wnd = WindowManager.instance.open("Window", "widgets_settings", wopt);
+        wnd.addEventListener("confirmFormComplete", this, "onConfirmFormComplete")
+        wnd.addEventListener("close", this, "onClose");
     }
     
     private function onConfirmFormComplete()
     {
-        list = (ScrollingList)(wnd.attachMovie("ScrollingList", "list", wnd.getNextHighestDepth(),
-            { _x: 10, _y: 58, _width: 200, _height: wnd.height - 75 } ));
+        list = UIComponent.createInstance(wnd, "ScrollingList", "list", wnd.getNextHighestDepth(),
+            { _x: 10, _y: 58, _width: 200, _height: wnd.height - 75, itemRenderer: "DropdownMenu_ListItemRenderer" } );
+        list.dataProvider = ["item1", "item2", "item3", "item4"];
 
         var btnAdd:Button = (Button)(wnd.attachMovie("Button", "btnAdd", wnd.getNextHighestDepth(),
             { _x: 15, _y: 35, _width: 90, _height: 22, label:Locale.get("Add") } ));
@@ -77,39 +78,61 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
         var widget_type:ButtonBar = (ButtonBar)(wnd.attachMovie("ButtonBar", "widget_type", wnd.getNextHighestDepth(),
             { _x: 215, _y: 34, autoSize: true, dataProvider: dp, selectedIndex: -1, itemRenderer: "WindowTabButton" } ));
         widget_type.addEventListener("change", this, "onWidgetTypeSelect");
-        widget_type.selectedIndex = 2;
+        widget_type.selectedIndex = 0;
     }
 
     private function CreateSmallWidgetSettings(mc:MovieClip)
     {
+        var enable:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "enable", mc.getNextHighestDepth(),
+            { _x: 10, _y: 10, autoSize: true, label: Locale.get("Enable") } ));
+
+        CreateLabel(mc, "lInterval", 10, 30, 130, 25, Locale.get("Update interval, sec"));
+        var interval:NumericStepper = (NumericStepper)(mc.attachMovie("NumericStepper", "interval", mc.getNextHighestDepth(),
+            { _x: 140, _y: 30, _width: 60, minimum: 10, maximum: 3600, value: 300, stepSize: 10 } ));
     }
 
     private function CreateMediumWidgetSettings(mc)
     {
+        var enable:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "enable", mc.getNextHighestDepth(),
+            { _x: 10, _y: 10, autoSize: true, label: Locale.get("Enable") } ));
+
+        CreateLabel(mc, "lInterval", 10, 30, 130, 25, Locale.get("Update interval, sec"));
+        var interval:NumericStepper = (NumericStepper)(mc.attachMovie("NumericStepper", "interval", mc.getNextHighestDepth(),
+            { _x: 140, _y: 30, _width: 60, minimum: 10, maximum: 3600, value: 300, stepSize: 10 } ));
     }
     
     private function CreateSwitcherSettings(mc)
     {
-        var tfLbl:TextField = mc.createTextField("tf_lbl", mc.getNextHighestDepth(), 10, 10, 40, 25);
+        var enable:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "enable", mc.getNextHighestDepth(),
+            { _x: 10, _y: 10, autoSize: true, label: Locale.get("Enable") } ));
+
+        CreateLabel(mc, "lLabel", 10, 30, 40, 25, Locale.get("Label"));
+        var tiLbl:TextInput = (TextInput)(mc.attachMovie("TextInput", "label", mc.getNextHighestDepth(),
+            { _x: 50, _y: 30, _width: 300 } ));
+        tiLbl.addEventListener("textChange", this, "onSwitcherLabelChange");
+
+        CreateLabel(mc, "lLabel", 10, 60, 100, 25, Locale.get("Modes"));
+        var cb0:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "cb0", mc.getNextHighestDepth(),
+            { _x: 10, _y: 80, autoSize: true, label: Locale.get("Hide all widgets") } ));
+        var cb1:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "cb1", mc.getNextHighestDepth(),
+            { _x: 10, _y: 100, autoSize: true, label: Locale.get("Select Mode 1") } ));
+        var cb2:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "cb2", mc.getNextHighestDepth(),
+            { _x: 10, _y: 120, autoSize: true, label: Locale.get("Select Mode 2") } ));
+        var cb3:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "cb3", mc.getNextHighestDepth(),
+            { _x: 10, _y: 140, autoSize: true, label: Locale.get("Show detailed info window") } ));
+    }
+
+    private function CreateLabel(mc, name, x, y, w, h, text)
+    {
+        var tfLbl:TextField = mc.createTextField("tf_lbl", mc.getNextHighestDepth(), x, y, w, h);
         tfLbl.verticalAlign = "center";
         tfLbl.textColor = Defines.UICOLOR_DEFAULT;
         var fmt:TextFormat =  tfLbl.getNewTextFormat();
         fmt.font = "$FieldFont";
         fmt.size = 13;
         tfLbl.setNewTextFormat(fmt);
-        tfLbl.text = Locale.get("Label");
-        var tiLbl:TextInput = (TextInput)(mc.attachMovie("TextInput", "label", mc.getNextHighestDepth(),
-            { _x: 50, _y: 10, _width: 300 } ));
-        tiLbl.addEventListener("textChange", this, "onSwitcherLabelChange");
+        tfLbl.text = text;
         
-        var cb0:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "cb0", mc.getNextHighestDepth(),
-            { _x: 10, _y: 40, autoSize: true, label: Locale.get("Hide all widgets") } ));
-        var cb1:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "cb1", mc.getNextHighestDepth(),
-            { _x: 10, _y: 60, autoSize: true, label: Locale.get("Select Mode 1") } ));
-        var cb2:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "cb2", mc.getNextHighestDepth(),
-            { _x: 10, _y: 80, autoSize: true, label: Locale.get("Select Mode 2") } ));
-        var cb3:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "cb3", mc.getNextHighestDepth(),
-            { _x: 10, _y: 100, autoSize: true, label: Locale.get("Show detailed info window") } ));
     }
     
     private function onClose()
@@ -121,7 +144,11 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
 
     private function onAdd()
     {
-        Logger.addObject(arguments, "onAdd", 2);
+        //Logger.addObject(arguments, "onAdd", 2);
+        var dp = list.dataProvider;
+        dp.push("item" + list.dataProvider.length);
+        Logger.addObject(dp, "dp", 2);
+        list.dataProvider = dp;
     }
     
     private function onRemove()
