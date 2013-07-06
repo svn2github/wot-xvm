@@ -10,6 +10,7 @@ import gfx.data.DataProvider;
 import net.wargaming.managers.WindowManager;
 import net.wargaming.controls.Window;
 import net.wargaming.managers.Localization;
+import com.xvm.Comm;
 import com.xvm.Defines;
 import com.xvm.Locale;
 import com.xvm.Logger;
@@ -27,10 +28,18 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     var mc_medium:MovieClip;
     var mc_switcher:MovieClip;
     
+    private function test()
+    {
+        Logger.addObject(arguments, "loaded", 2);
+    }
+    
     public function WidgetsSettingsDialog(main_mc:MovieClip) 
     {
+        //Comm.SyncEncoded(Defines.COMMAND_SAVE_SETTINGS, "test.1234;{\"sss\":\"sdfsdf\"}");
+        //Comm.SyncEncoded(Defines.COMMAND_LOAD_SETTINGS, "test.1234", this, test);
+return;        
+
         Logger.add("WidgetsSettingsDialog()");
-//return;        
         this.main_mc = main_mc;
 
         WindowManager.instance.close(windowName, true);
@@ -47,7 +56,7 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
         list = UIComponent.createInstance(wnd, "ScrollingList", "list", wnd.getNextHighestDepth(),
             { _x: 10, _y: 58, _width: 200, _height: wnd.height - 75, itemRenderer: "DropdownMenu_ListItemRenderer" } );
         list.dataProvider = ["item1", "item2", "item3", "item4"];
-
+        
         var btnAdd:Button = (Button)(wnd.attachMovie("Button", "btnAdd", wnd.getNextHighestDepth(),
             { _x: 15, _y: 35, _width: 90, _height: 22, label:Locale.get("Add") } ));
         btnAdd.addEventListener("click", this, "onAdd");

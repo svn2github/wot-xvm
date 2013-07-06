@@ -43,7 +43,6 @@ namespace wot.Dossier
 
     private void initialize()
     {
-      DossierDB.Instance.initialize();
       DossierFiles.Instance.initialize();
     }
 

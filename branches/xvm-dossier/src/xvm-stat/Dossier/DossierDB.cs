@@ -42,7 +42,18 @@ namespace wot.Dossier
     };
     #endregion
 
-    private SQLiteDatabase db;
+    private SQLiteDatabase _db = null;
+
+    private SQLiteDatabase db
+    {
+      get
+      {
+        if (_db == null)
+          _initialize();
+        return _db;
+      }
+    }
+
 
     #region initialization
 
@@ -55,10 +66,10 @@ namespace wot.Dossier
       "PRAGMA temp_store =  MEMORY",
     };
 
-    public void initialize()
+    private void _initialize()
     {
       Directory.CreateDirectory(Path.GetDirectoryName(Settings.Default.XvmDbFileName));
-      db = new SQLiteDatabase(Settings.Default.XvmDbFileName);
+      _db = new SQLiteDatabase(Settings.Default.XvmDbFileName);
       for (int i = 0; i < PRAGMA_Commands.Length; i++)
         db.ExecuteNonQuery(PRAGMA_Commands[i]);
                                                       

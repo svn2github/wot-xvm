@@ -345,9 +345,6 @@ namespace wot
             parameters = cmd[1];
           }
 
-          if (!command.StartsWith("@LOG") && command != "@SET" && command != "@ADD" && command != "@PING" && command != "@DOSSIER")
-            Log(String.Format("=> {0} {1}", command, parameters));
-
           ProcessCommand(command, parameters);
         }
         catch (Exception ex)
@@ -392,15 +389,18 @@ namespace wot
         // Flat
 
         case "@VAR": // args - variable=value
+          Log(String.Format("=> {0} {1}", command, parameters));
           ProcessVarCommand(parameters);
           break;
 
         case "@GET_VERSION":
+          Log(String.Format("=> {0} {1}", command, parameters));
           ProcessGetVersionCommand();
           Debug("_result: " + _result);
           break;
 
         case "@GET_PLAYERS": // no args
+          Log(String.Format("=> {0} {1}", command, parameters));
           ProcessGetPlayersCommand();
           Debug("_result: " + _result);
           break;
@@ -408,11 +408,13 @@ namespace wot
         // ASYNC
 
         case "@GET_ASYNC": // args - resultId requestCount
+          Log(String.Format("=> {0} {1}", command, parameters));
           ProcessGetAsyncCommand(parameters);
           Debug("_result: " + _result);
           break;
 
         case "@INFO_ASYNC": // args - resultId requestCount params
+          Log(String.Format("=> {0} {1}", command, parameters));
           ProcessInfoAsyncCommand(parameters);
           Debug("_result: " + _result);
           break;
