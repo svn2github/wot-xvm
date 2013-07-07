@@ -35,8 +35,6 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     
     public function WidgetsSettingsDialog(main_mc:MovieClip) 
     {
-        //Comm.SyncEncoded(Defines.COMMAND_SAVE_SETTINGS, "test.1234;{\"sss\":\"sdfsdf\"}");
-        //Comm.SyncEncoded(Defines.COMMAND_LOAD_SETTINGS, "test.1234", this, test);
 return;        
 
         Logger.add("WidgetsSettingsDialog()");

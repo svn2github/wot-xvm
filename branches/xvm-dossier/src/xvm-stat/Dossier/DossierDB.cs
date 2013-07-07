@@ -156,19 +156,19 @@ namespace wot.Dossier
 
     public static void SetVar(string var, string value)
     {
-      ExecuteNonQuery("INSERT OR REPLACE Vars VALUES ("+ Q(var) + ", " + Q(value) + ")");
+      ExecuteNonQuery("INSERT OR REPLACE INTO Vars VALUES ("+ Q(var) + ", " + Q(value) + ")");
     }
     #endregion
 
     #region LoadSettings / SaveSettings (public static)
     public static string LoadSettings(string key)
     {
-      return ExecuteScalar("SELECT value FROM Vars WHERE key=" + Q(key));
+      return ExecuteScalar("SELECT value FROM Settings WHERE key=" + Q(key));
     }
 
     public static void SaveSettings(string key, string value)
     {
-      ExecuteNonQuery("INSERT OR REPLACE Vars VALUES (" + Q(key) + ", " + Q(value) + ")");
+      ExecuteNonQuery("INSERT OR REPLACE INTO Settings VALUES (" + Q(key) + ", " + Q(value) + ")");
     }
     #endregion
 

@@ -547,6 +547,8 @@ namespace wot
       if (String.IsNullOrEmpty(value))
         return;
       _result = DossierDB.LoadSettings(parameters);
+      if (string.IsNullOrEmpty(_result))
+        _result = "";
     }
 
     private string _lastReadFileFilenameAndOffset = "";
