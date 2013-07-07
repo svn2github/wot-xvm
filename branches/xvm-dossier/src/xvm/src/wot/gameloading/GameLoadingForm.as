@@ -50,7 +50,7 @@ class wot.gameloading.GameLoadingForm
         GlobalEventDispatcher.removeEventListener("config_loaded", this, onConfigLoaded);
 
         // ------------------ DEBUG ------------------
-        var wsd = new com.xvm.Components.Dossier.WidgetsSettingsDialog(_root.header);
+        //var wsd = new com.xvm.Components.Dossier.WidgetsSettingsDialog(_root.header);
         // ------------------ DEBUG ------------------
 
         // Send first ping as early as possible, to be ready on login screen.

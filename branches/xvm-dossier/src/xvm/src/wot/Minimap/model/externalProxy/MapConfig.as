@@ -157,34 +157,23 @@ class wot.Minimap.model.externalProxy.MapConfig
     private static function defineCfgProperty(entryName:String, status:Number):String
     {
         var statusStr:String;
-        if (status == Player.PLAYER_LOST)
-        {
+        if (Math.abs(status) == Player.PLAYER_LOST)
             statusStr = "lost";
-        }
-        else if (status == Player.PLAYER_DEAD)
-        {
+        else if (Math.abs(status) == Player.PLAYER_DEAD)
             statusStr = "dead";
-        }
         else
-        {
             statusStr = "";
-        }
         
         if (entryName == "squadman")
-        {
             entryName = "squad";
-        }
+            
         if (status <= Player.TEAM_KILLER_FLAG)
-        {
             entryName = "teamkiller";
-        }
         
         var property:String = statusStr + entryName;
         
         if (property == "lostenemy")
-        {
             property = "lost"; /** Backwards config compatibility */
-        }
         
         return property;
     }

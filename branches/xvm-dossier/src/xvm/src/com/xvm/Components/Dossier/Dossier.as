@@ -22,7 +22,7 @@ class com.xvm.Components.Dossier.Dossier
     {
         if (cfg.enabled == false)
             return;
-
+return;
         if (instance == null)
             instance = new Dossier(playerName);
         instance.view = new DossierView(cfg, holder);

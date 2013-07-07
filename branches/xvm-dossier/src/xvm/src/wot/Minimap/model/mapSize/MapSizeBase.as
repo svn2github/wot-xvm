@@ -1,5 +1,12 @@
+import com.xvm.Config;
+import com.xvm.Locale;
+import com.xvm.Logger;
+
 class wot.Minimap.model.mapSize.MapSizeBase
 {
+    public static var s_mapname = { };
+    private static var _initialized = false;
+
     public static function sizeBySytemMapName(mapName:String):Number
     {
         mapName = mapName.toLowerCase();
@@ -73,6 +80,8 @@ class wot.Minimap.model.mapSize.MapSizeBase
                 return 100;
             case "73_asia_korea": // Священная долина
                 return 100;
+            case "85_winter": // Белогорск-19
+                return 100;
             default:
                 return undefined;
         }
@@ -80,205 +89,173 @@ class wot.Minimap.model.mapSize.MapSizeBase
 
     public static function sizeByLocalizedMapName(localizedMapName:String):Number
     {
-        switch(localizedMapName)
-        {
-            /**
-             * Deustch locale by PusteBlumeKuchen
-             * http://code.google.com/p/wot-xvm/issues/detail?id=367
-             */
-            case "Аэродром":
-            case "Airfield":
-            case "Flugplatz":
-            case "阿拉曼机场":
-                return sizeBySytemMapName("31_airfield");
- 
-            case "Уайдпарк":
-            case "Widepark":
-            case "Weitpark":
-            case "慕尼黑":
-                return sizeBySytemMapName("17_munchen");
- 
-            case "Вестфилд":
-            case "Westfield":
-            case "韦斯特菲尔德":
-                return sizeBySytemMapName("23_westfeld");
- 
-            case "Заполярье":
-            case "Arctic Region":
-            case "Polargebiet":
-            case "极地冰原":
-                return sizeBySytemMapName("38_mannerheim_line");
- 
-            case "Карелия":
-            case "Karelia":
-            case "Karelien":
-            case "卡累利阿":
-                return sizeBySytemMapName("01_karelia");
- 
-            case "Комарин":
-            case "Komarin":
-            case "科马林":
-                return sizeBySytemMapName("15_komarin");
- 
-            case "Лайв Окс":
-            case "Live Oaks":
-            case "里夫奥克斯":
-                return sizeBySytemMapName("44_north_america");
- 
-            case "Ласвилль":
-            case "Lakeville":
-            case "拉斯威利":
-                return sizeBySytemMapName("07_lakeville");
- 
-            case "Линия Зигфрида":
-            case "Siegfried Line":
-            case "Siegfriedlinie":
-            case "齐格菲防线":
-                return sizeBySytemMapName("14_siegfried_line");
- 
-            case "Малиновка":
-            case "Malinovka":
-            case "Malinowka":
-            case "马利诺夫卡":
-                return sizeBySytemMapName("02_malinovka");
- 
-            case "Монастырь":
-            case "Abbey":
-            case "Kloster":
-            case "小镇争夺战":
-                return sizeBySytemMapName("19_monastery");
- 
-            case "Мурованка":
-            case "Murovanka":
-            case "Murowanka":
-            case "穆勒万卡":
-                return sizeBySytemMapName("11_murovanka");
- 
-            case "Перевал":
-            case "Mountain Pass":
-            case "Bergpass":
-            case "胜利之门":
-                return sizeBySytemMapName("37_caucasus");
- 
-            case "Песчаная река":
-            case "Sand River":
-            case "Wadi":
-            case "荒漠小镇":
-                return sizeBySytemMapName("28_desert");
- 
-            case "Порт":
-            case "Port":
-            case "Hafen":
-            case "钢铁丛林":
-                return sizeBySytemMapName("42_north_america");
- 
-            case "Провинция":
-            case "Province":
-            case "Provinz":
-            case "坎帕尼亚":
-                return sizeBySytemMapName("03_campania");
- 
-            case "Прохоровка":
-            case "Prokhorovka":
-            case "Prokhorowka":
-            case "普罗霍洛夫卡":
-                return sizeBySytemMapName("05_prohorovka");
- 
-            case "Редшир":
-            case "Redshire":
-            case "斯特拉特福":
-                return sizeBySytemMapName("34_redshire");
- 
-            case "Рудники":
-            case "Mines":
-            case "Minen":
-            case "湖边的角逐":
-                return sizeBySytemMapName("10_hills");
- 
-            case "Руинберг":
-            case "Ruinberg":
-            case "鲁别克":
-                return sizeBySytemMapName("08_ruinberg");
- 
-            case "Рыбацкая бухта":
-            case "Fisherman's Bay":
-            case "Fischerbucht":
-            case "费舍尔湾":
-                return sizeBySytemMapName("36_fishing_bay");
- 
-            case "Степи":
-            case "Steppes":
-            case "Steppen":
-            case "荒蛮之地":
-                return sizeBySytemMapName("35_steppes");
- 
-            case "Тихий берег":
-            case "Serene Coast":
-            case "Küste":
-            case "寂静海岸":
-                return sizeBySytemMapName("47_canada_a");
- 
-            case "Утёс":
-            case "Cliff":
-            case "Klippe":
-            case "海岸争霸":
-                return sizeBySytemMapName("18_cliff");
- 
-            case "Фьорды":
-            case "Fjords":
-            case "Fjorde":
-            case "北欧峡湾":
-                return sizeBySytemMapName("33_fjord");
- 
-            case "Хайвей":
-            case "Highway":
-            case "州际公路":
-                return sizeBySytemMapName("45_north_america");
- 
-            case "Химмельсдорф":
-            case "Himmelsdorf":
-            case "锡默尔斯多夫":
-                return sizeBySytemMapName("04_himmelsdorf");
- 
-            case "Хребет Дракона":
-            case "Dragon Ridge":
-            case "Drachenkamm":
-            case "香格里拉":
-                return sizeBySytemMapName("51_asia");
- 
-            case "Эль-Халлуф":
-            case "El Halluf":
-            case "埃里-哈罗夫":
-                return sizeBySytemMapName("29_el_hallouf");
- 
-            case "Энск":
-            case "Ensk":
-            case "安斯克":
-                return sizeBySytemMapName("06_ensk");
- 
-            case "Эрленберг":
-            case "Erlenberg":
-            case "埃勒斯堡":
-                return sizeBySytemMapName("13_erlenberg");
- 
-            case "Южный берег":
-            case "South Coast":
-            case "Südküste":
-            case "雅尔塔小镇":
-                return sizeBySytemMapName("39_crimea");
- 
-            case "Жемчужная река":
-            case "Pearl River":
-            case "Perlenfluss":
-                return sizeBySytemMapName("60_asia_miao");
-            
-            case "Священная долина":
-            case "Sacred Valley":
-                return sizeBySytemMapName("73_asia_korea");
+        MapSizeBaseL10NDefaultValues();
+        //Logger.add("Locale[mapsizebase]: string: " + localizedMapName + " | value: " +  Locale.s_lang.locale.mapname[localizedMapName] + " | fallback string: " + s_mapname[localizedMapName] );
+        return Locale.s_lang.locale.mapname[localizedMapName] || s_mapname[localizedMapName] || localizedMapName ;
+    }
 
-            default:
-                return undefined;
-        }
+    private static function MapSizeBaseL10NDefaultValues() {
+        if (_initialized)
+            return;
+        _initialized = true;
+        
+        s_mapname["Карелия"]="01_karelia";
+        s_mapname["Karelia"]="01_karelia";
+        s_mapname["Karelien"]="01_karelia";
+        s_mapname["卡累利阿"]="01_karelia";
 
+        s_mapname["Малиновка"]="02_malinovka";
+        s_mapname["Malinovka"]="02_malinovka";
+        s_mapname["Malinowka"]="02_malinovka";
+        s_mapname["马利诺夫卡"]="02_malinovka";
+
+        s_mapname["Провинция"]="03_campania";
+        s_mapname["Province"]="03_campania";
+        s_mapname["Provinz"]="03_campania";
+        s_mapname["坎帕尼亚"]="03_campania";
+
+        s_mapname["Химмельсдорф"]="04_himmelsdorf";
+        s_mapname["Himmelsdorf"]="04_himmelsdorf";
+        s_mapname["锡默尔斯多夫"]="04_himmelsdorf";
+
+        s_mapname["Прохоровка"]="05_prohorovka";
+        s_mapname["Prokhorovka"]="05_prohorovka";
+        s_mapname["Prokhorowka"]="05_prohorovka";
+        s_mapname["普罗霍洛夫卡"]="05_prohorovka";
+
+        s_mapname["Энск"]="06_ensk";
+        s_mapname["Ensk"]="06_ensk";
+        s_mapname["安斯克"]="06_ensk";
+
+        s_mapname["Ласвилль"]="07_lakeville";
+        s_mapname["Lakeville"]="07_lakeville";
+        s_mapname["拉斯威利"]="07_lakeville";
+
+        s_mapname["Руинберг"]="08_ruinberg";
+        s_mapname["Ruinberg"]="08_ruinberg";
+        s_mapname["鲁别克"]="08_ruinberg";
+
+        s_mapname["Рудники"]="10_hills";
+        s_mapname["Mines"]="10_hills";
+        s_mapname["Minen"]="10_hills";
+        s_mapname["湖边的角逐"]="10_hills";
+
+        s_mapname["Мурованка"]="11_murovanka";
+        s_mapname["Murovanka"]="11_murovanka";
+        s_mapname["Murowanka"]="11_murovanka";
+        s_mapname["穆勒万卡"]="11_murovanka";
+
+        s_mapname["Эрленберг"]="13_erlenberg";
+        s_mapname["Erlenberg"]="13_erlenberg";
+        s_mapname["埃勒斯堡"]="13_erlenberg";
+
+        s_mapname["Линия Зигфрида"]="14_siegfried_line";
+        s_mapname["Siegfried Line"]="14_siegfried_line";
+        s_mapname["Siegfriedlinie"]="14_siegfried_line";
+        s_mapname["齐格菲防线"]="14_siegfried_line";
+
+        s_mapname["Комарин"]="15_komarin";
+        s_mapname["Komarin"]="15_komarin";
+        s_mapname["科马林"]="15_komarin";
+
+        s_mapname["Уайдпарк"]="17_munchen";
+        s_mapname["Widepark"]="17_munchen";
+        s_mapname["Weitpark"]="17_munchen";
+        s_mapname["慕尼黑"]="17_munchen";
+
+        s_mapname["Утёс"]="18_cliff";
+        s_mapname["Cliff"]="18_cliff";
+        s_mapname["Klippe"]="18_cliff";
+        s_mapname["海岸争霸"]="18_cliff";
+
+        s_mapname["Монастырь"]="19_monastery";
+        s_mapname["Abbey"]="19_monastery";
+        s_mapname["Kloster"]="19_monastery";
+        s_mapname["小镇争夺战"]="19_monastery"; 
+
+        s_mapname["Вестфилд"]="23_westfeld";
+        s_mapname["Westfield"]="23_westfeld";
+        s_mapname["韦斯特菲尔德"]="23_westfeld";
+
+        s_mapname["Песчаная река"]="28_desert";
+        s_mapname["Sand River"]="28_desert";
+        s_mapname["Wadi"]="28_desert";
+        s_mapname["荒漠小镇"]="28_desert";
+
+        s_mapname["Эль-Халлуф"]="29_el_hallouf";
+        s_mapname["El Halluf"]="29_el_hallouf";
+        s_mapname["埃里-哈罗夫"]="29_el_hallouf";
+
+        s_mapname["Аэродром"]="31_airfield";
+        s_mapname["Airfield"]="31_airfield";
+        s_mapname["Flugplatz"]="31_airfield";
+        s_mapname["阿拉曼机场"]="31_airfield";
+
+        s_mapname["Фьорды"]="33_fjord";
+        s_mapname["Fjords"]="33_fjord";
+        s_mapname["Fjorde"]="33_fjord";
+        s_mapname["北欧峡湾"]="33_fjord"; 
+
+        s_mapname["Редшир"]="34_redshire";
+        s_mapname["Redshire"]="34_redshire";
+        s_mapname["斯特拉特福"]="34_redshire";
+
+        s_mapname["Степи"]="35_steppes";
+        s_mapname["Steppes"]="35_steppes";
+        s_mapname["Steppen"]="35_steppes";
+        s_mapname["荒蛮之地"]="35_steppes";
+
+        s_mapname["Рыбацкая бухта"]="36_fishing_bay";
+        s_mapname["Fisherman's Bay"]="36_fishing_bay";
+        s_mapname["Fischerbucht"]="36_fishing_bay";
+        s_mapname["费舍尔湾"]="36_fishing_bay"; 
+
+        s_mapname["Перевал"]="37_caucasus";
+        s_mapname["Mountain Pass"]="37_caucasus";
+        s_mapname["Bergpass"]="37_caucasus";
+        s_mapname["胜利之门"]="37_caucasus"; 
+
+        s_mapname["Заполярье"]="38_mannerheim_line";
+        s_mapname["Arctic Region"]="38_mannerheim_line";
+        s_mapname["Polargebiet"]="38_mannerheim_line";
+        s_mapname["极地冰原"]="38_mannerheim_line";
+
+        s_mapname["Южный берег"]="39_crimea";
+        s_mapname["South Coast"]="39_crimea";
+        s_mapname["Südküste"]="39_crimea";
+        s_mapname["雅尔塔小镇"]="39_crimea";
+
+        s_mapname["Порт"]="42_north_america";
+        s_mapname["Port"]="42_north_america";
+        s_mapname["Hafen"]="42_north_america";
+        s_mapname["钢铁丛林"]="42_north_america"; 
+
+        s_mapname["Лайв Окс"]="44_north_america";
+        s_mapname["Live Oaks"]="44_north_america";
+        s_mapname["里夫奥克斯"]="44_north_america";
+
+        s_mapname["Хайвей"]="45_north_america";
+        s_mapname["Highway"]="45_north_america";
+        s_mapname["州际公路"]="45_north_america";
+
+        s_mapname["Тихий берег"]="47_canada_a";
+        s_mapname["Serene Coast"]="47_canada_a";
+        s_mapname["Küste"]="47_canada_a";
+        s_mapname["寂静海岸"]="47_canada_a";
+
+        s_mapname["Хребет Дракона"]="51_asia";
+        s_mapname["Dragon Ridge"]="51_asia";
+        s_mapname["Drachenkamm"]="51_asia";
+        s_mapname["香格里拉"]="51_asia";
+
+        s_mapname["Жемчужная река"]="60_asia_miao";
+        s_mapname["Pearl River"]="60_asia_miao";
+        s_mapname["Perlenfluss"]="60_asia_miao";
+
+        s_mapname["Священная долина"]="73_asia_korea";
+        s_mapname["Sacred Valley"]="73_asia_korea";
+        
+        s_mapname["Белогорск-19"]="85_winter";
+        s_mapname["Belogorsk-19"]="85_winter";
     }
 }

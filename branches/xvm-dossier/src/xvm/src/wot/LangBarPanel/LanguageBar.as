@@ -136,12 +136,10 @@ class wot.LangBarPanel.LanguageBar
         pingHolder._y = Math.round((768 - main.__height) / 2);
         PingServers.initFeature(Config.s_config.login.pingServers, pingHolder);
 
-        // Dossier component TESTING ONLY
-        if (Config.s_config.hangar.dossier.enabled == true)
-        {
-            var wsd = new WidgetsSettingsDialog(main);
-            //dossierHolder = main.createEmptyMovieClip("dossierHolder", main.getNextHighestDepth());
-            //Dossier.initialize(Config.s_config.hangar.dossier, dossierHolder, "sirmax2");
-        }
+        // ------------------ DEBUG ------------------
+        //var wsd = new com.xvm.Components.Dossier.WidgetsSettingsDialog(_root.header);
+        //dossierHolder = main.createEmptyMovieClip("dossierHolder", main.getNextHighestDepth());
+        //Dossier.initialize(Config.s_config.hangar.dossier, dossierHolder, "sirmax2");
+        // ------------------ DEBUG ------------------
     }
 }

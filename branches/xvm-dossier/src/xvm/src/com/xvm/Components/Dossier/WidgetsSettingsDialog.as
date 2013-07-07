@@ -35,7 +35,7 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     
     public function WidgetsSettingsDialog(main_mc:MovieClip) 
     {
-return;        
+//return;        
 
         Logger.add("WidgetsSettingsDialog()");
         this.main_mc = main_mc;

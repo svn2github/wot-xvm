@@ -1,3 +1,4 @@
+import com.xvm.Logger;
 import flash.geom.Point;
 import wot.Minimap.dataTypes.Player;
 import wot.Minimap.model.externalProxy.MapConfig;
@@ -8,6 +9,8 @@ class wot.Minimap.view.LabelViewBuilder
 {
     public static var TEXT_FIELD_NAME:String = "textField";
     
+    private static var TF_DEPTH:Number = 100;
+    
     public static function createTextField(label:MovieClip):Void
     {
         var status:Number = label[LabelsContainer.STATUS_FIELD_NAME];
@@ -17,7 +20,7 @@ class wot.Minimap.view.LabelViewBuilder
         
         var offset:Point = MapConfig.unitLabelOffset(entryName, status);
 
-        var textField:TextField = label.createTextField(TEXT_FIELD_NAME, label.getNextHighestDepth(), offset.x, offset.y, 100, 40);
+        var textField:TextField = label.createTextField(TEXT_FIELD_NAME, TF_DEPTH, offset.x, offset.y, 100, 40);
         textField.antiAliasType = "advanced";
         textField.html = true;
         textField.multiline = true;
