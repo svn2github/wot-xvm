@@ -49,6 +49,10 @@ class com.xvm.Defines
     public static var COMMAND_SAVE_SETTINGS:String = DOKAN_MP + "@SAVE_SETTINGS";
     public static var COMMAND_LOAD_SETTINGS:String = DOKAN_MP + "@LOAD_SETTINGS";
 
+    // Settings keys
+    public static var SETTINGS_DOSSIER_WIDGETS:String = "dossier.widgets";
+    public static var SETTINGS_DOSSIER_WIDGETSSETTINGSDIALOG:String = "dossier.widgetsSettingsDialog";
+
     // Default path to vehicle icons (relative)
     public static var WG_CONTOUR_ICON_PATH:String = "../maps/icons/vehicle/contour/";
     

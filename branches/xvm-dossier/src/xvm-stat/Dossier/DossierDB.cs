@@ -20,7 +20,7 @@ namespace wot.Dossier
     private const string DB_VERSION = "1";
 
     #region DB Structure
-    private static string[] CREATE_Commands = {
+    private readonly static string[] CREATE_Commands = {
       "CREATE TABLE Vars (key TEXT PRIMARY KEY, value TEXT)",
       "INSERT INTO Vars VALUES ('" + VAR_DB_VERSION + "', '" + DB_VERSION + "')",
 
@@ -57,7 +57,7 @@ namespace wot.Dossier
 
     #region initialization
 
-    private static string[] PRAGMA_Commands = {
+    private readonly static string[] PRAGMA_Commands = {
       "PRAGMA auto_vacuum = INCREMENTAL",
       "PRAGMA incremental_vacuum(1024)",
       "PRAGMA journal_mode = WAL",
@@ -121,7 +121,7 @@ namespace wot.Dossier
 
     #region Execute* functions  (private static)
 
-    private static object _executeLock = new object();
+    private readonly static object _executeLock = new object();
 
     private static void ExecuteNonQuery(string query)
     {
@@ -156,7 +156,7 @@ namespace wot.Dossier
 
     public static void SetVar(string var, string value)
     {
-      ExecuteNonQuery("INSERT OR REPLACE INTO Vars VALUES ("+ Q(var) + ", " + Q(value) + ")");
+      ExecuteNonQuery(String.Format("INSERT OR REPLACE INTO Vars VALUES ({0}, {1})", Q(var), Q(value)));
     }
     #endregion
 
@@ -168,13 +168,13 @@ namespace wot.Dossier
 
     public static void SaveSettings(string key, string value)
     {
-      ExecuteNonQuery("INSERT OR REPLACE INTO Settings VALUES (" + Q(key) + ", " + Q(value) + ")");
+      ExecuteNonQuery(String.Format("INSERT OR REPLACE INTO Settings VALUES ({0}, {1})", Q(key), Q(value)));
     }
     #endregion
 
     public static int GetDossierFileParam(string filename, string paramName, int defaultValue = 0)
     {
-      string value = ExecuteScalar("SELECT " + paramName + " FROM DossierCacheFiles WHERE filename=" + Q(filename));
+      string value = ExecuteScalar(String.Format("SELECT {0} FROM DossierCacheFiles WHERE filename={1}", paramName, Q(filename)));
       if (string.IsNullOrEmpty(value))
         return defaultValue;
       int res;
@@ -192,10 +192,9 @@ namespace wot.Dossier
 
       // update periods
       DataRow playerDataRow = ExecuteRow("SELECT 1 FROM Players WHERE playerName=" + Q(dossier.playerName));
-      if (playerDataRow == null)
-        ExecuteNonQuery(String.Format("INSERT INTO Players VALUES({0}, {1}, {1})", Q(dossier.playerName), newLastBattleTime));
-      else
-        ExecuteNonQuery(String.Format("UPDATE Players SET last={1} WHERE playerName={0}", Q(dossier.playerName), newLastBattleTime));
+      ExecuteNonQuery(playerDataRow == null
+        ? String.Format("INSERT INTO Players VALUES({0}, {1}, {1})", Q(dossier.playerName), newLastBattleTime)
+        : String.Format("UPDATE Players SET last={1} WHERE playerName={0}", Q(dossier.playerName), newLastBattleTime));
 
       // update vehicle stat
       if (dossier.vehicles == null)
@@ -214,7 +213,7 @@ namespace wot.Dossier
           continue;
         }
 
-        Program.Log("  " + vd.lastBattleTime.ToUnixDateTime() + ": " + vi.vname + " (" + vd.tankdata_battlesCount + " battles)");
+        Program.Log(String.Format("  {0}: {1} ({2} battles)", vd.lastBattleTime.ToUnixDateTime(), vi.vname, vd.tankdata_battlesCount));
 
         ExecuteNonQuery(String.Format("INSERT OR REPLACE INTO VehicleStat VALUES ({0}, {1}, {2}, {3}, {4}, {5})",
           Q(dossier.playerName),

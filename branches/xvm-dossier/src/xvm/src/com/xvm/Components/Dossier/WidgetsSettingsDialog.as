@@ -12,6 +12,7 @@ import net.wargaming.controls.Window;
 import net.wargaming.managers.Localization;
 import com.xvm.Comm;
 import com.xvm.Defines;
+import com.xvm.JSONx;
 import com.xvm.Locale;
 import com.xvm.Logger;
 import com.xvm.Utils;
@@ -19,11 +20,14 @@ import com.xvm.Utils;
 class com.xvm.Components.Dossier.WidgetsSettingsDialog
 {
     private static var windowName = "widgets_settings";
+    private static  var defaultSettings = { x: 400, y: 150 }
 
+    var settings:Object;
+    
     var main_mc:MovieClip;
     var wnd:Window;
     var list:ScrollingList;
-    
+
     var mc_small:MovieClip;
     var mc_medium:MovieClip;
     var mc_switcher:MovieClip;
@@ -35,13 +39,28 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     
     public function WidgetsSettingsDialog(main_mc:MovieClip) 
     {
+        //Logger.add("WidgetsSettingsDialog()");
 //return;        
 
-        Logger.add("WidgetsSettingsDialog()");
         this.main_mc = main_mc;
 
+        Comm.LoadSettings(Defines.SETTINGS_DOSSIER_WIDGETSSETTINGSDIALOG, this, onSettingsLoaded);
+    }
+    
+    public function onSettingsLoaded(event:Object) 
+    {
+        try
+        {
+            settings = (!event || !event.str || event.str == "") ? defaultSettings : JSONx.parse(event.str);
+        }
+        catch (e)
+        {
+            Logger.add("Error loading settings: " + e.message + "\n" + JSONx.stringify(event));
+            settings = defaultSettings;
+        }
+        
         WindowManager.instance.close(windowName, true);
-        var wopt = { _y: 150, _x: 400,  _title: Locale.get("Widgets Settings"), allowResize: false, _minWidth: 600, _minHeight: 400,
+        var wopt = { _x: settings.x, _y: settings.y,  _title: Locale.get("Widgets Settings"), allowResize: false, _minWidth: 600, _minHeight: 400,
             _formSource: "none", _formType: "symbol", _offsetLeft: 10, _offsetTop: 40, _offsetRight: 10, _offsetBottom: 30,
             _visible: true, topmostLevel: true};
         wnd = WindowManager.instance.open("Window", "widgets_settings", wopt);
@@ -144,6 +163,9 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     
     private function onClose()
     {
+        if (settings.x != wnd._x || settings.y != wnd._y)
+            Comm.SaveSettings(Defines.SETTINGS_DOSSIER_WIDGETSSETTINGSDIALOG, { x: wnd._x, y: wnd._y } );
+
         wnd.removeMovieClip();
         wnd = null;
         WindowManager.instance.deleteWindow(windowName)

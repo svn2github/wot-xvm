@@ -546,7 +546,7 @@ namespace wot
       string value = CollectParts(parameters);
       if (String.IsNullOrEmpty(value))
         return;
-      _result = DossierDB.LoadSettings(parameters);
+      _result = DossierDB.LoadSettings(value);
       if (string.IsNullOrEmpty(_result))
         _result = "";
     }
