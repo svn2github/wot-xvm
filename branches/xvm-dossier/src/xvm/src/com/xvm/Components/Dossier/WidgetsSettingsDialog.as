@@ -73,6 +73,7 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
         list = UIComponent.createInstance(wnd, "ScrollingList", "list", wnd.getNextHighestDepth(),
             { _x: 10, _y: 58, _width: 200, _height: wnd.height - 75, itemRenderer: "DropdownMenu_ListItemRenderer" } );
         list.dataProvider = ["item1", "item2", "item3", "item4"];
+        list.addEventListener("change", this, "onListChange")
         
         var btnAdd:Button = (Button)(wnd.attachMovie("Button", "btnAdd", wnd.getNextHighestDepth(),
             { _x: 15, _y: 35, _width: 90, _height: 22, label:Locale.get("Add") } ));
@@ -171,18 +172,28 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
         WindowManager.instance.deleteWindow(windowName)
     }
 
+    private function onListChange(event)
+    {
+        Logger.addObject(arguments, "onListChange", 2);
+        if (event.index >= list.dataProvider.length && list.dataProvider.length > 0)
+            list.selectedIndex = list.dataProvider.length - 1;
+    }
+    
     private function onAdd()
     {
         //Logger.addObject(arguments, "onAdd", 2);
         var dp = list.dataProvider;
         dp.push("item" + list.dataProvider.length);
-        Logger.addObject(dp, "dp", 2);
         list.dataProvider = dp;
+        list.invalidateData();
     }
     
     private function onRemove()
     {
-        Logger.addObject(arguments, "onRemove", 2);
+        if (list.selectedIndex < 0 || list.selectedIndex >= list.dataProvider.length)
+            return;
+        Array(list.dataProvider).splice(list.selectedIndex, 1);
+        list.invalidateData();
     }
     
     private function onWidgetTypeSelect(event)

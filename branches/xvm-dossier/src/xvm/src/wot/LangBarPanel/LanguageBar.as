@@ -137,7 +137,7 @@ class wot.LangBarPanel.LanguageBar
         PingServers.initFeature(Config.s_config.login.pingServers, pingHolder);
 
         // ------------------ DEBUG ------------------
-        //var wsd = new com.xvm.Components.Dossier.WidgetsSettingsDialog(_root.header);
+        var wsd = new com.xvm.Components.Dossier.WidgetsSettingsDialog(_root.header);
         //dossierHolder = main.createEmptyMovieClip("dossierHolder", main.getNextHighestDepth());
         //Dossier.initialize(Config.s_config.hangar.dossier, dossierHolder, "sirmax2");
         // ------------------ DEBUG ------------------
