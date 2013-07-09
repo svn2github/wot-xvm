@@ -53,6 +53,10 @@ class com.xvm.Defines
     public static var SETTINGS_DOSSIER_WIDGETS:String = "dossier.widgets";
     public static var SETTINGS_DOSSIER_WIDGETSSETTINGSDIALOG:String = "dossier.widgetsSettingsDialog";
 
+    // Default settings
+    public static  var DEFAULT_SETTINGS_WIDGETS = [];
+    public static  var DEFAULT_SETTINGS_WIDGETSSETTINGSDIALOG = { x: 400, y: 150 };
+    
     // Default path to vehicle icons (relative)
     public static var WG_CONTOUR_ICON_PATH:String = "../maps/icons/vehicle/contour/";
     
