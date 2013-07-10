@@ -32,7 +32,8 @@ namespace wot
       {
         for (int i = 0; i < path.Length - 1; ++i)
           data = data[path[i]];
-        return data[path[path.Length - 1]].IsInt ? int.Parse(data[path[path.Length - 1]].ToString()) : 0;
+        JsonData jd = data[path[path.Length - 1]];
+        return jd.IsInt ? int.Parse(jd.ToString()) : 0;
       }
       catch
       {
@@ -46,8 +47,9 @@ namespace wot
       {
         for (int i = 0; i < path.Length - 1; ++i)
           data = data[path[i]];
-        return (data[path[path.Length - 1]].IsInt || data[path[path.Length - 1]].IsLong)
-            ? long.Parse(data[path[path.Length - 1]].ToString()) : 0;
+        JsonData jd = data[path[path.Length - 1]];
+        return (jd.IsInt || jd.IsLong)
+            ? long.Parse(jd.ToString()) : 0;
       }
       catch
       {
@@ -61,8 +63,9 @@ namespace wot
       {
         for (int i = 0; i < path.Length - 1; ++i)
           data = data[path[i]];
-        return (data[path[path.Length - 1]].IsDouble || data[path[path.Length - 1]].IsInt) ?
-          double.Parse(data[path[path.Length - 1]].ToString()) : 0;
+        JsonData jd = data[path[path.Length - 1]];
+        return (jd.IsDouble || jd.IsInt || jd.IsLong) ?
+          double.Parse(jd.ToString()) : 0;
       }
       catch
       {
@@ -76,7 +79,7 @@ namespace wot
       {
         for (int i = 0; i < path.Length - 1; ++i)
           data = data[path[i]];
-        return data[path[path.Length - 1]].IsString ? data[path[path.Length - 1]].ToString() : "";
+        return data[path[path.Length - 1]].ToString();
       }
       catch
       {

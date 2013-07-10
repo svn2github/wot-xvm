@@ -298,7 +298,9 @@ namespace wot
         Directory.SetCurrentDirectory(game_dir);
 
         // --- DEBUG ----------------------------------------
-        //Dossier.Dossier.Instance.GetDossierInfo("1;sirmax2;381374000;3600;24;1;battle_count,wins;;");
+        //Dossier.Dossier.Instance.GetDossierInfo("1;sirmax2;1381374000;3600;24;4;battlesCount,wins;;");
+        //Thread.Sleep(1000);
+        //return;
         // --- DEBUG ----------------------------------------
 
         // Check for another instance started

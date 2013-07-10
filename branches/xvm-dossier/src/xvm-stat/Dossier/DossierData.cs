@@ -4,22 +4,6 @@ using System.Runtime.InteropServices;
 
 namespace wot.Dossier
 {
-  #region DossierPeriodData
-
-  public class DossierResult: Dictionary<long, DossierVehicleResult[]>
-  {
-  }
-
-  public class DossierVehicleResult
-  {
-    public int vid;
-    public string data;
-    public string company;
-    public string clan;
-  }
-
-  #endregion
-
   #region DossierData
   public class DossierData
   {

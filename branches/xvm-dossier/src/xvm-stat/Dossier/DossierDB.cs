@@ -225,27 +225,14 @@ namespace wot.Dossier
       }
     }
 
-    public static List<DossierVehicleResult> GetDataForPeriod(string playerName, long period)
+    public static DataTable GetDataForTime(string playerName, long time)
     {
-      DataTable dt = Execute(String.Format(
-        "SELECT vid, data, company, clan" +
+      return Execute(String.Format(
+        "SELECT {1} AS time, vs.vid, vi.level, vi.class, vi.hp, data, company, clan" +
         " FROM VehicleStat vs" +
-        //" JOIN VehicleInfo vi ON vs.vid = vi.vid" +
+        " JOIN VehicleInfo vi ON vs.vid = vi.vid" +
         " WHERE playerName={0} AND dt <= {1} GROUP BY vs.vid HAVING dt = MAX(dt)",
-        Q(playerName), period));
-      List<DossierVehicleResult> res = new List<DossierVehicleResult>();
-      foreach (DataRow dr in dt.Rows)
-      {
-        DossierVehicleResult vr = new DossierVehicleResult()
-        {
-          vid = (int)((long)dr[0]),
-          data = (string)dr[1],
-          company = (string)dr[2],
-          clan = (string)dr[3],
-        };
-        res.Add(vr);
-      }
-      return res;
+        Q(playerName), time));
     }
   }
 }
