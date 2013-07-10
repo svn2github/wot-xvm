@@ -18,11 +18,8 @@ class com.xvm.Components.Dossier.Dossier
     private var timer:Function; // FIXIT: replace timer with event
     private var commandCounter:Number;
 
-    public static function initialize(cfg:Object, holder:MovieClip, playerName:String)
+    public static function initialize(holder:MovieClip, playerName:String)
     {
-        if (cfg.enabled == false)
-            return;
-return;
         if (instance == null)
             instance = new Dossier(playerName);
         instance.view = new DossierView(cfg, holder);

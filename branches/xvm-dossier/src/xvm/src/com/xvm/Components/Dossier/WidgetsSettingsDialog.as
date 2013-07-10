@@ -19,11 +19,11 @@ import com.xvm.Utils;
 class com.xvm.Components.Dossier.WidgetsSettingsDialog
 {
     private static var windowName = "widgets_settings";
-
+    private static var WIDGET_TYPES = { small: 0, medium: 1, switcher: 2, clock: 3 };
+ 
     var widgets:Array;
     var settings:Object;
-    var widgetsChanged:Boolean;
-    
+
     var main_mc:MovieClip;
 
     var wnd:Window;
@@ -37,6 +37,7 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     var mc_small:MovieClip;
     var mc_medium:MovieClip;
     var mc_switcher:MovieClip;
+    var mc_clock:MovieClip;
     
     /////////////////////////////////////////////////////////////////
     // INIT
@@ -58,7 +59,7 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
             Logger.add("Error loading widgets: " + e.message + "\n" + JSONx.stringify(event));
             widgets = Defines.DEFAULT_SETTINGS_WIDGETS;
         }
-        widgetsChanged = false;
+        _widgetsChanged = false;
         Comm.LoadSettings(Defines.SETTINGS_DOSSIER_WIDGETSSETTINGSDIALOG, this, onSettingsLoaded2);
     }
     
@@ -117,10 +118,15 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
         mc_switcher._x = 210; mc_switcher._y = 58;
         CreateSwitcherSettings(mc_switcher);
 
+        mc_clock = mc_widget.createEmptyMovieClip("mc_clock", mc_widget.getNextHighestDepth());
+        mc_clock._x = 210; mc_clock._y = 58;
+        CreateClockSettings(mc_clock);
+
         var dp = [
             { value: "small",    label: Locale.get("Small") },
             { value: "medium",   label: Locale.get("Medium") },
-            { value: "switcher", label: Locale.get("Switcher") } ];
+            { value: "switcher", label: Locale.get("Switcher") },
+            { value: "clock",    label: Locale.get("Clock") } ];
         mc_widget_type = (ButtonBar)(mc_widget.attachMovie("ButtonBar", "widget_type", mc_widget.getNextHighestDepth(),
             { _x: 215, _y: 34, autoSize: true, dataProvider: dp, selectedIndex: -1, itemRenderer: "WindowTabButton" } ));
         mc_widget_type.addEventListener("change", this, "onWidgetTypeSelect");
@@ -178,6 +184,18 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
         cb4.addEventListener("select", this, "onSwitcherCbChange");
     }
 
+    private function CreateClockSettings(mc)
+    {
+        var enable:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "enable", mc.getNextHighestDepth(),
+            { _x: 10, _y: 10, autoSize: true, label: Locale.get("Enable") } ));
+        enable.addEventListener("select", this, "onEnableChange");
+
+        CreateLabel(mc, "lFormat", 10, 30, 40, 25, Locale.get("Format"));
+        var tiFormat:TextInput = (TextInput)(mc.attachMovie("TextInput", "format", mc.getNextHighestDepth(),
+            { _x: 50, _y: 30, _width: 300 } ));
+        tiFormat.addEventListener("textChange", this, "onClockFormatChange");
+    }
+
     private function CreateLabel(mc, name, x, y, w, h, text)
     {
         var tfLbl:TextField = mc.createTextField("tf_lbl", mc.getNextHighestDepth(), x, y, w, h);
@@ -194,6 +212,18 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     
     /////////////////////////////////////////////////////////////////
     // EVENTS
+
+    var _widgetsChanged:Boolean;
+    private function get widgetsChanged()
+    {
+        return _widgetsChanged;
+    }
+    
+    private function set widgetsChanged(value:Boolean)
+    {
+        _widgetsChanged = value;
+        showCurrentWidget();
+    }
     
     private function onClose()
     {
@@ -218,9 +248,10 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     private function onAdd()
     {
         widgets.push({
-            name: "small",
-            type: "small",
-            enabled: true
+            name: Locale.get("clock"),
+            type: "clock",
+            format: "HH:MM:SS",
+            enable: true
         });
         widgetsChanged = true;
         list.invalidateData();
@@ -247,9 +278,11 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
         {
             widgets[list.selectedIndex] = {
                 type: event.item.value,
-                name: event.item.value,
+                name: Locale.get(event.item.value),
                 enable: w.enable
             }
+            if (event.item.value == "clock")
+                widgets[list.selectedIndex].format = "HH:MM:SS";
             widgetsChanged = true;
             list.invalidateData();
             drawWidgetSettings();
@@ -292,7 +325,7 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
             return;
         var w = widgets[list.selectedIndex];
         w.label = event.target.text;
-        w.name = w.type + (w.label == "" ? "" : " : " + w.label);
+        w.name = Locale.get(w.type) + (w.label == "" ? "" : " : " + w.label);
         list.invalidateData();
         widgetsChanged = true;
     }
@@ -314,6 +347,16 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
         w.modes = (event.target.selected) ? w.modes | n : w.modes & ~n;
     }
     
+    private function onClockFormatChange(event)
+    {
+        //Logger.addObject(arguments, "onClockFormatChange", 2);
+        if (list.selectedIndex < 0 || list.selectedIndex > widgets.length - 1)
+            return;
+        var w = widgets[list.selectedIndex];
+        w.format = event.target.text;
+        widgetsChanged = true;
+    }
+
     /////////////////////////////////////////////////////////////////
     // DRAW
     
@@ -331,16 +374,18 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
         mc_widget._visible = true;
 
         var w = widgets[list.selectedIndex];
-        mc_widget_type.selectedIndex = w.type == "small" ? 0 : w.type == "medium" ? 1 : 2;
+        mc_widget_type.selectedIndex = WIDGET_TYPES[w.type];
         mc_small._visible = w.type == "small";
         mc_medium._visible = w.type == "medium";
         mc_switcher._visible = w.type == "switcher";
+        mc_clock._visible = w.type == "clock";
         
         switch (w.type)
         {
             case "small": drawSmallWidgetSettings(w); break;
             case "medium": drawMediumWidgetSettings(w); break;
             case "switcher": drawSwitcherSettings(w); break;
+            case "clock": drawClockSettings(w); break;
         }
     }
 
@@ -372,5 +417,21 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
         mc_switcher.cb2.selected = (w.modes & 0x02);
         mc_switcher.cb3.selected = (w.modes & 0x04);
         mc_switcher.cb4.selected = (w.modes & 0x08);
+    }
+
+    private function drawClockSettings(w:Object)
+    {
+        mc_clock.enable.selected = w.enable;
+        if (!w.format)
+            w.format = "HH:MM:SS";
+        mc_clock.format.text = w.format;
+    }
+    
+    /////////////////////////////////////////////////////////////////
+    // PREVIEW
+
+    private function showCurrentWidget()
+    {
+        
     }
 }

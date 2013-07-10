@@ -10,9 +10,9 @@
     // true - Show XWN instead of XEFF in company windows
     // true - показывать XWN вместо XEFF в окнах рот
     "xwnInCompany": true,
-    // Dossier (extended user statistics)
-    // Досье (расширенная статистика игрока)
-    "dossier": ${"dossier.xc":"dossier"},
+    // true - Enable dossier (extended user statistics)
+    // true - включить досье (расширенная статистика игрока)
+    "dossierEnabled": true,
     // Ping servers; works only with xvm-stat.exe
     // Пинг серверов; работает только с xvm-stat.exe
     "pingServers": {

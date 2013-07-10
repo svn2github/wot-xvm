@@ -99,7 +99,7 @@ class wot.LangBarPanel.LanguageBar
         PingServers.initFeature(Config.s_config.hangar.pingServers, pingHolder);
         
         // Dossier component
-        if (Config.s_config.hangar.dossier.enabled == true)
+        if (Config.s_config.hangar.dossierEnabled == true)
         {
             var bar:gfx.core.UIComponent = _root.header.buttonsBlock.bar;
             //com.xvm.Logger.addObject(_root.header.buttonsBlock.bar._dataProvider, "", 3);
@@ -114,7 +114,7 @@ class wot.LangBarPanel.LanguageBar
 
             var playerName = _root.header.tankPanel.account_name.text;
             dossierHolder = header.createEmptyMovieClip("dossierHolder", header.getNextHighestDepth());
-            Dossier.initialize(Config.s_config.hangar.dossier, dossierHolder, playerName);
+            Dossier.initialize(dossierHolder, playerName);
         }
     }
 
