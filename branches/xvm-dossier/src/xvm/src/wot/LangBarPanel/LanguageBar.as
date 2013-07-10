@@ -1,10 +1,14 @@
-﻿import com.xvm.Components.PingServers.PingServers;
+﻿import com.xvm.Comm;
 import com.xvm.Config;
+import com.xvm.Defines;
 import com.xvm.GlobalEventDispatcher;
+import com.xvm.JSONx;
 import com.xvm.Locale;
+import com.xvm.Logger;
 import com.xvm.Utils;
 import com.xvm.Components.Dossier.Dossier;
 import com.xvm.Components.Dossier.WidgetsSettingsDialog;
+import com.xvm.Components.PingServers.PingServers;
 
 class wot.LangBarPanel.LanguageBar
 {
@@ -34,15 +38,16 @@ class wot.LangBarPanel.LanguageBar
     // wrapped methods
     /////////////////////////////////////////////////////////////////
 
+    private var playerName:String;
     private var currentLoadingName:String;
-    private var pingHolder:MovieClip;
-    private var dossierHolder:MovieClip;
+    private var mc_ping:MovieClip;
+    private var mc_widgets:MovieClip;
     
     public function LanguageBarCtor()
     {
         currentLoadingName = "";
-        pingHolder = null;
-        dossierHolder = null;
+        mc_ping = null;
+        mc_widgets = null;
 
         GlobalEventDispatcher.addEventListener("config_loaded", this, onConfigLoaded);
         Config.LoadConfig("LanguageBar.as");
@@ -66,15 +71,15 @@ class wot.LangBarPanel.LanguageBar
 
         // "startgamevideo", "login", "hangar"
 
-        if (pingHolder != null)
+        if (mc_ping != null)
         {
-            pingHolder.removeMovieClip();
-            pingHolder = null;
+            mc_ping.removeMovieClip();
+            mc_ping = null;
         }
-        if (dossierHolder != null)
+        if (mc_widgets != null)
         {
-            dossierHolder.removeMovieClip();
-            dossierHolder = null;
+            mc_widgets.removeMovieClip();
+            mc_widgets = null;
         }
         
         if (currentLoadingName == "startgamevideo" || currentLoadingName == "login")
@@ -93,36 +98,56 @@ class wot.LangBarPanel.LanguageBar
     private function initHangar()
     {
         var header:MovieClip = _root.header;
+        playerName = _root.header.tankPanel.account_name.text;
 
         // PingServers component
-        pingHolder = header.createEmptyMovieClip("pingHolder", header.getNextHighestDepth());
-        PingServers.initFeature(Config.s_config.hangar.pingServers, pingHolder);
+        mc_ping = header.createEmptyMovieClip("pingHolder", header.getNextHighestDepth());
+        PingServers.initFeature(Config.s_config.hangar.pingServers, mc_ping);
         
         // Dossier component
         if (Config.s_config.hangar.dossierEnabled == true)
         {
-            var bar:gfx.core.UIComponent = _root.header.buttonsBlock.bar;
-            //com.xvm.Logger.addObject(_root.header.buttonsBlock.bar._dataProvider, "", 3);
-            if (bar["xvm_initialized"] != true)
-            {
-                bar["xvm_initialized"] = true;
-                var dp:Array = bar["dataProvider"];
-                dp.push({ value: "widget", label: Locale.get("Widgets") });
-                bar["dataProvider"] = dp;
-                bar.addEventListener("itemClick", this, "menuBarSelectEvent");
-            }
-
-            var playerName = _root.header.tankPanel.account_name.text;
-            dossierHolder = header.createEmptyMovieClip("dossierHolder", header.getNextHighestDepth());
-            Dossier.initialize(dossierHolder, playerName);
+            createMenuWidgetsButton();
+            Comm.LoadSettings(playerName + ":" + Defines.SETTINGS_DOSSIER_WIDGETS, this, onWidgetsLoaded);
         }
+    }
+    
+    private function createMenuWidgetsButton()
+    {
+        var bar:gfx.core.UIComponent = _root.header.buttonsBlock.bar;
+        if (bar["xvm_initialized"] != true)
+        {
+            bar["xvm_initialized"] = true;
+            var dp:Array = bar["dataProvider"];
+            dp.push({ value: "widget", label: Locale.get("Widgets") });
+            bar["dataProvider"] = dp;
+            bar.addEventListener("itemClick", this, "menuBarSelectEvent");
+        }
+    }
+    
+    private function onWidgetsLoaded(event:Object)
+    {
+        var widgets = null;
+        try
+        {
+            if (!event || !event.str || event.str == "")
+                return;
+            widgets = (Array)(JSONx.parse(event.str));
+        }
+        catch (e)
+        {
+            Logger.add("Error loading widgets: " + e.message + "\n" + JSONx.stringify(event));
+            return;
+        }
+
+        mc_widgets = _root.header.createEmptyMovieClip("widgets", _root.header.getNextHighestDepth());
+        Dossier.initialize(mc_widgets, playerName, widgets);
     }
 
     private function menuBarSelectEvent(event)
     {
-        if (event.item.value != "widget")
-            return;
-        var wsd = new WidgetsSettingsDialog(_root.header);
+        if (event.item.value == "widget")
+            var wsd = new WidgetsSettingsDialog(_root.header, playerName);
     }
     
     private function initLogin()
@@ -130,16 +155,16 @@ class wot.LangBarPanel.LanguageBar
         var main:MovieClip = _root.contentHolder.main;
 
         // PingServers component
-        pingHolder = main.createEmptyMovieClip("pingHolder", main.getNextHighestDepth());
+        mc_ping = main.createEmptyMovieClip("pingHolder", main.getNextHighestDepth());
         // _root.contentHolder.main is fixed size (1024x768), so create holder and place it at the top left corner of screen.
-        pingHolder._x = Math.round((1024 - main.__width) / 2);
-        pingHolder._y = Math.round((768 - main.__height) / 2);
-        PingServers.initFeature(Config.s_config.login.pingServers, pingHolder);
+        mc_ping._x = Math.round((1024 - main.__width) / 2);
+        mc_ping._y = Math.round((768 - main.__height) / 2);
+        PingServers.initFeature(Config.s_config.login.pingServers, mc_ping);
 
         // ------------------ DEBUG ------------------
-        var wsd = new com.xvm.Components.Dossier.WidgetsSettingsDialog(_root.header);
+        //var wsd = new com.xvm.Components.Dossier.WidgetsSettingsDialog(_root.header, "sirmax2");
         //dossierHolder = main.createEmptyMovieClip("dossierHolder", main.getNextHighestDepth());
-        //Dossier.initialize(Config.s_config.hangar.dossier, dossierHolder, "sirmax2");
+        //Dossier.initialize(dossierHolder, "sirmax2", {...});
         // ------------------ DEBUG ------------------
     }
 }

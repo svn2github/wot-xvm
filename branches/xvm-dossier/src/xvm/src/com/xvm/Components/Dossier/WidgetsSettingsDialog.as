@@ -15,6 +15,7 @@ import com.xvm.JSONx;
 import com.xvm.Locale;
 import com.xvm.Logger;
 import com.xvm.Utils;
+import com.xvm.Components.Dossier.DossierFactory;
 
 class com.xvm.Components.Dossier.WidgetsSettingsDialog
 {
@@ -25,7 +26,8 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     var settings:Object;
 
     var main_mc:MovieClip;
-
+    var playerName:String;
+    
     var wnd:Window;
 
     var btnAdd:Button;
@@ -40,30 +42,42 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     var mc_clock:MovieClip;
     
     /////////////////////////////////////////////////////////////////
+    // PROPERTIES
+    
+    var _widgetsChanged:Boolean;
+    private function get widgetsChanged()
+    {
+        return _widgetsChanged;
+    }
+
+    private function set widgetsChanged(value:Boolean)
+    {
+        _widgetsChanged = value;
+        showCurrentWidget();
+    }
+
+    private function get currentWidget()
+    {
+        if (list.selectedIndex < 0 || list.selectedIndex > widgets.length - 1)
+            return null;
+        return widgets[list.selectedIndex];
+    }
+    
+    /////////////////////////////////////////////////////////////////
     // INIT
     
-    public function WidgetsSettingsDialog(main_mc:MovieClip) 
+    public function WidgetsSettingsDialog(main_mc:MovieClip, playerName:String) 
     {
         this.main_mc = main_mc;
-        Comm.LoadSettings(Defines.SETTINGS_DOSSIER_WIDGETS, this, onSettingsLoaded1);
-    }
-    
-    public function onSettingsLoaded1(event:Object)
-    {
-        try
-        {
-            widgets = (!event || !event.str || event.str == "") ? Defines.DEFAULT_SETTINGS_WIDGETS : (Array)(JSONx.parse(event.str));
-        }
-        catch (e)
-        {
-            Logger.add("Error loading widgets: " + e.message + "\n" + JSONx.stringify(event));
-            widgets = Defines.DEFAULT_SETTINGS_WIDGETS;
-        }
+        this.playerName = playerName;
+
+        widgets = DossierFactory.WidgetsSettings;
+        DossierFactory.update([]);
         _widgetsChanged = false;
-        Comm.LoadSettings(Defines.SETTINGS_DOSSIER_WIDGETSSETTINGSDIALOG, this, onSettingsLoaded2);
+        Comm.LoadSettings(playerName + ":" + Defines.SETTINGS_DOSSIER_WIDGETSSETTINGSDIALOG, this, onSettingsLoaded);
     }
     
-    public function onSettingsLoaded2(event:Object)
+    public function onSettingsLoaded(event:Object)
     {
         try
         {
@@ -132,6 +146,8 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
         mc_widget_type.addEventListener("change", this, "onWidgetTypeSelect");
         
         drawWidgetSettings();
+        
+        showCurrentWidget();
     }
 
     private function CreateSmallWidgetSettings(mc:MovieClip)
@@ -212,30 +228,20 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     
     /////////////////////////////////////////////////////////////////
     // EVENTS
-
-    var _widgetsChanged:Boolean;
-    private function get widgetsChanged()
-    {
-        return _widgetsChanged;
-    }
-    
-    private function set widgetsChanged(value:Boolean)
-    {
-        _widgetsChanged = value;
-        showCurrentWidget();
-    }
     
     private function onClose()
     {
         if (settings.x != wnd._x || settings.y != wnd._y)
-            Comm.SaveSettings(Defines.SETTINGS_DOSSIER_WIDGETSSETTINGSDIALOG, { x: wnd._x, y: wnd._y } );
+            Comm.SaveSettings(playerName + ":" + Defines.SETTINGS_DOSSIER_WIDGETSSETTINGSDIALOG, { x: wnd._x, y: wnd._y } );
 
         if (widgetsChanged)
-            Comm.SaveSettings(Defines.SETTINGS_DOSSIER_WIDGETS, widgets);
+            Comm.SaveSettings(playerName + ":" + Defines.SETTINGS_DOSSIER_WIDGETS, widgets);
 
         wnd.removeMovieClip();
         wnd = null;
         WindowManager.instance.deleteWindow(windowName)
+
+        DossierFactory.update(widgets);
     }
 
     private function onListChange(event)
@@ -271,9 +277,9 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     private function onWidgetTypeSelect(event)
     {
         //Logger.addObject(arguments, "onWidgetTypeSelect", 2);
-        if (list.selectedIndex < 0 || list.selectedIndex > widgets.length - 1)
+        var w = currentWidget;
+        if (w == null)
             return;
-        var w = widgets[list.selectedIndex];
         if (w.type != event.item.value)
         {
             widgets[list.selectedIndex] = {
@@ -295,9 +301,9 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     private function onEnableChange(event)
     {
         //Logger.addObject(arguments, "onSmallWidgetEnableChange", 2);
-        if (list.selectedIndex < 0 || list.selectedIndex > widgets.length - 1)
+        var w = currentWidget;
+        if (w == null)
             return;
-        var w = widgets[list.selectedIndex];
         w.enable = event.target.selected;
         widgetsChanged = true;
     }
@@ -305,10 +311,9 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     private function onIntervalChange(event)
     {
         //Logger.addObject(arguments, "onSmallWidgetIntervalChange", 2);
-        if (list.selectedIndex < 0 || list.selectedIndex > widgets.length - 1)
+        var w = currentWidget;
+        if (w == null)
             return;
-        var w = widgets[list.selectedIndex];
-        Logger.add(w.interval + " " + event.target._name + " " + event.target.value);
         if (w.interval != event.target.value && (
             w.type == "small" && event.target._name == "interval_small" ||
             w.type == "medium" && event.target._name == "interval_medium"))
@@ -321,9 +326,9 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     private function onSwitcherLabelChange(event)
     {
         //Logger.addObject(arguments, "onSwitcherLabelChange", 2);
-        if (list.selectedIndex < 0 || list.selectedIndex > widgets.length - 1)
+        var w = currentWidget;
+        if (w == null)
             return;
-        var w = widgets[list.selectedIndex];
         w.label = event.target.text;
         w.name = Locale.get(w.type) + (w.label == "" ? "" : " : " + w.label);
         list.invalidateData();
@@ -333,9 +338,9 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     private function onSwitcherCbChange(event)
     {
         //Logger.addObject(arguments, "onSwitcherCbChange", 2);
-        if (list.selectedIndex < 0 || list.selectedIndex > widgets.length - 1)
+        var w = currentWidget;
+        if (w == null)
             return;
-        var w = widgets[list.selectedIndex];
         var n = 0;
         switch (event.target._name)
         {
@@ -350,9 +355,9 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     private function onClockFormatChange(event)
     {
         //Logger.addObject(arguments, "onClockFormatChange", 2);
-        if (list.selectedIndex < 0 || list.selectedIndex > widgets.length - 1)
+        var w = currentWidget;
+        if (w == null)
             return;
-        var w = widgets[list.selectedIndex];
         w.format = event.target.text;
         widgetsChanged = true;
     }
@@ -363,7 +368,8 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     private function drawWidgetSettings()
     {
         //Logger.addObject(arguments, "drawWidgetSettings", 2);
-        if (list.selectedIndex < 0 || list.selectedIndex > widgets.length - 1)
+        var w = currentWidget;
+        if (w == null)
         {
             btnRemove.disabled = true;
             mc_widget._visible = false;
@@ -373,7 +379,6 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
         btnRemove.disabled = false;
         mc_widget._visible = true;
 
-        var w = widgets[list.selectedIndex];
         mc_widget_type.selectedIndex = WIDGET_TYPES[w.type];
         mc_small._visible = w.type == "small";
         mc_medium._visible = w.type == "medium";
@@ -432,6 +437,10 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
 
     private function showCurrentWidget()
     {
-        
+        var w = currentWidget;
+        if (w == null)
+            DossierFactory.update([]);
+        else
+            DossierFactory.update([ w ]);
     }
 }

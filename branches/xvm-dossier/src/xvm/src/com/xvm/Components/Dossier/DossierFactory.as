@@ -5,17 +5,17 @@ import com.xvm.JSONx;
 import com.xvm.Logger;
 import com.xvm.Utils;
 import com.xvm.VehicleInfo;
-import com.xvm.Components.Dossier.DossierView;
+import com.xvm.Components.Dossier.Dossier;
 
-class com.xvm.Components.Dossier.Dossier
+class com.xvm.Components.Dossier.DossierFactory
 {
-    public static var instance:Dossier = null;
+    public static var instance:DossierFactory = null;
     
-    private var playerName:String;
-    private var widgets:Object;
-    private var view:DossierView;
+    private static var playerName:String;
+    private var widgetsSettings:Object;
+    private var widgets:Array;
     
-    private var timer:Function; // FIXIT: replace timer with event
+    private var timer:Function;
     private var commandCounter:Number;
 
     public static function initialize(holder:MovieClip, playerName:String, widgets:Array)
@@ -39,7 +39,7 @@ class com.xvm.Components.Dossier.Dossier
         instance.view.update(widgets);
     }
 
-    public static function get Widgets()
+    public static function get WidgetsSettings()
     {
         return instance.widgets;
     }
