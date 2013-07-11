@@ -1,5 +1,5 @@
 /**
- * Chart control
+ * Label control
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
 import com.xvm.Utils;

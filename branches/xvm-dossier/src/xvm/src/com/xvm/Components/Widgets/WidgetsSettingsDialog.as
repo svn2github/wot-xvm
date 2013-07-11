@@ -1,3 +1,7 @@
+/**
+ * Widgets Settings Dialog
+ * @author Maxim Schedriviy <m.schedriviy@gmail.com>
+ */
 import gfx.controls.Button;
 import gfx.controls.ButtonBar;
 import gfx.controls.CheckBox;
@@ -15,15 +19,15 @@ import com.xvm.JSONx;
 import com.xvm.Locale;
 import com.xvm.Logger;
 import com.xvm.Utils;
-import com.xvm.Components.Dossier.DossierFactory;
+import com.xvm.Components.Widgets.WidgetsFactory;
 
-class com.xvm.Components.Dossier.WidgetsSettingsDialog
+class com.xvm.Components.Widgets.WidgetsSettingsDialog
 {
     private static var windowName = "widgets_settings";
     private static var WIDGET_TYPES = { small: 0, medium: 1, switcher: 2, clock: 3 };
  
-    var widgets:Array;
-    var settings:Object;
+    var widgetsSettings:Array;
+    var dialogSettings:Object;
 
     var main_mc:MovieClip;
     var playerName:String;
@@ -58,9 +62,9 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
 
     private function get currentWidget()
     {
-        if (list.selectedIndex < 0 || list.selectedIndex > widgets.length - 1)
+        if (list.selectedIndex < 0 || list.selectedIndex > widgetsSettings.length - 1)
             return null;
-        return widgets[list.selectedIndex];
+        return widgetsSettings[list.selectedIndex];
     }
     
     /////////////////////////////////////////////////////////////////
@@ -71,8 +75,8 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
         this.main_mc = main_mc;
         this.playerName = playerName;
 
-        widgets = DossierFactory.WidgetsSettings;
-        DossierFactory.update([]);
+        widgetsSettings = WidgetsFactory.widgetsSettings;
+        WidgetsFactory.update([]);
         _widgetsChanged = false;
         Comm.LoadSettings(playerName + ":" + Defines.SETTINGS_DOSSIER_WIDGETSSETTINGSDIALOG, this, onSettingsLoaded);
     }
@@ -81,18 +85,18 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     {
         try
         {
-            settings = (!event || !event.str || event.str == "") ? Defines.DEFAULT_SETTINGS_WIDGETSSETTINGSDIALOG : JSONx.parse(event.str);
+            dialogSettings = (!event || !event.str || event.str == "") ? Defines.DEFAULT_SETTINGS_WIDGETSSETTINGSDIALOG : JSONx.parse(event.str);
         }
         catch (e)
         {
             Logger.add("Error loading settings: " + e.message + "\n" + JSONx.stringify(event));
-            settings = Defines.DEFAULT_SETTINGS_WIDGETSSETTINGSDIALOG;
+            dialogSettings = Defines.DEFAULT_SETTINGS_WIDGETSSETTINGSDIALOG;
         }
         
         WindowManager.instance.close(windowName, true);
-        var wopt = { _x: settings.x, _y: settings.y,  _title: Locale.get("Widgets Settings"), allowResize: false, _minWidth: 600, _minHeight: 400,
-            _formSource: "none", _formType: "symbol", _offsetLeft: 10, _offsetTop: 40, _offsetRight: 10, _offsetBottom: 30,
-            _visible: true, topmostLevel: true};
+        var wopt = { _x: dialogSettings.x, _y: dialogSettings.y,  _title: Locale.get("Widgets Settings"),
+            allowResize: false, _minWidth: 600, _minHeight: 400, _offsetLeft: 10, _offsetTop: 40, _offsetRight: 10, _offsetBottom: 30,
+            _formSource: "none", _formType: "symbol", _visible: true, topmostLevel: true};
         wnd = WindowManager.instance.open("Window", "widgets_settings", wopt);
         wnd.addEventListener("confirmFormComplete", this, "onConfirmFormComplete");
         wnd.addEventListener("close", this, "onClose");
@@ -103,7 +107,7 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
         list = UIComponent.createInstance(wnd, "ScrollingList", "list", wnd.getNextHighestDepth(),
             { _x: 10, _y: 58, _width: 200, _height: wnd.height - 75, labelField: "name", itemRenderer: "DropdownMenu_ListItemRenderer" } );
         list.addEventListener("change", this, "onListChange");
-        list.dataProvider = widgets;
+        list.dataProvider = widgetsSettings;
         list.invalidateData();
         list.selectedIndex = 0;
         
@@ -231,29 +235,29 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     
     private function onClose()
     {
-        if (settings.x != wnd._x || settings.y != wnd._y)
+        if (dialogSettings.x != wnd._x || dialogSettings.y != wnd._y)
             Comm.SaveSettings(playerName + ":" + Defines.SETTINGS_DOSSIER_WIDGETSSETTINGSDIALOG, { x: wnd._x, y: wnd._y } );
 
         if (widgetsChanged)
-            Comm.SaveSettings(playerName + ":" + Defines.SETTINGS_DOSSIER_WIDGETS, widgets);
+            Comm.SaveSettings(playerName + ":" + Defines.SETTINGS_DOSSIER_WIDGETS, widgetsSettings);
 
         wnd.removeMovieClip();
         wnd = null;
         WindowManager.instance.deleteWindow(windowName)
 
-        DossierFactory.update(widgets);
+        WidgetsFactory.update(widgetsSettings);
     }
 
     private function onListChange(event)
     {
-        if (event.index > widgets.length - 1)
-            list.selectedIndex = widgets.length - 1;
+        if (event.index > widgetsSettings.length - 1)
+            list.selectedIndex = widgetsSettings.length - 1;
         drawWidgetSettings();
     }
     
     private function onAdd()
     {
-        widgets.push({
+        widgetsSettings.push({
             name: Locale.get("clock"),
             type: "clock",
             format: "HH:MM:SS",
@@ -261,14 +265,14 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
         });
         widgetsChanged = true;
         list.invalidateData();
-        list.selectedIndex = widgets.length - 1;
+        list.selectedIndex = widgetsSettings.length - 1;
     }
     
     private function onRemove()
     {
-        if (list.selectedIndex < 0 || list.selectedIndex > widgets.length - 1)
+        if (list.selectedIndex < 0 || list.selectedIndex > widgetsSettings.length - 1)
             return;
-        widgets.splice(list.selectedIndex, 1);
+        widgetsSettings.splice(list.selectedIndex, 1);
         widgetsChanged = true;
         list.invalidateData();
         drawWidgetSettings();
@@ -282,13 +286,13 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
             return;
         if (w.type != event.item.value)
         {
-            widgets[list.selectedIndex] = {
+            widgetsSettings[list.selectedIndex] = {
                 type: event.item.value,
                 name: Locale.get(event.item.value),
                 enable: w.enable
             }
             if (event.item.value == "clock")
-                widgets[list.selectedIndex].format = "HH:MM:SS";
+                widgetsSettings[list.selectedIndex].format = "HH:MM:SS";
             widgetsChanged = true;
             list.invalidateData();
             drawWidgetSettings();
@@ -439,8 +443,8 @@ class com.xvm.Components.Dossier.WidgetsSettingsDialog
     {
         var w = currentWidget;
         if (w == null)
-            DossierFactory.update([]);
+            WidgetsFactory.update([]);
         else
-            DossierFactory.update([ w ]);
+            WidgetsFactory.update([ w ]);
     }
 }

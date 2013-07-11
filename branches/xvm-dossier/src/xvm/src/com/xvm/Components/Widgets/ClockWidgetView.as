@@ -1,3 +1,7 @@
+/**
+ * Clock Widget (view)
+ * @author Maxim Schedriviy <m.schedriviy@gmail.com>
+ */
 import com.xvm.Defines;
 import com.xvm.Locale;
 import com.xvm.Logger;
@@ -8,7 +12,7 @@ import com.xvm.Controls.Grid;
 import com.xvm.Controls.Label;
 import com.xvm.Controls.Progress;
 
-class com.xvm.Components.Dossier.DossierView
+class com.xvm.Components.Widgets.DossierClockWidgetView
 {
     private var cfg:Object;
     private var holder:MovieClip;

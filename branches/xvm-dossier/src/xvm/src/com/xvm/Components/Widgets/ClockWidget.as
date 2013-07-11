@@ -1,3 +1,7 @@
+/**
+ * Clock Widget
+ * @author Maxim Schedriviy <m.schedriviy@gmail.com>
+ */
 import com.xvm.Comm;
 import com.xvm.Config;
 import com.xvm.Defines;
@@ -5,17 +9,17 @@ import com.xvm.JSONx;
 import com.xvm.Logger;
 import com.xvm.Utils;
 import com.xvm.VehicleInfo;
-import com.xvm.Components.Dossier.Dossier;
+import com.xvm.Components.Dossier.DossierView;
 
-class com.xvm.Components.Dossier.DossierFactory
+class com.xvm.Components.Widgets.ClockWidget
 {
-    public static var instance:DossierFactory = null;
+    public static var instance:Dossier = null;
     
-    private static var playerName:String;
-    private var widgetsSettings:Object;
-    private var widgets:Array;
+    private var playerName:String;
+    private var widgets:Object;
+    private var view:DossierView;
     
-    private var timer:Function;
+    private var timer:Function; // FIXIT: replace timer with event
     private var commandCounter:Number;
 
     public static function initialize(holder:MovieClip, playerName:String, widgets:Array)
@@ -39,7 +43,7 @@ class com.xvm.Components.Dossier.DossierFactory
         instance.view.update(widgets);
     }
 
-    public static function get WidgetsSettings()
+    public static function get Widgets()
     {
         return instance.widgets;
     }

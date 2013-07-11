@@ -1,5 +1,5 @@
 /**
- * Chart control
+ * Progress control
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
 import com.xvm.Controls.IControl;

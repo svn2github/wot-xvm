@@ -1,6 +1,6 @@
 /**
- * ...
- * @author 
+ * Base Control Class (abstract)
+ * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
 class com.xvm.Controls.ControlBase
 {

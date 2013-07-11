@@ -1,4 +1,8 @@
-﻿import com.xvm.Comm;
+﻿/**
+ * Language Bar Worker
+ * @author Maxim Schedriviy <m.schedriviy@gmail.com>
+ */
+import com.xvm.Comm;
 import com.xvm.Config;
 import com.xvm.Defines;
 import com.xvm.GlobalEventDispatcher;
@@ -6,9 +10,9 @@ import com.xvm.JSONx;
 import com.xvm.Locale;
 import com.xvm.Logger;
 import com.xvm.Utils;
-import com.xvm.Components.Dossier.Dossier;
-import com.xvm.Components.Dossier.WidgetsSettingsDialog;
 import com.xvm.Components.PingServers.PingServers;
+import com.xvm.Components.Widgets.WidgetsFactory;
+import com.xvm.Components.Widgets.WidgetsSettingsDialog;
 
 class wot.LangBarPanel.LanguageBar
 {
@@ -137,11 +141,11 @@ class wot.LangBarPanel.LanguageBar
         catch (e)
         {
             Logger.add("Error loading widgets: " + e.message + "\n" + JSONx.stringify(event));
-            return;
+            widgets = [];
         }
 
         mc_widgets = _root.header.createEmptyMovieClip("widgets", _root.header.getNextHighestDepth());
-        Dossier.initialize(mc_widgets, playerName, widgets);
+        WidgetsFactory.initialize(mc_widgets, playerName, widgets);
     }
 
     private function menuBarSelectEvent(event)
