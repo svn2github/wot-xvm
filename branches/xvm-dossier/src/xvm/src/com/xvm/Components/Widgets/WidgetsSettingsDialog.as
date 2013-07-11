@@ -25,7 +25,15 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
 {
     private static var windowName = "widgets_settings";
     private static var WIDGET_TYPES = { small: 0, medium: 1, switcher: 2, clock: 3 };
- 
+    public static var DEFAULT_WIDGET_SETTINGS = {
+        id: (new Date()).getTime(),
+        name: Locale.get("clock"),
+        type: "clock",
+        format: "HH:MM:SS",
+        enable: true
+    };
+    
+    var savedWidgetsSettings:Array;
     var widgetsSettings:Array;
     var dialogSettings:Object;
 
@@ -39,11 +47,13 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
     var list:ScrollingList;
 
     var mc_widget:MovieClip;
-    var mc_widget_type:ButtonBar;
+    var mc_widgetType:ButtonBar;
     var mc_small:MovieClip;
     var mc_medium:MovieClip;
     var mc_switcher:MovieClip;
     var mc_clock:MovieClip;
+
+    var mc_actions:ButtonBar;
     
     /////////////////////////////////////////////////////////////////
     // PROPERTIES
@@ -58,6 +68,7 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
     {
         _widgetsChanged = value;
         showCurrentWidget();
+        mc_actions.renderers[1].disabled = !value; // apply
     }
 
     private function get currentWidget()
@@ -76,6 +87,10 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
         this.playerName = playerName;
 
         widgetsSettings = WidgetsFactory.widgetsSettings;
+        savedWidgetsSettings = (Array)(JSONx.parse(JSONx.stringify(widgetsSettings)));
+        
+        //Logger.addObject(widgetsSettings);
+        
         WidgetsFactory.update([]);
         _widgetsChanged = false;
         Comm.LoadSettings(playerName + ":" + Defines.SETTINGS_DOSSIER_WIDGETSSETTINGSDIALOG, this, onSettingsLoaded);
@@ -95,7 +110,7 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
         
         WindowManager.instance.close(windowName, true);
         var wopt = { _x: dialogSettings.x, _y: dialogSettings.y,  _title: Locale.get("Widgets Settings"),
-            allowResize: false, _minWidth: 600, _minHeight: 400, _offsetLeft: 10, _offsetTop: 40, _offsetRight: 10, _offsetBottom: 30,
+            allowResize: false, _minWidth: 600, _minHeight: 430, _offsetLeft: 10, _offsetTop: 40, _offsetRight: 10, _offsetBottom: 30,
             _formSource: "none", _formType: "symbol", _visible: true, topmostLevel: true};
         wnd = WindowManager.instance.open("Window", "widgets_settings", wopt);
         wnd.addEventListener("confirmFormComplete", this, "onConfirmFormComplete");
@@ -105,7 +120,7 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
     private function onConfirmFormComplete()
     {
         list = UIComponent.createInstance(wnd, "ScrollingList", "list", wnd.getNextHighestDepth(),
-            { _x: 10, _y: 58, _width: 200, _height: wnd.height - 75, labelField: "name", itemRenderer: "DropdownMenu_ListItemRenderer" } );
+            { _x: 10, _y: 58, _width: 200, _height: wnd.height - 100, labelField: "name", itemRenderer: "DropdownMenu_ListItemRenderer" } );
         list.addEventListener("change", this, "onListChange");
         list.dataProvider = widgetsSettings;
         list.invalidateData();
@@ -120,7 +135,7 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
         btnRemove.addEventListener("click", this, "onRemove");
 
         wnd.attachMovie("Window_BGForm", "bg", wnd.getNextHighestDepth(),
-            { _x: 210, _y: 58, _width: wnd.width - 220, _height: wnd.height - 75 });
+            { _x: 210, _y: 58, _width: wnd.width - 220, _height: wnd.height - 100 });
 
         mc_widget = wnd.createEmptyMovieClip("mc_widget", wnd.getNextHighestDepth());
 
@@ -145,12 +160,20 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
             { value: "medium",   label: Locale.get("Medium") },
             { value: "switcher", label: Locale.get("Switcher") },
             { value: "clock",    label: Locale.get("Clock") } ];
-        mc_widget_type = (ButtonBar)(mc_widget.attachMovie("ButtonBar", "widget_type", mc_widget.getNextHighestDepth(),
+        mc_widgetType = (ButtonBar)(mc_widget.attachMovie("ButtonBar", "widget_type", mc_widget.getNextHighestDepth(),
             { _x: 215, _y: 34, autoSize: true, dataProvider: dp, selectedIndex: -1, itemRenderer: "WindowTabButton" } ));
-        mc_widget_type.addEventListener("change", this, "onWidgetTypeSelect");
-        
+        mc_widgetType.addEventListener("change", this, "onWidgetTypeSelect");
+
+        var dp_actions = [
+            { value: "cancel",   label: Locale.get("Cancel") },
+            { value: "apply",    label: Locale.get("Apply"), disabled: true },
+            { value: "ok",       label: Locale.get("OK") } ];
+        mc_actions = (ButtonBar)(wnd.attachMovie("ButtonBar", "actions", wnd.getNextHighestDepth(),
+            { _x: 330, _y: 390, buttonWidth: 80, dataProvider: dp_actions, selectedIndex: -1, spacing: 5, tabEnabled: false, focusEnabled: false,
+              itemRenderer: "Button" } ));
+        mc_actions.addEventListener("change", this, "onActionButtonClick");
+
         drawWidgetSettings();
-        
         showCurrentWidget();
     }
 
@@ -238,16 +261,47 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
         if (dialogSettings.x != wnd._x || dialogSettings.y != wnd._y)
             Comm.SaveSettings(playerName + ":" + Defines.SETTINGS_DOSSIER_WIDGETSSETTINGSDIALOG, { x: wnd._x, y: wnd._y } );
 
-        if (widgetsChanged)
-            Comm.SaveSettings(playerName + ":" + Defines.SETTINGS_DOSSIER_WIDGETS, widgetsSettings);
-
         wnd.removeMovieClip();
         wnd = null;
         WindowManager.instance.deleteWindow(windowName)
 
-        WidgetsFactory.update(widgetsSettings);
+        WidgetsFactory.update(savedWidgetsSettings);
     }
 
+    private function onActionButtonClick(event)
+    {
+        Logger.addObject(arguments, "onActionButtonClick", 2);
+        
+        var save:Boolean = false;
+        var close:Boolean = false;
+        
+        switch (event.item.value)
+        {
+            case "cancel":
+                close = true;
+                break;
+            
+            case "apply":
+                save = true;
+                break;
+            
+            case "ok":
+                save = true;
+                close = true;
+                break;
+        }
+
+        if (save && widgetsChanged)
+        {
+            savedWidgetsSettings = (Array)(JSONx.parse(JSONx.stringify(widgetsSettings)));
+            widgetsChanged = false;
+            Comm.SaveSettings(playerName + ":" + Defines.SETTINGS_DOSSIER_WIDGETS, widgetsSettings);
+        }
+
+        if (close)
+            onClose();
+    }
+    
     private function onListChange(event)
     {
         if (event.index > widgetsSettings.length - 1)
@@ -257,12 +311,9 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
     
     private function onAdd()
     {
-        widgetsSettings.push({
-            name: Locale.get("clock"),
-            type: "clock",
-            format: "HH:MM:SS",
-            enable: true
-        });
+        var w = DEFAULT_WIDGET_SETTINGS;
+        w.id = (new Date()).getTime();
+        widgetsSettings.push(JSONx.parse(JSONx.stringify(w)));
         widgetsChanged = true;
         list.invalidateData();
         list.selectedIndex = widgetsSettings.length - 1;
@@ -287,6 +338,7 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
         if (w.type != event.item.value)
         {
             widgetsSettings[list.selectedIndex] = {
+                id:  w.id,
                 type: event.item.value,
                 name: Locale.get(event.item.value),
                 enable: w.enable
@@ -383,7 +435,7 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
         btnRemove.disabled = false;
         mc_widget._visible = true;
 
-        mc_widget_type.selectedIndex = WIDGET_TYPES[w.type];
+        mc_widgetType.selectedIndex = WIDGET_TYPES[w.type];
         mc_small._visible = w.type == "small";
         mc_medium._visible = w.type == "medium";
         mc_switcher._visible = w.type == "switcher";

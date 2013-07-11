@@ -59,6 +59,7 @@ class com.xvm.Components.Widgets.WidgetsFactory
         m_holder = holder;
         m_playerName = playerName;
         m_widgetsSettings = widgetsSettings;
+        m_widgets = [];
 
         m_commandCounter = 0;
 
@@ -72,6 +73,7 @@ class com.xvm.Components.Widgets.WidgetsFactory
     // called by timer every 10 ms
     private function idleFunc()
     {
+return;
         var now = (new Date()).getTime();
         if (!_lastUpdateDataCall)
         {
@@ -94,7 +96,7 @@ class com.xvm.Components.Widgets.WidgetsFactory
             (15 * 60) + ";" +         // interval(sec)
             100 + ";" +               // count
             "2;" +                    // 1 - per vehicle, 2 - summary
-            "battles_count,wins;" +   // data fields
+            "battlesCount,wins;" +    // data fields
             ";" +                     // company fields
             "",                       // clan fields
             this, answerCallback);
@@ -132,5 +134,9 @@ class com.xvm.Components.Widgets.WidgetsFactory
     private function updateWidgets()
     {
         Logger.addObject(m_widgetsSettings, "", 2);
+        
+        for (var i = 0; i < m_widgets.length; ++i)
+        {
+        }
     }
 }

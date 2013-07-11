@@ -12,7 +12,7 @@ import com.xvm.Controls.Grid;
 import com.xvm.Controls.Label;
 import com.xvm.Controls.Progress;
 
-class com.xvm.Components.Widgets.DossierClockWidgetView
+class com.xvm.Components.Widgets.ClockWidgetView
 {
     private var cfg:Object;
     private var holder:MovieClip;

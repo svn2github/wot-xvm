@@ -1,7 +1,8 @@
 ﻿/**
- * Language Bar Worker
+ * LanguageBar Worker
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
+import gfx.controls.ButtonBar;
 import com.xvm.Comm;
 import com.xvm.Config;
 import com.xvm.Defines;
@@ -86,10 +87,17 @@ class wot.LangBarPanel.LanguageBar
             mc_widgets = null;
         }
         
-        if (currentLoadingName == "startgamevideo" || currentLoadingName == "login")
-            initLogin();
-        else if (currentLoadingName == "hangar")
-            initHangar();
+        try
+        {
+            if (currentLoadingName == "startgamevideo" || currentLoadingName == "login")
+                initLogin();
+            else if (currentLoadingName == "hangar")
+                initHangar();
+        }
+        catch (e)
+        {
+            Logger.add("ERROR: " + e.message);
+        }
     }
     
     function initImpl()
@@ -98,6 +106,24 @@ class wot.LangBarPanel.LanguageBar
     }
     
     // PRIVATE
+    
+    private function initLogin()
+    {
+        var main:MovieClip = _root.contentHolder.main;
+
+        // PingServers component
+        mc_ping = main.createEmptyMovieClip("pingHolder", main.getNextHighestDepth());
+        // _root.contentHolder.main is fixed size (1024x768), so create holder and place it at the top left corner of screen.
+        mc_ping._x = Math.round((1024 - main.__width) / 2);
+        mc_ping._y = Math.round((768 - main.__height) / 2);
+        PingServers.initFeature(Config.s_config.login.pingServers, mc_ping);
+
+        // ------------------ DEBUG ------------------
+        //var wsd = new com.xvm.Components.Dossier.WidgetsSettingsDialog(_root.header, "sirmax2");
+        //var mc = _root.header.createEmptyMovieClip("widgetsHolder", _root.header.getNextHighestDepth());
+        //com.xvm.Components.Widgets.WidgetsFactory.initialize(mc, "sirmax2", [ com.xvm.Components.Widgets.WidgetsSettingsDialog.DEFAULT_WIDGET_SETTINGS ]);
+        // ------------------ DEBUG ------------------
+    }
     
     private function initHangar()
     {
@@ -118,14 +144,15 @@ class wot.LangBarPanel.LanguageBar
     
     private function createMenuWidgetsButton()
     {
-        var bar:gfx.core.UIComponent = _root.header.buttonsBlock.bar;
-        if (bar["xvm_initialized"] != true)
+        var bar:ButtonBar = (ButtonBar)(_root.header.buttonsBlock.bar);
+        if (bar.xvm_initialized != true)
         {
-            bar["xvm_initialized"] = true;
-            var dp:Array = bar["dataProvider"];
+            bar.xvm_initialized = true;
+            var dp:Array = bar.dataProvider;
             dp.push({ value: "widget", label: Locale.get("Widgets") });
-            bar["dataProvider"] = dp;
+            bar.dataProvider = dp;
             bar.addEventListener("itemClick", this, "menuBarSelectEvent");
+            bar.draw();
         }
     }
     
@@ -152,23 +179,5 @@ class wot.LangBarPanel.LanguageBar
     {
         if (event.item.value == "widget")
             var wsd = new WidgetsSettingsDialog(_root.header, playerName);
-    }
-    
-    private function initLogin()
-    {
-        var main:MovieClip = _root.contentHolder.main;
-
-        // PingServers component
-        mc_ping = main.createEmptyMovieClip("pingHolder", main.getNextHighestDepth());
-        // _root.contentHolder.main is fixed size (1024x768), so create holder and place it at the top left corner of screen.
-        mc_ping._x = Math.round((1024 - main.__width) / 2);
-        mc_ping._y = Math.round((768 - main.__height) / 2);
-        PingServers.initFeature(Config.s_config.login.pingServers, mc_ping);
-
-        // ------------------ DEBUG ------------------
-        //var wsd = new com.xvm.Components.Dossier.WidgetsSettingsDialog(_root.header, "sirmax2");
-        //dossierHolder = main.createEmptyMovieClip("dossierHolder", main.getNextHighestDepth());
-        //Dossier.initialize(dossierHolder, "sirmax2", {...});
-        // ------------------ DEBUG ------------------
     }
 }
