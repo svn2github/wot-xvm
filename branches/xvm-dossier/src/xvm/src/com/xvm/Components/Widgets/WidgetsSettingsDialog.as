@@ -20,15 +20,19 @@ import com.xvm.Locale;
 import com.xvm.Logger;
 import com.xvm.Utils;
 import com.xvm.Components.Widgets.WidgetsFactory;
+import com.xvm.Components.Widgets.SimpleDossierWidget;
+import com.xvm.Components.Widgets.ComplexDossierWidget;
+import com.xvm.Components.Widgets.SwitcherWidget;
+import com.xvm.Components.Widgets.ClockWidget;
 
 class com.xvm.Components.Widgets.WidgetsSettingsDialog
 {
     private static var windowName = "widgets_settings";
-    private static var WIDGET_TYPES = { small: 0, medium: 1, switcher: 2, clock: 3 };
+    private static var WIDGET_TYPES = { simple: 0, complex: 1, switcher: 2, clock: 3 };
     public static var DEFAULT_WIDGET_SETTINGS = {
         id: (new Date()).getTime(),
-        name: Locale.get("clock"),
-        type: "clock",
+        name: ClockWidget.WIDGET_NAME,
+        type: ClockWidget.WIDGET_TYPE,
         format: "HH:MM:SS",
         enable: true
     };
@@ -48,8 +52,8 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
 
     var mc_widget:MovieClip;
     var mc_widgetType:ButtonBar;
-    var mc_small:MovieClip;
-    var mc_medium:MovieClip;
+    var mc_simple:MovieClip;
+    var mc_complex:MovieClip;
     var mc_switcher:MovieClip;
     var mc_clock:MovieClip;
 
@@ -119,6 +123,15 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
     
     private function onConfirmFormComplete()
     {
+        var dp_actions = [
+            { value: "cancel",   label: Locale.get("Cancel") },
+            { value: "apply",    label: Locale.get("Apply"), disabled: true },
+            { value: "ok",       label: Locale.get("OK") } ];
+        mc_actions = (ButtonBar)(wnd.attachMovie("ButtonBar", "actions", wnd.getNextHighestDepth(),
+            { _x: 330, _y: 390, buttonWidth: 80, dataProvider: dp_actions, selectedIndex: -1, spacing: 5, tabEnabled: false, focusEnabled: false,
+              itemRenderer: "Button" } ));
+        mc_actions.addEventListener("change", this, "onActionButtonClick");
+
         list = UIComponent.createInstance(wnd, "ScrollingList", "list", wnd.getNextHighestDepth(),
             { _x: 10, _y: 58, _width: 200, _height: wnd.height - 100, labelField: "name", itemRenderer: "DropdownMenu_ListItemRenderer" } );
         list.addEventListener("change", this, "onListChange");
@@ -139,120 +152,35 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
 
         mc_widget = wnd.createEmptyMovieClip("mc_widget", wnd.getNextHighestDepth());
 
-        mc_small = mc_widget.createEmptyMovieClip("mc_small", mc_widget.getNextHighestDepth());
-        mc_small._x = 210; mc_small._y = 58;
-        CreateSmallWidgetSettings(mc_small);
+        mc_simple = mc_widget.createEmptyMovieClip("mc_simple", mc_widget.getNextHighestDepth());
+        mc_simple._x = 210; mc_simple._y = 58;
+        SimpleDossierWidget.createWidgetSettingsControls(this, mc_simple);
         
-        mc_medium = mc_widget.createEmptyMovieClip("mc_medium", mc_widget.getNextHighestDepth());
-        mc_medium._x = 210; mc_medium._y = 58;
-        CreateMediumWidgetSettings(mc_medium);
+        mc_complex = mc_widget.createEmptyMovieClip("mc_complex", mc_widget.getNextHighestDepth());
+        mc_complex._x = 210; mc_complex._y = 58;
+        ComplexDossierWidget.createWidgetSettingsControls(this, mc_complex);
         
         mc_switcher = mc_widget.createEmptyMovieClip("mc_switcher", mc_widget.getNextHighestDepth());
         mc_switcher._x = 210; mc_switcher._y = 58;
-        CreateSwitcherSettings(mc_switcher);
+        SwitcherWidget.createWidgetSettingsControls(this, mc_switcher);
 
         mc_clock = mc_widget.createEmptyMovieClip("mc_clock", mc_widget.getNextHighestDepth());
         mc_clock._x = 210; mc_clock._y = 58;
-        CreateClockSettings(mc_clock);
+        ClockWidget.createWidgetSettingsControls(this, mc_clock);
 
         var dp = [
-            { value: "small",    label: Locale.get("Small") },
-            { value: "medium",   label: Locale.get("Medium") },
-            { value: "switcher", label: Locale.get("Switcher") },
-            { value: "clock",    label: Locale.get("Clock") } ];
+            { value: SimpleDossierWidget.WIDGET_TYPE,   label: SimpleDossierWidget.WIDGET_TITLE },
+            { value: ComplexDossierWidget.WIDGET_TYPE,  label: ComplexDossierWidget.WIDGET_TITLE },
+            { value: SwitcherWidget.WIDGET_TYPE,        label: SwitcherWidget.WIDGET_TITLE },
+            { value: ClockWidget.WIDGET_TYPE,           label: ClockWidget.WIDGET_TITLE } ];
         mc_widgetType = (ButtonBar)(mc_widget.attachMovie("ButtonBar", "widget_type", mc_widget.getNextHighestDepth(),
             { _x: 215, _y: 34, autoSize: true, dataProvider: dp, selectedIndex: -1, itemRenderer: "WindowTabButton" } ));
         mc_widgetType.addEventListener("change", this, "onWidgetTypeSelect");
-
-        var dp_actions = [
-            { value: "cancel",   label: Locale.get("Cancel") },
-            { value: "apply",    label: Locale.get("Apply"), disabled: true },
-            { value: "ok",       label: Locale.get("OK") } ];
-        mc_actions = (ButtonBar)(wnd.attachMovie("ButtonBar", "actions", wnd.getNextHighestDepth(),
-            { _x: 330, _y: 390, buttonWidth: 80, dataProvider: dp_actions, selectedIndex: -1, spacing: 5, tabEnabled: false, focusEnabled: false,
-              itemRenderer: "Button" } ));
-        mc_actions.addEventListener("change", this, "onActionButtonClick");
 
         drawWidgetSettings();
         showCurrentWidget();
     }
 
-    private function CreateSmallWidgetSettings(mc:MovieClip)
-    {
-        var enable:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "enable", mc.getNextHighestDepth(),
-            { _x: 10, _y: 10, autoSize: true, label: Locale.get("Enable") } ));
-        enable.addEventListener("select", this, "onEnableChange");
-
-        CreateLabel(mc, "lInterval", 10, 30, 130, 25, Locale.get("Update interval, sec"));
-        var interval:NumericStepper = (NumericStepper)(mc.attachMovie("NumericStepper", "interval_small", mc.getNextHighestDepth(),
-            { _x: 140, _y: 30, _width: 60, minimum: 0, maximum: 3600, stepSize: 10 } ));
-        interval.addEventListener("change", this, "onIntervalChange");
-    }
-
-    private function CreateMediumWidgetSettings(mc)
-    {
-        var enable:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "enable", mc.getNextHighestDepth(),
-            { _x: 10, _y: 10, autoSize: true, label: Locale.get("Enable") } ));
-        enable.addEventListener("select", this, "onEnableChange");
-
-        CreateLabel(mc, "lInterval", 10, 30, 130, 25, Locale.get("Update interval, sec"));
-        var interval:NumericStepper = (NumericStepper)(mc.attachMovie("NumericStepper", "interval_medium", mc.getNextHighestDepth(),
-            { _x: 140, _y: 30, _width: 60, minimum: 0, maximum: 3600, stepSize: 10 } ));
-        interval.addEventListener("change", this, "onIntervalChange");
-    }
-    
-    private function CreateSwitcherSettings(mc)
-    {
-        var enable:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "enable", mc.getNextHighestDepth(),
-            { _x: 10, _y: 10, autoSize: true, label: Locale.get("Enable") } ));
-        enable.addEventListener("select", this, "onEnableChange");
-
-        CreateLabel(mc, "lLabel", 10, 30, 40, 25, Locale.get("Label"));
-        var tiLbl:TextInput = (TextInput)(mc.attachMovie("TextInput", "label", mc.getNextHighestDepth(),
-            { _x: 50, _y: 30, _width: 300 } ));
-        tiLbl.addEventListener("textChange", this, "onSwitcherLabelChange");
-
-        CreateLabel(mc, "lLabel", 10, 60, 100, 25, Locale.get("Modes"));
-        var cb1:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "cb1", mc.getNextHighestDepth(),
-            { _x: 10, _y: 80, width:200, label: Locale.get("Hide all widgets") } ));
-        cb1.addEventListener("select", this, "onSwitcherCbChange");
-        var cb2:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "cb2", mc.getNextHighestDepth(),
-            { _x: 10, _y: 100, width:200, label: Locale.get("Select Mode 1") } ));
-        cb2.addEventListener("select", this, "onSwitcherCbChange");
-        var cb3:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "cb3", mc.getNextHighestDepth(),
-            { _x: 10, _y: 120, width:200, label: Locale.get("Select Mode 2") } ));
-        cb3.addEventListener("select", this, "onSwitcherCbChange");
-        var cb4:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "cb4", mc.getNextHighestDepth(),
-            { _x: 10, _y: 140, width:200, label: Locale.get("Show detailed info window") } ));
-        cb4.addEventListener("select", this, "onSwitcherCbChange");
-    }
-
-    private function CreateClockSettings(mc)
-    {
-        var enable:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "enable", mc.getNextHighestDepth(),
-            { _x: 10, _y: 10, autoSize: true, label: Locale.get("Enable") } ));
-        enable.addEventListener("select", this, "onEnableChange");
-
-        CreateLabel(mc, "lFormat", 10, 30, 40, 25, Locale.get("Format"));
-        var tiFormat:TextInput = (TextInput)(mc.attachMovie("TextInput", "format", mc.getNextHighestDepth(),
-            { _x: 50, _y: 30, _width: 300 } ));
-        tiFormat.addEventListener("textChange", this, "onClockFormatChange");
-    }
-
-    private function CreateLabel(mc, name, x, y, w, h, text)
-    {
-        var tfLbl:TextField = mc.createTextField("tf_lbl", mc.getNextHighestDepth(), x, y, w, h);
-        tfLbl.selectable = false;
-        tfLbl.verticalAlign = "center";
-        tfLbl.textColor = Defines.UICOLOR_DEFAULT;
-        var fmt:TextFormat =  tfLbl.getNewTextFormat();
-        fmt.font = "$FieldFont";
-        fmt.size = 13;
-        tfLbl.setNewTextFormat(fmt);
-        tfLbl.text = text;
-        
-    }
-    
     /////////////////////////////////////////////////////////////////
     // EVENTS
     
@@ -343,7 +271,7 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
                 name: Locale.get(event.item.value),
                 enable: w.enable
             }
-            if (event.item.value == "clock")
+            if (event.item.value == ClockWidget.WIDGET_TYPE)
                 widgetsSettings[list.selectedIndex].format = "HH:MM:SS";
             widgetsChanged = true;
             list.invalidateData();
@@ -353,10 +281,11 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
     
     /////////////////////////////////////////////////////////////////
     // Settings controls events
-
+    // TODO: move to widgets classes
+    
     private function onEnableChange(event)
     {
-        //Logger.addObject(arguments, "onSmallWidgetEnableChange", 2);
+        //Logger.addObject(arguments, "onEnableChange", 2);
         var w = currentWidget;
         if (w == null)
             return;
@@ -366,13 +295,13 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
     
     private function onIntervalChange(event)
     {
-        //Logger.addObject(arguments, "onSmallWidgetIntervalChange", 2);
+        //Logger.addObject(arguments, "onIntervalChange", 2);
         var w = currentWidget;
         if (w == null)
             return;
         if (w.interval != event.target.value && (
-            w.type == "small" && event.target._name == "interval_small" ||
-            w.type == "medium" && event.target._name == "interval_medium"))
+            w.type == SimpleDossierWidget.WIDGET_TYPE && event.target._name == "interval_simple" ||
+            w.type == ComplexDossierWidget.WIDGET_TYPE && event.target._name == "interval_complex"))
         {
             w.interval = event.target.value;
             widgetsChanged = true;
@@ -406,6 +335,7 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
             case "cb4": n = 0x08; break;
         }
         w.modes = (event.target.selected) ? w.modes | n : w.modes & ~n;
+        widgetsChanged = true;
     }
     
     private function onClockFormatChange(event)
@@ -436,57 +366,20 @@ class com.xvm.Components.Widgets.WidgetsSettingsDialog
         mc_widget._visible = true;
 
         mc_widgetType.selectedIndex = WIDGET_TYPES[w.type];
-        mc_small._visible = w.type == "small";
-        mc_medium._visible = w.type == "medium";
-        mc_switcher._visible = w.type == "switcher";
-        mc_clock._visible = w.type == "clock";
+        mc_simple._visible = w.type == SimpleDossierWidget.WIDGET_TYPE;
+        mc_complex._visible = w.type == ComplexDossierWidget.WIDGET_TYPE;
+        mc_switcher._visible = w.type == SwitcherWidget.WIDGET_TYPE;
+        mc_clock._visible = w.type == ClockWidget.WIDGET_TYPE;
         
         switch (w.type)
         {
-            case "small": drawSmallWidgetSettings(w); break;
-            case "medium": drawMediumWidgetSettings(w); break;
-            case "switcher": drawSwitcherSettings(w); break;
-            case "clock": drawClockSettings(w); break;
+            case SimpleDossierWidget.WIDGET_TYPE: SimpleDossierWidget.drawWidgetSettings(mc_simple, w); break;
+            case ComplexDossierWidget.WIDGET_TYPE: ComplexDossierWidget.drawWidgetSettings(mc_complex, w); break;
+            case SwitcherWidget.WIDGET_TYPE: SwitcherWidget.drawWidgetSettings(mc_switcher, w); break;
+            case ClockWidget.WIDGET_TYPE: ClockWidget.drawWidgetSettings(mc_clock, w); break;
         }
     }
 
-    private function drawSmallWidgetSettings(w:Object)
-    {
-        mc_small.enable.selected = w.enable;
-        if (isNaN(w.interval))
-            w.interval = 300;
-        mc_small.interval_small.value = w.interval;
-    }
-
-    private function drawMediumWidgetSettings(w:Object)
-    {
-        mc_medium.enable.selected = w.enable;
-        if (isNaN(w.interval))
-            w.interval = 300;
-        mc_medium.interval_medium.value = w.interval;
-    }
-
-    private function drawSwitcherSettings(w:Object)
-    {
-        mc_switcher.enable.selected = w.enable;
-        if (!w.label)
-            w.label = "";
-        mc_switcher.label.text = w.label;
-        if (isNaN(parseInt(w.modes)))
-            w.modes = 0x0F;
-        mc_switcher.cb1.selected = (w.modes & 0x01);
-        mc_switcher.cb2.selected = (w.modes & 0x02);
-        mc_switcher.cb3.selected = (w.modes & 0x04);
-        mc_switcher.cb4.selected = (w.modes & 0x08);
-    }
-
-    private function drawClockSettings(w:Object)
-    {
-        mc_clock.enable.selected = w.enable;
-        if (!w.format)
-            w.format = "HH:MM:SS";
-        mc_clock.format.text = w.format;
-    }
     
     /////////////////////////////////////////////////////////////////
     // PREVIEW

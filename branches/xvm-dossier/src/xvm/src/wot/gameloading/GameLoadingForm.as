@@ -54,8 +54,8 @@ class wot.gameloading.GameLoadingForm
 
         // ------------------ DEBUG ------------------
         //var wsd = new com.xvm.Components.Widgets.WidgetsSettingsDialog(_root.header, "sirmax2");
-        //var mc = wrapper.createEmptyMovieClip("widgetsHolder", wrapper.getNextHighestDepth());
-        //com.xvm.Components.Widgets.WidgetsFactory.initialize(mc, "sirmax2", [ com.xvm.Components.Widgets.WidgetsSettingsDialog.DEFAULT_WIDGET_SETTINGS ]);
+        var mc = wrapper.createEmptyMovieClip("widgetsHolder", wrapper.getNextHighestDepth());
+        com.xvm.Components.Widgets.WidgetsFactory.initialize(mc, "sirmax2", [ com.xvm.Components.Widgets.WidgetsSettingsDialog.DEFAULT_WIDGET_SETTINGS ]);
         // ------------------ DEBUG ------------------
 
         // Send first ping as early as possible, to be ready on login screen.

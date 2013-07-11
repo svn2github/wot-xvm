@@ -4,7 +4,7 @@
  */
 interface com.xvm.Components.Widgets.IWidget 
 {
-    public function open(playerName:String);
-    public function update();
-    public function close();
+    //public function open(playerName:String);
+    //public function update();
+    //public function close();
 }
