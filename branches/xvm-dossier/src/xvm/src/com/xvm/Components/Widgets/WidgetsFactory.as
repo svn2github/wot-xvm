@@ -3,13 +3,10 @@
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
 import com.xvm.Comm;
-import com.xvm.Config;
 import com.xvm.Defines;
-import com.xvm.JSONx;
 import com.xvm.Logger;
 import com.xvm.Utils;
 import com.xvm.VehicleInfo;
-import com.xvm.Components.Dossier.IWidget;
 
 class com.xvm.Components.Widgets.WidgetsFactory
 {
@@ -133,7 +130,7 @@ return;
 
     private function updateWidgets()
     {
-        Logger.addObject(m_widgetsSettings, "", 2);
+        //Logger.addObject(m_widgetsSettings, "", 2);
         
         for (var i = 0; i < m_widgets.length; ++i)
         {

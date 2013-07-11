@@ -13,7 +13,7 @@ import com.xvm.Logger;
 import com.xvm.Utils;
 import com.xvm.Components.PingServers.PingServers;
 import com.xvm.Components.Widgets.WidgetsFactory;
-import com.xvm.Components.Widgets.WidgetsSettingsDialog;
+import com.xvm.Components.Widgets.Settings.WidgetsSettingsDialog;
 
 class wot.LangBarPanel.LanguageBar
 {
@@ -119,9 +119,10 @@ class wot.LangBarPanel.LanguageBar
         PingServers.initFeature(Config.s_config.login.pingServers, mc_ping);
 
         // ------------------ DEBUG ------------------
-        //var wsd = new com.xvm.Components.Dossier.WidgetsSettingsDialog(_root.header, "sirmax2");
         //var mc = _root.header.createEmptyMovieClip("widgetsHolder", _root.header.getNextHighestDepth());
-        //com.xvm.Components.Widgets.WidgetsFactory.initialize(mc, "sirmax2", [ com.xvm.Components.Widgets.WidgetsSettingsDialog.DEFAULT_WIDGET_SETTINGS ]);
+        //com.xvm.Components.Widgets.WidgetsFactory.initialize(mc, "sirmax2",
+        //    [ com.xvm.Components.Widgets.Settings.WidgetsSettingsDialog.DEFAULT_WIDGET_SETTINGS ]);
+        //var wsd = new com.xvm.Components.Widgets.Settings.WidgetsSettingsDialog(_root.header, "sirmax2");
         // ------------------ DEBUG ------------------
     }
     

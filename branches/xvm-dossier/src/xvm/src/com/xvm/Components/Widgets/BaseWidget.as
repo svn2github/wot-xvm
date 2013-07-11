@@ -2,75 +2,46 @@
  * Base Widget Implementation (abstract)
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
-import gfx.controls.CheckBox;
-import com.xvm.Defines;
-import com.xvm.Locale;
 import com.xvm.Components.Widgets.IWidget;
-import com.xvm.Components.Widgets.WidgetsSettingsDialog;
- 
+
 class com.xvm.Components.Widgets.BaseWidget implements IWidget
 {
     /////////////////////////////////////////////////////////////////
-    // PUBLIC STATIC
-    
+    // CONSTANTS
+
     public static var WIDGET_TITLE = "Base";
     public static var WIDGET_NAME = "Base";
     public static var WIDGET_TYPE = "";
-    
-    public static function createWidgetSettingsControls(owner:WidgetsSettingsDialog, mc:MovieClip)
-    {
-        var enable:CheckBox = (CheckBox)(mc.attachMovie("CheckBox", "enable", mc.getNextHighestDepth(),
-            { _x: 10, _y: 10, autoSize: true, label: Locale.get("Enable") } ));
-        enable.addEventListener("select", owner, "onEnableChange");
-    }
-    
-    public static function drawWidgetSettings(mc:MovieClip, w:Object)
-    {
-    }
-    
-    // protected
-    public static function CreateLabel(mc, name, x, y, w, h, text)
-    {
-        var tfLbl:TextField = mc.createTextField("tf_lbl", mc.getNextHighestDepth(), x, y, w, h);
-        tfLbl.selectable = false;
-        tfLbl.verticalAlign = "center";
-        tfLbl.textColor = Defines.UICOLOR_DEFAULT;
-        var fmt:TextFormat =  tfLbl.getNewTextFormat();
-        fmt.font = "$FieldFont";
-        fmt.size = 13;
-        tfLbl.setNewTextFormat(fmt);
-        tfLbl.text = text;
-    }
 
     /////////////////////////////////////////////////////////////////
     // .ctor()
 
-    public function BaseWidget() 
+    public function BaseWidget()
     {
-        
+
     }
-    
+
     /////////////////////////////////////////////////////////////////
     // IWidget implementation
-    
 
-    
+
+
     /////////////////////////////////////////////////////////////////
     // PRIVATE
-    
-    
-    
-    
-    
+
+
+
+
+
     /*
-    
-    
+
+
     public static var instance:Dossier = null;
-    
+
     private var playerName:String;
     private var widgets:Object;
     private var view:DossierView;
-    
+
     private var timer:Function; // FIXIT: replace timer with event
     private var commandCounter:Number;
 
@@ -107,7 +78,7 @@ class com.xvm.Components.Widgets.BaseWidget implements IWidget
         this.widgets = widgets;
     }
 
-    private var lastUpdateDataCall; 
+    private var lastUpdateDataCall;
     // called by timer every 10 ms
     private function idleFunc()
     {
@@ -124,7 +95,7 @@ class com.xvm.Components.Widgets.BaseWidget implements IWidget
         }
         view.updateIdle((now - lastUpdateDataCall) / 60000);
     }
-    
+
     private function updateData()
     {
         Comm.SyncEncoded(Defines.COMMAND_DOSSIER,
@@ -140,7 +111,7 @@ class com.xvm.Components.Widgets.BaseWidget implements IWidget
             "",                       // clan fields
             this, answerCallback);
     }
-    
+
     private function answerCallback(event):Void
     {
         var answer:String = event.str;
@@ -156,7 +127,7 @@ class com.xvm.Components.Widgets.BaseWidget implements IWidget
         Logger.addObject(data);
         view.update(data);
     }
-    
+
     private function parseAnswer(answer:String):Object
     {
         var lines:Array = answer.split("\n");
