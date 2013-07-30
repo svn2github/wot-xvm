@@ -11,7 +11,6 @@
  # `sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 41A6E3C3`
  # `sudo apt-get update`
  # `sudo apt-get install mono-runtime libmono2.0-cil mono-3-opt mono-mcs svn`
- # `echo "deb http://ppa.launchpad.net/keks9n/monodevelop-latest/ubuntu raring main" | sudo tee -a /etc/apt/sources.list`
  # `svn checkout https://wot-xvm.googlecode.com/svn/trunk/ wot-xvm`
  # `cd wot-xvm/src/xvm-stat`
  # `/opt/mono-3/bin/xbuild xvm-stat.csproj /p:TargetFrameworkProfile=""  /p:Configuration=Release /p:win32icon=WoT.ico`
