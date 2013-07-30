@@ -1,7 +1,18 @@
-#labels linux,automation
-=Build latest revision on Linux(Ubuntu)=
+#labels linux,Ubuntu,automation
+=Build XVM=
   # `sudo apt-get install mono-runtime libmono2.0-cil mtasc patch svn swfmill zip`
   # `svn checkout https://wot-xvm.googlecode.com/svn/trunk/ wot-xvm`
   # `cd wot-xvm/utils/build-system-linux`
   # `./build-xvm.sh`
-  # grap your XVM from wot-xvm/bin
+  # grab your XVM from wot-xvm/bin
+
+=Build XVM-stat=
+ # `echo "deb http://ppa.launchpad.net/keks9n/monodevelop-latest/ubuntu raring main" | sudo tee -a /etc/apt/sources.list`
+ # `sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 41A6E3C3`
+ # `sudo apt-get update"
+ # `sudo apt-get install mono-runtime libmono2.0-cil mono-3-opt mono-mcs svn"
+ # `echo "deb http://ppa.launchpad.net/keks9n/monodevelop-latest/ubuntu raring main" | sudo tee -a /etc/apt/sources.list`
+ # `svn checkout https://wot-xvm.googlecode.com/svn/trunk/ wot-xvm`
+ # `cd wot-xvm/src/xvm-stat`
+ # `/opt/mono-3/bin/xbuild xvm-stat.csproj /p:TargetFrameworkProfile=""  /p:Configuration=Release /p:win32icon=WoT.ico`
+ # grab your XVM-stat from wot-xvm/src/xvm-stat/bin/Release
