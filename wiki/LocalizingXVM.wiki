@@ -7,13 +7,12 @@ To translate XVM you need:
 
   # Download [https://wot-xvm.googlecode.com/svn/trunk/release/l10n/en.xc en.xc] or [https://wot-xvm.googlecode.com/svn/trunk/release/l10n/ru.xc ru.xc]
   # Translate downloaded file
-  # Rename the file to XX.xc, where XX - language code, which you can see in the "LANGUAGE_CODE" key of `[WOT folder]\res\text\LC_MESSAGES\settings.mo` file
+  # Rename the file to XX.xc, where XX - language code, which you can see in [https://code.google.com/p/wot-xvm/issues/detail?id=466 this ticket] or in the "LANGUAGE_CODE" key of `[WOT folder]\res\text\LC_MESSAGES\settings.mo`
 
 * Send your changes to the XVM
 
   # Send file to `xvm-l10n@by-reservation.com`
-  # Or create a ticket in our bugtracker https://code.google.com/p/wot-xvm/issues/entry
-  
+  # Or post a link to file in this ticket https://code.google.com/p/wot-xvm/issues/detail?id=466
   
   
 ==Русская инструкция ==
@@ -23,9 +22,9 @@ To translate XVM you need:
 
   # Скачать [https://wot-xvm.googlecode.com/svn/trunk/release/l10n/en.xc en.xc] или [https://wot-xvm.googlecode.com/svn/trunk/release/l10n/ru.xc ru.xc]
   # Выполнить перевод файла
-  # Переименовать файл в XX.xc, где XX - код языка, который вы можете подсмотреть в ключе "LANGUAGE_CODE" файла `[Папка WOT]\res\text\LC_MESSAGES\settings.mo`
+  # Переименовать файл в XX.xc, где XX - код языка, который вы можете подсмотреть в [https://code.google.com/p/wot-xvm/issues/detail?id=466 этом тикете] или в ключе "LANGUAGE_CODE" файла `[Папка WOT]\res\text\LC_MESSAGES\settings.mo`
 
 * Отправить свои изменения в XVM
 
   # Написать на `xvm-l10n@by-reservation.com`
-  # Или создать тикет в багтрекере https://code.google.com/p/wot-xvm/issues/entry
+  # Или запостить ссылку на файл в этом тиките https://code.google.com/p/wot-xvm/issues/detail?id=466
