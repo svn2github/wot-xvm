@@ -13,5 +13,5 @@
  # `sudo apt-get install mono-runtime libmono2.0-cil mono-3-opt mono-mcs svn`
  # `svn checkout https://wot-xvm.googlecode.com/svn/trunk/ wot-xvm`
  # `cd wot-xvm/src/xvm-stat`
- # `/opt/mono-3/bin/xbuild xvm-stat.csproj /p:TargetFrameworkProfile=""  /p:Configuration=Release /p:win32icon=WoT.ico`
+ # `/opt/mono-3/bin/xbuild xvm-stat.csproj /p:Configuration="Release" /p:TargetFrameworkProfile="" /p:SignAssembly="False" /p:win32icon="WoT.ico"`
  # grab your XVM-stat from `wot-xvm/src/xvm-stat/bin/Release`
