@@ -22,5 +22,5 @@
   # `sudo apt-get install mono-runtime libmono2.0-cil svn zip`
   # `svn checkout https://wot-xvm.googlecode.com/svn/trunk/ wot-xvm`
   # `cd wot-xvm/utils/build-system-linux`
-  # `./build-xvmvpb.sh`
+  # `./build-xvmvbp.sh`
   # grab your XVM Vehicle Bank Parser from `wot-xvm/bin`
