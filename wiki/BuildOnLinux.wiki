@@ -1,5 +1,6 @@
 #labels linux,Ubuntu,automation
 =Build XVM=
+  # `sudo apt-get update`
   # `sudo apt-get install mono-runtime libmono2.0-cil mtasc patch svn swfmill zip`
   # `svn checkout https://wot-xvm.googlecode.com/svn/trunk/ wot-xvm`
   # `cd wot-xvm/utils/build-system-linux`
@@ -12,6 +13,14 @@
  # `sudo apt-get update`
  # `sudo apt-get install mono-runtime libmono2.0-cil mono-3-opt mono-mcs svn`
  # `svn checkout https://wot-xvm.googlecode.com/svn/trunk/ wot-xvm`
- # `cd wot-xvm/src/xvm-stat`
- # `/opt/mono-3/bin/xbuild xvm-stat.csproj /p:Configuration="Release" /p:TargetFrameworkProfile="" /p:SignAssembly="False" /p:win32icon="WoT.ico"`
- # grab your XVM-stat from `wot-xvm/src/xvm-stat/bin/Release`
+ # `cd wot-xvm/utils/build-system-linux`
+ # `./build-xvmstat.sh`
+ # grab your XVM-stat from `wot-xvm/bin`
+
+=Build XVM Vehicle Bank Parser=
+  # `sudo apt-get update`
+  # `sudo apt-get install mono-runtime libmono2.0-cil svn zip`
+  # `svn checkout https://wot-xvm.googlecode.com/svn/trunk/ wot-xvm`
+  # `cd wot-xvm/utils/build-system-linux`
+  # `./build-xvmvpb.sh`
+  # grab your XVM Vehicle Bank Parser from `wot-xvm/bin`
