@@ -4,20 +4,20 @@
         "message": "  * адаптация к WoT 0.8.7\n  * новые возможности\n  * улучшения и исправления"
     },
     "EU": {
-        "ver": "4.0.0",
-        "message": "  * for WoT 0.8.6\n  * new features\n  * improvements and bugfixes"
+        "ver": "4.1.0",
+        "message": "  * for WoT 0.8.7\n  * new features\n  * improvements and bugfixes"
     },
     "US": {
-        "ver": "4.0.0",
-        "message": "  * for WoT 0.8.6\n  * new features\n  * improvements and bugfixes"
+        "ver": "4.1.0",
+        "message": "  * for WoT 0.8.7\n  * new features\n  * improvements and bugfixes"
     },
     "SEA": {
-        "ver": "4.0.0",
-        "message": "  * for WoT 0.8.6\n  * new features\n  * improvements and bugfixes"
+        "ver": "4.1.0",
+        "message": "  * for WoT 0.8.7\n  * new features\n  * improvements and bugfixes"
     },
     "VTC": {
-        "ver": "4.0.0",
-        "message": "  * for WoT 0.8.6\n  * new features\n  * improvements and bugfixes"
+        "ver": "4.1.0",
+        "message": "  * for WoT 0.8.7\n  * new features\n  * improvements and bugfixes"
     },
-    "CT":  { "ver": "4.0.0", "message": "" }
+    "CT":  { "ver": "4.1.0", "message": "" }
 }
