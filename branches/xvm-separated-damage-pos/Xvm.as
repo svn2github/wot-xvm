@@ -460,7 +460,7 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
             clanIconComponent.updateState(cfg);
 
             // Damage Text
-            damageTextComponent.updateState(cfg);
+            //damageTextComponent.updateState(cfg);
 
             // Health Bar
             healthBarComponent.updateState(cfg);

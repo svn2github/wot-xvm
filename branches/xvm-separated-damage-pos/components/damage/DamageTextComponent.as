@@ -34,6 +34,12 @@ class wot.VehicleMarkersManager.components.damage.DamageTextComponent
     {
         this.cfg = cfg;// new DamageTextConfig(dmgReceiverCfg, dmgSourceCfg, flag, damageType);
 
+        damage._visible = cfg.visible;
+        //damage._y = cfg.y;
+        //damage._height = damage._width = 500.0;
+        damage._x = - (damage._width / 2.0);
+        damage._y = - (damage._height / 2.0);
+
         if (!cfg.visible)
             return;
 
@@ -71,28 +77,33 @@ class wot.VehicleMarkersManager.components.damage.DamageTextComponent
         //com.xvm.Logger.add("dmg: " + flagToDamageSource(flag) + ", " + proxy.damageDest + " - color=" + color);
         //com.xvm.Logger.add(tf.htmlText);
         //com.xvm.Logger.add(Utils.createCSSFromConfig(cfg.font, color, "xvm_damageText"));
-
+        //com.xvm.Logger.addObject(cfg);
         var dummy = new DamageTextAnimation(cfg, tf); // defines and starts
     }
 
-    public function updateState(state_cfg:Object)
+    /*public function updateState(state_cfg:Object)
     {
         var cfg = state_cfg.damageText;
+        com.xvm.Logger.add("updateState, cfg");
+        com.xvm.Logger.addObject(cfg);
         var visible = cfg.visible;
         if (visible)
         {
+            com.xvm.Logger.add("updateState, dmg x: " + damage._x + ", dmg y: " + damage._y);
+            com.xvm.Logger.add("updateState, сfg x: " + cfg.x + ", cfg y: " + cfg.y);
             damage._x = cfg.x;
             damage._y = cfg.y;
         }
         damage._visible = visible;
-    }
-
+    }*/
+  
+    
     // PRIVATE METHODS
 
     private function createTextField(color:Number, shadowColor:Number, cfg):TextField
     {
         var n = damage.getNextHighestDepth();
-        var tf: TextField = damage.createTextField("txt" + n, n, 0, 0, 200, 100);
+        var tf: TextField = damage.createTextField("txt" + n, n, ((damage._width / 2.0)+cfg.x), ((damage._height / 2.0)+cfg.y), 200, 100);
 
         tf.antiAliasType = "advanced";
         tf.multiline = true;
@@ -104,7 +115,12 @@ class wot.VehicleMarkersManager.components.damage.DamageTextComponent
         tf.filters = [ GraphicsUtil.createShadowFilter(cfg.shadow.distance, cfg.shadow.angle, shadowColor,
             cfg.shadow.alpha, cfg.shadow.size, cfg.shadow.strength) ];
 
-        tf._x = -(tf._width / 2.0);
+        tf._x -= (tf._width / 2.0);
+        //tf._y = cfg.y - (tf._height / 2.0);
+        com.xvm.Logger.add("createTextField, сfg.x: " + cfg.x + ", cfg.y: " + cfg.y);
+        com.xvm.Logger.add("tf._x: " + tf._x + ", tf._y: " + tf._y);
+        com.xvm.Logger.add("damage.x: " + damage._x + ", damage._y: " + damage._y);
+        com.xvm.Logger.add("damage._width: " + damage._width + ", damage._height: " + damage._height);
 
 /*        var b1:flash.display.BitmapData = new flash.display.BitmapData(16, 16);
         var matrix:flash.geom.Matrix = new flash.geom.Matrix()
