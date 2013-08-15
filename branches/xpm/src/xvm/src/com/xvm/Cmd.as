@@ -16,6 +16,11 @@ class com.xvm.Cmd
         _call(target, callback, [COMMAND_PING]);
     }
 
+    public static function log(str:String)
+    {
+        _call(null, null, [COMMAND_LOG, str]);
+    }
+    
     /////////////////////////////////////////////////////////////////
     
     private static function _call(target:Object, callback:String, args:Array):Void

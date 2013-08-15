@@ -29,11 +29,6 @@ class wot.battleloading.BattleLoading
         BattleLoadingCtor();
     }
 
-    function setSize()
-    {
-        return this.setSizeImpl.apply(this, arguments);
-    }
-
     // wrapped methods
     /////////////////////////////////////////////////////////////////
 
@@ -66,13 +61,6 @@ class wot.battleloading.BattleLoading
         GlobalEventDispatcher.removeEventListener("stat_loaded", this, onStatLoaded);
         if (Config.s_config.rating.enableStatisticsLog == true)
             StatsLogger.saveStatistics("setup", StatData.s_data);
-    }
-
-    // override
-    function setSizeImpl(width, height)
-    {
-        base.setSize(width, height);
-        Comm.SetVar("window_size", width + "," + height);
     }
 
     private function onConfigLoaded()

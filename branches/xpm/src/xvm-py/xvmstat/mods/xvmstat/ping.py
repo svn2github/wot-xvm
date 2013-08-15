@@ -7,7 +7,7 @@ from gui.mods.utils import *
 #############################
 # Command
 
-def ping(*args):
+def ping():
     g_preDefinedHosts._PreDefinedHostList__ping()
     pings = g_preDefinedHosts._PreDefinedHostList__pingResult
     try:

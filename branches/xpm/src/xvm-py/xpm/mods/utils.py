@@ -8,6 +8,14 @@ import random
 import Event
 
 #####################################################################
+# Global constants
+
+#IS_DEVELOPMENT = False
+IS_DEVELOPMENT = True
+
+
+
+#####################################################################
 # Common methods
 
 def log(msg):
@@ -93,3 +101,15 @@ def OverrideMethod(cls, method, handler):
         i += 1
     setattr(cls, newm, getattr(cls, method))
     setattr(cls, method, lambda *a, **k: handler(getattr(cls, newm), *a, **k))
+
+
+
+#####################################################################
+# Setup development environment
+
+import BigWorld
+def _autoFlushPythonLog():
+    BigWorld.flushPythonLog()
+    BigWorld.callback(0.1, _autoFlushPythonLog)
+if IS_DEVELOPMENT:
+    _autoFlushPythonLog()

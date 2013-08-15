@@ -19,7 +19,7 @@ CURRENT_DIRECTORY=`pwd`
 
 cd "${WOT_DIRECTORY}"
 REPLAY=${CURRENT_DIRECTORY}/../utils/replays/${SAMPLE_REPLAY}
-#cmd /c start ./WorldOfTanks.exe `cygpath --windows $REPLAY`
-cmd /c start ./xvm-stat.exe `cygpath --windows $REPLAY` &
+cmd /c start ./WorldOfTanks.exe `cygpath --windows $REPLAY`
+#cmd /c start ./xvm-stat.exe `cygpath --windows $REPLAY` &
 #cmd /c start ./xvm-stat.exe /server=CT `cygpath --windows $REPLAY` &
 #cmd /c start ./xvm-stat.exe /debug `cygpath --windows $REPLAY` &
