@@ -1,8 +1,18 @@
 """ xvm-stat (c) sirmax 2013 """
 
+#####################################################################
+# MOD INFO (mandatory)
+
+XPM_MOD_VERSION    = "1.0.0"
+XPM_MOD_URL        = "http://www.modxvm.com/"
+XPM_MOD_UPDATE_URL = "http://www.modxvm.com/en/download-xvm/"
+XPM_GAME_VERSIONS  = ["0.8.6", "0.8.7", "0.8.8"]
+
+#####################################################################
+
 import BigWorld
-from gui.mods.utils import *
-from xvmstat.XvmStat import XvmStat
+from gui.mods.xpm import *
+from XvmStat import XvmStat
 
 #####################################################################
 # event handlers

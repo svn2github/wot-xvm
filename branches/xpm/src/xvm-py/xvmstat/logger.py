@@ -3,8 +3,7 @@
 import datetime
 import json
 
-from gui.mods.utils import *
-from gui.mods.utils import IS_DEVELOPMENT
+from gui.mods.xpm import *
 from constants import XVM_LOG_FILE_NAME
 
 #############################

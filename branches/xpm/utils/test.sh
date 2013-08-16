@@ -2,7 +2,15 @@
 
 cd $(dirname $(realpath $(cygpath --unix $0)))
 
-./deploy.sh
+no_deploy=0
+while [ ! -z "$1" ]; do
+    if [ "$1" = "--no-deploy" ]; then
+      no_deploy=1
+    fi
+    shift
+done
+
+[ "$no_deploy" = "0" ] && ./deploy.sh
 
 [ "$WOT_DIRECTORY" = "" ] && WOT_DIRECTORY=/cygdrive/d/work/games/WoT
 CURRENT_DIRECTORY=`pwd`

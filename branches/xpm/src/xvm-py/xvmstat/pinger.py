@@ -1,16 +1,16 @@
 """ xvm-stat (c) sirmax 2013 """
 
+from pprint import pprint
 from predefined_hosts import g_preDefinedHosts
-
-from gui.mods.utils import *
 
 #############################
 # Command
 
 def ping():
     g_preDefinedHosts._PreDefinedHostList__ping()
+    hosts = g_preDefinedHosts._hosts;
     pings = g_preDefinedHosts._PreDefinedHostList__pingResult
     try:
-        return dict(map(lambda item: (item.name, pings[item.url]), g_preDefinedHosts._hosts))
+        return dict(map(lambda x: (x.name, pings[x.url] if x.url in pings else "?"), hosts))
     except:
         return None

@@ -3,7 +3,8 @@
 cd $(dirname $0)
 
 WOT_ROOT=/cygdrive/d/work/games/WoT
-VER=0.8.7
+VER="0.8.7"
+#VER="0.8.8 Common Test"
 
 clear()
 {
@@ -19,8 +20,13 @@ build()
   fi
   f=${1#*/}
   d=${f%/*}
-  mkdir -p "../../bin/xpm/scripts/client/gui/$d"
-  cp $1c "../../bin/xpm/scripts/client/gui/${f}c"
+  [ "$d" = "$f" ] && d=""
+  mkdir -p "../../bin/xpm/scripts/client/gui/$2/$d"
+  if [ -z "$2" ]; then
+    cp $1c "../../bin/xpm/scripts/client/gui/${f}c"
+  else
+    cp $1c "../../bin/xpm/scripts/client/gui/$2/${f}c"
+  fi
   rm -f $1c
 }
 
@@ -28,7 +34,7 @@ run()
 {
   #rm -rf "$WOT_ROOT/res_mods/$VER/scripts"
   cp -R ../../bin/xpm/scripts "$WOT_ROOT/res_mods/$VER"
-  sh "../../utils/test.sh"
+  sh "../../utils/test.sh" --no-deploy
 }
 
 clear                       
@@ -37,7 +43,12 @@ opwd=$PWD
 
 for fn in $(find . -name "*.py"); do
   f=${fn#./}
-  build $f
+  m=${f%%/*}
+  if [ "$m" = "xpm" ]; then
+    build $f 
+  else
+    build $f mods/$m
+  fi
 done
 
 run

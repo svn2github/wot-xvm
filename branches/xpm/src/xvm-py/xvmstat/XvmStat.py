@@ -6,11 +6,11 @@ from pprint import pprint
 import BigWorld
 from messenger.gui import MessengerDispatcher
 
-from gui.mods.utils import *
+from gui.mods.xpm import *
 
 from constants import *
-from ping import ping
-from log import log
+from pinger import ping
+from logger import log
 
 class XvmStat(object):
     def __init__(self):
@@ -20,7 +20,6 @@ class XvmStat(object):
         res = None
         if cmd == COMMAND_PING:
             res = ping()
-            #pprint(res)
         elif cmd == COMMAND_LOG:
             res = log(*args)
         else:
