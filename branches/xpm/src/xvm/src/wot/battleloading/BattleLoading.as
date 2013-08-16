@@ -73,34 +73,7 @@ class wot.battleloading.BattleLoading
         winChances.enableLog = Config.s_config.rating.enableStatisticsLog;
 
         if (Config.s_config.rating.showPlayersStatistics)
-            loadStatistics();
-    }
-
-    private static function loadStatistics(loop)
-    {
-        if (!loop)
-          loop = 0;
-        // Force stats loading after 0.5 sec if enabled (for 12x12 battles, FogOfWar, ...)
-        _global.setTimeout
-        (
-            function() {
-                if (!StatData.s_loaded) {
-                    if (StatLoader.instance.teams.t1 == 0 /*&& StatLoader.teams.t2 == 0*/) { // t2 disabled because of FogOfWar
-                        if (loop * BattleLoading.STAT_PRELOAD_DELAY > 10000) { // 10 sec
-                            Logger.add("WARNING: no players data after 10 sec, skip stats loading");
-                        } else {
-                            Logger.add("[" + loop  + "] no players data, waiting more");
-                            BattleLoading.loadStatistics(loop + 1);
-                        }
-                    }
-                    else {
-                        Logger.add("[BattleLoading] loading stat data (" + StatLoader.instance.players_count + " players)");
-                        StatLoader.LoadData();
-                    }
-                }
-            },
-            STAT_PRELOAD_DELAY
-        );
+            StatLoader.LoadData();
     }
 
     private function traceToProxyTerminal()

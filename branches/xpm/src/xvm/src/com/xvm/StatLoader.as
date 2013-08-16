@@ -112,6 +112,7 @@ class com.xvm.StatLoader
 
     private function LoadStatDataCallback(event)
     {
+        Logger.addObject(event, "LoadStatDataCallback");
         var finallyBugWorkaround: Boolean = false; // Workaround: finally block have a bug - it can be called twice. Why? How?
         try
         {

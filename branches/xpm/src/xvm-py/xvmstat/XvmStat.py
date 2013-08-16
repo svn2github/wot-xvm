@@ -13,6 +13,7 @@ from constants import *
 from gameregion import region
 from logger import log
 from pinger import ping
+from stats import getStat, getUserData
 
 class XvmStat(object):
     def __init__(self):
@@ -20,14 +21,18 @@ class XvmStat(object):
 
     def onXvmCommand(self, proxy, id, cmd, *args):
         res = None
-        if cmd == COMMAND_PING:
-            res = json.dumps(ping())
-        elif cmd == COMMAND_LOG:
+        if cmd == COMMAND_LOG:
             log(*args)
+        elif cmd == COMMAND_PING:
+            res = json.dumps(ping())
         elif cmd == COMMAND_GETSCREENSIZE:
             res = json.dumps(list(GUI.screenResolution()))
         elif cmd == COMMAND_GETGAMEREGION:
             res = region
+        elif cmd == COMMAND_LOADSTATDATA:
+            res = getStat(*args)
+        elif cmd == COMMAND_LOADUSERDATA:
+            res = getUserData(*args)
         else:
             log("cmd=" + str(cmd) + " args=" + json.dumps(args))
         proxy.respond([id, res])
