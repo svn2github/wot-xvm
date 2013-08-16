@@ -4,6 +4,7 @@ import json
 from pprint import pprint
 
 import BigWorld
+import GUI
 from messenger.gui import MessengerDispatcher
 
 from gui.mods.xpm import *
@@ -19,12 +20,14 @@ class XvmStat(object):
     def onXvmCommand(self, proxy, id, cmd, *args):
         res = None
         if cmd == COMMAND_PING:
-            res = ping()
+            res = json.dumps(ping())
         elif cmd == COMMAND_LOG:
-            res = log(*args)
+            log(*args)
+        elif cmd == COMMAND_GETSCREENSIZE:
+            res = json.dumps(list(GUI.screenResolution()))
         else:
             log("cmd=" + str(cmd) + " args=" + json.dumps(args))
-        proxy.respond([id, json.dumps(res)])
+        proxy.respond([id, res])
 
     def onKeyDown(self, event):
         # do not handle keys when chat is active
@@ -36,3 +39,6 @@ class XvmStat(object):
             #return True
             pass
         return False
+
+from . import XPM_MOD_VERSION, XPM_MOD_URL, XPM_GAME_VERSIONS
+log("xvm-stat %s (%s) for WoT %s" % (XPM_MOD_VERSION, XPM_MOD_URL, ", ".join(XPM_GAME_VERSIONS)))

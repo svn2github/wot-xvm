@@ -2,6 +2,8 @@
 
 COMMAND_PING = "ping"
 COMMAND_LOG = "log"
+COMMAND_GETSCREENSIZE = "getScreenSize"
+
 #COMMAND_GETSTAT = "getstat"
 #COMMAND_VAR = "var"
 #COMMAND_LOGSTAT = "logstat"

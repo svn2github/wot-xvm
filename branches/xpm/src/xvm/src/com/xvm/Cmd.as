@@ -4,21 +4,28 @@ import com.xvm.Logger;
 class com.xvm.Cmd
 {
     private static var COMMAND_LOG:String = "log";
-    private static var COMMAND_GETSTAT:String = "getstat";
-    private static var COMMAND_VAR:String = "var";
-    private static var COMMAND_LOGSTAT:String = "logstat";
     private static var COMMAND_PING:String = "ping";
-    private static var COMMAND_SAVE_SETTINGS:String = "save_settings";
-    private static var COMMAND_LOAD_SETTINGS:String = "load_settings";
+    private static var COMMAND_GETSCREENSIZE:String = "getScreenSize";
 
+    //private static var COMMAND_GETSTAT:String = "getstat";
+    //private static var COMMAND_VAR:String = "var";
+    //private static var COMMAND_LOGSTAT:String = "logstat";
+    //private static var COMMAND_SAVE_SETTINGS:String = "save_settings";
+    //private static var COMMAND_LOAD_SETTINGS:String = "load_settings";
+
+    public static function log(str:String)
+    {
+        _call(null, null, [COMMAND_LOG, str]);
+    }
+    
     public static function ping(target:Object, callback:String)
     {
         _call(target, callback, [COMMAND_PING]);
     }
 
-    public static function log(str:String)
+    public static function getScreenSize(target:Object, callback:String)
     {
-        _call(null, null, [COMMAND_LOG, str]);
+        _call(target, callback, [COMMAND_GETSCREENSIZE]);
     }
     
     /////////////////////////////////////////////////////////////////

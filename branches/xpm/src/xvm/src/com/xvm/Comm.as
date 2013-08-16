@@ -7,11 +7,6 @@ class com.xvm.Comm
     // try to retrieve stats after: 100, 200, 300, 500, 750, 1000, 1500, 2000, 2500, 3500, 5000, 7500, 10000
     private static var timeouts = [ 100, 100, 100, 200, 250, 250,  500,  500,  500,  1000, 1500, 2500, 2500 ];
 
-    public static function SetVar(name:String, value:String):Void
-    {
-        (new LoadVars()).load(Defines.COMMAND_VAR + " " + name + "=" + value);
-    }
- 
     public static function Sync(command:String, arg:String, target:Object, callback:Function):Void
     {
         var lv:LoadVars = new LoadVars();
@@ -44,7 +39,7 @@ class com.xvm.Comm
         while (s.length > 0)
         {
             var c = command + (partId++).toString(16) + ",";
-            var m = Math.min(s.length, Defines.MAX_PATH - c.length);
+            var m = Math.min(s.length, 199 - c.length);
             sa.push(c + s.slice(0, m))
             s = s.slice(m);
         }

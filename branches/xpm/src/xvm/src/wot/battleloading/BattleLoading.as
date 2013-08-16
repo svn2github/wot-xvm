@@ -107,7 +107,6 @@ class wot.battleloading.BattleLoading
     {
         Logger.add("[BattleLoading]\n" +
                 "    XVM_VERSION=" + Defines.XVM_VERSION + "\n" +
-                "    MAX_PATH=" + Defines.MAX_PATH + "\n" +
                 "    GameRegion=" + Config.s_game_region + "\n" +
                 "    configVersion=" + Config.s_config.configVersion + "\n" +
                 "    showPlayersStatistics=" + Config.s_config.rating.showPlayersStatistics + "\n" +

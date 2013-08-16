@@ -127,31 +127,6 @@ class com.xvm.ConfigLoader
             {
                 var a: Array = event.str.split("\n");
                 Config.s_game_region = a[0].toUpperCase();
-
-                // MAX_PATH is 259 on NTFS
-                // WARNING: What if MAX_PATH less then 50?
-                //   259 - "\res_mods\xvm\.xvmfs\".length - 1 = 237
-                // 199 - ?
-                Defines.MAX_PATH = Math.min(199, Math.max(50, 237 - a[1].length));
-
-                for (var i = 2; i < a.length; ++i)
-                {
-                    try
-                    {
-                        var v = a[i].split("=");
-                        switch (v[0].toLowerCase())
-                        {
-                            case "window_size":
-                                var sz = v[1].split(",");
-                                Config.s_vars.window_size = [ Math.max(800, parseInt(sz[0])), Math.max(600, parseInt(sz[1])) ];
-                                break;
-                        }
-                    }
-                    catch (e)
-                    {
-                        Logger.add("Invalid variable received: " + a[i] + "\n" + e);
-                    }
-                }
             }
             finally
             {

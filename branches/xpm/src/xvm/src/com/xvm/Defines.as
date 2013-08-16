@@ -34,14 +34,10 @@ class com.xvm.Defines
     // res_mods/x.x.x/gui/flash/XVM.xvmconf
     public static var CONFIG_FILE_NAME_XVMCONF:String = "XVM.xvmconf";
 
-    // MAX_PATH is 259 on NTFS
-    public static var MAX_PATH:Number = 100;
-
     // WebDav commands
     public static var COMMAND_LOG:String = DOKAN_MP + "@LOG";
     public static var COMMAND_SET:String = DOKAN_MP + "@SET";
     public static var COMMAND_ADD:String = DOKAN_MP + "@ADD";
-    public static var COMMAND_VAR:String = DOKAN_MP + "@VAR";
     public static var COMMAND_LOGSTAT:String = DOKAN_MP + "@LOGSTAT";
     public static var COMMAND_GET_ASYNC:String = DOKAN_MP + "@GET_ASYNC";
     public static var COMMAND_GET_PLAYERS:String = DOKAN_MP + "@GET_PLAYERS";
