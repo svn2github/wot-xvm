@@ -27,8 +27,8 @@ class wot.battle.BattleMain
     {
         Utils.TraceXvmModule("Battle");
 
-        GlobalEventDispatcher.addEventListener("config_loaded", BattleMainConfigLoaded);
-        GlobalEventDispatcher.addEventListener("config_loaded", StatLoader.LoadLastStat);
+        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, BattleMainConfigLoaded);
+        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, StatLoader.LoadLastStat);
         Config.LoadConfig("BattleMain.as");
 
         // initialize TweenLite
@@ -46,7 +46,7 @@ class wot.battle.BattleMain
     {
         //Logger.add("BattleMainConfigLoaded()");
 
-        GlobalEventDispatcher.removeEventListener("config_loaded", BattleMainConfigLoaded);
+        GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, BattleMainConfigLoaded);
 
         // Initialize Sixth Sense Indicator
         instance.sixthSenseIndicator = new SixthSenseIndicator();

@@ -54,13 +54,13 @@ class wot.LangBarPanel.LanguageBar
         mc_ping = null;
         mc_widgets = null;
 
-        GlobalEventDispatcher.addEventListener("config_loaded", this, onConfigLoaded);
+        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         Config.LoadConfig("LanguageBar.as");
     }
 
     private function onConfigLoaded()
     {
-        GlobalEventDispatcher.removeEventListener("config_loaded", this, onConfigLoaded);
+        GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
 
         var me = this;
         _global.setInterval(function() { me.onTimer.call(me); }, 1000);

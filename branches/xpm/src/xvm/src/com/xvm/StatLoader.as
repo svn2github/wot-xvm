@@ -1,3 +1,4 @@
+import com.xvm.Cmd;
 import com.xvm.Comm;
 import com.xvm.Config;
 import com.xvm.Defines;
@@ -11,10 +12,48 @@ import com.xvm.VehicleInfo;
 
 class com.xvm.StatLoader
 {
-    public static var s_players_count = 0;
-    public static var teams = { t1:0, t2:0 };
-    private static var s_loading = false;
-    private static var dirty:Boolean = false;
+    private static var _instance:StatLoader = null
+    public static function get instance():StatLoader
+    {
+        if (_instance == null)
+            _instance = new StatLoader();
+        return _instance;
+    }
+
+    public static function LoadData()
+    {
+        if (!Config.s_config.rating.showPlayersStatistics)
+            return;
+        if (instance._loading)
+            return;
+        instance._loading = true;
+        Cmd.loadStatData(instance, "LoadStatDataCallback", null);
+    }
+
+    public static function LoadUserData(value:String, isId:Boolean)
+    {
+        Cmd.loadUserData(instance, "LoadUserDataCallback", value, isId);
+    }
+
+    public static function LoadLastStat(event)
+    {
+        if (event)
+            GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, StatLoader.LoadLastStat);
+        GlobalEventDispatcher.addEventListener("process_fow", instance, instance.ProcessForFogOfWar);
+        if (Config.s_config.rating.showPlayersStatistics)
+        {
+            if (!StatData.s_loaded)
+                Comm.Sync(Defines.COMMAND_GET_PLAYERS, null, instance, instance.GetPlayersCallback);
+            else
+                GlobalEventDispatcher.dispatchEvent({type: StatData.E_STAT_LOADED});
+        }
+    }
+
+
+    public var players_count = 0;
+    public var teams = { t1:0, t2:0 };
+    private var _loading = false;
+    private var dirty:Boolean = false;
 
     // data: {
     //   uid|id|playerId,
@@ -25,7 +64,7 @@ class com.xvm.StatLoader
     //   vehId|playerID,
     //   vehicleState
     // }
-    public static function AddPlayerData(data:Object, team:Number)
+    public function AddPlayerData(data:Object, team:Number)
     {
         var id = data.uid || data.id || data.playerId || 0;
         var label = data.label || data.playerName;
@@ -51,7 +90,7 @@ class com.xvm.StatLoader
             teams.t2 = 1;
 
         if (!StatData.s_data[pname])
-            s_players_count++;
+            players_count++;
         StatData.s_data[pname] = {
             playerId: id,
             fullPlayerName: label.split(" ").join(""),
@@ -71,59 +110,7 @@ class com.xvm.StatLoader
             dirty = true;
     }
 
-    public static function StartLoadData()
-    {
-        if (s_loading)
-            return;
-        s_loading= true;
-        StartLoadDataInternal();
-    }
-
-    private static function StartLoadDataInternal()
-    {
-        var rq = [];
-        for (var pname in StatData.s_data)
-        {
-            var pdata = StatData.s_data[pname];
-            if (pdata.loadstate != Defines.LOADSTATE_NONE)
-                continue;
-            pdata.loadstate = Defines.LOADSTATE_LOADING;
-            var pd = {
-                id:pdata.playerId,
-                n:pdata.fullPlayerName,
-                v:pdata.vehicleKey,
-                s:pdata.selected ? 1 : 0,
-                t:pdata.team
-            }
-            rq.push(JSONx.stringify(pd, "", true));
-        }
-
-        var n = rq.length;
-        Logger.add("StatLoader: Loading data: " + s_players_count + " total, " + n + " to load");
-        for (var i = 0; i < n; ++i)
-        {
-            Comm.SyncEncoded(i == 0 ? Defines.COMMAND_SET : Defines.COMMAND_ADD, rq[i], null, function(event) {
-                n--;
-                try
-                {
-                    var response = JSONx.parse(event.str);
-                    if (n == 0)
-                        Comm.Async(Defines.COMMAND_GET_ASYNC, response.resultId, null, null, StatLoader.LoadStatDataCallback);
-                    // TODO: what if bad resultId?
-                }
-                catch (e)
-                {
-                    Logger.add("Error parsing response: " + e);
-                    if (n == 0)
-                        StatLoader.LoadStatDataCallback({error:e});
-                }
-            });
-        }
-
-        dirty = false;
-    }
-
-    private static function LoadStatDataCallback(event)
+    private function LoadStatDataCallback(event)
     {
         var finallyBugWorkaround: Boolean = false; // Workaround: finally block have a bug - it can be called twice. Why? How?
         try
@@ -140,10 +127,10 @@ class com.xvm.StatLoader
                 {
                     var stat = response.players[i];
                     var name = stat.name.toUpperCase();
-                    stat = StatLoader.CalculateStatValues(stat);
+                    stat = CalculateStatValues(stat);
                     if (!StatData.s_data[name])
                     {
-                        StatLoader.s_players_count++;
+                        players_count++;
                         StatData.s_data[name] = { };
                     }
                     StatData.s_data[name].stat = stat;
@@ -166,16 +153,16 @@ class com.xvm.StatLoader
             finallyBugWorkaround = true;
 
             StatData.s_loaded = true;
-            StatLoader.s_loading = false;
+            _loading = false;
             //Logger.add("Stat Loaded");
-            GlobalEventDispatcher.dispatchEvent( { type: "stat_loaded" } );
+            GlobalEventDispatcher.dispatchEvent({type: StatData.E_STAT_LOADED});
 
-            if (StatLoader.dirty)
-                var timer = _global.setTimeout(function() { StatLoader.StartLoadData(); }, 50);
+            if (dirty)
+                var timer = _global.setTimeout(function() { StatLoader.LoadData(); }, 50);
         }
     }
 
-    public static function CalculateStatValues(stat, forceTeff): Object
+    public function CalculateStatValues(stat, forceTeff): Object
     {
         // rating (GWR)
         stat.r = stat.b > 0 ? Math.round(stat.w / stat.b * 100) : 0;
@@ -283,16 +270,7 @@ class com.xvm.StatLoader
         return stat;
     }
 
-    public static function LoadLastStat(event)
-    {
-        if (event)
-            GlobalEventDispatcher.removeEventListener("config_loaded", StatLoader.LoadLastStat);
-        GlobalEventDispatcher.addEventListener("process_fow", StatLoader.ProcessForFogOfWar);
-        if (Config.s_config.rating.showPlayersStatistics && !StatData.s_loaded)
-            Comm.Sync(Defines.COMMAND_GET_PLAYERS, null, null, GetPlayersCallback);
-    }
-
-    private static function GetPlayersCallback(event)
+    private function GetPlayersCallback(event)
     {
         try
         {
@@ -312,7 +290,7 @@ class com.xvm.StatLoader
                    vehicleState: 3
                 }, p.t);
             }
-            var timer = _global.setTimeout(function() { StatLoader.StartLoadData(); }, 50);
+            var timer = _global.setTimeout(function() { StatLoader.LoadData(); }, 50);
         }
         catch (ex)
         {
@@ -322,7 +300,7 @@ class com.xvm.StatLoader
 
     // Fog of War
 
-    private static function ProcessForFogOfWar(event)
+    private function ProcessForFogOfWar(event)
     {
         if (!event)
             return;
@@ -339,27 +317,10 @@ class com.xvm.StatLoader
 
         AddPlayerData(data, event.team);
 
-        var timer = _global.setTimeout(function() { StatLoader.StartLoadData(); }, 50);
+        var timer = _global.setTimeout(function() { StatLoader.LoadData(); }, 50);
     }
 
-    public static function LoadUserData(value, isId)
-    {
-        //Logger.add("LoadUserData: " + value);
-
-        var a:Array = (String(value) + "," + (isId == true ? "ID" : Config.s_game_region)).split("");
-        var s:String = "";
-        var a_length:Number = a.length;
-        for (var i = 0; i < a_length; ++i)
-        {
-          var b:Number = a[i].charCodeAt(0);
-          var c:String = (b < 128) ? b.toString(16) : escape(a[i].charAt(0)).split("%").join("");
-          s += (c.length % 2 == 0 ? "" : "0") + c;
-        }
-
-        Comm.Async(Defines.COMMAND_INFO_ASYNC, -1, s, null, function(e) { StatLoader.LoadUserDataCallback(e, value, isId); } );
-    }
-
-    private static function LoadUserDataCallback(event, value, isId)
+    private function LoadUserDataCallback(event, value, isId)
     {
         var data = null;
         if (event.error)

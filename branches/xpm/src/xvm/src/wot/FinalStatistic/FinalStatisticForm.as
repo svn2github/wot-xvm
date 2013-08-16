@@ -46,13 +46,13 @@ class wot.FinalStatistic.FinalStatisticForm
         StatData.s_data = {};
 
         winChances = new WinChances(wrapper);
-        GlobalEventDispatcher.addEventListener("config_loaded", this, onConfigLoaded);
+        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         Config.LoadConfig("FinalStatisticForm.as");
     }
 
     private function onConfigLoaded()
     {
-        GlobalEventDispatcher.removeEventListener("config_loaded", this, onConfigLoaded);
+        GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         processData();
     }
 
@@ -67,23 +67,7 @@ class wot.FinalStatistic.FinalStatisticForm
             StatsLogger.saveStatistics("results", wrapper.data);
 
         if (Config.s_config.rating.showPlayersStatistics && Config.s_config.finalStatistic.showChances)
-        {
-            var len = wrapper.data.team1.length;
-            for (var i = 0; i < len; ++i)
-            {
-                var d = wrapper.data.team1[i];
-                StatLoader.AddPlayerData(d, Defines.TEAM_ALLY);
-            }
-
-            len = wrapper.data.team2.length;
-            for (var i = 0; i < len; ++i)
-            {
-                var d = wrapper.data.team2[i];
-                StatLoader.AddPlayerData(d, Defines.TEAM_ENEMY);
-            }
-
-            StatLoader.StartLoadData();
-        }
+            StatLoader.LoadData();
     }
 
     function setCommonDataImpl(data)

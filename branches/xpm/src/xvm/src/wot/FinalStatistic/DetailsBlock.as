@@ -39,7 +39,7 @@ class wot.FinalStatistic.DetailsBlock
 
     private function DetailsBlockCtor()
     {
-        GlobalEventDispatcher.addEventListener("config_loaded", this, onConfigLoaded);
+        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         Config.LoadConfig("DetailsBlock.as");
 
         var h = wrapper.xpTitleLbl._height;
@@ -55,7 +55,7 @@ class wot.FinalStatistic.DetailsBlock
 
     private function onConfigLoaded()
     {
-        GlobalEventDispatcher.removeEventListener("config_loaded", this, onConfigLoaded);
+        GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         // currently for locale, and other options in the future
     }
 

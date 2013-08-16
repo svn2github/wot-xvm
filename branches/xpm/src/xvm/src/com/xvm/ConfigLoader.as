@@ -20,10 +20,6 @@ class com.xvm.ConfigLoader
     private static var s_src:String = "";
     private static var info_event:Object = null;
 
-    // Constants
-    private static var E_CONFIG_LOADED = "config_loaded";
-    private static var E_SET_INFO = "set_info";
-    
     // instance
     private static var instance:ConfigLoader = null;
     
@@ -40,7 +36,7 @@ class com.xvm.ConfigLoader
                 // Use set timeout to avoid overriding by default value
                 _global.setTimeout(function() { GlobalEventDispatcher.dispatchEvent(ConfigLoader.info_event); }, 1);
             }
-            GlobalEventDispatcher.dispatchEvent({type: E_CONFIG_LOADED});
+            GlobalEventDispatcher.dispatchEvent({type: Config.E_CONFIG_LOADED});
             return;
         }
         s_src = src || "";
@@ -100,7 +96,7 @@ class com.xvm.ConfigLoader
     {
         if (event.error != null && event.error.type == "NO_FILE")
         {
-            info_event = { type: E_SET_INFO, warning: "" };
+            info_event = { type: Config.E_SET_INFO, warning: "" };
             GlobalEventDispatcher.dispatchEvent(info_event);
             return;
         }
@@ -112,7 +108,7 @@ class com.xvm.ConfigLoader
             var text:String = "Error loading config file '" + event.filename + "': ";
             text += ConfigUtils.parseErrorEvent(event);
 
-            info_event = { type: E_SET_INFO, error: text };
+            info_event = { type: Config.E_SET_INFO, error: text };
             GlobalEventDispatcher.dispatchEvent(info_event);
             Logger.add(String(text).substr(0, 200));
             return;
@@ -121,7 +117,7 @@ class com.xvm.ConfigLoader
         Config.s_config = ConfigUtils.MergeConfigs(ConfigUtils.FixConfig(event.data), Config.s_config);
         //Logger.addObject(Config.s_config, "config", 2);
         //Logger.addObject(Config.s_config.markers.enemy.alive.normal, "", 3);
-        info_event = { type: E_SET_INFO };
+        info_event = { type: Config.E_SET_INFO };
         GlobalEventDispatcher.dispatchEvent(info_event); // Just show version
     }
 
@@ -136,6 +132,6 @@ class com.xvm.ConfigLoader
         //Logger.add("Config: Loaded (" + s_src + ")");
         Config.s_loaded = true;
         ConfigLoader.s_loading = false;
-        GlobalEventDispatcher.dispatchEvent({type: E_CONFIG_LOADED});
+        GlobalEventDispatcher.dispatchEvent({type: Config.E_CONFIG_LOADED});
     }
 }

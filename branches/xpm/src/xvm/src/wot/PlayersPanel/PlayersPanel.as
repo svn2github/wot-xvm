@@ -87,9 +87,9 @@ class wot.PlayersPanel.PlayersPanel
 
     public function PlayersPanelCtor()
     {
-        GlobalEventDispatcher.addEventListener("config_loaded", StatLoader.LoadLastStat);
-        GlobalEventDispatcher.addEventListener("config_loaded", this, onConfigLoaded);
-        GlobalEventDispatcher.addEventListener("stat_loaded", this, onStatLoaded);
+        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, StatLoader.LoadLastStat);
+        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
+        GlobalEventDispatcher.addEventListener(StatData.E_STAT_LOADED, this, onStatLoaded);
         
         GlobalEventDispatcher.addEventListener(AutoUpdate.UPDATE_BY_TIMER_EVENT, this, updateSpotStatusMarkers);
         

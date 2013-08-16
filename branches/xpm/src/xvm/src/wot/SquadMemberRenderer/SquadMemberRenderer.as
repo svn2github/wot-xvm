@@ -53,7 +53,7 @@ class wot.SquadMemberRenderer.SquadMemberRenderer
     public function SquadMemberRendererCtor()
     {
         if(!Config.s_loaded) { // rendere is initialized more than once
-            GlobalEventDispatcher.addEventListener("config_loaded", this, onConfigLoaded);
+            GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
             Config.LoadConfig("SquadMemberRenderer.as");
         }
     }
@@ -91,7 +91,7 @@ class wot.SquadMemberRenderer.SquadMemberRenderer
 
     private function onConfigLoaded()
     {
-        GlobalEventDispatcher.removeEventListener("config_loaded", this, onConfigLoaded);
+        GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         displayVehicleTier();
     }
 

@@ -7,12 +7,11 @@ class com.xvm.Cmd
     private static var COMMAND_PING:String = "ping";
     private static var COMMAND_GETSCREENSIZE:String = "getScreenSize";
     private static var COMMAND_GETGAMEREGION:String = "getGameRegion";
-
-    //private static var COMMAND_GETSTAT:String = "getstat";
-    //private static var COMMAND_VAR:String = "var";
-    //private static var COMMAND_LOGSTAT:String = "logstat";
-    //private static var COMMAND_SAVE_SETTINGS:String = "save_settings";
-    //private static var COMMAND_LOAD_SETTINGS:String = "load_settings";
+    private static var COMMAND_LOADSTATDATA:String = "loadStatData";
+    private static var COMMAND_LOADUSERDATA:String = "loadUserData";
+    private static var COMMAND_LOGSTAT:String = "logstat";
+    private static var COMMAND_SAVE_SETTINGS:String = "save_settings";
+    private static var COMMAND_LOAD_SETTINGS:String = "load_settings";
 
     public static function log(str:String)
     {
@@ -32,6 +31,21 @@ class com.xvm.Cmd
     public static function getGameRegion(target:Object, callback:String)
     {
         _call(target, callback, [COMMAND_GETGAMEREGION]);
+    }
+    
+    public static function loadStatData(target:Object, callback:String, players:Array)
+    {
+        _call(target, callback, [COMMAND_LOADSTATDATA, players]);
+    }
+    
+    public static function loadUserData(target:Object, callback:String, value:String, isId:Boolean)
+    {
+        _call(target, callback, [COMMAND_LOADUSERDATA, value, isId]);
+    }
+
+    public static function logStat()
+    {
+        _call(null, null, [COMMAND_LOGSTAT]);
     }
     
     /////////////////////////////////////////////////////////////////

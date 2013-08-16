@@ -34,13 +34,13 @@ class wot.crew.tankmen.Crew
 
     private function CrewCtor()
     {
-        GlobalEventDispatcher.addEventListener("config_loaded", this, onConfigLoaded);
+        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         Config.LoadConfig("Crew.as");
     }
 
     private function onConfigLoaded()
     {
-        GlobalEventDispatcher.removeEventListener("config_loaded", this, onConfigLoaded);
+        GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
 
         if (Config.s_config.hangar.hideTutorial == true)
             _root.header.tutorialDispatcher._visible = false;

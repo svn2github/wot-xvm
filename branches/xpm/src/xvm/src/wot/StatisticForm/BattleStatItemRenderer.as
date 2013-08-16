@@ -66,9 +66,9 @@ class wot.StatisticForm.BattleStatItemRenderer
         wrapper.col3.verticalAlign = "center";
         wrapper.col3.verticalAutoSize = true;
 
-        GlobalEventDispatcher.addEventListener("config_loaded", StatLoader.LoadLastStat);
-        GlobalEventDispatcher.addEventListener("config_loaded", this, onConfigLoaded);
-        GlobalEventDispatcher.addEventListener("stat_loaded", wrapper, updateData);
+        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, StatLoader.LoadLastStat);
+        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
+        GlobalEventDispatcher.addEventListener(StatData.E_STAT_LOADED, wrapper, updateData);
 
         Config.LoadConfig("BattleStatItemRenderer.as");
     }
@@ -103,7 +103,7 @@ class wot.StatisticForm.BattleStatItemRenderer
 
     public function onConfigLoaded(event)
     {
-        GlobalEventDispatcher.removeEventListener("config_loaded", this, onConfigLoaded);
+        GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
 
         s_winChances.showChances = Config.s_config.statisticForm.showChances;
         s_winChances.showExp = Config.s_config.statisticForm.showChancesExp;
@@ -135,9 +135,7 @@ class wot.StatisticForm.BattleStatItemRenderer
         // Add data for Win Chance calculation
         //Logger.addObject(data);
         if (Config.s_config.rating.showPlayersStatistics) {
-            if (!StatData.s_data[pname] || !StatData.s_data[pname].playerId)
-                StatLoader.AddPlayerData(wrapper.data, team);
-            else
+            if (StatData.s_data[pname])
                 StatData.s_data[pname].vehicleState = wrapper.data.vehicleState;
         }
         // Chance

@@ -74,13 +74,13 @@ class wot.UserInfo.UserInfo
         m_userData = null;
         m_dataLoaded = false;
 
-        GlobalEventDispatcher.addEventListener("config_loaded", this, onConfigLoaded);
+        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         Config.LoadConfig("UserInfo.as");
     }
 
     private function onConfigLoaded()
     {
-        GlobalEventDispatcher.removeEventListener("config_loaded", this, onConfigLoaded);
+        GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         loadData();
     }
 
@@ -363,7 +363,7 @@ class wot.UserInfo.UserInfo
             tf: tf,
             ts: data.ts
         };
-        stat = StatLoader.CalculateStatValues(stat, true);
+        stat = StatLoader.instance.CalculateStatValues(stat, true);
         //Logger.addObject(stat);
 
         var s2 = "";
@@ -544,7 +544,7 @@ class wot.UserInfo.UserInfo
                         tf: vdata.f,
                         ts: vdata.s
                     };
-                    stat = StatLoader.CalculateStatValues(stat);
+                    stat = StatLoader.instance.CalculateStatValues(stat);
                 }
                 data[i].tsb = stat.ts / stat.tb || 0;
                 data[i].ts = stat.ts || 0;

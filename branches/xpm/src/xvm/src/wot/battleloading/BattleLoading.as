@@ -43,29 +43,29 @@ class wot.battleloading.BattleLoading
     {
         StatData.s_loaded = false;
         StatData.s_data = {};
-        StatLoader.s_players_count = 0;
-        StatLoader.teams = { t1:0, t2:0 };
+        StatLoader.instance.players_count = 0;
+        StatLoader.instance.teams = { t1:0, t2:0 };
 
         // Components
         winChances = new WinChances(wrapper.form_mc); // Winning chance info above players list.
         tipField   = new TipField(wrapper.form_mc);   // Information field below players list.
         realClock  = new RealClock(wrapper.form_mc);  // Realworld time at right side of TipField.
 
-        GlobalEventDispatcher.addEventListener("config_loaded", this, onConfigLoaded);
+        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         Config.LoadConfig("BattleLoading.as");
-        GlobalEventDispatcher.addEventListener("stat_loaded", this, onStatLoaded);
+        GlobalEventDispatcher.addEventListener(StatData.E_STAT_LOADED, this, onStatLoaded);
     }
 
     private function onStatLoaded()
     {
-        GlobalEventDispatcher.removeEventListener("stat_loaded", this, onStatLoaded);
+        GlobalEventDispatcher.removeEventListener(StatData.E_STAT_LOADED, this, onStatLoaded);
         if (Config.s_config.rating.enableStatisticsLog == true)
             StatsLogger.saveStatistics("setup", StatData.s_data);
     }
 
     private function onConfigLoaded()
     {
-        GlobalEventDispatcher.removeEventListener("config_loaded", this, onConfigLoaded);
+        GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         traceToProxyTerminal();
 
         winChances.showChances = Config.s_config.battleLoading.showChances;
@@ -85,7 +85,7 @@ class wot.battleloading.BattleLoading
         (
             function() {
                 if (!StatData.s_loaded) {
-                    if (StatLoader.teams.t1 == 0 /*&& StatLoader.teams.t2 == 0*/) { // t2 disabled because of FogOfWar
+                    if (StatLoader.instance.teams.t1 == 0 /*&& StatLoader.teams.t2 == 0*/) { // t2 disabled because of FogOfWar
                         if (loop * BattleLoading.STAT_PRELOAD_DELAY > 10000) { // 10 sec
                             Logger.add("WARNING: no players data after 10 sec, skip stats loading");
                         } else {
@@ -94,8 +94,8 @@ class wot.battleloading.BattleLoading
                         }
                     }
                     else {
-                        Logger.add("[BattleLoading] loading stat data (" + StatLoader.s_players_count + " players)");
-                        StatLoader.StartLoadData();
+                        Logger.add("[BattleLoading] loading stat data (" + StatLoader.instance.players_count + " players)");
+                        StatLoader.LoadData();
                     }
                 }
             },

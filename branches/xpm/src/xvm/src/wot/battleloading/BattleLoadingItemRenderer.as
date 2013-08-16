@@ -69,8 +69,8 @@ class wot.battleloading.BattleLoadingItemRenderer
         // Process one player data.
         if (data)
         {
-            addPlayerToStatLoadQueue(data);
             attachClanIconToPlayer(data);
+            GlobalEventDispatcher.addEventListener(StatData.E_STAT_LOADED, this, StatLoadedCallback);
         }
 
         // Remove squad icon.
@@ -78,15 +78,6 @@ class wot.battleloading.BattleLoadingItemRenderer
             wrapper.squad._visible = false;
 
         base.setData(data);
-    }
-
-    function addPlayerToStatLoadQueue(data)
-    {
-        if (!Config.s_config.rating.showPlayersStatistics)
-            return;
-
-        StatLoader.AddPlayerData(data, team);
-        GlobalEventDispatcher.addEventListener("stat_loaded", this, StatLoadedCallback);
     }
 
     function attachClanIconToPlayer(data)
@@ -202,7 +193,7 @@ class wot.battleloading.BattleLoadingItemRenderer
     {
         //Logger.add("StatLoaded(): " + data.label);
 
-        GlobalEventDispatcher.removeEventListener("stat_loaded", this, StatLoadedCallback);
+        GlobalEventDispatcher.removeEventListener(StatData.E_STAT_LOADED, this, StatLoadedCallback);
 
         var label = wrapper.data.label;
         var team = this.team;
