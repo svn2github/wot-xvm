@@ -2,9 +2,10 @@
  * ...
  * @author sirmax2
  */
-import com.xvm.Comm;
+import com.xvm.Cmd;
 import com.xvm.Config;
 import com.xvm.ConfigUtils;
+import com.xvm.DefaultConfig;
 import com.xvm.Defines;
 import com.xvm.GlobalEventDispatcher;
 import com.xvm.JSONxLoader;
@@ -19,12 +20,19 @@ class com.xvm.ConfigLoader
     private static var s_src:String = "";
     private static var info_event:Object = null;
 
+    // Constants
+    private static var E_CONFIG_LOADED = "config_loaded";
+    private static var E_SET_INFO = "set_info";
+    
+    // instance
+    private static var instance:ConfigLoader = null;
+    
     // Load XVM mod config; config data is shared between all marker instances, so
     // it should be loaded only once per session. s_loaded flag indicates that
     // we've already initialized config loading process.
     public static function LoadConfig(src: String)
     {
-        //Logger.add("TRACE: LoadConfig()");
+        //Logger.add("TRACE: LoadConfig(" + src + ")");
         if (Config.s_loaded)
         {
             if (info_event != null)
@@ -32,26 +40,31 @@ class com.xvm.ConfigLoader
                 // Use set timeout to avoid overriding by default value
                 _global.setTimeout(function() { GlobalEventDispatcher.dispatchEvent(ConfigLoader.info_event); }, 1);
             }
-            GlobalEventDispatcher.dispatchEvent({type: "config_loaded"});
+            GlobalEventDispatcher.dispatchEvent({type: E_CONFIG_LOADED});
             return;
         }
         s_src = src || "";
-        ReloadConfig();
+        
+        if (instance == null)
+            instance = new ConfigLoader();
+        instance.ReloadConfig();
     }
 
-    private static function ReloadConfig()
+    private function ReloadConfig()
     {
-        //Logger.add("TRACE: Config.ReloadConfig()");
-        if (s_loading)
+        //Logger.add("TRACE: ReloadConfig()");
+        if (ConfigLoader.s_loading)
             return;
-        s_loading = true;
+        ConfigLoader.s_loading = true;
 
-        Config.s_config = com.xvm.DefaultConfig.config;
-
-        JSONxLoader.LoadAndParse(Defines.XVM_ROOT + Defines.CONFIG_FILE_NAME, null, ReloadConfigCallback);
+        var me = this;
+        _global.setTimeout(function() {
+            Config.s_config = DefaultConfig.config;
+            JSONxLoader.LoadAndParse(Defines.XVM_ROOT + Defines.CONFIG_FILE_NAME, me, me.ReloadConfigCallback);
+        }, 1);
     }
 
-    private static function ReloadConfigCallback(event)
+    private function ReloadConfigCallback(event)
     {
         //Logger.add("TRACE: ReloadConfigCallback(): start");
         if (event.error != null && event.error.type == "NO_FILE")
@@ -59,15 +72,15 @@ class com.xvm.ConfigLoader
             if (event.filename == Defines.CONFIG_FILE_NAME)
             {
                 // xvm.xc not found, try to load legacy config XVM.xvmconf
-                JSONxLoader.LoadAndParse(Defines.CONFIG_FILE_NAME_XVMCONF, null, ReloadConfigCallback);
+                JSONxLoader.LoadAndParse(Defines.CONFIG_FILE_NAME_XVMCONF, this, ReloadConfigCallback);
                 return;
             }
         }
 
-        var finallyBugWorkaround: Boolean = false; // Workaround: finally block have a bug - it can be called twice times.
+        var finallyBugWorkaround: Boolean = false; // Workaround: finally block have a bug - it can be called twice.
         try
         {
-            ConfigLoader.ProcessConfig(event);
+            ProcessConfig(event);
             ConfigUtils.TuneupConfig();
         }
         finally
@@ -76,18 +89,18 @@ class com.xvm.ConfigLoader
             if (finallyBugWorkaround)
                 return;
             finallyBugWorkaround = true;
-            ConfigLoader.ReloadGameRegion();
+            Cmd.getGameRegion(this, "OnGameRegionReceived");
             Locale.loadLocale();
             //Logger.add("TRACE: ReloadConfigCallback(): finally::end");
         }
         //Logger.add("TRACE: ReloadConfigCallback(): end");
     }
 
-    private static function ProcessConfig(event)
+    private function ProcessConfig(event)
     {
         if (event.error != null && event.error.type == "NO_FILE")
         {
-            info_event = { type: "set_info", warning: "" };
+            info_event = { type: E_SET_INFO, warning: "" };
             GlobalEventDispatcher.dispatchEvent(info_event);
             return;
         }
@@ -99,7 +112,7 @@ class com.xvm.ConfigLoader
             var text:String = "Error loading config file '" + event.filename + "': ";
             text += ConfigUtils.parseErrorEvent(event);
 
-            info_event = { type: "set_info", error: text };
+            info_event = { type: E_SET_INFO, error: text };
             GlobalEventDispatcher.dispatchEvent(info_event);
             Logger.add(String(text).substr(0, 200));
             return;
@@ -108,91 +121,21 @@ class com.xvm.ConfigLoader
         Config.s_config = ConfigUtils.MergeConfigs(ConfigUtils.FixConfig(event.data), Config.s_config);
         //Logger.addObject(Config.s_config, "config", 2);
         //Logger.addObject(Config.s_config.markers.enemy.alive.normal, "", 3);
-        info_event = { type: "set_info" };
+        info_event = { type: E_SET_INFO };
         GlobalEventDispatcher.dispatchEvent(info_event); // Just show version
     }
 
-    private static function ReloadGameRegion()
+    private function OnGameRegionReceived(region)
     {
-        //Logger.add("TRACE: Config.ReloadGameRegion()");
-        Comm.Sync(Defines.COMMAND_GET_VERSION, null, null, function(event) {
-            if (!event.str) // proxy is not running
-            {
-                ConfigLoader.GetGameRegionFromWOTLauncherCfg();
-                return;
-            }
-
-            var finallyBugWorkaround: Boolean = false; // Workaround: finally block have a bug - it can be called twice times. Why? How? F*ck!
-            try
-            {
-                var a: Array = event.str.split("\n");
-                Config.s_game_region = a[0].toUpperCase();
-            }
-            finally
-            {
-                if (finallyBugWorkaround)
-                    return;
-                finallyBugWorkaround = true;
-                ConfigLoader.SetConfigLoaded();
-            }
-        });
+        Config.s_game_region = region;
+        SetConfigLoaded();
     }
 
-    private static function GetGameRegionFromWOTLauncherCfg()
+    private function SetConfigLoaded()
     {
-        //Logger.add("TRACE: Config.GetGameRegionFromWOTLauncherCfg()");
-
-        var xml:XML = new XML();
-        xml.ignoreWhite = true;
-        xml.onLoad = function(success: Boolean)
-        {
-            var finallyBugWorkaround: Boolean = false; // Workaround: finally block have a bug - it can be called twice. Why? How? F*ck!
-            try
-            {
-                if (!success)
-                    return;
-                var cfg = com.produxion.util.XML2Object.deserialize(xml);
-                var items = cfg["wotlauncher.cfg"]["patch_info_urls"]["item"];
-                if (!(items instanceof Array))
-                    items = [ items ];
-                for (var i = 0; i < items.length; ++i)
-                {
-                    var url:String = Strings.trim(items[i]["data"]).toLowerCase();
-                    //Logger.add("url: " + url);
-                    if (url.indexOf("http://update.wot.ru.wargaming.net") > -1 || url.indexOf("http://update.worldoftanks.ru") > -1)
-                        Config.s_game_region = "RU";
-                    else if (url.indexOf("http://update.worldoftanks.eu") > -1)
-                        Config.s_game_region = "EU";
-                    else if (url.indexOf("http://update.worldoftanks.com") > -1)
-                        Config.s_game_region = "US";
-                    else if (url.indexOf("http://update-ct.wargaming.net") > -1)
-                        Config.s_game_region = "CT";
-                    else if (url.indexOf("http://update.worldoftanks.cn") > -1)
-                        Config.s_game_region = "CN";
-                    else if (url.indexOf("http://update.worldoftanks-sea.com") > -1)
-                        Config.s_game_region = "SEA";
-                    else if (url.indexOf("http://update.worldoftanks.vn") > -1)
-                        Config.s_game_region = "VTC";
-                }
-            }
-            finally
-            {
-                if (finallyBugWorkaround)
-                    return;
-                finallyBugWorkaround = true;
-                ConfigLoader.SetConfigLoaded();
-            }
-        };
-
-        xml.load("../../../../WOTLauncher.cfg");
-    }
-
-    private static function SetConfigLoaded()
-    {
-        Logger.add("Config: Loaded (" + s_src + ")");
+        //Logger.add("Config: Loaded (" + s_src + ")");
         Config.s_loaded = true;
-        s_loading = false;
-        GlobalEventDispatcher.dispatchEvent({type: "config_loaded"});
+        ConfigLoader.s_loading = false;
+        GlobalEventDispatcher.dispatchEvent({type: E_CONFIG_LOADED});
     }
-
 }

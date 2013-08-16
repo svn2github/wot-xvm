@@ -84,13 +84,16 @@ def RegisterEvent(cls, method, handler, prepend=False):
     e += handler
 
 def __event_handler(prepend, e, m, *a, **k):
-    if prepend:
-        e(*a, **k)
-        r = m(*a, **k)
-    else:
-        r = m(*a, **k)
-        e(*a, **k)
-    return r
+    try:
+        if prepend:
+            e(*a, **k)
+            r = m(*a, **k)
+        else:
+            r = m(*a, **k)
+            e(*a, **k)
+        return r
+    except:
+        pass
 
 def OverrideMethod(cls, method, handler):
     i = 0

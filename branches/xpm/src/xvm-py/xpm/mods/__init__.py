@@ -5,7 +5,6 @@ import gui.mods.xpm
 import ResMgr
 import glob
 import os
-import ast
 from gui import VERSION_FILE_PATH
 
 ver = ResMgr.openSection(VERSION_FILE_PATH).readString('version')

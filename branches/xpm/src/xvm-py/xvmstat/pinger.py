@@ -7,10 +7,10 @@ from predefined_hosts import g_preDefinedHosts
 # Command
 
 def ping():
-    g_preDefinedHosts._PreDefinedHostList__ping()
-    hosts = g_preDefinedHosts._hosts;
-    pings = g_preDefinedHosts._PreDefinedHostList__pingResult
     try:
+        g_preDefinedHosts._PreDefinedHostList__ping()
+        hosts = g_preDefinedHosts._hosts;
+        pings = g_preDefinedHosts._PreDefinedHostList__pingResult
         return dict(map(lambda x: (x.name, pings[x.url] if x.url in pings else "?"), hosts))
     except:
         return None

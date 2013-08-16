@@ -10,8 +10,9 @@ from messenger.gui import MessengerDispatcher
 from gui.mods.xpm import *
 
 from constants import *
-from pinger import ping
+from gameregion import region
 from logger import log
+from pinger import ping
 
 class XvmStat(object):
     def __init__(self):
@@ -25,6 +26,8 @@ class XvmStat(object):
             log(*args)
         elif cmd == COMMAND_GETSCREENSIZE:
             res = json.dumps(list(GUI.screenResolution()))
+        elif cmd == COMMAND_GETGAMEREGION:
+            res = region
         else:
             log("cmd=" + str(cmd) + " args=" + json.dumps(args))
         proxy.respond([id, res])

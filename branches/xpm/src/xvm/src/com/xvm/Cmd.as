@@ -6,6 +6,7 @@ class com.xvm.Cmd
     private static var COMMAND_LOG:String = "log";
     private static var COMMAND_PING:String = "ping";
     private static var COMMAND_GETSCREENSIZE:String = "getScreenSize";
+    private static var COMMAND_GETGAMEREGION:String = "getGameRegion";
 
     //private static var COMMAND_GETSTAT:String = "getstat";
     //private static var COMMAND_VAR:String = "var";
@@ -26,6 +27,11 @@ class com.xvm.Cmd
     public static function getScreenSize(target:Object, callback:String)
     {
         _call(target, callback, [COMMAND_GETSCREENSIZE]);
+    }
+    
+    public static function getGameRegion(target:Object, callback:String)
+    {
+        _call(target, callback, [COMMAND_GETGAMEREGION]);
     }
     
     /////////////////////////////////////////////////////////////////

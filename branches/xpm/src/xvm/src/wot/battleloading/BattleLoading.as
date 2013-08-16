@@ -106,11 +106,11 @@ class wot.battleloading.BattleLoading
     private function traceToProxyTerminal()
     {
         Logger.add("[BattleLoading]\n" +
-                "    XVM_VERSION=" + Defines.XVM_VERSION + "\n" +
-                "    GameRegion=" + Config.s_game_region + "\n" +
-                "    configVersion=" + Config.s_config.configVersion + "\n" +
-                "    showPlayersStatistics=" + Config.s_config.rating.showPlayersStatistics + "\n" +
-                "    loadEnemyStatsInFogOfWar=" + Config.s_config.rating.loadEnemyStatsInFogOfWar + "\n" +
-                "    useStandardMarkers=" + Config.s_config.battle.useStandardMarkers);
+                "                                 XVM_VERSION=" + Defines.XVM_VERSION + "\n" +
+                "                                 GameRegion=" + Config.s_game_region + "\n" +
+                "                                 configVersion=" + Config.s_config.configVersion + "\n" +
+                "                                 showPlayersStatistics=" + Config.s_config.rating.showPlayersStatistics + "\n" +
+                "                                 loadEnemyStatsInFogOfWar=" + Config.s_config.rating.loadEnemyStatsInFogOfWar + "\n" +
+                "                                 useStandardMarkers=" + Config.s_config.battle.useStandardMarkers);
     }
 }
