@@ -30,9 +30,9 @@ class XvmStat(object):
         elif cmd == COMMAND_GETGAMEREGION:
             res = region
         elif cmd == COMMAND_LOADSTATDATA:
-            res = getStat(*args)
+            getStat(proxy, *args)
         elif cmd == COMMAND_LOADUSERDATA:
-            res = getUserData(*args)
+            getUserData(proxy, *args)
         else:
             log("cmd=" + str(cmd) + " args=" + json.dumps(args))
         proxy.respond([id, res])

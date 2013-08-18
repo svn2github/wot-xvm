@@ -1,3 +1,4 @@
+import gfx.io.GameDelegate;
 import com.xvm.Cmd;
 import com.xvm.Comm;
 import com.xvm.Config;
@@ -9,6 +10,7 @@ import com.xvm.Macros;
 import com.xvm.StatData;
 import com.xvm.Utils;
 import com.xvm.VehicleInfo;
+import com.xvm.DataTypes.Stat;
 
 class com.xvm.StatLoader
 {
@@ -27,12 +29,14 @@ class com.xvm.StatLoader
         if (instance._loading)
             return;
         instance._loading = true;
-        Cmd.loadStatData(instance, "LoadStatDataCallback", null);
+        GameDelegate.addCallBack(Cmd.RESPOND_STATDATA, instance, "LoadStatDataCallback");
+        Cmd.loadStatData(null);
     }
 
     public static function LoadUserData(value:String, isId:Boolean)
     {
-        Cmd.loadUserData(instance, "LoadUserDataCallback", value, isId);
+        GameDelegate.addCallBack(Cmd.RESPOND_USERDATA, instance, "LoadUserDataCallback");
+        Cmd.loadUserData(value, isId);
     }
 
     public static function LoadLastStat(event)
@@ -110,42 +114,41 @@ class com.xvm.StatLoader
             dirty = true;
     }
 
-    private function LoadStatDataCallback(event)
+    private function LoadStatDataCallback(json_str)
     {
-        Logger.addObject(event, "LoadStatDataCallback");
+        GameDelegate.removeCallBack(Cmd.RESPOND_STATDATA);
         var finallyBugWorkaround: Boolean = false; // Workaround: finally block have a bug - it can be called twice. Why? How?
         try
         {
-            var response = JSONx.parse(event.str);
+            var response = JSONx.parse(json_str);
+            //Logger.addObject(response, "response", 2);
 
-            if (response.info && response.info.xvm)
-                GlobalEventDispatcher.dispatchEvent({ type: "set_info", ver: response.info.xvm.ver, message: response.info.xvm.message });
+            if (response.info)
+                GlobalEventDispatcher.dispatchEvent({ type: "set_info", ver: response.info.ver, message: response.info.message });
 
             if (response.players)
             {
-                var players_length = response.players.length;
-                for (var i = 0; i < players_length; ++i)
+                for (var nm in response.players)
                 {
-                    var stat = response.players[i];
-                    var name = stat.name.toUpperCase();
+                    var stat:Stat = response.players[nm];
                     stat = CalculateStatValues(stat);
-                    if (!StatData.s_data[name])
+                    if (!StatData.s_data[nm])
                     {
                         players_count++;
-                        StatData.s_data[name] = { };
+                        StatData.s_data[nm] = { };
                     }
-                    StatData.s_data[name].stat = stat;
-                    StatData.s_data[name].loadstate = (StatData.s_data[name].vehicleKey == "UNKNOWN")
+                    StatData.s_data[nm].stat = stat;
+                    StatData.s_data[nm].loadstate = (StatData.s_data[nm].vehicleKey == "UNKNOWN")
                         ? Defines.LOADSTATE_UNKNOWN : Defines.LOADSTATE_DONE;
                     StatData.s_empty = false;
-                    Macros.RegisterStatMacros(stat.name, stat);
-                    //Logger.addObject(StatData.s_data[name], "s_data[" + name + "]");
+                    Macros.RegisterStatMacros(nm, stat);
+                    //Logger.addObject(StatData.s_data[nm], "s_data[" + nm + "]", 3);
                 }
             }
         }
         catch (ex)
         {
-            // do nothing
+            Logger.add("[LoadStatDataCallback] ERROR: " + ex.toString());
         }
         finally
         {
@@ -163,20 +166,20 @@ class com.xvm.StatLoader
         }
     }
 
-    public function CalculateStatValues(stat, forceTeff): Object
+    public function CalculateStatValues(stat:Stat, forceTeff:Boolean):Stat
     {
         // rating (GWR)
-        stat.r = stat.b > 0 ? Math.round(stat.w / stat.b * 100) : 0;
+        stat.r = stat.battles > 0 ? Math.round(stat.w / stat.battles * 100) : 0;
 
-        if (!stat.tb || stat.tb <= 0 || !stat.tl || stat.tl <= 0)
+        if (!stat.v || !stat.v.b || stat.v.b <= 0 || !stat.v.l || stat.v.l <= 0)
             stat.tr = stat.r;
         else
         {
             var Or = stat.r;
-            var Tr = Math.round(stat.tw / stat.tb * 100);
-            var Tb = stat.tb / 100;
-            var Tl = Math.min(stat.tl, 4) / 4;
-            if (stat.tb < 100)
+            var Tr = Math.round(stat.v.w / stat.v.b * 100);
+            var Tb = stat.v.b / 100;
+            var Tl = Math.min(stat.v.l, 4) / 4;
+            if (stat.v.b < 100)
                 stat.tr = Math.round(Or - (Or - Tr) * Tb * Tl);
             else
                 stat.tr = Tr;
@@ -186,8 +189,8 @@ class com.xvm.StatLoader
 
         // xeff
         stat.xeff = null;
-        if (stat.e != null && stat.e > 0)
-            stat.xeff = Utils.XEFF(stat.e);
+        if (stat.eff != null && stat.eff > 0)
+            stat.xeff = Utils.XEFF(stat.eff);
 
         // xwn
         stat.xwn = null;
@@ -201,25 +204,25 @@ class com.xvm.StatLoader
         stat.tdv = null;
         stat.te = null;
         stat.teff = null;
-        // skip tb less then 10, because of WG bug:
+        // skip v.b less then 10, because of WG bug:
         // http://www.koreanrandom.com/forum/topic/1643-/page-19#entry26189
         // forceTeff used in UserInfo, there is not this bug there.
-        if (stat.tb == null || stat.tl == null || (forceTeff != true && stat.tb < 10 + stat.tl * 2))
+        if (stat.v == null || stat.v.b == null || stat.v.l == null || (forceTeff != true && stat.v.b < 10 + stat.v.l * 2))
             return stat;
 
-        stat.tdb = (stat.td == null || stat.td < 0) ? null : Math.round(stat.td / stat.tb);
-        stat.tfb = (stat.tf == null || stat.tf < 0) ? null : Math.round(stat.tf / stat.tb * 10) / 10;
-        stat.tsb = (stat.ts == null || stat.ts < 0) ? null : Math.round(stat.ts / stat.tb * 10) / 10;
+        stat.tdb = (stat.v.d == null || stat.v.d < 0) ? null : Math.round(stat.v.d / stat.v.b);
+        stat.tfb = (stat.v.f == null || stat.v.f < 0) ? null : Math.round(stat.v.f / stat.v.b * 10) / 10;
+        stat.tsb = (stat.v.s == null || stat.v.s < 0) ? null : Math.round(stat.v.s / stat.v.b * 10) / 10;
         //Logger.addObject(stat);
 
-        var vi2 = VehicleInfo.getInfo2("/-" + stat.vn + ".");
+        var vi2 = VehicleInfo.getInfo2("/-" + stat.vname + ".");
         if (!vi2 || !vi2.type || !vi2.level)
         {
             //Logger.add("WARNING: vehicle info (3) missed: " + stat.vn);
             return stat;
         }
 
-        stat.tdv = (stat.td == null || stat.td < 0) ? null : Math.round(stat.td / stat.tb / vi2.hptop * 10) / 10;
+        stat.tdv = (stat.v.d == null || stat.v.d < 0) ? null : Math.round(stat.v.d / stat.v.b / vi2.hptop * 10) / 10;
 
         var EC = { CD: 3, CF: 1 };
 //        Logger.addObject(stat);
@@ -249,11 +252,11 @@ class com.xvm.StatLoader
         f2 = Math.max(0, f2);
 
         stat.te = (d * EC.CD + f * EC.CF) / (EC.CD + EC.CF);
-        stat.teff2 = (d2 * EC.CD + f2 * EC.CF) / (EC.CD + EC.CF);
+        //stat.teff2 = (d2 * EC.CD + f2 * EC.CF) / (EC.CD + EC.CF);
 //        Logger.add(stat.vn + " D:" + d + " F:" + f + " S:" + s);
 
         stat.teff = Math.max(1, Math.round(stat.te * 1000));
-        stat.teff2 = Math.max(1, Math.round(stat.teff2 * 1000));
+        //stat.teff2 = Math.max(1, Math.round(stat.teff2 * 1000));
         stat.te = (stat.teff == 0) ? 0 //can not be used
             : (stat.teff < 300) ? 1
             : (stat.teff < 500) ? 2
@@ -323,6 +326,7 @@ class com.xvm.StatLoader
 
     private function LoadUserDataCallback(event, value, isId)
     {
+        GameDelegate.removeCallBack(Cmd.RESPOND_STATDATA);
         var data = null;
         if (event.error)
             data = {error:event.error};

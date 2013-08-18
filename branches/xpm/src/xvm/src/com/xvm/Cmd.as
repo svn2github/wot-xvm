@@ -13,6 +13,9 @@ class com.xvm.Cmd
     private static var COMMAND_SAVE_SETTINGS:String = "save_settings";
     private static var COMMAND_LOAD_SETTINGS:String = "load_settings";
 
+    public static var RESPOND_STATDATA = "xvm.statdata";
+    public static var RESPOND_USERDATA = "xvm.userdata";
+
     public static function log(str:String)
     {
         _call(null, null, [COMMAND_LOG, str]);
@@ -33,14 +36,14 @@ class com.xvm.Cmd
         _call(target, callback, [COMMAND_GETGAMEREGION]);
     }
     
-    public static function loadStatData(target:Object, callback:String, players:Array)
+    public static function loadStatData(players:Array)
     {
-        _call(target, callback, [COMMAND_LOADSTATDATA, players]);
+        _call(null, null, [COMMAND_LOADSTATDATA, players]);
     }
-    
-    public static function loadUserData(target:Object, callback:String, value:String, isId:Boolean)
+
+    public static function loadUserData(value:String, isId:Boolean)
     {
-        _call(target, callback, [COMMAND_LOADUSERDATA, value, isId]);
+        _call(null, null, [COMMAND_LOADUSERDATA, value, isId]);
     }
 
     public static function logStat()

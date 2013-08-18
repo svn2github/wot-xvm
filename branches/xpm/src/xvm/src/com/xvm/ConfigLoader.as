@@ -34,9 +34,10 @@ class com.xvm.ConfigLoader
             if (info_event != null)
             {
                 // Use set timeout to avoid overriding by default value
-                _global.setTimeout(function() { GlobalEventDispatcher.dispatchEvent(ConfigLoader.info_event); }, 1);
+                _global.setTimeout(function() { GlobalEventDispatcher.dispatchEvent(ConfigLoader.info_event); }, 2);
             }
-            GlobalEventDispatcher.dispatchEvent({type: Config.E_CONFIG_LOADED});
+            // delayed initialization to guarantee python module initialization
+            _global.setTimeout(function() { GlobalEventDispatcher.dispatchEvent( { type: Config.E_CONFIG_LOADED } ); }, 1);
             return;
         }
         s_src = src || "";
@@ -53,6 +54,7 @@ class com.xvm.ConfigLoader
             return;
         ConfigLoader.s_loading = true;
 
+        // delayed initialization
         var me = this;
         _global.setTimeout(function() {
             Config.s_config = DefaultConfig.config;

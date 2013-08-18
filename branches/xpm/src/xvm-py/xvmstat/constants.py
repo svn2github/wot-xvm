@@ -7,6 +7,9 @@ COMMAND_GETGAMEREGION = "getGameRegion"
 COMMAND_LOADSTATDATA = "loadStatData"
 COMMAND_LOADUSERDATA = "loadUserData"
 
+RESPOND_STATDATA = "xvm.statdata"
+RESPOND_USERDATA = "xvm.userdata"
+
 #COMMAND_GETSTAT = "getstat"
 #COMMAND_VAR = "var"
 #COMMAND_LOGSTAT = "logstat"

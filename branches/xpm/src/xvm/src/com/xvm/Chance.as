@@ -129,7 +129,7 @@ class com.xvm.Chance
         var Ea = stat.xwn == null ? Config.s_config.consts.AVG_XVMSCALE : stat.xwn;
         var Ean = Ea + (Ea * (((stat.avglvl || T) - T) * 0.05));
         var Ra = stat.r || Config.s_config.consts.AVG_GWR;
-        var Ba = stat.b || Config.s_config.consts.AVG_BATTLES;
+        var Ba = stat.battles || Config.s_config.consts.AVG_BATTLES;
 
         // 1
         var Klvl = (Tmax + Tmin) / 2 - T;
@@ -165,7 +165,7 @@ class com.xvm.Chance
         var Ea = stat.xwn == null ? Config.s_config.consts.AVG_XVMSCALE : stat.xwn;
         var Ean = Ea + (Ea * (((stat.avglvl || T) - T) * 0.05));
         var Ra = stat.r || Config.s_config.consts.AVG_GWR;
-        var Ba = stat.b || Config.s_config.consts.AVG_BATTLES;
+        var Ba = stat.battles || Config.s_config.consts.AVG_BATTLES;
 
         // 1
         var Klvl = (Tmax + Tmin) / 2 - T;
@@ -209,7 +209,7 @@ class com.xvm.Chance
         var Ea = stat.xwn == null ? Config.s_config.consts.AVG_XVMSCALE : stat.xwn;
         var Ean = Ea + (Ea * (((stat.avglvl || T) - T) * 0.05));
         var Ra = stat.r || Config.s_config.consts.AVG_GWR;
-        var Ba = stat.b || Config.s_config.consts.AVG_BATTLES;
+        var Ba = stat.battles || Config.s_config.consts.AVG_BATTLES;
 
         // 1
         var Klvl = (Tmax + Tmin) / 2 - T;
@@ -248,7 +248,7 @@ class com.xvm.Chance
         var Ea = stat.xwn == null ? Config.s_config.consts.AVG_XVMSCALE : stat.xwn;
         var Ean = Ea + (Ea * (((stat.avglvl || T) - T) * 0.05));
         var Ra = stat.r || Config.s_config.consts.AVG_GWR;
-        var Ba = stat.b || Config.s_config.consts.AVG_BATTLES;
+        var Ba = stat.battles || Config.s_config.consts.AVG_BATTLES;
 
         // 1
         var Klvl = (Tmax + Tmin) / 2 - T;

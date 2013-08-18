@@ -66,10 +66,10 @@ class com.xvm.Helpers.TeamRendererHelper
             "<font color='" + GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_X, stat.xwn) + "'>" + (stat.xwn == 100 ? "XX" : (stat.xwn < 10 ? "0" : "") + stat.xwn) + "</font>") + " ";
         s += "(" + (!stat.wn ? "-" :
             "<font color='" + GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_WN, stat.wn) + "'>" + stat.wn + "</font>") + ") ";
-        s += Locale.get("EFF") + ": " + (!stat.e ? "--" :
+        s += Locale.get("EFF") + ": " + (!stat.eff ? "--" :
             "<font color='" + GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_X, stat.xeff) + "'>" + (stat.xeff == 100 ? "XX" : (stat.xeff < 10 ? "0" : "") + stat.xeff) + "</font>") + " ";
-        s += "(" + (!stat.e ? "-" :
-            "<font color='" + GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_EFF, stat.e) + "'>" + stat.e + "</font>") + ")";
+        s += "(" + (!stat.eff ? "-" :
+            "<font color='" + GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_EFF, stat.eff) + "'>" + stat.eff + "</font>") + ")";
         s += "<br>";
         // line 3
         s += Locale.get("Fights") + ": " + (!stat.b ? "-" :
@@ -157,7 +157,7 @@ class com.xvm.Helpers.TeamRendererHelper
         }
         else
         {
-            textField.htmlText = "<span class='xvm_eff'>" + (!stat.e ? "--" :
+            textField.htmlText = "<span class='xvm_eff'>" + (!stat.eff ? "--" :
             "<font color='" + GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_X, stat.xeff) + "'>" + (stat.xeff == 100 ? "XX" : (stat.xeff < 10 ? "0" : "") + stat.xeff) + "</font>") + "</span>";
         }
         return stat;
