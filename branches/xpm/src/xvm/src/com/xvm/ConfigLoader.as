@@ -34,10 +34,9 @@ class com.xvm.ConfigLoader
             if (info_event != null)
             {
                 // Use set timeout to avoid overriding by default value
-                _global.setTimeout(function() { GlobalEventDispatcher.dispatchEvent(ConfigLoader.info_event); }, 2);
+                _global.setTimeout(function() { GlobalEventDispatcher.dispatchEvent(ConfigLoader.info_event); }, 1);
             }
-            // delayed initialization to guarantee python module initialization
-            _global.setTimeout(function() { GlobalEventDispatcher.dispatchEvent( { type: Config.E_CONFIG_LOADED } ); }, 1);
+            GlobalEventDispatcher.dispatchEvent({type: Config.E_CONFIG_LOADED});
             return;
         }
         s_src = src || "";
@@ -53,13 +52,8 @@ class com.xvm.ConfigLoader
         if (ConfigLoader.s_loading)
             return;
         ConfigLoader.s_loading = true;
-
-        // delayed initialization
-        var me = this;
-        _global.setTimeout(function() {
-            Config.s_config = DefaultConfig.config;
-            JSONxLoader.LoadAndParse(Defines.XVM_ROOT + Defines.CONFIG_FILE_NAME, me, me.ReloadConfigCallback);
-        }, 1);
+        Config.s_config = DefaultConfig.config;
+        JSONxLoader.LoadAndParse(Defines.XVM_ROOT + Defines.CONFIG_FILE_NAME, this, ReloadConfigCallback);
     }
 
     private function ReloadConfigCallback(event)

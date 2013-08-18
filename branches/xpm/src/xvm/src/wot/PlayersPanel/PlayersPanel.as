@@ -87,19 +87,16 @@ class wot.PlayersPanel.PlayersPanel
 
     public function PlayersPanelCtor()
     {
-        var me = this;
-        _global.setTimeout(function() {
-            GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, StatLoader.LoadLastStat);
-            GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, me, me.onConfigLoaded);
-            GlobalEventDispatcher.addEventListener(StatData.E_STAT_LOADED, me, me.onStatLoaded);
-            
-            GlobalEventDispatcher.addEventListener(AutoUpdate.UPDATE_BY_TIMER_EVENT, me, me.updateSpotStatusMarkers);
-            
-            Config.LoadConfig("PlayersPanel.as");
-            
-            /** Minimap needs to know loaded status */
-            me.checkLoading();
-        }, 1);
+        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, StatLoader.LoadData);
+        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
+        GlobalEventDispatcher.addEventListener(StatData.E_STAT_LOADED, this, onStatLoaded);
+        
+        GlobalEventDispatcher.addEventListener(AutoUpdate.UPDATE_BY_TIMER_EVENT, this, updateSpotStatusMarkers);
+        
+        Config.LoadConfig("PlayersPanel.as");
+        
+        /** Minimap needs to know loaded status */
+        checkLoading();
     }
 
     private function onConfigLoaded(event):Void

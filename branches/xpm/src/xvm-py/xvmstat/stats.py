@@ -28,6 +28,7 @@ class _Stat(object):
         self.arenaId = None
         self.players = None
         self.cache = {}
+        self.cacheUser = {}
         self.info = None
         self.proxies = [ "http://proxy2.bulychev.net/%1" ] # TODO
         self.timeout = 30000
@@ -56,10 +57,6 @@ class _Stat(object):
 
 
     def getUserData(self, proxy, value, isId):
-        player = BigWorld.player()
-        if player.arena is None:
-            return
-
         self.onGetUserComplete += self._respond
         if self.threadUser is not None:
             return
@@ -71,6 +68,7 @@ class _Stat(object):
 
 
     def _respond(self, proxy, method, data):
+        log("DEBUG: respond: " + method)
         proxy.call(method, [json.dumps(data)])
 
 
@@ -135,7 +133,7 @@ class _Stat(object):
             return
 
         try:
-            updateRequest = updateRequest.replace('?', '%3F') # for Chinise server
+            updateRequest = updateRequest.replace('?', '%3F') # for Chinese server
             proxy = self.proxies[randint(0, len(self.proxies) - 1)]
             responseFromServer, duration = self.loadUrl(proxy, updateRequest)
 
@@ -160,15 +158,33 @@ class _Stat(object):
                 self.cache[cacheKey] = stat
 
         except Exception, ex:
-            log('ERROR: PrepareStat exception: ' + str(ex) + "\n" + traceback.format_exc(ex))
+            log('ERROR: _load_stat() exception: ' + str(ex) + "\n" + traceback.format_exc(ex))
 
 
     def _get_user(self, proxy, value, isId):
+        value = str(value)
+        cacheKey = "%s,%d" % (value, isId)
+        if cacheKey not in self.cacheUser:
+            try:
+                req = "INFO/%s/%s" % ("ID" if isId else region, value)
+                proxy = self.proxies[randint(0, len(self.proxies) - 1)]
+                responseFromServer, duration = self.loadUrl(proxy, req)
 
-        self.onGetUserComplete(proxy, RESPOND_USERDATA, None)
+                if len(responseFromServer) <= 0:
+                    log('WARNING: Empty response or parsing error')
+                    return
 
-        with self.threadUserLock:
-            self.threadUser = None
+                data = json.loads(responseFromServer)
+                self.cacheUser[str(data['id']) + ",0"] = data
+                self.cacheUser[data['name'] + ",1"] = data
+
+            except Exception, ex:
+                log('ERROR: _get_user() exception: ' + str(ex) + "\n" + traceback.format_exc(ex))
+
+        self.onGetStatComplete(proxy, RESPOND_USERDATA, self.cacheUser[cacheKey])
+
+        with self.threadLock:
+            self.thread = None
 
 
     def loadUrl(self, url, members, test=False):

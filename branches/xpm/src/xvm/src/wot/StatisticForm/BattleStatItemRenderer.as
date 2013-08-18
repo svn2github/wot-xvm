@@ -66,7 +66,7 @@ class wot.StatisticForm.BattleStatItemRenderer
         wrapper.col3.verticalAlign = "center";
         wrapper.col3.verticalAutoSize = true;
 
-        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, StatLoader.LoadLastStat);
+        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, StatLoader.LoadData);
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         GlobalEventDispatcher.addEventListener(StatData.E_STAT_LOADED, wrapper, updateData);
 

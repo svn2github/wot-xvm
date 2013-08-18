@@ -88,7 +88,7 @@ class com.xvm.DefaultConfig
                         }
                     },
                     threshold: {
-                        great: 30,
+                        great: 35,
                         good: 60,
                         poor: 100
                     },

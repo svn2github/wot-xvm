@@ -1,4 +1,5 @@
 import gfx.io.GameDelegate;
+import com.xvm.JSONx;
 import com.xvm.Logger;
 
 class com.xvm.Cmd
@@ -49,6 +50,16 @@ class com.xvm.Cmd
     public static function logStat()
     {
         _call(null, null, [COMMAND_LOGSTAT]);
+    }
+    
+    public static function loadSettings(target:Object, callback:String)
+    {
+        _call(target, callback, [COMMAND_LOAD_SETTINGS]);
+    }
+    
+    public static function saveSettings(settingsStr)
+    {
+        _call(null, null, [COMMAND_SAVE_SETTINGS, settingsStr]);
     }
     
     /////////////////////////////////////////////////////////////////

@@ -28,7 +28,7 @@ class wot.battle.BattleMain
         Utils.TraceXvmModule("Battle");
 
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, BattleMainConfigLoaded);
-        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, StatLoader.LoadLastStat);
+        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, StatLoader.LoadData);
         Config.LoadConfig("BattleMain.as");
 
         // initialize TweenLite

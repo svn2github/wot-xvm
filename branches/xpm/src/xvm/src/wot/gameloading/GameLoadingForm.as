@@ -20,12 +20,7 @@ class wot.gameloading.GameLoadingForm
     {
         this.wrapper = wrapper;
         this.base = base;
-
-        Utils.TraceXvmModule("gameloading");
-
-        GameLoadingFormCtor();
-
-        //Logger.addObject(_root);
+        _global.setTimeout(GameLoadingFormCtor, 1);
     }
 
     function setVersion()
@@ -36,14 +31,10 @@ class wot.gameloading.GameLoadingForm
     // wrapped methods
     /////////////////////////////////////////////////////////////////
 
-    private var currentLoadingName:String;
-    private var holder:MovieClip;
-
     public function GameLoadingFormCtor()
     {
-        currentLoadingName = "";
-        holder = null;
-
+        Utils.TraceXvmModule("gameloading");
+        //Logger.addObject(_root);
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         Config.LoadConfig("GameLoadingForm.as");
     }

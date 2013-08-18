@@ -39,80 +39,9 @@ class com.xvm.StatLoader
         Cmd.loadUserData(value, isId);
     }
 
-    public static function LoadLastStat(event)
-    {
-        if (event)
-            GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, StatLoader.LoadLastStat);
-        GlobalEventDispatcher.addEventListener("process_fow", instance, instance.ProcessForFogOfWar);
-        if (Config.s_config.rating.showPlayersStatistics)
-        {
-            if (!StatData.s_loaded)
-                Comm.Sync(Defines.COMMAND_GET_PLAYERS, null, instance, instance.GetPlayersCallback);
-            else
-                GlobalEventDispatcher.dispatchEvent({type: StatData.E_STAT_LOADED});
-        }
-    }
-
-
-    public var players_count = 0;
-    public var teams = { t1:0, t2:0 };
+    // PRIVATE
+    
     private var _loading = false;
-    private var dirty:Boolean = false;
-
-    // data: {
-    //   uid|id|playerId,
-    //   label|playerName,
-    //   vehicle|vehicleName,
-    //   icon|tankIcon,
-    //   himself,
-    //   vehId|playerID,
-    //   vehicleState
-    // }
-    public function AddPlayerData(data:Object, team:Number)
-    {
-        var id = data.uid || data.id || data.playerId || 0;
-        var label = data.label || data.playerName;
-        var vehicle = data.vehicle || data.vehicleName;
-        var icon = data.icon || data.tankIcon;
-        var vehId = data.vehId || data.playerID || 0;
-        var vehicleState = data.vehicleState || 3; // IS_ALIVE = 1, IS_AVATAR_READY = 2, IS_UNKNOWN = 4
-
-        //Logger.add("AddPlayerData: " + team + ", " + label + ", " + vehicle + ", " + icon);
-
-        if (id <= 0 || !label)
-            return;
-
-        if (data.clanAbbrev)
-            label += "[" + data.clanAbbrev + "]";
-
-        var pname = Utils.GetNormalizedPlayerName(label);
-        var clan = Utils.GetClanName(label);
-
-        if (team == Defines.TEAM_ALLY)
-            teams.t1 = 1;
-        else
-            teams.t2 = 1;
-
-        if (!StatData.s_data[pname])
-            players_count++;
-        StatData.s_data[pname] = {
-            playerId: id,
-            fullPlayerName: label.split(" ").join(""),
-            label: pname,
-            clanAbbrev: clan,
-            vehicle: vehicle,
-            vehicleKey: VehicleInfo.getInfo2(icon).name.toUpperCase(),
-            icon: icon,
-            team: team,
-      	    vehicleId: vehId,
-            vehicleState: vehicleState,
-            selected: data.himself,
-            loadstate: !StatData.s_data[pname].loadstate ? Defines.LOADSTATE_NONE : StatData.s_data[pname].loadstate,
-            stat: StatData.s_data[pname] ? StatData.s_data[pname].stat : undefined
-        };
-        if (StatData.s_data[pname].loadstate == Defines.LOADSTATE_NONE)
-            dirty = true;
-    }
 
     private function LoadStatDataCallback(json_str)
     {
@@ -134,7 +63,7 @@ class com.xvm.StatLoader
                     stat = CalculateStatValues(stat);
                     if (!StatData.s_data[nm])
                     {
-                        players_count++;
+                        //players_count++;
                         StatData.s_data[nm] = { };
                     }
                     StatData.s_data[nm].stat = stat;
@@ -160,9 +89,6 @@ class com.xvm.StatLoader
             _loading = false;
             //Logger.add("Stat Loaded");
             GlobalEventDispatcher.dispatchEvent({type: StatData.E_STAT_LOADED});
-
-            if (dirty)
-                var timer = _global.setTimeout(function() { StatLoader.LoadData(); }, 50);
         }
     }
 
@@ -272,56 +198,6 @@ class com.xvm.StatLoader
 //        Logger.addObject(stat);
 
         return stat;
-    }
-
-    private function GetPlayersCallback(event)
-    {
-        try
-        {
-            //Logger.add(event.str);
-            var players = JSONx.parse(event.str);
-            for (var i = 0; i < players.length; ++i)
-            {
-                var p = players[i];
-                var vi2 = VehicleInfo.getInfo2("/-" + p.v + ".");
-                AddPlayerData({
-                   uid: p.id,
-                   label: p.n,
-                   vehicle: vi2 ? vi2.name : p.v,
-                   icon: "../maps/icons/vehicle/contour/" + (vi2 ? vi2.nation + "-" + vi2.name : "unknown-" + p.v) + ".png",
-                   himself: p.s,
-                   vehId: 0,
-                   vehicleState: 3
-                }, p.t);
-            }
-            var timer = _global.setTimeout(function() { StatLoader.LoadData(); }, 50);
-        }
-        catch (ex)
-        {
-            // do nothing
-        }
-    }
-
-    // Fog of War
-
-    private function ProcessForFogOfWar(event)
-    {
-        if (!event)
-            return;
-        var data = event.data;
-        if (!data.uid)
-            return;
-
-        //Logger.add("ProcessForFogOfWar(): " + data.label);
-        //Logger.addObject(data);
-
-        var pname: String = Utils.GetNormalizedPlayerName(data.label);
-        if (StatData.s_data[pname] && StatData.s_data[pname].loadstate != Defines.LOADSTATE_NONE)
-            return;
-
-        AddPlayerData(data, event.team);
-
-        var timer = _global.setTimeout(function() { StatLoader.LoadData(); }, 50);
     }
 
     private function LoadUserDataCallback(event, value, isId)

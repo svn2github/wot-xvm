@@ -4,6 +4,7 @@
 import com.xvm.Config;
 import com.xvm.GlobalEventDispatcher;
 import com.xvm.Utils;
+import com.xvm.Components.WGComponents;
 import wot.crew.CrewLoader;
 
 class wot.crew.tankmen.Crew
@@ -48,7 +49,7 @@ class wot.crew.tankmen.Crew
         // FIXIT: dirty hack, find the best place to initialize carousel without timer
         var timer = _global.setInterval(function() {
             // save carousel tanks in _global to be available from the Achievements dialog.
-            var carousel:net.wargaming.Carousel = wot.RootComponents.carousel;
+            var carousel:net.wargaming.Carousel = WGComponents.carousel;
             if (carousel)
                 _global._xvm_carousel_dataProvider = carousel.dataProvider;
         }, 1000);

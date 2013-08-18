@@ -20,6 +20,8 @@ class XvmStat(object):
         pass
 
     def onXvmCommand(self, proxy, id, cmd, *args):
+        if (cmd not in ('ping', 'log')):
+            log("DEBUG: cmd=" + str(cmd) + " args=" + json.dumps(args))
         res = None
         if cmd == COMMAND_LOG:
             log(*args)
@@ -33,8 +35,12 @@ class XvmStat(object):
             getStat(proxy, *args)
         elif cmd == COMMAND_LOADUSERDATA:
             getUserData(proxy, *args)
+        elif cmd == COMMAND_LOAD_SETTINGS:
+            pass # TODO
+        elif cmd == COMMAND_SAVE_SETTINGS:
+            pass # TODO
         else:
-            log("cmd=" + str(cmd) + " args=" + json.dumps(args))
+            log("WARNING: unknown command: " + str(cmd))
         proxy.respond([id, res])
 
     def onKeyDown(self, event):

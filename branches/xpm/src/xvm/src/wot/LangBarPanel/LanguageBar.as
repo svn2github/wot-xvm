@@ -3,7 +3,7 @@
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
 import gfx.controls.ButtonBar;
-import com.xvm.Comm;
+import com.xvm.Cmd;
 import com.xvm.Config;
 import com.xvm.Defines;
 import com.xvm.GlobalEventDispatcher;
@@ -27,17 +27,7 @@ class wot.LangBarPanel.LanguageBar
     {
         this.wrapper = wrapper;
         this.base = base;
-
-        Utils.TraceXvmModule("LangBarPanel");
-
-        LanguageBarCtor();
-
-        //Logger.addObject(_root);
-    }
-
-    function init()
-    {
-        return this.initImpl.apply(this, arguments);
+        _global.setTimeout(LanguageBarCtor, 1);
     }
 
     // wrapped methods
@@ -50,23 +40,23 @@ class wot.LangBarPanel.LanguageBar
     
     public function LanguageBarCtor()
     {
+        Utils.TraceXvmModule("LangBarPanel");
+        //Logger.addObject(_root);
+        
         currentLoadingName = "";
         mc_ping = null;
         mc_widgets = null;
-
+        
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         Config.LoadConfig("LanguageBar.as");
     }
-
+    
     private function onConfigLoaded()
     {
         GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
-
-        var me = this;
-        _global.setInterval(function() { me.onTimer.call(me); }, 1000);
-        onTimer();
+        _global.setInterval(onTimer, 100);
     }
-
+    
     private function onTimer()
     {
         //Logger.add(_root.loadingName);
@@ -89,20 +79,15 @@ class wot.LangBarPanel.LanguageBar
         
         try
         {
-            if (currentLoadingName == "startgamevideo" || currentLoadingName == "login")
+            if (currentLoadingName == "login")
                 initLogin();
             else if (currentLoadingName == "hangar")
                 initHangar();
         }
-        catch (e)
+        catch (e:Error)
         {
             Logger.add("ERROR: " + e.message);
         }
-    }
-    
-    function initImpl()
-    {
-        //Logger.add("LanguageBar.init()");
     }
     
     // PRIVATE
@@ -117,7 +102,7 @@ class wot.LangBarPanel.LanguageBar
         mc_ping._x = Math.round((1024 - main.__width) / 2);
         mc_ping._y = Math.round((768 - main.__height) / 2);
         PingServers.initFeature(Config.s_config.login.pingServers, mc_ping);
-
+        
         // ------------------ DEBUG ------------------
         //var mc = main.createEmptyMovieClip("widgetsHolder", main.getNextHighestDepth());
         //WidgetsFactory.initialize(mc, "sirmax2",
@@ -130,7 +115,7 @@ class wot.LangBarPanel.LanguageBar
     {
         var header:MovieClip = _root.header;
         playerName = _root.header.tankPanel.account_name.text;
-
+        
         // PingServers component
         mc_ping = header.createEmptyMovieClip("pingHolder", header.getNextHighestDepth());
         PingServers.initFeature(Config.s_config.hangar.pingServers, mc_ping);
@@ -139,7 +124,7 @@ class wot.LangBarPanel.LanguageBar
         if (Config.s_config.hangar.widgetsEnabled == true)
         {
             createMenuWidgetsButton();
-            Comm.LoadSettings(playerName + ":" + Defines.SETTINGS_WIDGETS, this, onWidgetsLoaded);
+            Cmd.loadSettings(this, "onWidgetsSettingsLoaded");
         }
     }
     
@@ -157,8 +142,10 @@ class wot.LangBarPanel.LanguageBar
         }
     }
     
-    private function onWidgetsLoaded(event:Object)
+    private function onWidgetsSettingsLoaded(str:String)
     {
+        // TODO
+        /*
         var widgetsSettings = null;
         try
         {
@@ -175,11 +162,12 @@ class wot.LangBarPanel.LanguageBar
         var holder = _root.header.buttonsBlock;
         mc_widgets = holder.createEmptyMovieClip("widgets", holder.getNextHighestDepth());
         WidgetsFactory.initialize(mc_widgets, playerName, widgetsSettings);
+        */
     }
 
-    private function menuBarSelectEvent(event)
+    /*private function menuBarSelectEvent(event)
     {
         if (event.item.value == "widget")
             var wsd = new WidgetsSettingsDialog(_root.header, playerName);
-    }
+    }*/
 }

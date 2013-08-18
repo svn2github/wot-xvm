@@ -43,8 +43,8 @@ class wot.battleloading.BattleLoading
     {
         StatData.s_loaded = false;
         StatData.s_data = {};
-        StatLoader.instance.players_count = 0;
-        StatLoader.instance.teams = { t1:0, t2:0 };
+        //StatLoader.instance.players_count = 0;
+        //StatLoader.instance.teams = { t1:0, t2:0 };
 
         // Components
         winChances = new WinChances(wrapper.form_mc); // Winning chance info above players list.

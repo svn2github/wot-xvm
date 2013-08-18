@@ -10,8 +10,9 @@ import com.xvm.StatLoader;
 import com.xvm.Strings;
 import com.xvm.Utils;
 import com.xvm.VehicleInfo;
-import wot.WGDataTypes.CarouselDataItem;
-import wot.WGDataTypes.UserInfoDataItem;
+import com.xvm.Components.WGComponents;
+import com.xvm.WGDataTypes.CarouselDataItem;
+import com.xvm.WGDataTypes.UserInfoDataItem;
 
 class wot.UserInfo.UserInfo
 {
@@ -460,7 +461,7 @@ class wot.UserInfo.UserInfo
         fixList(m_allDataProvider);
 
         // Hangar
-        var carouselData:Array = wot.RootComponents.carousel.dataProvider || _global._xvm_carousel_dataProvider;
+        var carouselData:Array = WGComponents.carousel.dataProvider || _global._xvm_carousel_dataProvider;
         if (!carouselData)
         {
             m_hangarDataProvider = null;
@@ -479,7 +480,7 @@ class wot.UserInfo.UserInfo
 
             for (var i:Number = 0; i < ulen; ++i)
             {
-                var ui:wot.WGDataTypes.UserInfoDataItem = m_allDataProvider[i];
+                var ui:UserInfoDataItem = m_allDataProvider[i];
                 //Logger.add(ci.label + ", " + ui.name + ", " + VehicleInfo.getVName(ci.image));
                 if (VehicleInfo.getVName(ci.image) == ui.name)
                     ui.name = ci.label;
