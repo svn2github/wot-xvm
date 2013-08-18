@@ -40,8 +40,7 @@ class wot.Minimap.MinimapEntry
         this.wrapper = wrapper;
         this.base = base;
         wrapper.xvm_worker = this;
-
-        Utils.TraceXvmModule("MM");
+        Utils.Timeout(this, MinimapEntryCtor, 1);
     }
 
     function lightPlayer()
@@ -88,6 +87,11 @@ class wot.Minimap.MinimapEntry
 
     public var labelMc:MovieClip;
 
+    function MinimapEntryCtor()
+    {
+        Utils.TraceXvmModule("Minimap");
+    }
+    
     /**
      * All attachments container: TextFiels(Labels), Shapes.
      */

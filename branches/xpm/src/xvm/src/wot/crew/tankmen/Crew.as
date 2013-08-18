@@ -19,10 +19,7 @@ class wot.crew.tankmen.Crew
     {
         this.wrapper = wrapper;
         this.base = base;
-
-        Utils.TraceXvmModule("Crew");
-
-        CrewCtor();
+        Utils.Timeout(this, CrewCtor, 1);
     }
 
     function setTankmen()
@@ -35,8 +32,10 @@ class wot.crew.tankmen.Crew
 
     private function CrewCtor()
     {
+        Utils.TraceXvmModule("Crew");
+
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
-        Config.LoadConfig("Crew.as");
+        Config.LoadConfig();
     }
 
     private function onConfigLoaded()

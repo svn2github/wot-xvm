@@ -23,10 +23,7 @@ class wot.battleloading.BattleLoading
     {
         this.wrapper = wrapper;
         this.base = base;
-
-        Utils.TraceXvmModule("BL");
-
-        BattleLoadingCtor();
+        Utils.Timeout(this, BattleLoadingCtor, 1);
     }
 
     // wrapped methods
@@ -41,6 +38,8 @@ class wot.battleloading.BattleLoading
 
     private function BattleLoadingCtor()
     {
+        Utils.TraceXvmModule("battleloading");
+
         StatData.s_loaded = false;
         StatData.s_data = {};
         //StatLoader.instance.players_count = 0;
@@ -52,7 +51,7 @@ class wot.battleloading.BattleLoading
         realClock  = new RealClock(wrapper.form_mc);  // Realworld time at right side of TipField.
 
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
-        Config.LoadConfig("BattleLoading.as");
+        Config.LoadConfig();
         GlobalEventDispatcher.addEventListener(StatData.E_STAT_LOADED, this, onStatLoaded);
     }
 

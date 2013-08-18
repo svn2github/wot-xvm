@@ -19,10 +19,7 @@ class wot.FinalStatistic.FinalStatisticForm
     {
         this.wrapper = wrapper;
         this.base = base;
-
-        Utils.TraceXvmModule("FS");
-
-        FinalStatisticFormCtor();
+        Utils.Timeout(this, FinalStatisticFormCtor, 1);
     }
 
     function setCommonData()
@@ -40,6 +37,8 @@ class wot.FinalStatistic.FinalStatisticForm
 
     private function FinalStatisticFormCtor()
     {
+        Utils.TraceXvmModule("FinalStatistic");
+
         save_data_pending = false;
 
         StatData.s_loaded = false;
@@ -47,7 +46,7 @@ class wot.FinalStatistic.FinalStatisticForm
 
         winChances = new WinChances(wrapper);
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
-        Config.LoadConfig("FinalStatisticForm.as");
+        Config.LoadConfig();
     }
 
     private function onConfigLoaded()

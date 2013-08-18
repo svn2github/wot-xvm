@@ -17,7 +17,6 @@ class com.xvm.ConfigLoader
 {
     // Private vars
     private static var s_loading:Boolean = false;
-    private static var s_src:String = "";
     private static var info_event:Object = null;
 
     // instance
@@ -26,9 +25,9 @@ class com.xvm.ConfigLoader
     // Load XVM mod config; config data is shared between all marker instances, so
     // it should be loaded only once per session. s_loaded flag indicates that
     // we've already initialized config loading process.
-    public static function LoadConfig(src: String)
+    public static function LoadConfig()
     {
-        //Logger.add("TRACE: LoadConfig(" + src + ")");
+        //Logger.add("TRACE: LoadConfig()");
         if (Config.s_loaded)
         {
             if (info_event != null)
@@ -39,7 +38,6 @@ class com.xvm.ConfigLoader
             GlobalEventDispatcher.dispatchEvent({type: Config.E_CONFIG_LOADED});
             return;
         }
-        s_src = src || "";
         
         if (instance == null)
             instance = new ConfigLoader();
@@ -125,7 +123,7 @@ class com.xvm.ConfigLoader
 
     private function SetConfigLoaded()
     {
-        //Logger.add("Config: Loaded (" + s_src + ")");
+        //Logger.add("Config: Loaded ()");
         Config.s_loaded = true;
         ConfigLoader.s_loading = false;
         GlobalEventDispatcher.dispatchEvent({type: Config.E_CONFIG_LOADED});

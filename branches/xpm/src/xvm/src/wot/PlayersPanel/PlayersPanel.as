@@ -29,10 +29,7 @@ class wot.PlayersPanel.PlayersPanel
         this.wrapper = wrapper;
         this.base = base;
         wrapper.xvm_worker = this;
-        
-        Utils.TraceXvmModule("PP");
-        
-        PlayersPanelCtor();
+        Utils.Timeout(this, PlayersPanelCtor, 1);
     }
     
     function setData()
@@ -87,13 +84,15 @@ class wot.PlayersPanel.PlayersPanel
 
     public function PlayersPanelCtor()
     {
+        Utils.TraceXvmModule("PlayersPanel");
+
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, StatLoader.LoadData);
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         GlobalEventDispatcher.addEventListener(StatData.E_STAT_LOADED, this, onStatLoaded);
         
         GlobalEventDispatcher.addEventListener(AutoUpdate.UPDATE_BY_TIMER_EVENT, this, updateSpotStatusMarkers);
         
-        Config.LoadConfig("PlayersPanel.as");
+        Config.LoadConfig();
         
         /** Minimap needs to know loaded status */
         checkLoading();

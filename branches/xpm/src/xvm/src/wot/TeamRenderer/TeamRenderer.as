@@ -19,10 +19,7 @@ class wot.TeamRenderer.TeamRenderer
     {
         this.wrapper = wrapper;
         this.base = base;
-
-        Utils.TraceXvmModule("TeamRenderer");
-
-        TeamRendererCtor();
+        Utils.Timeout(this, TeamRendererCtor, 1);
     }
 
     function configUI()
@@ -45,13 +42,15 @@ class wot.TeamRenderer.TeamRenderer
 
     public function TeamRendererCtor()
     {
+        Utils.TraceXvmModule("TeamRenderer");
+
         configured = false;
         m_name = null;
         m_effField = null;
         stat = null;
 
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
-        Config.LoadConfig("TeamRenderer.as");
+        Config.LoadConfig();
     }
 
     private function onConfigLoaded()

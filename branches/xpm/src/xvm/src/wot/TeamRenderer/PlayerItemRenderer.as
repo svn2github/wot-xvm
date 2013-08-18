@@ -17,10 +17,7 @@ class wot.TeamRenderer.PlayerItemRenderer
     {
         this.wrapper = wrapper;
         this.base = base;
-
-        Utils.TraceXvmModule("TeamRenderer");
-
-        PlayerItemRendererCtor();
+        Utils.Timeout(this, PlayerItemRendererCtor, 1);
     }
 
     function configUI()
@@ -42,12 +39,14 @@ class wot.TeamRenderer.PlayerItemRenderer
 
     public function PlayerItemRendererCtor()
     {
+        Utils.TraceXvmModule("TeamRenderer");
+
         configured = false;
         m_name = null;
         m_effField = null;
 
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
-        Config.LoadConfig("PlayerItemRenderer.as");
+        Config.LoadConfig();
     }
 
     private function onConfigLoaded()

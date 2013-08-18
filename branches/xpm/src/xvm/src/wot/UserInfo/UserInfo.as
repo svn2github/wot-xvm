@@ -26,10 +26,7 @@ class wot.UserInfo.UserInfo
     {
         this.wrapper = wrapper;
         this.base = base;
-
-        Utils.TraceXvmModule("UserInfo");
-
-        UserInfoCtor();
+        Utils.Timeout(this, UserInfoCtor, 1);
     }
 
     function setCommonInfo()
@@ -71,12 +68,14 @@ class wot.UserInfo.UserInfo
 
     public function UserInfoCtor()
     {
+        Utils.TraceXvmModule("UserInfo");
+
         m_name = null;
         m_userData = null;
         m_dataLoaded = false;
 
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
-        Config.LoadConfig("UserInfo.as");
+        Config.LoadConfig();
     }
 
     private function onConfigLoaded()

@@ -18,10 +18,7 @@ class wot.crew.tankmen.CrewItemRenderer
     {
         this.wrapper = wrapper;
         this.base = base;
-
-        Utils.TraceXvmModule("Crew");
-
-        CrewItemRendererCtor();
+        Utils.Timeout(this, CrewItemRendererCtor, 1);
     }
 
     function configUI()
@@ -36,6 +33,8 @@ class wot.crew.tankmen.CrewItemRenderer
 
     private function CrewItemRendererCtor()
     {
+        Utils.TraceXvmModule("Crew");
+
         onMouseDownFuncBase = null;
     }
 

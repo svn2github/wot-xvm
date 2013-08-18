@@ -13,6 +13,7 @@ XPM_GAME_VERSIONS  = ["0.8.6", "0.8.7", "0.8.8"]
 import BigWorld
 from gui.mods.xpm import *
 from XvmStat import XvmStat
+from logger import log
 
 #####################################################################
 # event handlers

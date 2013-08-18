@@ -14,6 +14,7 @@ import com.xvm.Utils;
 import com.xvm.Components.PingServers.PingServers;
 import com.xvm.Components.Widgets.WidgetsFactory;
 import com.xvm.Components.Widgets.Settings.WidgetsSettingsDialog;
+import com.xvm.Components.WGComponents;
 
 class wot.LangBarPanel.LanguageBar
 {
@@ -27,7 +28,7 @@ class wot.LangBarPanel.LanguageBar
     {
         this.wrapper = wrapper;
         this.base = base;
-        _global.setTimeout(LanguageBarCtor, 1);
+        Utils.Timeout(this, LanguageBarCtor, 1);
     }
 
     // wrapped methods
@@ -38,7 +39,7 @@ class wot.LangBarPanel.LanguageBar
     private var mc_ping:MovieClip;
     private var mc_widgets:MovieClip;
     
-    public function LanguageBarCtor()
+    private function LanguageBarCtor()
     {
         Utils.TraceXvmModule("LangBarPanel");
         //Logger.addObject(_root);
@@ -48,13 +49,13 @@ class wot.LangBarPanel.LanguageBar
         mc_widgets = null;
         
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
-        Config.LoadConfig("LanguageBar.as");
+        Config.LoadConfig();
     }
     
     private function onConfigLoaded()
     {
         GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
-        _global.setInterval(onTimer, 100);
+        Utils.Interval(this, onTimer, 100);
     }
     
     private function onTimer()
@@ -63,6 +64,7 @@ class wot.LangBarPanel.LanguageBar
         if (currentLoadingName == _root.loadingName)
             return;
         currentLoadingName = _root.loadingName;
+        //Logger.add(currentLoadingName);
 
         // "startgamevideo", "login", "hangar"
 
@@ -130,7 +132,7 @@ class wot.LangBarPanel.LanguageBar
     
     private function createMenuWidgetsButton()
     {
-        var bar:ButtonBar = (ButtonBar)(_root.header.buttonsBlock.bar);
+        var bar:ButtonBar = WGComponents.headerButtons;
         if (bar.xvm_initialized != true)
         {
             bar.xvm_initialized = true;
@@ -144,30 +146,25 @@ class wot.LangBarPanel.LanguageBar
     
     private function onWidgetsSettingsLoaded(str:String)
     {
-        // TODO
-        /*
         var widgetsSettings = null;
         try
         {
-            if (!event || !event.str || event.str == "")
-                return;
-            widgetsSettings = (Array)(JSONx.parse(event.str));
+            widgetsSettings = (!str || str == "") ? [] : (Array)(JSONx.parse(str));
         }
         catch (e)
         {
-            Logger.add("Error loading widgets: " + e.message + "\n" + JSONx.stringify(event));
+            Logger.add("Error loading widgets: " + e.message + "\n" + JSONx.stringify(str));
             widgetsSettings = [];
         }
 
         var holder = _root.header.buttonsBlock;
         mc_widgets = holder.createEmptyMovieClip("widgets", holder.getNextHighestDepth());
         WidgetsFactory.initialize(mc_widgets, playerName, widgetsSettings);
-        */
     }
 
-    /*private function menuBarSelectEvent(event)
+    private function menuBarSelectEvent(event)
     {
         if (event.item.value == "widget")
             var wsd = new WidgetsSettingsDialog(_root.header, playerName);
-    }*/
+    }
 }

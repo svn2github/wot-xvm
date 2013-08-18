@@ -41,6 +41,16 @@ class com.xvm.Utils
         return defaultValue ? value != "false" : value == "true";
     }
 
+    public static function Timeout(target:Object, callback:Function, timeout:Number)
+    {
+        return _global.setTimeout(function() { callback.call(target) }, timeout);
+    }
+    
+    public static function Interval(target:Object, callback:Function, timeout:Number)
+    {
+        return _global.setInterval(function() { callback.call(target) }, timeout);
+    }
+    
     public static function elapsedMSec(start:Date, end:Date):Number
     {
         return end.getTime() - start.getTime();

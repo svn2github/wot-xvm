@@ -23,10 +23,7 @@ class wot.SquadMemberRenderer.SquadMemberRenderer
     {
         this.wrapper = wrapper;
         this.base = base;
-
-        Utils.TraceXvmModule("Squad");
-
-        SquadMemberRendererCtor();
+        Utils.Timeout(this, SquadMemberRendererCtor, 1);
     }
 
     function configUI()
@@ -52,9 +49,11 @@ class wot.SquadMemberRenderer.SquadMemberRenderer
 
     public function SquadMemberRendererCtor()
     {
+        Utils.TraceXvmModule("SquadMemberRenderer");
+
         if(!Config.s_loaded) { // rendere is initialized more than once
             GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
-            Config.LoadConfig("SquadMemberRenderer.as");
+            Config.LoadConfig();
         }
     }
 

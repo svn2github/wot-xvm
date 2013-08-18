@@ -14,10 +14,7 @@ class wot.UserInfo.ItemRenderer
     {
         this.wrapper = wrapper;
         this.base = base;
-
-        Utils.TraceXvmModule("UserInfo");
-
-        ItemRendererCtor();
+        Utils.Timeout(this, ItemRendererCtor, 1);
     }
 
     function setup()
@@ -37,6 +34,8 @@ class wot.UserInfo.ItemRenderer
     
     function ItemRendererCtor()
     {
+        Utils.TraceXvmModule("UserInfo");
+
         teffTextField = Utils.duplicateTextField(wrapper, "teff", wrapper.fights, 0, "center");
         teffTextField._x -= 37;
         //Logger.add("teff=" + teffTextField._x + ", fights=" + wrapper.fights._x);

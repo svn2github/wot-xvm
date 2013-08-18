@@ -15,10 +15,7 @@ class wot.FinalStatistic.DetailsBlock
     {
         this.wrapper = wrapper;
         this.base = base;
-
-        Utils.TraceXvmModule("FS");
-
-        DetailsBlockCtor();
+        Utils.Timeout(this, DetailsBlockCtor, 1);
     }
 
     function draw()
@@ -39,8 +36,10 @@ class wot.FinalStatistic.DetailsBlock
 
     private function DetailsBlockCtor()
     {
+        Utils.TraceXvmModule("FinalStatistic");
+
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
-        Config.LoadConfig("DetailsBlock.as");
+        Config.LoadConfig();
 
         var h = wrapper.xpTitleLbl._height;
         var y = h + 60;

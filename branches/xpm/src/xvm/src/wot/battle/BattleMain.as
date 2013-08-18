@@ -29,7 +29,7 @@ class wot.battle.BattleMain
 
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, BattleMainConfigLoaded);
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, StatLoader.LoadData);
-        Config.LoadConfig("BattleMain.as");
+        Config.LoadConfig();
 
         // initialize TweenLite
         OverwriteManager.init(OverwriteManager.AUTO);

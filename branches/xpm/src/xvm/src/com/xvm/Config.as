@@ -18,8 +18,8 @@ class com.xvm.Config
     // Load XVM mod config; config data is shared between all marker instances, so
     // it should be loaded only once per session. s_loaded flag indicates that
     // we've already initialized config loading process.
-    public static function LoadConfig(src: String)
+    public static function LoadConfig()
     {
-        ConfigLoader.LoadConfig(src);
+        ConfigLoader.LoadConfig();
     }
 }

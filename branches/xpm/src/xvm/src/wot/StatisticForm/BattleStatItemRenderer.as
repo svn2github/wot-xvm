@@ -28,10 +28,7 @@ class wot.StatisticForm.BattleStatItemRenderer
     {
         this.wrapper = wrapper;
         this.base = base;
-
-        Utils.TraceXvmModule("SF");
-
-        BattleStatItemRendererCtor();
+        Utils.Timeout(this, BattleStatItemRendererCtor, 1);
     }
 
     function updateData()
@@ -57,6 +54,8 @@ class wot.StatisticForm.BattleStatItemRenderer
 
     public function BattleStatItemRendererCtor()
     {
+        Utils.TraceXvmModule("StatisticForm");
+
         if (s_winChances == null)
             s_winChances = new WinChances();
 
@@ -70,7 +69,7 @@ class wot.StatisticForm.BattleStatItemRenderer
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         GlobalEventDispatcher.addEventListener(StatData.E_STAT_LOADED, wrapper, updateData);
 
-        Config.LoadConfig("BattleStatItemRenderer.as");
+        Config.LoadConfig();
     }
 
     private function get team(): Number

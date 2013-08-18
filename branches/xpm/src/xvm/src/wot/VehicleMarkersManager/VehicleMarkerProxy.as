@@ -35,10 +35,7 @@ class wot.VehicleMarkersManager.VehicleMarkerProxy implements IVehicleMarker
     {
         this.wrapper = wrapper;
         this.base = base;
-
-        Utils.TraceXvmModule("VMM");
-
-        VehicleMarkerProxyCtor();
+        Utils.Timeout(this, VehicleMarkerProxyCtor, 1);
     }
 
     /////////////////////////////////////////////////////////////////
@@ -72,6 +69,8 @@ class wot.VehicleMarkersManager.VehicleMarkerProxy implements IVehicleMarker
     var start;
     private function VehicleMarkerProxyCtor()
     {
+        Utils.TraceXvmModule("VehicleMarkersManager");
+
         start = new Date();
         //trace("VehicleMarkerProxy::ctor()");
 
@@ -94,7 +93,7 @@ class wot.VehicleMarkersManager.VehicleMarkerProxy implements IVehicleMarker
             //   register config load complete event
             GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
             //   start config loading
-            Config.LoadConfig("VehicleMarkerProxy.as");
+            Config.LoadConfig();
         }
         else
         {

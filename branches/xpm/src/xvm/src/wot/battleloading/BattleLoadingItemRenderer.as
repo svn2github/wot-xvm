@@ -27,10 +27,7 @@ class wot.battleloading.BattleLoadingItemRenderer
     {
         this.wrapper = wrapper;
         this.base = base;
-
-        Utils.TraceXvmModule("BL");
-
-        BattleLoadingItemRendererCtor();
+        Utils.Timeout(this, BattleLoadingItemRendererCtor, 1);
     }
 
     function setData()
@@ -57,6 +54,8 @@ class wot.battleloading.BattleLoadingItemRenderer
 
     private function BattleLoadingItemRendererCtor()
     {
+        Utils.TraceXvmModule("battleloading");
+
         wrapper.vehicleField.html = true;
         wrapper.vehicleField.verticalAlign = "center";
         wrapper.vehicleField.verticalAutoSize = true;
