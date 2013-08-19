@@ -1,5 +1,5 @@
 =_Draft_=
-=Inscructions for deploying new XVM release to download page=
+=Instructions for deploying new XVM release to download page=
 
 ==Build==
 -----
@@ -50,4 +50,4 @@ wot.Minimap.model.mapSize.MapInfoData
 
 
 == File hierarchy for release preparation==
-...
+.../bin
