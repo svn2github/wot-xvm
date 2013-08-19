@@ -20,28 +20,32 @@ class XvmStat(object):
         pass
 
     def onXvmCommand(self, proxy, id, cmd, *args):
-        if (cmd not in ('ping', 'log', 'getGameRegion')):
-            log("DEBUG: cmd=" + str(cmd) + " args=" + json.dumps(args))
-        res = None
-        if cmd == COMMAND_LOG:
-            log(*args)
-        elif cmd == COMMAND_PING:
-            res = json.dumps(ping())
-        elif cmd == COMMAND_GETSCREENSIZE:
-            res = json.dumps(list(GUI.screenResolution()))
-        elif cmd == COMMAND_GETGAMEREGION:
-            res = region
-        elif cmd == COMMAND_LOADSTATDATA:
-            getStat(proxy, *args)
-        elif cmd == COMMAND_LOADUSERDATA:
-            getUserData(proxy, *args)
-        elif cmd == COMMAND_LOAD_SETTINGS:
-            pass # TODO
-        elif cmd == COMMAND_SAVE_SETTINGS:
-            pass # TODO
-        else:
-            log("WARNING: unknown command: " + str(cmd))
-        proxy.respond([id, res])
+        try:
+            if (cmd not in ('ping', 'log', 'getGameRegion')):
+                log("DEBUG: cmd=" + str(cmd) + " args=" + json.dumps(args))
+            res = None
+            if cmd == COMMAND_LOG:
+                log(*args)
+            elif cmd == COMMAND_PING:
+                #res = json.dumps(ping())
+                res = None
+            elif cmd == COMMAND_GETSCREENSIZE:
+                res = json.dumps(list(GUI.screenResolution()))
+            elif cmd == COMMAND_GETGAMEREGION:
+                res = region
+            elif cmd == COMMAND_LOADSTATDATA:
+                getStat(proxy, *args)
+            elif cmd == COMMAND_LOADUSERDATA:
+                getUserData(proxy, *args)
+            elif cmd == COMMAND_LOAD_SETTINGS:
+                pass # TODO
+            elif cmd == COMMAND_SAVE_SETTINGS:
+                pass # TODO
+            else:
+                log("WARNING: unknown command: " + str(cmd))
+            proxy.respond([id, res])
+        except:
+            pass
 
     def onKeyDown(self, event):
         # do not handle keys when chat is active

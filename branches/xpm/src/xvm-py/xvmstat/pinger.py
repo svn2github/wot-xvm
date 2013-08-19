@@ -13,8 +13,8 @@ from logger import log
 
 def ping():
     try:
+        # TODO: WGPinger can crash client!!!
         # TODO: WGPinger is blocking operation. Replace with ICMP pinger?
-        # TODO: WGPinger can crash client
         g_preDefinedHosts._PreDefinedHostList__ping()
         hosts = g_preDefinedHosts._hosts;
         pings = g_preDefinedHosts._PreDefinedHostList__pingResult

@@ -6,6 +6,7 @@ import json
 import traceback
 from random import randint
 from urllib2 import urlopen
+import threading
 
 import BigWorld
 from items.vehicles import VEHICLE_CLASS_TAGS
@@ -24,6 +25,7 @@ class _Stat(object):
         player = BigWorld.player()
         self.arenaId = None
         self.players = None
+        self.playersSkip = None
         self.cache = {}
         self.cacheUser = {}
         self.info = None
@@ -55,6 +57,7 @@ class _Stat(object):
         if player.arenaUniqueID != self.arenaId:
             self.arenaId = player.arenaUniqueID
             self.players = {}
+            self.playersSkip = {}
 
         self._update_players()
 
@@ -67,6 +70,7 @@ class _Stat(object):
             if cacheKey not in self.cache:
                 cacheKey = "%d" % (pl.playerId)
                 if cacheKey not in self.cache:
+                    playersSkip[str(pl.playerId)] = True
                     continue
             players[pl.name] = self.cache[cacheKey]
         #pprint(players)
@@ -92,6 +96,8 @@ class _Stat(object):
 
             if cacheKey in self.cache:
                 continue
+            if str(pl.playerId) in self.playersSkip:
+                continue
 
             if pl.vn in [None, '', 'UNKNOWN']:
                 requestList.append(str(pl.playerId))
@@ -99,9 +105,9 @@ class _Stat(object):
                 requestList.append("%d=%s%s" % (pl.playerId, pl.vn,
                         '=1' if pl.vehId == player.playerVehicleID else ''))
 
-        updateRequest = ','.join(requestList)
-        if not updateRequest:
+        if not requestList:
             return
+        updateRequest = ','.join(requestList)
 
         if self.servers is None or len(self.servers) <= 0:
             log('WARNING: Cannot read statistics: no suitable server was found.')
