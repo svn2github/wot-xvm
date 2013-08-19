@@ -29,7 +29,7 @@ class wot.PlayersPanel.PlayersPanel
         this.wrapper = wrapper;
         this.base = base;
         wrapper.xvm_worker = this;
-        Utils.Timeout(this, PlayersPanelCtor, 1);
+        PlayersPanelCtor();
     }
     
     function setData()

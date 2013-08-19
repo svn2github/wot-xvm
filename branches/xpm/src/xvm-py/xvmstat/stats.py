@@ -6,7 +6,6 @@ import json
 import traceback
 from random import randint
 from urllib2 import urlopen
-import threading
 
 import BigWorld
 from items.vehicles import VEHICLE_CLASS_TAGS
@@ -22,8 +21,6 @@ PUBLIC_TOKEN = 'xpm'
 
 class _Stat(object):
     def __init__(self):
-        self.onGetStatComplete = Event.Event()
-        self.onGetStatComplete += self._respond
         player = BigWorld.player()
         self.arenaId = None
         self.players = None
@@ -32,8 +29,6 @@ class _Stat(object):
         self.info = None
         self.servers = [ "http://proxy2.bulychev.net/%1" ] # TODO
         self.timeout = 30000
-        self.thread = None
-        self.threadLock = threading.RLock()
         pass
 
     def __del__(self):
@@ -43,26 +38,15 @@ class _Stat(object):
         player = BigWorld.player()
         if player.arena is None:
             return
-
-        with self.threadLock:
-            if self.thread is not None:
-                return
-            self.thread = threading.Thread(target=self._get_stat, args=(proxy, ids))
-            self.thread.daemon = True # thread dies with the program
-            self.thread.start()
+        self._get_stat(proxy, ids)
 
 
     def getUserData(self, proxy, value, isId):
-        with self.threadLock:
-            if self.thread is not None:
-                return
-            self.thread = threading.Thread(target=self._get_user, args=(proxy, value, isId))
-            self.thread.daemon = True # thread dies with the program
-            self.thread.start()
+        self._get_user(proxy, value, isId)
 
 
     def _respond(self, proxy, method, data):
-        log("DEBUG: respond: " + method)
+        #log("DEBUG: respond: " + method)
         proxy.call(method, [json.dumps(data)])
 
 
@@ -87,10 +71,7 @@ class _Stat(object):
             players[pl.name] = self.cache[cacheKey]
         #pprint(players)
 
-        self.onGetStatComplete(proxy, RESPOND_STATDATA, {'players': players, 'info': self.info})
-
-        with self.threadLock:
-            self.thread = None
+        self._respond(proxy, RESPOND_STATDATA, {'players': players, 'info': self.info})
 
 
     def _update_players(self):
@@ -156,36 +137,29 @@ class _Stat(object):
 
 
     def _get_user(self, proxy, value, isId):
-        value = str(value)
+        if isId:
+            value = str(int(value))
         cacheKey = "%s,%d" % (value, isId)
+        data = None
         if cacheKey not in self.cacheUser:
             try:
                 req = "INFO/%s/%s" % ("ID" if isId else region, value)
                 server = self.servers[randint(0, len(self.servers) - 1)]
                 responseFromServer, duration = self.loadUrl(server, req)
 
-                log("1")
-                if len(responseFromServer) <= 0:
+                if not responseFromServer:
                     log('WARNING: Empty response or parsing error')
-                    return
-
-                log("2")
-                data = json.loads(responseFromServer)[0]
-                log("3")
-                self.cacheUser[data['nm'] + ",0"] = data
-                log("4")
-                self.cacheUser[str(data['_id']) + ",1"] = data
-                log("5")
+                else:
+                    data = json.loads(responseFromServer)[0]
+                    if data is not None and 'nm' in data and '_id' in data:
+                        self.cacheUser[data['nm'] + ",0"] = data
+                        self.cacheUser[str(data['_id']) + ",1"] = data
 
             except Exception, ex:
                 log('ERROR: _get_user() exception: ' + str(ex) + "\n" + traceback.format_exc(ex))
 
-        #self._respond(proxy, RESPOND_USERDATA, self.cacheUser[cacheKey])
-        #self.onGetStatComplete(proxy, RESPOND_USERDATA, self.cacheUser[cacheKey])
-        log("respond")
-
-        with self.threadLock:
-            self.thread = None
+        self._respond(proxy, RESPOND_USERDATA,
+            self.cacheUser[cacheKey] if cacheKey in self.cacheUser else None)
 
 
     def loadUrl(self, url, members, test=False):

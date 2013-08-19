@@ -13,7 +13,7 @@ class wot.FinalStatistic.TeamStats
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, TeamStatsCtor, 1);
+        TeamStatsCtor();
     }
 
     function configUI()

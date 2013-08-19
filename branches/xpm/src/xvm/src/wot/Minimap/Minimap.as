@@ -3,7 +3,6 @@ import wot.Minimap.*;
 import wot.Minimap.model.externalProxy.MapConfig;
 import wot.Minimap.model.SyncModel;
 import com.xvm.AutoUpdate;
-import wot.Minimap.view.*;
 
 /**
  * @author ilitvinov87@gmail.com
@@ -25,7 +24,7 @@ class wot.Minimap.Minimap
         this.base = base;
         MinimapProxy.setReferences(base, wrapper);
         wrapper.xvm_worker = this;
-        Utils.Timeout(this, MinimapCtor, 1);
+        MinimapCtor();
     }
 
     function onEntryInited()

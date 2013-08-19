@@ -11,7 +11,6 @@ import com.xvm.GlobalEventDispatcher;
 import com.xvm.JSONxLoader;
 import com.xvm.Locale;
 import com.xvm.Logger;
-import com.xvm.Strings;
 
 class com.xvm.ConfigLoader
 {

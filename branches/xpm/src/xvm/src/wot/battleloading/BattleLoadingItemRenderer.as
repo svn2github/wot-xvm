@@ -27,7 +27,7 @@ class wot.battleloading.BattleLoadingItemRenderer
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, BattleLoadingItemRendererCtor, 1);
+        BattleLoadingItemRendererCtor();
     }
 
     function setData()

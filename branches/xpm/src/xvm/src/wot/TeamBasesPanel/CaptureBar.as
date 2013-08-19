@@ -47,7 +47,7 @@ class wot.TeamBasesPanel.CaptureBar
         this.wrapper = wrapper;
         this.base = base;
         wrapper.xvm_worker = this;
-        Utils.Timeout(this, CaptureBarCtor, 1);
+        CaptureBarCtor();
     }
 
     function updateProgress()

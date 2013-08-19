@@ -19,7 +19,7 @@ class wot.TeamRenderer.TeamRenderer
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, TeamRendererCtor, 1);
+        TeamRendererCtor();
     }
 
     function configUI()
@@ -124,7 +124,9 @@ class wot.TeamRenderer.TeamRenderer
 
     private function onUpdateClick()
     {
-        UserDataLoaderHelper.LoadUserData(m_name, false);
+        m_name = Utils.GetPlayerName(wrapper.data.owner);
+        if (m_name != null)
+            UserDataLoaderHelper.LoadUserData(m_name, false);
     }
 
     private function afterSetDataXVM()

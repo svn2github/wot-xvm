@@ -15,7 +15,7 @@ class wot.FinalStatistic.DetailsBlock
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, DetailsBlockCtor, 1);
+        DetailsBlockCtor();
     }
 
     function draw()

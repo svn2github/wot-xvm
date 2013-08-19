@@ -21,7 +21,7 @@ class wot.TeamBasesPanel.TeamBasesPanel
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, TeamBasesPanelCtor, 1);
+        TeamBasesPanelCtor();
     }
 
     function add()

@@ -19,7 +19,7 @@ class wot.TeamMemberRenderer.TeamMemberRenderer
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, TeamMemberRendererCtor, 1);
+        TeamMemberRendererCtor();
     }
 
     function configUI()

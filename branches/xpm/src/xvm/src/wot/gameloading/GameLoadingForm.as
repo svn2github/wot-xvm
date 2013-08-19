@@ -20,7 +20,7 @@ class wot.gameloading.GameLoadingForm
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, GameLoadingFormCtor, 1);
+        GameLoadingFormCtor();
     }
 
     function setVersion()

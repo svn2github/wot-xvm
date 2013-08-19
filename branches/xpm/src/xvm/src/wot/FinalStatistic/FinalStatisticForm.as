@@ -19,7 +19,7 @@ class wot.FinalStatistic.FinalStatisticForm
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, FinalStatisticFormCtor, 1);
+        FinalStatisticFormCtor();
     }
 
     function setCommonData()

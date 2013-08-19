@@ -18,7 +18,7 @@ class wot.crew.tankmen.CrewItemRenderer
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, CrewItemRendererCtor, 1);
+        CrewItemRendererCtor();
     }
 
     function configUI()

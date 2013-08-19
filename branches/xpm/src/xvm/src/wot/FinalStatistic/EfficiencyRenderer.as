@@ -12,7 +12,7 @@ class wot.FinalStatistic.EfficiencyRenderer
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, EfficiencyRendererCtor, 1);
+        EfficiencyRendererCtor();
     }
 
     function draw()

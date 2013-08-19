@@ -35,7 +35,7 @@ class wot.VehicleMarkersManager.VehicleMarkerProxy implements IVehicleMarker
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, VehicleMarkerProxyCtor, 1);
+        VehicleMarkerProxyCtor();
     }
 
     /////////////////////////////////////////////////////////////////

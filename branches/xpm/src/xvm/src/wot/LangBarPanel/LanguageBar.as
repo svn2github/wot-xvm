@@ -28,7 +28,7 @@ class wot.LangBarPanel.LanguageBar
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, LanguageBarCtor, 1);
+        LanguageBarCtor();
     }
 
     // wrapped methods

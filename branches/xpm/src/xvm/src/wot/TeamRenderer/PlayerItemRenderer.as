@@ -17,7 +17,7 @@ class wot.TeamRenderer.PlayerItemRenderer
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, PlayerItemRendererCtor, 1);
+        PlayerItemRendererCtor();
     }
 
     function configUI()

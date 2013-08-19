@@ -28,7 +28,7 @@ class wot.StatisticForm.BattleStatItemRenderer
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, BattleStatItemRendererCtor, 1);
+        BattleStatItemRendererCtor();
     }
 
     function updateData()

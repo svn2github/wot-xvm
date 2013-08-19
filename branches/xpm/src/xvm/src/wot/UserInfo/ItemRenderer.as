@@ -14,7 +14,7 @@ class wot.UserInfo.ItemRenderer
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, ItemRendererCtor, 1);
+        ItemRendererCtor();
     }
 
     function setup()

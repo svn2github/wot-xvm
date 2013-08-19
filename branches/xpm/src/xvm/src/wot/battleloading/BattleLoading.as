@@ -23,7 +23,7 @@ class wot.battleloading.BattleLoading
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, BattleLoadingCtor, 1);
+        BattleLoadingCtor();
     }
 
     // wrapped methods

@@ -1,6 +1,5 @@
 import gfx.io.GameDelegate;
 import com.xvm.Cmd;
-import com.xvm.Comm;
 import com.xvm.Config;
 import com.xvm.Defines;
 import com.xvm.GlobalEventDispatcher;
@@ -200,26 +199,28 @@ class com.xvm.StatLoader
         return stat;
     }
 
-    private function LoadUserDataCallback(event, value, isId)
+    private function LoadUserDataCallback(str)
     {
-        Logger.addObject(arguments, "LoadUserDataCallback", 2)
+        //Logger.addObject(arguments, "LoadUserDataCallback", 2)
         GameDelegate.removeCallBack(Cmd.RESPOND_USERDATA);
         var data = null;
-        if (event.error)
-            data = {error:event.error};
-        else if (!event.str)
-            data = {error:"no data"};
+        var error = null;
+        if (!str)
+            error = "no data";
         else
         {
             try
             {
-                data = JSONx.parse(event.str);
+                data = JSONx.parse(str);
             }
-            catch (ex)
+            catch (ex:Error)
             {
-                data = {error:ex};
+                error = ex.message;
             }
         }
-        GlobalEventDispatcher.dispatchEvent( { type: "userdata_loaded", data: data, request: { value: value, isId: isId } } );
+        if (error == null)
+            GlobalEventDispatcher.dispatchEvent({ type: StatData.E_USERDATA_LOADED, data: data });
+        else
+            GlobalEventDispatcher.dispatchEvent({ type: StatData.E_USERDATA_LOADED, error: error });
     }
 }

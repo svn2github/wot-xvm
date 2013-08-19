@@ -22,7 +22,7 @@ class wot.PlayersPanel.PlayerListItemRenderer
         this.wrapper = wrapper;
         this.base = base;
         wrapper.xvm_worker = this;
-        Utils.Timeout(this, PlayerListItemRendererCtor, 1);
+        PlayerListItemRendererCtor();
     }
 
     function __getColorTransform()

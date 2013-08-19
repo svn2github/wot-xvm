@@ -23,7 +23,7 @@ class wot.SquadMemberRenderer.SquadMemberRenderer
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, SquadMemberRendererCtor, 1);
+        SquadMemberRendererCtor();
     }
 
     function configUI()

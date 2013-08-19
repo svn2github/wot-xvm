@@ -2,7 +2,6 @@
 
 import datetime
 import json
-import threading
 
 from gui.mods.xpm import *
 from constants import XVM_LOG_FILE_NAME
@@ -13,16 +12,14 @@ from constants import XVM_LOG_FILE_NAME
 class _Logger(object):
     def __init__(self):
         self.logfile = open(XVM_LOG_FILE_NAME, "w", 2 if IS_DEVELOPMENT else 8192)
-        self.rlock = threading.RLock()
 
     def __del__(self):
         self.logfile.close()
 
     def add(self, s):
         try:
-            with self.rlock:
-                self.logfile.write("%s: %s\n" %
-                    (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), s))
+            self.logfile.write("%s: %s\n" %
+                (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), s))
         except:
             logtrace(__file__)
 

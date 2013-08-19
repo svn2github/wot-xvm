@@ -16,7 +16,7 @@ class wot.crew.tankmen.Crew
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, CrewCtor, 1);
+        CrewCtor();
     }
 
     function setTankmen()

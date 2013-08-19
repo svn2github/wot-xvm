@@ -11,6 +11,7 @@ import com.xvm.Strings;
 import com.xvm.Utils;
 import com.xvm.VehicleInfo;
 import com.xvm.Components.WGComponents;
+import com.xvm.DataTypes.Stat;
 import com.xvm.WGDataTypes.CarouselDataItem;
 import com.xvm.WGDataTypes.UserInfoDataItem;
 
@@ -26,7 +27,7 @@ class wot.UserInfo.UserInfo
     {
         this.wrapper = wrapper;
         this.base = base;
-        Utils.Timeout(this, UserInfoCtor, 1);
+        UserInfoCtor();
     }
 
     function setCommonInfo()
@@ -53,7 +54,7 @@ class wot.UserInfo.UserInfo
     var m_statisticsField2:TextField;
     var m_statisticsHeaderField:TextField;
     var m_name:String;
-    var m_userData:Object;
+    var m_userData:Stat;
     var m_rbAll:gfx.controls.RadioButton;
     var m_rbFull:gfx.controls.RadioButton;
     var m_rbOwn:gfx.controls.RadioButton;
@@ -264,7 +265,8 @@ class wot.UserInfo.UserInfo
         GlobalEventDispatcher.removeEventListener(UserDataLoaderHelper.E_USERDATACACHED, this, onUserDataLoaded);
 
         m_userData = Cache.Get(key);
-
+        //com.xvm.Logger.addObject(m_userData);
+        
         if (!m_button5.disabled)
         {
             var dt = m_userData.dt.split("T").join(" ").substr(0, 10);

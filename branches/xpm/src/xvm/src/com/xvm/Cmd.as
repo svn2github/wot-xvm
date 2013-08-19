@@ -64,7 +64,17 @@ class com.xvm.Cmd
     
     private static function _call(target:Object, callback:String, args:Array):Void
     {
-        //Logger.add(">>> Cmd.send: " + com.xvm.JSONx.stringify(arguments, "", true));
-        GameDelegate.call("xvm.cmd", args, target, callback);
+        if (!_global._xvm_sandbox_cmd_initialized)
+        {
+            _global.setTimeout(function() {
+                _global._xvm_sandbox_cmd_initialized = true;
+                Cmd._call(target, callback, args);
+            }, 1);
+        }
+        else
+        {
+            //Logger.add(">>> Cmd.send: " + com.xvm.JSONx.stringify(arguments, "", true));
+            GameDelegate.call("xvm.cmd", args, target, callback);
+        }
     }
 }

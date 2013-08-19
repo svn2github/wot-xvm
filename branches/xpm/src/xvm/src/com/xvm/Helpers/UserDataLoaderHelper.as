@@ -48,14 +48,14 @@ class com.xvm.Helpers.UserDataLoaderHelper
     private static function onUserDataLoaded(event)
     {
         GlobalEventDispatcher.removeEventListener(StatData.E_USERDATA_LOADED, onUserDataLoaded);
-        if (event.data && event.data[0])
+        if (event.data)
         {
             //Logger.addObject(event.data, "data", 3);
-            var fixedData = FixData(event.data[0]);
+            var fixedData = FixData(event.data);
 
-            Cache.Get("INFO#" + event.data[0]._id, function() { return fixedData; });
-            Cache.Get("INFO@" + (event.request.isId == true ? event.data[0].nm : event.request.value), function() { return fixedData; });
-            GlobalEventDispatcher.dispatchEvent( { type: E_USERDATACACHED } );
+            Cache.Get("INFO#" + event.data._id, function() { return fixedData; });
+            Cache.Get("INFO@" + event.data.nm, function() { return fixedData; });
+            GlobalEventDispatcher.dispatchEvent({type: E_USERDATACACHED});
 
             //Logger.addObject(stat, "stat", 3);
         }
@@ -69,8 +69,8 @@ class com.xvm.Helpers.UserDataLoaderHelper
         ud.r = ud.battles > 0 ? Math.round(ud.w / ud.battles * 100) : 0;
 
         // xeff
-        if (ud.eff != null)
-            ud.xeff = Utils.XEFF(ud.eff);
+        if (ud.e != null)
+            ud.xeff = Utils.XEFF(ud.e);
 
         // xwn
         if (ud.wn != null)
