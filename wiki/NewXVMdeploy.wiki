@@ -37,16 +37,18 @@ Edit rights needed.
 
 5.3) Run project.
 
+6) Run all update scripts at xvm\addons\clanicons
+
 -----
 This will generate vehicles file. It will contain info for all vehicles hp, names, levels etc including new vehicles released with new WoT version.
 -----
-6) Check if there are new map released. Define size and system name at
+7) Check if there are new map released. Define size and system name at
 
 wot.Minimap.model.mapSize.MapInfoData
 
 -----
 
-7) *Build Flash projects.*
+8) *Build Flash projects.*
 
 
 == File hierarchy for release preparation==
@@ -59,6 +61,3 @@ res_mods\xvm *Obtain files from xvm\release\*
 user configs *Manual download from http://www.koreanrandom.com/forum/forum/50-%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0
 
 res\clanicons
-
-=TODO:=
-=Clan icons script=
