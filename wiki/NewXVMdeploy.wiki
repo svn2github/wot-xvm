@@ -1,0 +1,23 @@
+Inscructions for deploying new XVM release to download page.
+
+) Update version number at com.xvm.Defines {
+  public static var XVM_VERSION:String = "4.1.1";
+
+) Update version number at changelog files.
+) Check changelog contents.
+\xvm\release\doc\ChangeLog-en.txt
+\xvm\release\doc\ChangeLog-ru.txt
+
+) Update version + info at
+https://code.google.com/p/wot-xvm/wiki/ReleaseInfo?ts=1362224570&updated=ReleaseInfo
+XVM shows new version info while battle is loading in case client version is outdated.
+Edit rights needed.
+
+
+For new WoT major update:
+) Open xvm\src\vehicle-bank-parser project in Microsoft Visual C# 2010 Express. Not 2012.
+Right click on VehicleBankParser. Properties. Settings. Edit settings according to your paths.
+Run. This will generate vehicles file. It will contain info for all vehicles hp, names, levels etc including new vehicles released with new WoT version.
+
+) Check if there are new map released. Define size and system name.
+wot.Minimap.model.mapSize.MapInfoData
