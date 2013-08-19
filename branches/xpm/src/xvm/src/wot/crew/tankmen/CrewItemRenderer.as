@@ -29,19 +29,15 @@ class wot.crew.tankmen.CrewItemRenderer
     // wrapped methods
     /////////////////////////////////////////////////////////////////
 
-    private var onMouseDownFuncBase;
-
     private function CrewItemRendererCtor()
     {
         Utils.TraceXvmModule("Crew");
-
-        onMouseDownFuncBase = null;
     }
 
     private function configUIImpl()
     {
         base.configUI();
-        wrapper["onMouseDownFuncBase"] = wrapper.onMouseDownFunc;
+        wrapper.onMouseDownFuncBase = wrapper.onMouseDownFunc;
         wrapper.onMouseDownFunc =  onMouseDownFuncXVM;
         wrapper.onMouseDown = wrapper.onMouseDownFunc;
     }
@@ -53,7 +49,7 @@ class wot.crew.tankmen.CrewItemRenderer
     {
         var context:net.wargaming.tankmen.CrewItemRenderer = net.wargaming.tankmen.CrewItemRenderer(this);
 
-        onMouseDownFuncBase.apply(this, arguments);
+        context.onMouseDownFuncBase.apply(context, arguments);
 
         if (context.disabled || context.data.tankmanID != null)
             return;

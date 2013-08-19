@@ -111,7 +111,7 @@ class wot.UserInfo.UserInfo
         if (Cache.Exist("INFO@" + m_name))
             onUserDataLoaded();
         else {
-            GlobalEventDispatcher.addEventListener("userdata_cached", this, onUserDataLoaded);
+            GlobalEventDispatcher.addEventListener(UserDataLoaderHelper.E_USERDATACACHED, this, onUserDataLoaded);
             UserDataLoaderHelper.LoadUserData(m_name, false);
         }
     }
@@ -261,7 +261,7 @@ class wot.UserInfo.UserInfo
         if (!Cache.Exist(key))
             return;
 
-        GlobalEventDispatcher.removeEventListener("userdata_cached", this, onUserDataLoaded);
+        GlobalEventDispatcher.removeEventListener(UserDataLoaderHelper.E_USERDATACACHED, this, onUserDataLoaded);
 
         m_userData = Cache.Get(key);
 

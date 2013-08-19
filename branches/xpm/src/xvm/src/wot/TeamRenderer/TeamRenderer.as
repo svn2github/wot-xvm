@@ -53,16 +53,26 @@ class wot.TeamRenderer.TeamRenderer
         Config.LoadConfig();
     }
 
-    private function onConfigLoaded()
-    {
-        GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
-        configXVM();
-    }
-
     function configUIImpl()
     {
         base.configUI();
         configured = true;
+        configXVM();
+    }
+
+    function afterSetDataImpl()
+    {
+        base.afterSetData();
+        //Logger.addObject(data);
+        afterSetDataXVM();
+    }
+
+    ///////////////////////////////////
+    // PRIVATE
+    
+    private function onConfigLoaded()
+    {
+        GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         configXVM();
     }
 
@@ -73,15 +83,15 @@ class wot.TeamRenderer.TeamRenderer
         if (Config.s_config.rating.enableCompanyStatistics != true)
             return;
 
-        var me = this;
+        var $this = this;
         wrapper.onRollOver = function()
         {
-            if (me.stat)
-                ToolTipManager.instance.show(TeamRendererHelper.GetToolTipData(me.wrapper.data, me.stat));
+            if ($this.stat)
+                ToolTipManager.instance.show(TeamRendererHelper.GetToolTipData($this.wrapper.data, $this.stat));
             else
             {
-                if (me.wrapper.toolTip)
-                    ToolTipManager.instance.show(me.wrapper.toolTip);
+                if ($this.wrapper.toolTip)
+                    ToolTipManager.instance.show($this.wrapper.toolTip);
             }
         }
 
@@ -117,13 +127,6 @@ class wot.TeamRenderer.TeamRenderer
         UserDataLoaderHelper.LoadUserData(m_name, false);
     }
 
-    function afterSetDataImpl()
-    {
-        base.afterSetData();
-        //Logger.addObject(data);
-        afterSetDataXVM();
-    }
-
     private function afterSetDataXVM()
     {
         if (!configured || !Config.s_loaded || Config.s_config.rating.showPlayersStatistics != true)
@@ -140,7 +143,7 @@ class wot.TeamRenderer.TeamRenderer
         {
             stat = null;
             m_effField.htmlText = "";
-            GlobalEventDispatcher.addEventListener("userdata_cached", this, setXVMStat);
+            GlobalEventDispatcher.addEventListener(UserDataLoaderHelper.E_USERDATACACHED, this, setXVMStat);
             if (wrapper["owner"]._parent.updateButton != null && wrapper["owner"]._parent.updateButton.selected)
                 onUpdateClick();
         }
@@ -151,7 +154,7 @@ class wot.TeamRenderer.TeamRenderer
         var key = "INFO@" + m_name;
         if (Cache.Exist("INFO@" + m_name))
         {
-            GlobalEventDispatcher.removeEventListener("userdata_cached", this, setXVMStat);
+            GlobalEventDispatcher.removeEventListener(UserDataLoaderHelper.E_USERDATACACHED, this, setXVMStat);
             stat = TeamRendererHelper.setXVMStat(key, m_effField);
         }
     }

@@ -23,19 +23,17 @@ PUBLIC_TOKEN = 'xpm'
 class _Stat(object):
     def __init__(self):
         self.onGetStatComplete = Event.Event()
-        self.onGetUserComplete = Event.Event()
+        self.onGetStatComplete += self._respond
         player = BigWorld.player()
         self.arenaId = None
         self.players = None
         self.cache = {}
         self.cacheUser = {}
         self.info = None
-        self.proxies = [ "http://proxy2.bulychev.net/%1" ] # TODO
+        self.servers = [ "http://proxy2.bulychev.net/%1" ] # TODO
         self.timeout = 30000
         self.thread = None
         self.threadLock = threading.RLock()
-        self.threadUser = None
-        self.threadUserLock = threading.RLock()
         pass
 
     def __del__(self):
@@ -46,25 +44,21 @@ class _Stat(object):
         if player.arena is None:
             return
 
-        self.onGetStatComplete += self._respond
-        if self.thread is not None:
-            return
-
         with self.threadLock:
+            if self.thread is not None:
+                return
             self.thread = threading.Thread(target=self._get_stat, args=(proxy, ids))
             self.thread.daemon = True # thread dies with the program
             self.thread.start()
 
 
     def getUserData(self, proxy, value, isId):
-        self.onGetUserComplete += self._respond
-        if self.threadUser is not None:
-            return
-
         with self.threadLock:
-            self.threadUser = threading.Thread(target=self._get_user, args=(proxy, value, isId))
-            self.threadUser.daemon = True # thread dies with the program
-            self.threadUser.start()
+            if self.thread is not None:
+                return
+            self.thread = threading.Thread(target=self._get_user, args=(proxy, value, isId))
+            self.thread.daemon = True # thread dies with the program
+            self.thread.start()
 
 
     def _respond(self, proxy, method, data):
@@ -128,14 +122,14 @@ class _Stat(object):
         if not updateRequest:
             return
 
-        if self.proxies is None or len(self.proxies) <= 0:
-            log('WARNING: Cannot read statistics: no suitable proxy was found.')
+        if self.servers is None or len(self.servers) <= 0:
+            log('WARNING: Cannot read statistics: no suitable server was found.')
             return
 
         try:
             updateRequest = updateRequest.replace('?', '%3F') # for Chinese server
-            proxy = self.proxies[randint(0, len(self.proxies) - 1)]
-            responseFromServer, duration = self.loadUrl(proxy, updateRequest)
+            server = self.servers[randint(0, len(self.servers) - 1)]
+            responseFromServer, duration = self.loadUrl(server, updateRequest)
 
             if len(responseFromServer) <= 0:
                 log('WARNING: Empty response or parsing error')
@@ -167,21 +161,28 @@ class _Stat(object):
         if cacheKey not in self.cacheUser:
             try:
                 req = "INFO/%s/%s" % ("ID" if isId else region, value)
-                proxy = self.proxies[randint(0, len(self.proxies) - 1)]
-                responseFromServer, duration = self.loadUrl(proxy, req)
+                server = self.servers[randint(0, len(self.servers) - 1)]
+                responseFromServer, duration = self.loadUrl(server, req)
 
+                log("1")
                 if len(responseFromServer) <= 0:
                     log('WARNING: Empty response or parsing error')
                     return
 
-                data = json.loads(responseFromServer)
-                self.cacheUser[str(data['id']) + ",0"] = data
-                self.cacheUser[data['name'] + ",1"] = data
+                log("2")
+                data = json.loads(responseFromServer)[0]
+                log("3")
+                self.cacheUser[data['nm'] + ",0"] = data
+                log("4")
+                self.cacheUser[str(data['_id']) + ",1"] = data
+                log("5")
 
             except Exception, ex:
                 log('ERROR: _get_user() exception: ' + str(ex) + "\n" + traceback.format_exc(ex))
 
-        self.onGetStatComplete(proxy, RESPOND_USERDATA, self.cacheUser[cacheKey])
+        #self._respond(proxy, RESPOND_USERDATA, self.cacheUser[cacheKey])
+        #self.onGetStatComplete(proxy, RESPOND_USERDATA, self.cacheUser[cacheKey])
+        log("respond")
 
         with self.threadLock:
             self.thread = None

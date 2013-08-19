@@ -5,6 +5,7 @@ import com.xvm.Helpers.TeamRendererHelper;
 import com.xvm.Helpers.UserDataLoaderHelper;
 import com.xvm.Utils;
 import net.wargaming.messenger.MessengerUtils;
+import com.xvm.DataTypes.Stat;
 
 class wot.TeamMemberRenderer.TeamMemberRenderer
 {
@@ -47,9 +48,9 @@ class wot.TeamMemberRenderer.TeamMemberRenderer
     private var configured:Boolean;
     private var uid:Number;
     private var m_infoField:TextField;
-    private var stat:Object;
+    private var stat:Stat;
 
-    public function TeamMemberRendererCtor()
+    function TeamMemberRendererCtor()
     {
         Utils.TraceXvmModule("TeamMemberRenderer");
 
@@ -62,12 +63,6 @@ class wot.TeamMemberRenderer.TeamMemberRenderer
         Config.LoadConfig();
     }
 
-    private function onConfigLoaded()
-    {
-        GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
-        configXVM();
-    }
-
     function configUIImpl()
     {
         wrapper.textField._x -= 10;
@@ -78,6 +73,33 @@ class wot.TeamMemberRenderer.TeamMemberRenderer
         base.configUI();
 
         configured = true;
+        configXVM();
+    }
+
+    function afterSetDataImpl()
+    {
+        base.afterSetData();
+        setTextColor();
+        afterSetDataXVM();
+    }
+
+    function updateAfterStateChangeImpl()
+    {
+        base.updateAfterStateChange();
+        setTextColor();
+    }
+
+    function getToolTipDataImpl()
+    {
+        return (stat == null) ? base.getToolTipData() : TeamRendererHelper.GetToolTipData(wrapper.data, stat);
+    }
+    
+    ///////////////////////////////////
+    // PRIVATE
+    
+    private function onConfigLoaded()
+    {
+        GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         configXVM();
     }
 
@@ -102,19 +124,6 @@ class wot.TeamMemberRenderer.TeamMemberRenderer
         afterSetDataXVM();
     }
 
-    function afterSetDataImpl()
-    {
-        base.afterSetData();
-        setTextColor();
-        afterSetDataXVM();
-    }
-
-    function updateAfterStateChangeImpl()
-    {
-        base.updateAfterStateChange();
-        setTextColor();
-    }
-
     private function setTextColor()
     {
         var color = MessengerUtils.isFriend(wrapper.data) ? 0x66FF66 : MessengerUtils.isIgnored(wrapper.data) ? 0xFF6666 : wrapper.data.colors[0];
@@ -137,7 +146,7 @@ class wot.TeamMemberRenderer.TeamMemberRenderer
         else
         {
             m_infoField.htmlText = "";
-            GlobalEventDispatcher.addEventListener("userdata_cached", this, setXVMStat);
+            GlobalEventDispatcher.addEventListener(UserDataLoaderHelper.E_USERDATACACHED, this, setXVMStat);
             UserDataLoaderHelper.LoadUserData(uid, true);
         }
     }
@@ -147,12 +156,8 @@ class wot.TeamMemberRenderer.TeamMemberRenderer
         var key = "INFO#" + uid;
         if (!Cache.Exist(key))
             return;
-        GlobalEventDispatcher.removeEventListener("userdata_cached", this, setXVMStat);
+        GlobalEventDispatcher.removeEventListener(UserDataLoaderHelper.E_USERDATACACHED, this, setXVMStat);
         stat = TeamRendererHelper.setXVMStat(key, m_infoField);
     }
 
-    function getToolTipDataImpl()
-    {
-        return (!stat) ? base.getToolTipData() : TeamRendererHelper.GetToolTipData(wrapper.data, stat);
-    }
 }

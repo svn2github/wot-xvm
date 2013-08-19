@@ -1,6 +1,4 @@
 import gfx.io.GameDelegate;
-import com.xvm.JSONx;
-import com.xvm.Logger;
 
 class com.xvm.Cmd
 {

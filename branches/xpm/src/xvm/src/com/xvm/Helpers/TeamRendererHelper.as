@@ -9,6 +9,7 @@ import com.xvm.Defines;
 import com.xvm.GraphicsUtil;
 import com.xvm.Locale;
 import com.xvm.Utils;
+import com.xvm.DataTypes.Stat;
 
 class com.xvm.Helpers.TeamRendererHelper
 {
@@ -48,13 +49,13 @@ class com.xvm.Helpers.TeamRendererHelper
         return res;
     }
 
-    public static function GetToolTipData(data, stat)
+    public static function GetToolTipData(data, stat:Stat)
     {
         var prefix =
             MessengerUtils.isFriend(data) ? '<font color="#66FF66">' + Locale.get("Friend") + '</font><br>' :
             MessengerUtils.isIgnored(data) ? '<font color="#FF6666">' + Locale.get("Ignored") + '</font><br>' : "";
 
-        var dt = stat.dt ? stat.dt.split("T").join(" ").substr(0, 10) : Locale.get("unknown");
+        var dt = stat.date ? stat.date.split("T").join(" ").substr(0, 10) : Locale.get("unknown");
 
         var s = "";
         // line 1
@@ -72,8 +73,8 @@ class com.xvm.Helpers.TeamRendererHelper
             "<font color='" + GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_EFF, stat.eff) + "'>" + stat.eff + "</font>") + ")";
         s += "<br>";
         // line 3
-        s += Locale.get("Fights") + ": " + (!stat.b ? "-" :
-            "<font color='" + GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_KB, stat.b / 1000) + "'>" + stat.b + "</font>") + " ";
+        s += Locale.get("Fights") + ": " + (!stat.battles ? "-" :
+            "<font color='" + GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_KB, stat.battles / 1000) + "'>" + stat.battles + "</font>") + " ";
         s += Locale.get("Wins") + ": " + (!stat.r ? "-" :
             "<font color='" + GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_RATING, stat.r) + "'>" + stat.r + "%</font>") + " ";
         s += "TWR: " + (!stat.twr ? "-" :

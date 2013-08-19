@@ -202,7 +202,8 @@ class com.xvm.StatLoader
 
     private function LoadUserDataCallback(event, value, isId)
     {
-        GameDelegate.removeCallBack(Cmd.RESPOND_STATDATA);
+        Logger.addObject(arguments, "LoadUserDataCallback", 2)
+        GameDelegate.removeCallBack(Cmd.RESPOND_USERDATA);
         var data = null;
         if (event.error)
             data = {error:event.error};

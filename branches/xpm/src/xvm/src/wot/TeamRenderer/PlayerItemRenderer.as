@@ -37,7 +37,7 @@ class wot.TeamRenderer.PlayerItemRenderer
     private var m_name:String;
     private var m_effField:TextField;
 
-    public function PlayerItemRendererCtor()
+    function PlayerItemRendererCtor()
     {
         Utils.TraceXvmModule("TeamRenderer");
 
@@ -49,16 +49,25 @@ class wot.TeamRenderer.PlayerItemRenderer
         Config.LoadConfig();
     }
 
-    private function onConfigLoaded()
-    {
-        GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
-        configXVM();
-    }
-
     function configUIImpl()
     {
         base.configUI();
         configured = true;
+        configXVM();
+    }
+
+    function afterSetDataImpl()
+    {
+        base.afterSetData();
+        afterSetDataXVM();
+    }
+
+    ///////////////////////////////////
+    // PRIVATE
+    
+    private function onConfigLoaded()
+    {
+        GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         configXVM();
     }
 
@@ -76,12 +85,6 @@ class wot.TeamRenderer.PlayerItemRenderer
         }
         m_effField.htmlText = "";
 
-        afterSetDataXVM();
-    }
-
-    function afterSetDataImpl()
-    {
-        base.afterSetData();
         afterSetDataXVM();
     }
 
@@ -105,7 +108,7 @@ class wot.TeamRenderer.PlayerItemRenderer
         else
         {
             m_effField.htmlText = "";
-            GlobalEventDispatcher.addEventListener("userdata_cached", this, setXVMStat);
+            GlobalEventDispatcher.addEventListener(UserDataLoaderHelper.E_USERDATACACHED, this, setXVMStat);
             UserDataLoaderHelper.LoadUserData(m_name, false);
         }
     }
@@ -115,7 +118,7 @@ class wot.TeamRenderer.PlayerItemRenderer
         var key = "INFO@" + m_name;
         if (!Cache.Exist(key))
             return;
-        GlobalEventDispatcher.removeEventListener("userdata_cached", this, setXVMStat);
+        GlobalEventDispatcher.removeEventListener(UserDataLoaderHelper.E_USERDATACACHED, this, setXVMStat);
         TeamRendererHelper.setXVMStat(key, m_effField);
     }
 }

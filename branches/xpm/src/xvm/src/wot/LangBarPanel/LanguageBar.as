@@ -55,11 +55,19 @@ class wot.LangBarPanel.LanguageBar
     private function onConfigLoaded()
     {
         GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
-        Utils.Interval(this, onTimer, 100);
+        Utils.Interval(this, onTimer, 1000);
     }
     
     private function onTimer()
     {
+        // save carousel tanks in _global to be available from the Achievements dialog.
+        // FIXIT: dirty hack, find the best place to initialize carousel without timer
+        if (WGComponents.carousel != null && WGComponents.carousel.dataProvider != null)
+        {
+            if (_global._xvm_carousel_dataProvider == null || _global._xvm_carousel_dataProvider.length != WGComponents.carousel.dataProvider.length)
+                _global._xvm_carousel_dataProvider = WGComponents.carousel.dataProvider;
+        }
+
         //Logger.add(_root.loadingName);
         if (currentLoadingName == _root.loadingName)
             return;
@@ -117,7 +125,11 @@ class wot.LangBarPanel.LanguageBar
     {
         var header:MovieClip = _root.header;
         playerName = _root.header.tankPanel.account_name.text;
-        
+
+        // Hide tutorial
+        if (Config.s_config.hangar.hideTutorial == true)
+            _root.header.tutorialDispatcher._visible = false;
+
         // PingServers component
         mc_ping = header.createEmptyMovieClip("pingHolder", header.getNextHighestDepth());
         PingServers.initFeature(Config.s_config.hangar.pingServers, mc_ping);

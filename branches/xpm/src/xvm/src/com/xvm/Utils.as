@@ -168,7 +168,7 @@ class com.xvm.Utils
             return;
         _global["_xvm__trace_module_" + moduleName] = 1;
         xvmModules.push(moduleName);
-        Logger.add("xvm-> [ \"" + xvmModules.join("\", \"") + "\" ]");
+        Logger.add("xvm -> [\"" + xvmModules.join("\", \"") + "\"]");
     }
 
     /**

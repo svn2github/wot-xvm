@@ -47,14 +47,14 @@ class wot.SquadMemberRenderer.SquadMemberRenderer
     private var configured:Boolean = false;
     private var vehicleTierField:TextField = null;
 
-    public function SquadMemberRendererCtor()
+    function SquadMemberRendererCtor()
     {
         Utils.TraceXvmModule("SquadMemberRenderer");
 
-        if(!Config.s_loaded) { // rendere is initialized more than once
+        // TODO: sirmax: is required?    if (!Config.s_loaded) { // renderer is initialized more than once
             GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
             Config.LoadConfig();
-        }
+        //}
     }
 
     function configUIImpl()
@@ -71,7 +71,7 @@ class wot.SquadMemberRenderer.SquadMemberRenderer
 
     function getToolTipDataImpl()
     {
-        /** Prevent editing empty or "invite" fileds */
+        /** Prevent editing empty or "invite" fields */
         if (!wrapper.data || wrapper.data.dummy)
             return base.getToolTipData();
 
@@ -97,7 +97,8 @@ class wot.SquadMemberRenderer.SquadMemberRenderer
     private function displayVehicleTier()
     {
         /** Erase field */
-        vehicleTierField.htmlText = "";
+        if (vehicleTierField != null)
+            vehicleTierField.htmlText = "";
 
         /** Prevent editing empty or "invite" fileds */
         if (!wrapper.data || wrapper.data.dummy)
@@ -115,7 +116,7 @@ class wot.SquadMemberRenderer.SquadMemberRenderer
             wrapper.data.displayName = Utils.GetPlayerName(wrapper.data.displayName);
 
         /** Is vehicle selected ? */
-        if (!wrapper.data.vehicleName)
+        if (wrapper.data.vehicleName == null || wrapper.data.vehicleName == "")
             return;
 
         /** Display vehicle tier */
