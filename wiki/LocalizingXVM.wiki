@@ -7,7 +7,7 @@ To translate XVM you need:
 
   # Download [https://wot-xvm.googlecode.com/svn/trunk/release/l10n/en.xc en.xc] or [https://wot-xvm.googlecode.com/svn/trunk/release/l10n/ru.xc ru.xc]
   # Translate downloaded file
-  # Rename the file to XX.xc, where XX - language code, which you can see in [https://code.google.com/p/wot-xvm/issues/detail?id=466 this ticket] or in the "LANGUAGE_CODE" key of `[WOT folder]\res\text\LC_MESSAGES\settings.mo`
+  # Rename the file to XX.xc, where XX - language code, which you can see in the "Languages" section of this page or in the "LANGUAGE_CODE" key of `[WOT folder]\res\text\LC_MESSAGES\settings.mo`
 
 * Send your changes to the XVM
 
@@ -22,9 +22,29 @@ To translate XVM you need:
 
   # Скачать [https://wot-xvm.googlecode.com/svn/trunk/release/l10n/en.xc en.xc] или [https://wot-xvm.googlecode.com/svn/trunk/release/l10n/ru.xc ru.xc]
   # Выполнить перевод файла
-  # Переименовать файл в XX.xc, где XX - код языка, который вы можете подсмотреть в [https://code.google.com/p/wot-xvm/issues/detail?id=466 этом тикете] или в ключе "LANGUAGE_CODE" файла `[Папка WOT]\res\text\LC_MESSAGES\settings.mo`
+  # Переименовать файл в XX.xc, где XX - код языка, который вы можете подсмотреть в разделе "Languages" этой инструкции или в ключе "LANGUAGE_CODE" файла `[Папка WOT]\res\text\LC_MESSAGES\settings.mo`
 
 * Отправить свои изменения в XVM
 
   # Написать на `xvm-l10n@by-reservation.com`
   # Или запостить ссылку на файл в этом тиките https://code.google.com/p/wot-xvm/issues/detail?id=466
+
+== Languages ==
+===Updated===
+||Belarusian (be)(unofficial)||Czech (cs)||English (en)||
+||Russian (ru)||Spanish (es)||||
+
+===Update needed===
+||Finnish (fi)||French (fr)||German (de)||
+||Hungarian (hu)||Korean (ko)||Polish (pl)||
+||Ukrainian (uk)(unofficial)||Vietnamese (vi)||||
+
+===To do===
+||Bulgarian (bg)||Chinese (China)(Simplified?)(zh_CN)||Chinese (Taiwan)(Traditional?)(zh_TW)||
+||Croatian (hr)||Danish (da)||Dutch (nl)||
+||Estonian (et)||Filipino (fil)||Indonesian (id)||
+||Italian (it)||Japanese (ja)||Latvian (lv)||
+||Lithuanian (lt)||Malay (ms)||Norwegian (no)||
+||Portuguese (Brazil)(pt_BR)||Portuguese (pt)||Romanian (ro)||
+||Serbian (latin?)(sr)||Swedish (sv)||Thai (th)||
+||Turkish (tr)||||||||
