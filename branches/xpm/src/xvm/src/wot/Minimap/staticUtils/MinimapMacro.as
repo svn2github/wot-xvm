@@ -1,8 +1,8 @@
 import com.xvm.Utils;
-import com.xvm.VehicleTypeShort;
 import com.xvm.VehicleInfo;
-import wot.Minimap.model.externalProxy.MapConfig;
+import com.xvm.VehicleInfoDataL10n;
 import wot.Minimap.dataTypes.Player;
+import wot.Minimap.model.externalProxy.MapConfig;
 
 class wot.Minimap.staticUtils.MinimapMacro
 {
@@ -11,9 +11,9 @@ class wot.Minimap.staticUtils.MinimapMacro
     private static var VEHCLASS_MACRO:String = "{{vehicle-class}}";
     private static var VEH_MACRO:String = "{{vehicle}}";
     private static var VEH_MACRO_ALT:String = "{{vehicle-type}}";
+    private static var VEH_SHORT_MACRO:String = "{{vehicle-short}}";
     private static var VEH_NAME:String = "{{vehiclename}}";
     private static var VEH_NAME_ALT:String = "{{vehicle-name}}";
-    private static var SHORT_VEH__MACRO:String = "{{vehicle-type-short}}"; // TODO
 
     public static function process(format:String, player:Player, vehicleClass:String):String
     {
@@ -38,11 +38,11 @@ class wot.Minimap.staticUtils.MinimapMacro
         }
 
         /** Vehicle short type */
-        formatArr = format.split(SHORT_VEH__MACRO);
+        formatArr = format.split(VEH_SHORT_MACRO);
         if (formatArr.length > 1)
         {
             var type:String = VehicleInfo.getVehicleName(player.icon).split("-").join("_");
-            format = formatArr.join(VehicleTypeShort.translate(type));
+            format = formatArr.join(VehicleInfo.mapVehicleShortName(type, player.vehicle));
         }
 
 
@@ -60,13 +60,13 @@ class wot.Minimap.staticUtils.MinimapMacro
         if (formatArr.length > 1)
             format = formatArr.join(systemVehName);
 
-        /** Vehicle type readable - Чаффи */
+        /** Vehicle type readable - Chaffee */
         formatArr = format.split(VEH_MACRO);
         if (formatArr.length > 1)
-            format = formatArr.join(player.vehicle);
+            format = formatArr.join(VehicleInfo.mapVehicleName2(VehicleInfoDataL10n.getVehicleNationName(player.vehicle), player.vehicle));
         formatArr = format.split(VEH_MACRO_ALT);
         if (formatArr.length > 1)
-            format = formatArr.join(player.vehicle);
+            format = formatArr.join(VehicleInfo.mapVehicleName2(VehicleInfoDataL10n.getVehicleNationName(player.vehicle), player.vehicle));
 
 
 

@@ -66,7 +66,7 @@ class com.xvm.Helpers.UserDataLoaderHelper
     private static function FixData(ud:Stat)
     {
         // GWR
-        ud.r = ud.battles > 0 ? Math.round(ud.w / ud.battles * 100) : 0;
+        ud.r = ud.b > 0 ? Math.round(ud.w / ud.b * 100) : 0;
 
         // xeff
         if (ud.e != null)

@@ -5,7 +5,7 @@
 class com.xvm.Defines
 {
     // Global versions
-    public static var XVM_VERSION:String = "4.1.0";
+    public static var XVM_VERSION:String = "4.1.1";
     public static var XVM_INTRO:String = "www.modxvm.com";
     public static var WOT_VERSION:String = "0.8.7";
     public static var CONFIG_VERSION:String = "4.0.0";
@@ -33,20 +33,6 @@ class com.xvm.Defines
     public static var CONFIG_FILE_NAME:String = "xvm.xc";
     // res_mods/x.x.x/gui/flash/XVM.xvmconf
     public static var CONFIG_FILE_NAME_XVMCONF:String = "XVM.xvmconf";
-
-    // WebDav commands
-    public static var COMMAND_LOG:String = DOKAN_MP + "@LOG";
-    public static var COMMAND_SET:String = DOKAN_MP + "@SET";
-    public static var COMMAND_ADD:String = DOKAN_MP + "@ADD";
-    public static var COMMAND_LOGSTAT:String = DOKAN_MP + "@LOGSTAT";
-    public static var COMMAND_GET_ASYNC:String = DOKAN_MP + "@GET_ASYNC";
-    public static var COMMAND_GET_PLAYERS:String = DOKAN_MP + "@GET_PLAYERS";
-    public static var COMMAND_GET_VERSION:String = DOKAN_MP + "@GET_VERSION";
-    public static var COMMAND_INFO_ASYNC:String = DOKAN_MP + "@INFO_ASYNC";
-    public static var COMMAND_PING:String = DOKAN_MP + "@PING";
-    public static var COMMAND_DOSSIER:String = DOKAN_MP + "@DOSSIER";
-    public static var COMMAND_SAVE_SETTINGS:String = DOKAN_MP + "@SAVE_SETTINGS";
-    public static var COMMAND_LOAD_SETTINGS:String = DOKAN_MP + "@LOAD_SETTINGS";
 
     // Settings keys
     public static var SETTINGS_WIDGETS:String = "widgets";

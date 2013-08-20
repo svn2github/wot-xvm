@@ -55,7 +55,7 @@ class com.xvm.Helpers.TeamRendererHelper
             MessengerUtils.isFriend(data) ? '<font color="#66FF66">' + Locale.get("Friend") + '</font><br>' :
             MessengerUtils.isIgnored(data) ? '<font color="#FF6666">' + Locale.get("Ignored") + '</font><br>' : "";
 
-        var dt = stat.date ? stat.date.split("T").join(" ").substr(0, 10) : Locale.get("unknown");
+        var dt = stat.dt ? stat.dt.split("T").join(" ").substr(0, 10) : Locale.get("unknown");
 
         var s = "";
         // line 1

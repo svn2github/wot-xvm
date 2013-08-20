@@ -122,7 +122,7 @@ class com.xvm.ConfigLoader
 
     private function SetConfigLoaded()
     {
-        //Logger.add("Config: Loaded ()");
+        //Logger.add("Config: Loaded");
         Config.s_loaded = true;
         ConfigLoader.s_loading = false;
         GlobalEventDispatcher.dispatchEvent({type: Config.E_CONFIG_LOADED});
