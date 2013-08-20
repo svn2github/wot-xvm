@@ -16,7 +16,7 @@ clear()
 
 build()
 {
-  python -c "import py_compile; py_compile.compile('$1')"
+  python2.6 -c "import py_compile; py_compile.compile('$1')"
   if [ ! -f $1c ]; then
     exit
   fi
