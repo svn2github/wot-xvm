@@ -27,8 +27,8 @@ class XvmStat(object):
             if cmd == COMMAND_LOG:
                 log(*args)
             elif cmd == COMMAND_PING:
-                #res = json.dumps(ping())
-                res = None
+                res = json.dumps(ping())
+                #res = None
             elif cmd == COMMAND_GETSCREENSIZE:
                 res = json.dumps(list(GUI.screenResolution()))
             elif cmd == COMMAND_GETGAMEREGION:

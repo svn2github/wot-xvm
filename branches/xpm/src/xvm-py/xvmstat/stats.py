@@ -171,13 +171,10 @@ class _Stat(object):
 
     def _get_stat_stub(self, player):
         return {
-            'id': pl.playerId
-            'name': pl.name
-            'vname': pl.vName
+            'id': pl.playerId,
+            'name': pl.name,
+            'vname': pl.vName,
         }
-
-    public var v:VStat;
-            self.stat_stub(pl)
 
     def loadUrl(self, url, members, test=False):
         if not test:
