@@ -71,6 +71,7 @@ class _Stat(object):
                 cacheKey = "%d" % (pl.playerId)
                 if cacheKey not in self.cache:
                     playersSkip[str(pl.playerId)] = True
+                    players[pl.name] = self._get_stat_stub(pl)
                     continue
             players[pl.name] = self.cache[cacheKey]
         #pprint(players)
@@ -167,6 +168,16 @@ class _Stat(object):
         self._respond(proxy, RESPOND_USERDATA,
             self.cacheUser[cacheKey] if cacheKey in self.cacheUser else None)
 
+
+    def _get_stat_stub(self, player):
+        return {
+            'id': pl.playerId
+            'name': pl.name
+            'vname': pl.vName
+        }
+
+    public var v:VStat;
+            self.stat_stub(pl)
 
     def loadUrl(self, url, members, test=False):
         if not test:

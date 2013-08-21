@@ -46,7 +46,8 @@ class wot.StatisticForm.BattleStatItemRenderer
 
     static var DEBUG_TIMES = false;
 
-    public static var s_winChances:WinChances = null;
+    private static var s_state:Number = 0;
+    private static var s_winChances:WinChances = null;
 
     var m_clanIcon: UILoaderAlt = null;
     var m_iconset: IconLoader = null;
@@ -65,7 +66,6 @@ class wot.StatisticForm.BattleStatItemRenderer
         wrapper.col3.verticalAlign = "center";
         wrapper.col3.verticalAutoSize = true;
 
-        GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, StatLoader.LoadData);
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         GlobalEventDispatcher.addEventListener(StatData.E_STAT_LOADED, wrapper, updateData);
 
@@ -104,8 +104,13 @@ class wot.StatisticForm.BattleStatItemRenderer
     {
         GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
 
-        s_winChances.showChances = Config.s_config.statisticForm.showChances;
-        s_winChances.showExp = Config.s_config.statisticForm.showChancesExp;
+        if (s_state <= 0)
+        {
+            s_state = 1;
+            s_winChances.showChances = Config.s_config.statisticForm.showChances;
+            s_winChances.showExp = Config.s_config.statisticForm.showChancesExp;
+            StatLoader.LoadData();
+        }
 
         wrapper.col3.condenseWhite = true;
     }

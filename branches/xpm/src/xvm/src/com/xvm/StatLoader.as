@@ -25,6 +25,8 @@ class com.xvm.StatLoader
     {
         if (!Config.s_config.rating.showPlayersStatistics)
             return;
+        if (StatData.s_loaded == true)
+            return;
         if (instance._loading)
             return;
         instance._loading = true;
@@ -51,9 +53,6 @@ class com.xvm.StatLoader
             var response = JSONx.parse(json_str);
             //Logger.addObject(response, "response", 2);
 
-            if (response.info)
-                GlobalEventDispatcher.dispatchEvent({ type: "set_info", ver: response.info.ver, message: response.info.message });
-
             if (response.players)
             {
                 for (var nm in response.players)
@@ -73,6 +72,9 @@ class com.xvm.StatLoader
                     //Logger.addObject(StatData.s_data[nm], "s_data[" + nm + "]", 3);
                 }
             }
+
+            if (response.info)
+                GlobalEventDispatcher.dispatchEvent({ type: Config.E_SET_INFO, ver: response.info.ver, message: response.info.message });
         }
         catch (ex)
         {
