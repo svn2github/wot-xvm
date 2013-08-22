@@ -137,7 +137,7 @@ class _Stat(object):
                 if 'name' not in stat or not stat['name']:
                     continue
                 cacheKey = "%d%s" % (stat['id'], "=" + stat['vname'] if stat['vname'] else '')
-                self.cache[cacheKey] = stat
+                self.cache[cacheKey] = self._map(stat)
 
         except Exception, ex:
             log('ERROR: _load_stat() exception: ' + str(ex) + "\n" + traceback.format_exc(ex))
@@ -211,6 +211,19 @@ class _Stat(object):
             duration = msec
 
         return responseFromServer, duration
+
+    def _map(self, stat):
+        r = stat
+        if 'battles' in r:
+            if not 'b' in r:
+                r['b'] = r['battles']
+        if 'wins' in r:
+            if not 'w' in r:
+                r['w'] = r['wins']
+        if 'eff' in r:
+            if not 'e' in r:
+                r['e'] = r['eff']
+        return r
 
 
 class _Player(object):
