@@ -5,7 +5,7 @@
 class com.xvm.Defines
 {
     // Global versions
-    public static var XVM_VERSION:String = "4.1.1";
+    public static var XVM_VERSION:String = "4.1.1-xpm";
     public static var XVM_INTRO:String = "www.modxvm.com";
     public static var WOT_VERSION:String = "0.8.7";
     public static var CONFIG_VERSION:String = "4.0.0";
@@ -16,9 +16,6 @@ class com.xvm.Defines
 
     // res_mods/xvm/
     public static var XVM_ROOT:String = "../../../xvm/";
-
-    // Path to Dokan MountPoint
-    public static var DOKAN_MP:String = XVM_ROOT + ".xvmfs/";
 
     // res_mods/xvm/res/
     public static var XVMRES_ROOT:String = XVM_ROOT + "res/";

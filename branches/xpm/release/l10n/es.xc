@@ -3,6 +3,7 @@
  */
 {
   "locale": {
+    // Author of translation
     "XVM_translator": "RKPhantom",
 
     // Win chance
@@ -16,13 +17,20 @@
     "fire": "fuego",
     "ramming": "choque",
     "world_collision": "caida",
+    "Hits": "Impactos",
+    "Total": "Total",
+    "Last": "Ultimo",
+
+    // Hp Left
+    "hpLeftTitle": "Puntos de Impacto Restante:",
 
     // Capture
-    "<font size='15' color='#FFFFFF'>Enemy base capture! {{extra}}</font>": "<font size='15' color='#FFFFFF'>Capturando Base enemiga! {{extra}}</font>",
-    "<font size='17' color='#FFCC66'>Enemy base captured!</font>": "<font size='17' color='#FFCC66'>Base enemiga capturada!</font>",
-    "<font size='15' color='#FFFFFF'>Ally base capture! {{extra}}</font>": "<font size='15' color='#FFFFFF'>Estan capturando la base aliada! {{extra}}</font>",
-    "<font size='17' color='#FFCC66'>Ally base captured!</font>": "<font size='17' color='#FFCC66'>Base aliada capturada!</font>",
-    "Capturers: <b><font color='#FFCC66'>{{tanks}}</font></b> Timeleft: <b><font color='#FFCC66'>{{time}}</font><b>": "Capturando: <b><font color='#FFCC66'>{{tanks}}</font></b> Tiempo restante: <b><font color='#FFCC66'>{{time}}</font><b>",
+    "enemyBaseCapture": "Capturando base enemiga!",
+    "enemyBaseCaptured": "Base enemiga capturada!",
+    "allyBaseCapture": "Estan capturando la base aliada!",
+    "allyBaseCaptured": "Base aliada capturada!",
+    "Timeleft": "Tiempo restante",
+    "Capturers": "Capturando",
 
     // FinalStatistics
     "Hit percent": "Tasa de impactos",
@@ -85,6 +93,9 @@
     "MT": "TM",
     "LT": "TL",
     "TD": "AT",
-    "SPG": "AAP"
+    "SPG": "AAP",
+
+    // VehicleMarkersManager
+    "blownUp": "Detonado!"
   }
 }

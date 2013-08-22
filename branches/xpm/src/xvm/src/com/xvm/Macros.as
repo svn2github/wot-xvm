@@ -167,16 +167,16 @@ class com.xvm.Macros
 
         // vars
         var r:Number = Utils.toInt(stat.r, 0);
-        var eff:Number = Utils.toInt(stat.eff, 0);
-        var b:Number = Utils.toInt(stat.battles, 0);
+        var eff:Number = Utils.toInt(stat.e, 0);
+        var b:Number = Utils.toInt(stat.b, 0);
         var w:Number = Utils.toInt(stat.w, 0);
         var tr:Number = Utils.toInt(stat.tr, 0);
-        var tb:Number = Utils.toInt(stat.v.b, 0);
-        var tw:Number = Utils.toInt(stat.v.w, 0);
+        var tb:Number = Utils.toInt(stat.tb, 0);
+        var tw:Number = Utils.toInt(stat.tw, 0);
         var tbK:Number = Math.round(tb / 100) / 10;
 
         // {{avglvl}}
-        var avglvl = Math.round(Utils.toFloat(stat.lvl, 0));
+        var avglvl = Math.round(Utils.toFloat(stat.avglvl, 0));
         pdata["avglvl"] = avglvl < 1 ? "-" : avglvl == 10 ? "X" : avglvl;
         // {{xeff}}
         pdata["xeff"] = stat.xeff == null ? "--" : stat.xeff == 100 ? "XX" : (stat.xeff < 10 ? "0" : "") + stat.xeff;

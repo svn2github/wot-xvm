@@ -41,4 +41,8 @@ class com.xvm.DataTypes.Stat
     public var tdv:Number;          // average tank damage efficiency per battle
     
     public var v:VStat;
+    
+    public var tb;
+    public var tw;
+    public var avglvl;
 }
