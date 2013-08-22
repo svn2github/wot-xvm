@@ -32,12 +32,12 @@ To translate XVM you need:
 == Languages ==
 ===Updated===
 ||Belarusian (be)(unofficial)||Czech (cs)||English (en)||
-||Russian (ru)||Spanish (es)||||
+||German (de)||Russian (ru)||Spanish (es)||
 
 ===Update needed===
-||Finnish (fi)||French (fr)||German (de)||
-||Hungarian (hu)||Korean (ko)||Polish (pl)||
-||Ukrainian (uk)(unofficial)||Vietnamese (vi)||||
+||Finnish (fi)||French (fr)||Hungarian (hu)||
+||Korean (ko)||Polish (pl)||Ukrainian (uk)(unofficial)||
+||Vietnamese (vi)||||||
 
 ===To do===
 ||Bulgarian (bg)||Chinese (China)(Simplified?)(zh_CN)||Chinese (Taiwan)(Traditional?)(zh_TW)||
