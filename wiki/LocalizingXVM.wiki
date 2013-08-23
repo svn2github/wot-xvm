@@ -31,9 +31,9 @@ To translate XVM you need:
 
 == Languages ==
 ===Updated===
-||Belarusian (be)(unofficial)||Czech (cs)||English (en)||
-||Finnish||German (de)||Russian (ru)||
-||Spanish (es)||
+||Belarusian (be)(unofficial)||Czech (cs)||Dutch (nl)||
+||English (en)||Finnish||German (de)||
+||Russian (ru)||Spanish (es)||
 
 ===Update needed===
 ||French (fr)||Hungarian (hu)||Korean (ko)||
@@ -41,10 +41,9 @@ To translate XVM you need:
 
 ===To do===
 ||Bulgarian (bg)||Chinese (China)(Simplified?)(zh_CN)||Chinese (Taiwan)(Traditional?)(zh_TW)||
-||Croatian (hr)||Danish (da)||Dutch (nl)||
-||Estonian (et)||Filipino (fil)||Indonesian (id)||
-||Italian (it)||Japanese (ja)||Latvian (lv)||
-||Lithuanian (lt)||Malay (ms)||Norwegian (no)||
-||Portuguese (Brazil)(pt_BR)||Portuguese (pt)||Romanian (ro)||
-||Serbian (latin?)(sr)||Swedish (sv)||Thai (th)||
-||Turkish (tr)||||||||
+||Croatian (hr)||Danish (da)||Estonian (et)||
+||Filipino (fil)||Indonesian (id)||Italian (it)||
+||Japanese (ja)||Latvian (lv)||Lithuanian (lt)||
+||Malay (ms)||Norwegian (no)||Portuguese (Brazil)(pt_BR)||
+||Portuguese (pt)||Romanian (ro)||Serbian (latin?)(sr)||
+||Swedish (sv)||Thai (th)||Turkish (tr)||
