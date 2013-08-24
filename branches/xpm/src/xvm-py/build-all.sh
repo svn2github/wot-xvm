@@ -2,9 +2,9 @@
 
 cd $(dirname $0)
 
-WOT_ROOT=/cygdrive/d/work/games/WoT
-VER="0.8.7"
-#VER="0.8.8 Common Test"
+WOT_ROOT=/cygdrive/d/work/games/WoT-CT
+#VER="0.8.7"
+VER="0.8.8 Common Test"
 
 clear()
 {

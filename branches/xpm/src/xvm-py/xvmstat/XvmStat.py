@@ -5,7 +5,7 @@ from pprint import pprint
 
 import BigWorld
 import GUI
-from messenger.gui import MessengerDispatcher
+#from messenger import MessengerEntry
 
 from gui.mods.xpm import *
 
@@ -49,13 +49,13 @@ class XvmStat(object):
 
     def onKeyDown(self, event):
         # do not handle keys when chat is active
-        if MessengerDispatcher.g_instance.battleMessenger.isFocused():
-            return
-        key = event.key
-        if event.isKeyDown() and not event.isRepeatedEvent():
-            #log("key=" + str(key))
-            #return True
-            pass
+        #if MessengerEntry.g_instance.gui.isFocused():
+        #    return
+        #key = event.key
+        #if event.isKeyDown() and not event.isRepeatedEvent():
+        #    #log("key=" + str(key))
+        #    #return True
+        #    pass
         return False
 
 from . import XPM_MOD_VERSION, XPM_MOD_URL, XPM_GAME_VERSIONS

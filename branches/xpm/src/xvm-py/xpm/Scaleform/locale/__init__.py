@@ -1,7 +1,8 @@
 """ Mods loader (c) sirmax 2013 """
 
+print "[XPM] preloader"
 try:
-    from gui.mods import *
+    import gui.mods
 except:
     print "============================="
     import traceback
