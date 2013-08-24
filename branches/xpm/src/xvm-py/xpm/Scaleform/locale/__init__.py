@@ -1,6 +1,6 @@
 """ Mods loader (c) sirmax 2013 """
 
-print "[XPM] preloader"
+print "[XPM] preloader", __name__
 try:
     import gui.mods
 except:

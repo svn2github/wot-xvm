@@ -33,7 +33,7 @@ build()
 
 run()
 {
-  #rm -rf "$WOT_ROOT/res_mods/$VER/scripts"
+  rm -rf "$WOT_ROOT/res_mods/$VER/scripts"
   cp -R ../../bin/xpm/scripts "$WOT_ROOT/res_mods/$VER"
   sh "../../utils/test.sh" --no-deploy
 }

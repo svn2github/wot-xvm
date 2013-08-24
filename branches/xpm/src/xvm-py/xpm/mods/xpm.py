@@ -5,8 +5,6 @@ import json
 import codecs
 import random
 
-import Event
-
 #####################################################################
 # Global constants
 
@@ -54,6 +52,7 @@ def uniq(seq):
             checked.append(e)
     return checked
 
+
 #################################################################
 # Singleton
 
@@ -67,6 +66,33 @@ class Singleton(type):
             self.instance = super(Singleton, self).__call__(*args, **kw)
         return self.instance
 
+
+#####################################################################
+# EventHook
+
+class EventHook(object):
+
+    def __init__(self):
+        self.__handlers = []
+
+    def __iadd__(self, handler):
+        self.__handlers.append(handler)
+        return self
+
+    def __isub__(self, handler):
+        self.__handlers.remove(handler)
+        return self
+
+    def fire(self, *args, **keywargs):
+        for handler in self.__handlers:
+            handler(*args, **keywargs)
+
+    def clearObjectHandlers(self, inObject):
+        for theHandler in self.__handlers:
+            if theHandler.im_self == inObject:
+                self -= theHandler
+
+
 #####################################################################
 # Register events
 
@@ -76,7 +102,7 @@ def RegisterEvent(cls, method, handler, prepend=False):
         e = getattr(cls, evt)
     else:
         newm = '__orig_%i_%s' % ((1 if prepend else 0), method)
-        setattr(cls, evt, Event.Event())
+        setattr(cls, evt, EventHook())
         setattr(cls, newm, getattr(cls, method))
         e = getattr(cls, evt)
         m = getattr(cls, newm)
@@ -86,14 +112,14 @@ def RegisterEvent(cls, method, handler, prepend=False):
 def __event_handler(prepend, e, m, *a, **k):
     try:
         if prepend:
-            e(*a, **k)
+            e.fire(*a, **k)
             r = m(*a, **k)
         else:
             r = m(*a, **k)
-            e(*a, **k)
+            e.fire(*a, **k)
         return r
     except:
-        pass
+        logtrace(__file__)
 
 def OverrideMethod(cls, method, handler):
     i = 0

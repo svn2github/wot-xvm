@@ -5,7 +5,6 @@ from pprint import pprint
 
 import BigWorld
 import GUI
-#from messenger import MessengerEntry
 
 from gui.mods.xpm import *
 
@@ -18,6 +17,9 @@ from stats import getStat, getUserData
 class XvmStat(object):
     def __init__(self):
         pass
+
+    def onXvmCommand2(self, *args):
+        log(str(args))
 
     def onXvmCommand(self, proxy, id, cmd, *args):
         try:
@@ -49,14 +51,17 @@ class XvmStat(object):
 
     def onKeyDown(self, event):
         # do not handle keys when chat is active
+        #from messenger import MessengerEntry
         #if MessengerEntry.g_instance.gui.isFocused():
-        #    return
+        #    return False
         #key = event.key
         #if event.isKeyDown() and not event.isRepeatedEvent():
         #    #log("key=" + str(key))
         #    #return True
         #    pass
-        return False
+        return True
+
+g_xvm = XvmStat()
 
 from . import XPM_MOD_VERSION, XPM_MOD_URL, XPM_GAME_VERSIONS
 log("xvm-stat %s (%s) for WoT %s" % (XPM_MOD_VERSION, XPM_MOD_URL, ", ".join(XPM_GAME_VERSIONS)))
