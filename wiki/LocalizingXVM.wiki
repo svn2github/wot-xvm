@@ -34,10 +34,11 @@ To translate XVM you need:
 ||Belarusian (be)(unofficial)||Czech (cs)||Dutch (nl)||
 ||English (en)||Finnish||German (de)||
 ||Hungarian (hu)||Russian (ru)||Spanish (es)||
+||Ukrainian (uk)(unofficial)||
 
 ===Update needed===
 ||French (fr)||Korean (ko)||Polish (pl)||
-||Ukrainian (uk)(unofficial)||Vietnamese (vi)||
+||Vietnamese (vi)||
 
 ===To do===
 ||Bulgarian (bg)||Chinese (China)(Simplified?)(zh_CN)||Chinese (Taiwan)(Traditional?)(zh_TW)||
