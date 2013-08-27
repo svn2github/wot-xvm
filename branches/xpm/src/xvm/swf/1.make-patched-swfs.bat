@@ -1,31 +1,15 @@
 @echo off
 
-set copy_files=
 set patch_swfs=battle.swf battleloading.swf LangBarPanel.swf Minimap.swf PlayersPanel.swf
 set patch_swfs=%patch_swfs% StatisticForm.swf TeamBasesPanel.swf VehicleMarkersManager.swf
 
-::set patch_swfs=battleloading.swf PlayersPanel.swf StatisticForm.swf FinalStatistic.swf
-::set patch_swfs=%patch_swfs% battle.swf TeamBasesPanel.swf Minimap.swf VehicleMarkersManager.swf
-::set patch_swfs=%patch_swfs% SquadMemberRenderer.swf TeamMemberRenderer.swf TeamRenderer.swf
-::set patch_swfs=%patch_swfs% UserInfo.swf crew.swf LangBarPanel.swf gameloading.swf
-
-:: not implemented
-::set patch_xmls=%patch_swfs% lobby_messenger.swf 
-
-rem Patch XMLs
-for %%i in (%patch_xmls%) do call :do_patch_xml %%~ni
-
-rem Copy files without patching
-for %%i in (%copy_files%) do call :do_copy_file %%i
+set as3_swfs=Application.swf
+::set as3_swfs=%patch_swfs% gameloading.swf
 
 rem Patch SWFs
 for %%i in (%patch_swfs%) do call :do_patch_swf %%~ni
+for %%i in (%as3_swfs%) do call :do_patch_as3 %%~ni
 
-goto :EOF
-
-:do_copy_file
-echo copying file %1
-copy /Y orig\%1 %1 > nul
 goto :EOF
 
 :do_patch_swf
@@ -42,11 +26,19 @@ if "%ok%" == "ok" (
 )
 goto :EOF
 
-:do_patch_xml
+:do_patch_as3
 set n=%1
-copy /Y orig\%n%.xml %n%.xml > nul
+echo %1.swf
+copy /Y flash\%n%.swf %n%.swf > nul
+abcexport.exe %n%.swf
+rabcdasm %n%-0.abc
 set ok=failed
-patch < %n%.xml.patch && set ok=ok
-echo patch result: %ok% (%n%.xml)
-if exist %n%.xml.orig del %n%.xml.orig
+patch -p0 < %n%.patch && set ok=ok
+echo patch result: %ok% (%n%.swf)
+if "%ok%" == "ok" (
+  rabcasm %n%-0/%n%-0.main.asasm
+  abcreplace %n%.swf 0 %n%-0/%n%-0.main.abc
+  del %n%-0.abc
+  rmdir /S /Q %n%-0
+)
 goto :EOF

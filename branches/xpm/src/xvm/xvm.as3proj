@@ -9,13 +9,13 @@
     <movie width="800" />
     <movie height="600" />
     <movie version="10" />
-    <movie minorVersion="1" />
+    <movie minorVersion="2" />
     <movie platform="Flash Player" />
     <movie background="#FFFFFF" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
-    <class path="src" />
+    <class path="as3\src" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -27,7 +27,7 @@
     <option locale="" />
     <option loadConfig="" />
     <option optimize="True" />
-    <option omitTraces="True" />
+    <option omitTraces="False" />
     <option showActionScriptWarnings="True" />
     <option showBindingWarnings="True" />
     <option showInvalidCSS="True" />
@@ -63,7 +63,7 @@
   </rslPaths>
   <!-- Intrinsic Libraries -->
   <intrinsics>
-    <!-- example: <element path="..." /> -->
+    <element path="" />
   </intrinsics>
   <!-- Assets to embed into the output SWF -->
   <library>
@@ -71,7 +71,7 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="src\Main.as" />
+    <compile path="as3\src\wot\Xvm.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>

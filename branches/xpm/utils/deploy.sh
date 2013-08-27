@@ -1,8 +1,14 @@
 #!/bin/sh
 
+# TODO - refactor
+
 #[ "$GAME_VER" = "" ] && GAME_VER="0.8.7"
 [ "$GAME_VER" = "" ] && GAME_VER="0.8.8 Common Test"
 [ "$WOT_DIRECTORY" = "" ] && WOT_DIRECTORY=/cygdrive/d/work/games/WoT-CT
+
+FILES_FLASH="
+  Application.swf
+"
 
 FILES_SCALEFORM="
   battle.swf
@@ -24,6 +30,16 @@ RES_MODS_DIR="$WOT_DIRECTORY/res_mods"
 SWF_DIR="$RES_MODS_DIR/$GAME_VER/gui"
 
 mkdir -p "$RES_MODS_DIR/xvm/res"
+
+copy_file_flash()
+{
+  [ -f "$SWF_DIR/flash/$1" ] && rm -f "$SWF_DIR/flash/$1"
+  [ -f "../src/xvm/swf/$1" ] && {
+    echo "=> $1"
+    mkdir -p "$SWF_DIR/flash"
+    cp -p "../src/xvm/swf/$1" "$SWF_DIR/flash/${1##*/}"
+  }
+}
 
 copy_file_scaleform()
 {
@@ -53,8 +69,8 @@ copy_xvm_dir()
   }
 }
 
-for n in $FILES_FLASH_XVM; do
-  copy_xvm_swf $n
+for n in $FILES_FLASH; do
+  copy_file_flash $n
 done
 
 for n in $FILES_SCALEFORM; do

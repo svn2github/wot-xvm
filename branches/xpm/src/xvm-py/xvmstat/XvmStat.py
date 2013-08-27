@@ -18,11 +18,9 @@ class XvmStat(object):
     def __init__(self):
         pass
 
-    def onXvmCommand2(self, *args):
-        log(str(args))
-
     def onXvmCommand(self, proxy, id, cmd, *args):
         try:
+            #log("DEBUG: id=" + str(id) + " cmd=" + str(cmd) + " args=" + json.dumps(args))
             if (cmd not in ('ping', 'log', 'getGameRegion')):
                 log("DEBUG: cmd=" + str(cmd) + " args=" + json.dumps(args))
             res = None
