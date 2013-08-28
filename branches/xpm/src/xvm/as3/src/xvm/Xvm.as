@@ -1,10 +1,10 @@
-package wot
+package xvm
 {
     import flash.display.*;
     import flash.net.*;
     import flash.text.TextField;
     import flash.events.Event;
-    import flash.utils.setTimeout;
+    import flash.utils.setInterval;
     import flash.external.ExternalInterface;
     import flash.utils.describeType;
     import com.xvm.Logger;
@@ -30,7 +30,18 @@ package wot
             // entry point
 
             Logger.add("init()");
-            Logger.addObject(stage);
+            try
+            {
+                setInterval(function()
+                {
+                    Logger.addObject(stage.focus.root, "app", 1);
+                }, 1000);
+            }
+            catch (e:Error)
+            {
+                Logger.add(e.message());
+                Logger.add(e.getStackTrace());
+            }
         }
     }
 }
