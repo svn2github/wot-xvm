@@ -2,9 +2,9 @@
  * Loader for JSONx format (JSON with references)
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
-package com.xvm
+package com.xvm.io
 {
-    import com.xvm.JSONx;
+    import com.xvm.io.JSONx;
     import com.xvm.Logger;
     import flash.display.Loader;
     import flash.events.Event;
@@ -28,6 +28,8 @@ package com.xvm
         {
             (new JSONxLoader(filename, target, callback)).LoadFiles();
         }
+
+        // PRIVATE
 
         function JSONxLoader(rootFileName:String, target:Object, callback:Function)
         {

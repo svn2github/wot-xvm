@@ -42,7 +42,7 @@ added JSONx extensions 2012-2013 by Maxim Schedriviy <m.schedriviy@gmail.com>, w
 ported to AS3 2013-08-23 by Maxim Schedriviy <m.schedriviy@gmail.com>, www.modxvm.com
 */
 
-package com.xvm
+package com.xvm.io
 {
     import adobe.utils.CustomActions;
     import flash.display.Stage;

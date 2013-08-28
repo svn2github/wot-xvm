@@ -2,35 +2,30 @@
  * XVM String Utils
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
-package com.xvm
+package com.xvm.utils
 {
-    /**
-     * ...
-     * @author sirmax2
-     */
     public class Strings
     {
-/*        public static function startsWith(substr:String, str:String):Boolean
+        public static function startsWith(substr:String, str:String):Boolean
         {
             return str.indexOf(substr, 0) == 0;
         }
 
         public static function endsWith(substr:String, str:String):Boolean
         {
-            var i = str.lastIndexOf(substr);
+            var i:int = str.lastIndexOf(substr);
             return i >= 0 && i == (str.length - substr.length);
         }
 
         // TODO: check performance, charAt is slow in ScaleForm
         public static function trim(str:String):String
         {
-            var i, j;
-            for (i = 0; str.charCodeAt(i) < 33; ++i);
-            var len = str.length;
-            for (j = len-1; str.charCodeAt(j) < 33; --j);
+            var i:int, j:int;
+            for (i = 0; str.charCodeAt(i) < 33; ++i){};
+            var len:int = str.length;
+            for (j = len-1; str.charCodeAt(j) < 33; --j){};
             return str.substring(i, j+1);
         }
-*/
 
         public static function padLeft(str:String, len:Number, char:String):String
         {

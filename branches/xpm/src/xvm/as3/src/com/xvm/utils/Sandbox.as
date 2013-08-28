@@ -2,7 +2,7 @@
  * XVM Sandbox Detector
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
-package com.xvm
+package com.xvm.utils
 {
   //import net.wargaming.utils.DebugUtils;
 

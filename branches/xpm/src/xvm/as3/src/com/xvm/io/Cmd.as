@@ -1,12 +1,14 @@
-package com.xvm
+/**
+ * XVM Communication interface
+ * @author Maxim Schedriviy <m.schedriviy@gmail.com>
+ */
+package com.xvm.io
 {
-    /**
-     * ...
-     * @author
-     */
     import flash.external.ExternalInterface;
     import flash.utils.setTimeout;
-    
+
+    import flash.text.TextFormatAlign
+
     public class Cmd
     {
         private static const COMMAND_LOG:String = "log";
