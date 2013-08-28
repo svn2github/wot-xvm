@@ -1,4 +1,4 @@
-#labels l10n,contribution
+#labels l10n,contribution,Featured
 =Localizing XVM=
 ==English tutorial==
 To translate XVM you need:
