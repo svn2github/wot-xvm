@@ -1,5 +1,10 @@
+/**
+ * XVM Entry Point
+ * @author Maxim Schedriviy <m.schedriviy@gmail.com>
+ */
 package xvm
 {
+    import com.xvm.JSONx;
     import flash.display.*;
     import flash.net.*;
     import flash.text.TextField;
@@ -8,23 +13,27 @@ package xvm
     import flash.external.ExternalInterface;
     import flash.utils.describeType;
     import com.xvm.Logger;
+    import com.xvm.JSONxLoader;
 
     [SWF(width="1", height="1", backgroundColor="#000000")]
 
-    /**
-     * ...
-     * @author 
-     */
-    public class Xvm extends flash.display.MovieClip 
+    public class Xvm extends flash.display.MovieClip
     {
 
-        public function Xvm():void 
+        public function Xvm():void
         {
-            if (stage) init();
-            else addEventListener(Event.ADDED_TO_STAGE, init);
+            JSONxLoader.LoadAndParse("../../../xvm/xvm.xc", this, loaded);
+
+           if (stage) init();
+           else addEventListener(Event.ADDED_TO_STAGE, init);
         }
-        
-        private function init(e:Event = null):void 
+
+        private function loaded():void
+        {
+            Logger.addObject(arguments, "loaded", 2);
+        }
+
+        private function init(e:Event = null):void
         {
             removeEventListener(Event.ADDED_TO_STAGE, init);
             // entry point
@@ -32,15 +41,11 @@ package xvm
             Logger.add("init()");
             try
             {
-                setInterval(function()
-                {
-                    Logger.addObject(stage.focus.root, "app", 1);
-                }, 1000);
+                Logger.addObject(stage.focus.root, "app", 1);
             }
-            catch (e:Error)
+            catch (e:*)
             {
-                Logger.add(e.message());
-                Logger.add(e.getStackTrace());
+                Logger.add(e.message);
             }
         }
     }

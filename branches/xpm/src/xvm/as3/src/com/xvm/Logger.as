@@ -1,4 +1,8 @@
-﻿package com.xvm
+﻿/**
+ * XVM Logger
+ * @author Maxim Schedriviy <m.schedriviy@gmail.com>
+ */
+package com.xvm
 {
     import flash.utils.*;
     import com.xvm.Cmd;
@@ -7,7 +11,7 @@
     public class Logger
     {
         private static var counter:int = 0;
-        
+
         public static function add(str:String):void
         {
             try
@@ -19,7 +23,7 @@
                 // quiet
             }
         }
-        
+
         public static function addObject(obj:Object, name:String = "obj", depth:Number = 1):void
         {
             add(name + ": " + JSONx.stringifyDepth(obj, depth));

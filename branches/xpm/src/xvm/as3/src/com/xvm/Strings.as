@@ -1,4 +1,8 @@
-﻿package com.xvm
+﻿/**
+ * XVM String Utils
+ * @author Maxim Schedriviy <m.schedriviy@gmail.com>
+ */
+package com.xvm
 {
     /**
      * ...

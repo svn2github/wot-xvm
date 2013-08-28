@@ -1,3 +1,7 @@
+/**
+ * XVM Sandbox Detector
+ * @author Maxim Schedriviy <m.schedriviy@gmail.com>
+ */
 package com.xvm
 {
   //import net.wargaming.utils.DebugUtils;
@@ -10,8 +14,8 @@ package com.xvm
       public static const SANDBOX_HANGAR:String = "H";
       public static const SANDBOX_LOGIN:String = "L";*/
 
-      
-      
+
+
       public static function GetCurrentSandboxPrefix() : String
       {
           /*// VehicleMarkersManager.swf

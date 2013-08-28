@@ -27,7 +27,7 @@
     <option locale="" />
     <option loadConfig="" />
     <option optimize="True" />
-    <option omitTraces="False" />
+    <option omitTraces="True" />
     <option showActionScriptWarnings="True" />
     <option showBindingWarnings="True" />
     <option showInvalidCSS="True" />
