@@ -4,44 +4,38 @@
  */
 package xvm
 {
-    import com.xvm.JSONx;
-    import flash.display.*;
-    import flash.net.*;
-    import flash.text.TextField;
+    import flash.display.MovieClip;
     import flash.events.Event;
     import flash.utils.setInterval;
-    import flash.external.ExternalInterface;
-    import flash.utils.describeType;
     import com.xvm.Logger;
-    import com.xvm.JSONxLoader;
+    import com.xvm.Config;
+    import com.xvm.io.JSONxLoader;
 
     [SWF(width="1", height="1", backgroundColor="#000000")]
 
-    public class Xvm extends flash.display.MovieClip
+    public class Xvm extends MovieClip
     {
 
         public function Xvm():void
         {
-            JSONxLoader.LoadAndParse("../../../xvm/xvm.xc", this, loaded);
-
-           if (stage) init();
-           else addEventListener(Event.ADDED_TO_STAGE, init);
-        }
-
-        private function loaded():void
-        {
-            Logger.addObject(arguments, "loaded", 2);
+            Config.addListener(this, init);
         }
 
         private function init(e:Event = null):void
         {
-            removeEventListener(Event.ADDED_TO_STAGE, init);
-            // entry point
+           if (!stage)
+           {
+                addEventListener(Event.ADDED_TO_STAGE, init);
+                return;
+           }
+           removeEventListener(Event.ADDED_TO_STAGE, init);
+
+           // entry point
 
             Logger.add("init()");
             try
             {
-                Logger.addObject(stage.focus.root, "app", 1);
+                Logger.addObject(Config.config, "app", 1);
             }
             catch (e:*)
             {

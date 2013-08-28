@@ -4,9 +4,10 @@
  */
 package com.xvm
 {
-    import flash.utils.*;
-    import com.xvm.Cmd;
-    //import com.adobe.serialization.json.JSONEncoder;
+    import com.xvm.io.Cmd;
+    import com.xvm.io.JSONx;
+    import com.xvm.utils.Sandbox;
+    import com.xvm.utils.Strings;
 
     public class Logger
     {
@@ -27,7 +28,6 @@ package com.xvm
         public static function addObject(obj:Object, name:String = "obj", depth:Number = 1):void
         {
             add(name + ": " + JSONx.stringifyDepth(obj, depth));
-            //Cmd.log(_addObject(obj, name, depth));
         }
     }
 }

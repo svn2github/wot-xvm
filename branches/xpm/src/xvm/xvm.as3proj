@@ -16,6 +16,7 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="as3\src" />
+    <class path="as3\shared" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -55,7 +56,7 @@
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
-    <!-- example: <element path="..." /> -->
+    <element path="" />
   </externalLibraryPaths>
   <!-- Runtime Shared Libraries -->
   <rslPaths>
