@@ -30,9 +30,8 @@ cp -rf ../../release/ ../../temp/xvm/
 mv -f ../../temp/xvm/xvm.xc.sample ../../temp/xvm/xvm.xc
 
 echo "$revision" >> ../../temp/"$revision"
-pushd ../../temp/ > /dev/null && zip -9 -r -q "$revision".zip ./ && popd > /dev/null
+pushd ../../temp/ > /dev/null && zip -9 -r -q "$revision"_xvm.zip ./ && popd > /dev/null
 
 rm -rf ../../bin/*
-mv -f ../../temp/"$revision".zip ../../bin/
+mv -f ../../temp/"$revision"_xvm.zip ../../bin/
 rm -rf ../../temp/
-
