@@ -15,7 +15,6 @@ package xvm
 
     public class Xvm extends MovieClip
     {
-
         public function Xvm():void
         {
             Config.load(this, init);
@@ -23,19 +22,18 @@ package xvm
 
         private function init(e:Event = null):void
         {
-           if (!stage)
-           {
+            if (!stage)
+            {
                 addEventListener(Event.ADDED_TO_STAGE, init);
                 return;
-           }
-           removeEventListener(Event.ADDED_TO_STAGE, init);
+            }
+            removeEventListener(Event.ADDED_TO_STAGE, init);
 
-           // entry point
+            // entry point
 
-            Logger.add("init()");
             try
             {
-                Logger.addObject(Config.config, "app", 1);
+                Logger.addObject(Config.config, "config", 3);
             }
             catch (e:*)
             {

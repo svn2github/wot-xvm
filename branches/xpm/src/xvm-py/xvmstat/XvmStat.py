@@ -14,6 +14,8 @@ from logger import log
 from pinger import ping
 from stats import getStat, getUserData
 
+NO_LOG_COMMANDS = ('ping', 'log', 'getGameRegion', 'getLanguage')
+
 class XvmStat(object):
     def __init__(self):
         pass
@@ -21,7 +23,7 @@ class XvmStat(object):
     def onXvmCommand(self, proxy, id, cmd, *args):
         try:
             #log("DEBUG: id=" + str(id) + " cmd=" + str(cmd) + " args=" + json.dumps(args))
-            if (cmd not in ('ping', 'log', 'getGameRegion')):
+            if (cmd not in NO_LOG_COMMANDS):
                 log("DEBUG: cmd=" + str(cmd) + " args=" + json.dumps(args))
             res = None
             if cmd == COMMAND_LOG:
@@ -45,7 +47,7 @@ class XvmStat(object):
                 pass # TODO
             else:
                 log("WARNING: unknown command: " + str(cmd))
-            proxy.respond([id, res])
+            proxy.movie.invoke(('xvm.respond', [id, res]))
         except:
             pass
 

@@ -146,28 +146,29 @@ package com.xvm
 
         private function loadGameRegion():void
         {
-            Logger.add("TRACE: STAGE 2: loadGameRegion()");
+            //Logger.add("TRACE: STAGE 2: loadGameRegion()");
             config.regionDetected = config.region.toLowerCase() == Defines.REGION_AUTO_DETECTION;
             if (config.regionDetected)
-                Cmd.getGameRegion(this, "loadGameRegionCallback");
+                Cmd.getGameRegion(this, loadGameRegionCallback);
             else
                 loadGameRegionCallback(config.region);
         }
 
         private function loadGameRegionCallback(region:String):void
         {
+            //Logger.add("TRACE: loadGameRegionCallback: " + region);
             config.region = region.toUpperCase();
             loadLanguage(); // run Stage 3
         }
 
-        // Stage 3
+        // STAGE 3
 
         private function loadLanguage():void
         {
-            Logger.add("TRACE: STAGE 3: loadLanguage()");
+            //Logger.add("TRACE: STAGE 3: loadLanguage()");
             config.languageDetected = config.language.toLowerCase() == Defines.LOCALE_AUTO_DETECTION
             if (config.languageDetected)
-                Cmd.getLanguage(this, "loadLanguageCallback");
+                Cmd.getLanguage(this, loadLanguageCallback);
             else
                 loadLanguageCallback(config.language);
         }
@@ -188,7 +189,6 @@ package com.xvm
             if (e.result != null && e.result.error != null && stateInfo == null && stateInfo.error == null)
                 stateInfo = { error: e.result.error };
 
-            Logger.add("Config loaded.");
             Logger.add(StringUtil.substitute("Config loaded. Region: {0} ({1}), Language: {2} ({3})",
                 config.region,
                 config.regionDetected ? "detected" : "config",
