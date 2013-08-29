@@ -4,7 +4,7 @@
  */
 package com.xvm.cfg
 {
-    public dynamic class CColors
+    public dynamic class CColors extends Object
     {
         //system: {
             //ally_alive:          "0x96FF00",

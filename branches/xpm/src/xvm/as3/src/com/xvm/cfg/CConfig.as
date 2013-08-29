@@ -4,7 +4,7 @@
  */
 package com.xvm.cfg
 {
-    public dynamic class CConfig
+    public dynamic class CConfig extends Object
     {
         public var configVersion:String;
         public var editorVersion:String;

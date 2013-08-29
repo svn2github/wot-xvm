@@ -4,7 +4,7 @@
  */
 package com.xvm.cfg
 {
-    public dynamic class CRating
+    public dynamic class CRating extends Object
     {
         //showPlayersStatistics: true,    // Global switch. Handles whole statisctics module.
         //loadEnemyStatsInFogOfWar: true, // Load players data in "fog of war".

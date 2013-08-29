@@ -4,6 +4,7 @@
  */
 package com.xvm.cfg
 {
+    import com.xvm.utils.ObjectConverter;
     import com.xvm.cfg.CConfig;
     import com.xvm.Defines;
     import com.xvm.vehinfo.VehicleInfo;
@@ -13,7 +14,7 @@ package com.xvm.cfg
         public static function get config():CConfig
         {
             var d:Date = new Date();
-            return CConfig(
+            return ObjectConverter.convertData(
             {
                 configVersion: Defines.CONFIG_VERSION,
                 editorVersion: Defines.EDITOR_VERSION,
@@ -971,7 +972,7 @@ package com.xvm.cfg
                 },
                 consts: consts,
                 vehicleNames: VehicleInfo.getVehicleNamesData()
-            });
+            }, CConfig) as CConfig;
         }
 
         public static function get shadow_150(): Object

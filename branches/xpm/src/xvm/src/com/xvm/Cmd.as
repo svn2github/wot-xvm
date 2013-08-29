@@ -19,7 +19,7 @@ class com.xvm.Cmd
     {
         _call(null, null, [COMMAND_LOG, str]);
     }
-    
+
     public static function ping(target:Object, callback:String)
     {
         _call(target, callback, [COMMAND_PING]);
@@ -29,12 +29,12 @@ class com.xvm.Cmd
     {
         _call(target, callback, [COMMAND_GETSCREENSIZE]);
     }
-    
+
     public static function getGameRegion(target:Object, callback:String)
     {
         _call(target, callback, [COMMAND_GETGAMEREGION]);
     }
-    
+
     public static function loadStatData(players:Array)
     {
         _call(null, null, [COMMAND_LOADSTATDATA, players]);
@@ -49,19 +49,19 @@ class com.xvm.Cmd
     {
         _call(null, null, [COMMAND_LOGSTAT]);
     }
-    
+
     public static function loadSettings(target:Object, callback:String)
     {
         _call(target, callback, [COMMAND_LOAD_SETTINGS]);
     }
-    
+
     public static function saveSettings(settingsStr)
     {
         _call(null, null, [COMMAND_SAVE_SETTINGS, settingsStr]);
     }
-    
+
     /////////////////////////////////////////////////////////////////
-    
+
     private static function _call(target:Object, callback:String, args:Array):Void
     {
         if (!_global._xvm_sandbox_cmd_initialized)
@@ -69,7 +69,7 @@ class com.xvm.Cmd
             _global.setTimeout(function() {
                 _global._xvm_sandbox_cmd_initialized = true;
                 Cmd._call(target, callback, args);
-            }, 1);
+            }, 100);
         }
         else
         {

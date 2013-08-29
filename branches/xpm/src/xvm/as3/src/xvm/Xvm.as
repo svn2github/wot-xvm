@@ -18,7 +18,7 @@ package xvm
 
         public function Xvm():void
         {
-            Config.addListener(this, init);
+            Config.load(this, init);
         }
 
         private function init(e:Event = null):void

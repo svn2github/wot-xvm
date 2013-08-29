@@ -4,7 +4,7 @@
  */
 package com.xvm.cfg
 {
-    public dynamic class CAlpha
+    public dynamic class CAlpha extends Object
     {
         //// values - from min to max, transparency are for values 'lesser then ...'
         //hp: [

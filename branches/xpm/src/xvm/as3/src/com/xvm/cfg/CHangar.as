@@ -4,7 +4,7 @@
  */
 package com.xvm.cfg
 {
-    public dynamic class CHangar
+    public dynamic class CHangar extends Object
     {
         //hideTutorial: false,
         //xwnInCompany: true,

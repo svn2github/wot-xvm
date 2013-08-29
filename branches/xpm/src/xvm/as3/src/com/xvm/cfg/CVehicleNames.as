@@ -4,7 +4,7 @@
  */
 package com.xvm.cfg
 {
-    public dynamic class CVehicleNames
+    public dynamic class CVehicleNames extends Object
     {
     }
 }

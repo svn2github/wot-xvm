@@ -4,7 +4,7 @@
  */
 package com.xvm.cfg
 {
-    public dynamic class CLogin
+    public dynamic class CLogin extends Object
     {
         // Show ping to the servers
         //pingServers: {

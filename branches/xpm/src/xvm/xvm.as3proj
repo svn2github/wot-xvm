@@ -76,7 +76,11 @@
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
-    <!-- example: <hidden path="..." /> -->
+    <hidden path="src" />
+    <hidden path="shared" />
+    <hidden path="include" />
+    <hidden path="swf" />
+    <hidden path="wrapper" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />

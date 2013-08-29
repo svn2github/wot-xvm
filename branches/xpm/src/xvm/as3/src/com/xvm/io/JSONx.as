@@ -86,10 +86,13 @@ package com.xvm.io
 
             //Logger.add(indent + typeof arg);
 
+            if (arg == null)
+                return 'null';
+
             switch (typeof arg)
             {
                 case 'object':
-                    if (arg == null || arg.toString == undefined)
+                    if (arg.toString == undefined)
                         return 'null';
 
                     if (maxDepth > 0 && curDepth >= maxDepth)
@@ -191,11 +194,11 @@ package com.xvm.io
                     }
                     return s + '"';
 
-                case 'null':
-                    return 'null';
+                case 'xml':
+                    return '"' + arg.toString() + '"';
 
                 default:
-                    return 'null' + (compact ? '' : ' // ' + (typeof arg));
+                    return 'null' + (compact ? '' : ' // unknown type: ' + (typeof arg));
             }
         }
 

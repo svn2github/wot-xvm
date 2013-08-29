@@ -4,7 +4,7 @@
  */
 package com.xvm.cfg
 {
-    public dynamic class CBattle
+    public dynamic class CBattle extends Object
     {
         //mirroredVehicleIcons: true,      // Set false for alternative tank icon mirroring.
         //showPostmortemTips: true,        // Popup tooltip panel after death.

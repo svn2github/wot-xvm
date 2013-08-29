@@ -10,6 +10,7 @@ package com.xvm.io
     import flash.events.Event;
     import flash.net.URLLoader;
     import flash.net.URLRequest;
+    import flash.events.IOErrorEvent;
 
     public class JSONxLoader
     {
@@ -26,7 +27,10 @@ package com.xvm.io
 
         public static function LoadAndParse(filename:String, target:Object, callback:Function):void
         {
-            (new JSONxLoader(filename, target, callback)).LoadFiles();
+            //Logger.add("LoadAndParse: " + filename);
+            var jxl:JSONxLoader = new JSONxLoader(filename, target, callback);
+            // WARNING: inline call does not work
+            jxl.LoadFiles();
         }
 
         // PRIVATE
@@ -56,55 +60,49 @@ package com.xvm.io
         {
             var me:JSONxLoader = this;
             var loader:URLLoader = new URLLoader();
-            loader.addEventListener(Event.COMPLETE, function(e:Event):void {
-                //Logger.add("onData: " + filename);
-                me.file_cache[filename] = e.target.data;
-                if (!--me.loadingCount)
-                    me.LoadFileCallback.call(me);
-            });
-            try {
+            var $this:JSONxLoader = this;
+            loader.addEventListener(Event.COMPLETE, function(e:Event):void { $this.onLoadFileComplete(e, filename) });
+            loader.addEventListener(IOErrorEvent.IO_ERROR, function(e:Event):void { $this.onLoadFileComplete(e, filename) });
+            try
+            {
                 loader.load(new URLRequest(rootPath + filename));
-            } catch (error:Error) {
-                trace("Unable to load requested document.");
             }
-            //lv.onData = function(str:String) {
-                //Logger.add("onData: " + filename);
-                //me.file_cache[filename] = str;
-                //if (!--me.loadingCount)
-                    //me.LoadFileCallback.call(me);
-            //}
-            //Logger.add("lv.load: " + rootPath + filename);
-            //lv.load(rootPath + filename);
+            catch (error:Error)
+            {
+                Logger.add(error.getStackTrace());
+            }
+        }
+
+        private function onLoadFileComplete(e:Event, filename:String):void
+        {
+            var loader:URLLoader = e.target as URLLoader;
+            file_cache[filename] = loader.data;
+            if (!--loadingCount)
+                LoadFileCallback();
         }
 
         private function LoadFileCallback():void
         {
-            //Logger.add("LoadFileCallback");
             try
             {
-                //Logger.addObject(rootObj, "rootObj", 2);
-                //Logger.addObject(rootObj.markers.ally.alive.normal, "marker", 10);
                 rootObj = Deref(rootObj);
-                //Logger.addObject(pendingFiles, "pendingFiles", 2);
                 if (pendingFiles.length > 0)
-                    LoadFiles();
-                else
                 {
-                    //Logger.addObject(rootObj, "config", 10);
-                    //Logger.addObject(rootObj.markers.ally.alive.normal, "marker", 10);
-                    callback.call(target, { data:rootObj, filename:rootFileName } );
+                    LoadFiles();
+                    return;
                 }
             }
             catch (ex:*)
             {
                 callback.call(target, ex);
+                return;
             }
+
+            callback.call(target, { data:rootObj, filename:rootFileName } );
         }
 
         private function Deref(data:Object, level:int = 0, file:String = null, obj_path:String = null):Object
         {
-            //Logger.add(file);
-            //Logger.addObject(data, "Deref:" + level, 4);
             // limit of recursion
             if (level > 32)
                 return data;
@@ -129,20 +127,17 @@ package com.xvm.io
             }
 
             // object
-            if (data.$ref == null)
+            if (!data.hasOwnProperty('$ref'))
             {
                 for (var n:String in data)
                 {
                     data[n] = Deref(data[n], level + 1, file, (obj_path == "" ? "" : obj_path + ".") + n);
-                    //Logger.addObject(data[n], i, 2);
                 }
                 return data;
             }
 
             // reference
             //   "$ref": { "file": "...", "line": "..." }
-
-            //Logger.addObject(data, "Deref[" + level + "]", 2);
 
             if (data.$ref.$ref != null)
                 throw { type: "BAD_REF", message: "endless reference recursion in " + file + ", " + obj_path};
@@ -154,11 +149,8 @@ package com.xvm.io
                 fn = (d.d + (data.$ref.file || d.f));
             }
 
-            //Logger.add("fn: " + fn);
-
             if (!file_cache.hasOwnProperty(fn))
             {
-                //Logger.add("fn: " + fn + " (pending)");
                 data.$ref.abs_path = fn;
                 var found:Boolean = false;
                 var len2:int = pendingFiles.length;
@@ -175,7 +167,6 @@ package com.xvm.io
             }
             else
             {
-                //Logger.add("fn: " + fn + " (loaded)");
                 try
                 {
                     if (!obj_cache.hasOwnProperty(fn))
@@ -183,7 +174,6 @@ package com.xvm.io
                     if (obj_cache[fn] == null)
                         throw { type: fn == rootFileName ? "NO_FILE" : "NO_REF_FILE", message: "file is missing: " + fn };
                     var value:* = getValue(obj_cache[fn], data.$ref.path);
-                    //Logger.add(data.$ref.path + ": " + String(value));
                     if (value === undefined)
                         throw { type: "BAD_REF", message: "bad reference:\n    ${\"" + data.$ref.file + "\":\"" + data.$ref.path + "\"}" };
 
@@ -201,7 +191,6 @@ package com.xvm.io
 
                     // deref result
                     data = Deref(value, level + 1, fn, obj_path);
-                    //Logger.addObject(data);
                 }
                 catch (ex:*)
                 {
@@ -214,8 +203,6 @@ package com.xvm.io
 
         private function getValue(obj:*, path: String):*
         {
-            //Logger.add("getValue: " + path);
-
             if (obj === undefined)
                 return undefined;
 

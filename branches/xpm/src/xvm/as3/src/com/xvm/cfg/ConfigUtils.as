@@ -7,7 +7,7 @@ package com.xvm.cfg
     import com.xvm.utils.Strings;
     import com.xvm.utils.Utils;
 
-    public class ConfigUtils
+    public class ConfigUtils extends Object
     {
         /**
          * Recursive walt default config and merge with loaded values.
@@ -325,27 +325,28 @@ package com.xvm.cfg
             return config;
         }
 
-        public static function parseErrorEvent(event:Object):String {
-            var ex:Object = event.error;
+        public static function parseErrorEvent(ex:Object):String {
+            var e:Error = ex as Error;
+            if (e != null)
+                return e.getStackTrace();
 
             if (ex.at == null)
-                return (ex.name != null ? Strings.trim(ex.name) + ": " : "") + Strings.trim(ex.message);
-            else
-            {
-                var head:String = ex.at > 0 ? ex.text.substring(0, ex.at) : "";
-                head = head.split("\r").join("").split("\n").join("");
-                while (head.indexOf("  ") != -1)
-                    head = head.split("  ").join(" ");
-                head = head.substr(head.length - 75, 75);
+                return ex.toString();
 
-                var tail:String = (ex.at + 1 < ex.text.length) ? ex.text.substring(ex.at + 1, ex.text.length) : "";
-                tail = tail.split("\r").join("").split("\n").join("");
-                while (tail.indexOf("  ") != -1)
-                tail = tail.split("  ").join(" ");
+            var head:String = ex.at > 0 ? ex.text.substring(0, ex.at) : "";
+            head = head.split("\r").join("").split("\n").join("");
+            while (head.indexOf("  ") != -1)
+                head = head.split("  ").join(" ");
+            head = head.substr(head.length - 75, 75);
 
-                return "[" + ex.at + "] " + Strings.trim(ex.name) + ": " + Strings.trim(ex.message) + "\n  " +
-                    head + ">>>" + ex.text.charAt(ex.at) + "<<<" + tail;
-            }
+            var tail:String = (ex.at + 1 < ex.text.length) ? ex.text.substring(ex.at + 1, ex.text.length) : "";
+            tail = tail.split("\r").join("").split("\n").join("");
+            while (tail.indexOf("  ") != -1)
+            tail = tail.split("  ").join(" ");
+            tail = tail.substr(0, 125);
+
+            return "[" + ex.at + "] " + Strings.trim(ex.name) + ": " + Strings.trim(ex.message) + "\n  " +
+                head + ">>>" + ex.text.charAt(ex.at) + "<<<" + tail;
         }
     }
 }

@@ -4,15 +4,9 @@
  */
 package com.xvm.cfg
 {
-    public dynamic class CTexts
+    public dynamic class CTexts extends Object
     {
         // Text for {{vtype}} macro
-        //vtype: {
-            //LT:  "LT",        // Text for light tanks
-            //MT:  "MT",        // Text for medium tanks
-            //HT:  "HT",        // Text for heavy tanks
-            //SPG: "SPG",       // Text for arty
-            //TD:  "TD"         // Text for tank destroyers
-        //}
+        public var vtype:CTextsVType;
     }
 }

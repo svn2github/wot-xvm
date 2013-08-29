@@ -4,7 +4,7 @@
  */
 package com.xvm.cfg
 {
-    public dynamic class CDefinition
+    public dynamic class CDefinition extends Object
     {
         public var author:String;
         public var description:String;

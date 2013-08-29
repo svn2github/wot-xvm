@@ -40,7 +40,7 @@ package com.xvm
         // Load XVM mod config; config data is shared between all marker instances, so
         // it should be loaded only once per session. s_loaded flag indicates that
         // we've already initialized config loading process.
-        public static function addListener(target:Object, callback:Function):void
+        public static function load(target:Object, callback:Function):void
         {
             instance.loadConfig(target, callback);
         }
@@ -64,25 +64,28 @@ package com.xvm
         // we've already initialized config loading process.
         private function loadConfig(target:Object = null, callback:Function = null):void
         {
-            //Logger.add("TRACE: loadConfig()");
+            //Logger.add("TRACE: loadConfig(): target=" + String(target));
             if (loaded)
             {
-                callback.call(target);
+                if (callback != null)
+                    callback.call(target);
                 return;
             }
 
-            listeners.push( { target:target, callback:callback } );
+            if (callback != null)
+                listeners.push( { target:target, callback:callback } );
             if (loading)
                 return;
             loading = true;
 
             config = DefaultConfig.config;
+
             JSONxLoader.LoadAndParse(Defines.XVM_ROOT + Defines.CONFIG_FILE_NAME, this, LoadConfigCallback);
         }
 
         private function LoadConfigCallback(event:Object):void
         {
-            //Logger.add("TRACE: ReloadConfigCallback(): start");
+            //Logger.add("TRACE: LoadConfigCallback()");
             try
             {
                 ProcessConfig(event);
@@ -90,12 +93,10 @@ package com.xvm
             }
             finally
             {
-                //Logger.add("TRACE: ReloadConfigCallback(): finally:start");
                 //TODO Cmd.getGameRegion(this, "OnGameRegionReceived");
                 //TODO Locale.loadLocale();
-                //Logger.add("TRACE: ReloadConfigCallback(): finally::end");
+                Logger.addObject(config, "config", 4);
             }
-            //Logger.add("TRACE: ReloadConfigCallback(): end");
         }
 
         private function ProcessConfig(event:Object):void
@@ -108,13 +109,11 @@ package com.xvm
 
             if (event.error != null)
             {
-                var ex:Object = event.error;
-
                 var text:String = "Error loading config file '" + event.filename + "': ";
-                text += ConfigUtils.parseErrorEvent(event);
+                text += ConfigUtils.parseErrorEvent(event.error);
 
                 stateInfo = { error: text };
-                Logger.add(String(text).substr(0, 200));
+                Logger.add(text);
                 return;
             }
 
