@@ -6,6 +6,8 @@ package com.xvm.utils
 {
     import flash.utils.setInterval;
     import flash.utils.setTimeout;
+    import com.adobe.utils.StringUtil;
+
     public class Utils
     {
         public static function toInt(value:Object, defaultValue:Number):Number
@@ -56,7 +58,7 @@ package com.xvm.utils
         public static function fixPath(path:String):String
         {
             path = path.split("\\").join("/");
-            if (!Strings.endsWith("/", path))
+            if (!StringUtil.endsWith("/", path))
                 path += "/";
             return path;
         }

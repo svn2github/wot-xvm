@@ -6,7 +6,18 @@ package com.xvm.utils
 {
     public class Strings
     {
-        public static function startsWith(substr:String, str:String):Boolean
+        public static function padLeft(str:String, len:Number, char:String):String
+        {
+            if (!str)
+                str = "";
+            if (!char)
+                char = ' ';
+            while (str.length < len)
+                str = char + str;
+            return str;
+        }
+
+        /*public static function startsWith(substr:String, str:String):Boolean
         {
             return str.indexOf(substr, 0) == 0;
         }
@@ -27,20 +38,9 @@ package com.xvm.utils
             return str.substring(i, j+1);
         }
 
-        public static function padLeft(str:String, len:Number, char:String):String
-        {
-            if (!str)
-                str = "";
-            if (!char)
-                char = ' ';
-            while (str.length < len)
-                str = char + str;
-            return str;
-        }
-
 //        public static function FormatDate(format:String, date:Date):String
 //        {
-//            var keys = {Y:"getFullYear", M:"getMonth", D:"getDate", H:"getHours", N:"getMinutes", S:"getSeconds"/*, I:"getMilliseconds"*/};
+//            var keys = {Y:"getFullYear", M:"getMonth", D:"getDate", H:"getHours", N:"getMinutes", S:"getSeconds"/*, I:"getMilliseconds"*///};
 /*            var str = "";
             if (!date)
                 date = new Date();

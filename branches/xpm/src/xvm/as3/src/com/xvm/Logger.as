@@ -17,7 +17,7 @@ package com.xvm
         {
             try
             {
-                Cmd.log("[" + Sandbox.GetCurrentSandboxPrefix() + ":" + Strings.padLeft(String(counter++), 3, '0') + "] " + str);
+                Cmd.log("[" + Sandbox.GetCurrentSandboxPrefix() + ":" + Strings..padLeft(String(counter++), 3, '0') + "] " + str);
             }
             catch(e:Error)
             {

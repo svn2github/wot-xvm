@@ -9,3 +9,5 @@ from gui import VERSION_FILE_PATH
 
 region = ResMgr.openSection(VERSION_FILE_PATH).readString('meta/localization')
 region = region[region.find(" ")+1:]
+
+language = "ru" # TODO

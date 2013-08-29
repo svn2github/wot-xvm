@@ -5,11 +5,16 @@
 package com.xvm
 {
     import flash.display.MovieClip;
+    import flash.events.Event;
     import flash.events.IEventDispatcher;
     import com.xvm.cfg.CConfig;
     import com.xvm.cfg.DefaultConfig;
     import com.xvm.cfg.ConfigUtils;
+    import com.xvm.events.ObjectEvent;
+    import com.xvm.io.Cmd;
     import com.xvm.io.JSONxLoader;
+    import com.xvm.l10n.Locale;
+    import mx.utils.StringUtil;
 
     public class Config
     {
@@ -22,14 +27,24 @@ package com.xvm
             return _instance;
         }
 
+        public static function get Loaded():Boolean
+        {
+            return instance.loaded;
+        }
+
         public static function get config():CConfig
         {
             return instance.config;
         }
 
-        public static function get Loaded():Boolean
+        public static function get GameRegion():String
         {
-            return instance.loaded;
+            return config.region;
+        }
+
+        public static function get Language():String
+        {
+            return config.language;
         }
 
         public static function get StateInfo():Object
@@ -55,13 +70,11 @@ package com.xvm
         private var config:CConfig = null;
         private var loading:Boolean = false;
         private var loaded:Boolean = false;
-        //TODOprivate var game_region:String = null;
         private var stateInfo:Object = null;
         private var listeners:Vector.<Object> = new Vector.<Object>;
 
-        // Load XVM mod config; config data is shared between all marker instances, so
-        // it should be loaded only once per session. s_loaded flag indicates that
-        // we've already initialized config loading process.
+        // Load XVM mod config; config data is shared between all instances, so
+        // it should be loaded only once per session.
         private function loadConfig(target:Object = null, callback:Function = null):void
         {
             //Logger.add("TRACE: loadConfig(): target=" + String(target));
@@ -80,10 +93,18 @@ package com.xvm
 
             config = DefaultConfig.config;
 
-            JSONxLoader.LoadAndParse(Defines.XVM_ROOT + Defines.CONFIG_FILE_NAME, this, LoadConfigCallback);
+            loadXvmXc(); // run Stage 1
         }
 
-        private function LoadConfigCallback(event:Object):void
+        // STAGE 1 - xvm.xc
+
+        private function loadXvmXc():void
+        {
+            //Logger.add("TRACE: STAGE 1: loadXvmXc()");
+            JSONxLoader.LoadAndParse(Defines.XVM_ROOT + Defines.CONFIG_FILE_NAME, this, loadXvmXcCallback);
+        }
+
+        private function loadXvmXcCallback(event:Object):void
         {
             //Logger.add("TRACE: LoadConfigCallback()");
             try
@@ -93,9 +114,7 @@ package com.xvm
             }
             finally
             {
-                //TODO Cmd.getGameRegion(this, "OnGameRegionReceived");
-                //TODO Locale.loadLocale();
-                Logger.addObject(config, "config", 4);
+                loadGameRegion(); // run Stage 2
             }
         }
 
@@ -123,15 +142,60 @@ package com.xvm
             stateInfo = { };
         }
 
-        //TODO private function OnGameRegionReceived(region)
-        //TODO {
-        //TODO     Config.s_game_region = region;
-        //TODO     SetConfigLoaded();
-        //TODO }
+        // STAGE 2 - Game Region
 
-        private function SetConfigLoaded():void
+        private function loadGameRegion():void
         {
-            //Logger.add("Config: Loaded");
+            Logger.add("TRACE: STAGE 2: loadGameRegion()");
+            config.regionDetected = config.region.toLowerCase() == Defines.REGION_AUTO_DETECTION;
+            if (config.regionDetected)
+                Cmd.getGameRegion(this, "loadGameRegionCallback");
+            else
+                loadGameRegionCallback(config.region);
+        }
+
+        private function loadGameRegionCallback(region:String):void
+        {
+            config.region = region.toUpperCase();
+            loadLanguage(); // run Stage 3
+        }
+
+        // Stage 3
+
+        private function loadLanguage():void
+        {
+            Logger.add("TRACE: STAGE 3: loadLanguage()");
+            config.languageDetected = config.language.toLowerCase() == Defines.LOCALE_AUTO_DETECTION
+            if (config.languageDetected)
+                Cmd.getLanguage(this, "loadLanguageCallback");
+            else
+                loadLanguageCallback(config.language);
+        }
+
+        private function loadLanguageCallback(language:String):void
+        {
+            config.language = language.toLowerCase();
+            Locale.Instance.addEventListener(Defines.E_LOCALE_LOADED, setConfigLoaded);
+            Locale.LoadLocaleFile();
+        }
+
+        // All done
+
+        private function setConfigLoaded(e:ObjectEvent):void
+        {
+            Locale.Instance.removeEventListener(Defines.E_LOCALE_LOADED, setConfigLoaded);
+
+            if (e.result != null && e.result.error != null && stateInfo == null && stateInfo.error == null)
+                stateInfo = { error: e.result.error };
+
+            Logger.add("Config loaded.");
+            Logger.add(StringUtil.substitute("Config loaded. Region: {0} ({1}), Language: {2} ({3})",
+                config.region,
+                config.regionDetected ? "detected" : "config",
+                config.language,
+                config.languageDetected ? "detected" : "config"));
+            //Logger.addObject(config, "config", 10);
+
             loaded = true;
             loading = false;
             for each (var l:Object in listeners)
@@ -142,7 +206,7 @@ package com.xvm
                 }
                 catch (e:Error)
                 {
-                    Logger.add("Error: " + e.message);
+                    Logger.add(e.getStackTrace());
                 }
                 catch (e:*)
                 {

@@ -16,6 +16,9 @@ package com.xvm
         // Locale
         public static const LOCALE_AUTO_DETECTION:String = "auto";
 
+        // Region
+        public static const REGION_AUTO_DETECTION:String = "auto";
+
         // res_mods/xvm/
         public static const XVM_ROOT:String = "../../../xvm/";
 
@@ -45,6 +48,8 @@ package com.xvm
         // Events
         public static const E_CONFIG_LOADED:String = "config_loaded";
         public static const E_SET_INFO:String = "set_info";
+        public static const E_LOCALE_LOADED:String = "locale_loaded";
+
 
         // UI Colors
         public static const UICOLOR_DEFAULT:int = 0xC9C9B6;

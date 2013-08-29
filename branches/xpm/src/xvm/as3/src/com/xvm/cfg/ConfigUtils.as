@@ -4,7 +4,7 @@
  */
 package com.xvm.cfg
 {
-    import com.xvm.utils.Strings;
+    import com.adobe.utils.StringUtil;
     import com.xvm.utils.Utils;
 
     public class ConfigUtils extends Object
@@ -345,7 +345,7 @@ package com.xvm.cfg
             tail = tail.split("  ").join(" ");
             tail = tail.substr(0, 125);
 
-            return "[" + ex.at + "] " + Strings.trim(ex.name) + ": " + Strings.trim(ex.message) + "\n  " +
+            return "[" + ex.at + "] " + StringUtil.trim(ex.name) + ": " + StringUtil.trim(ex.message) + "\n  " +
                 head + ">>>" + ex.text.charAt(ex.at) + "<<<" + tail;
         }
     }

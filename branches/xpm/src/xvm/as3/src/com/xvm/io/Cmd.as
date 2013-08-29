@@ -15,6 +15,7 @@ package com.xvm.io
         private static const COMMAND_PING:String = "ping";
         private static const COMMAND_GETSCREENSIZE:String = "getScreenSize";
         private static const COMMAND_GETGAMEREGION:String = "getGameRegion";
+        private static const COMMAND_GETLANGUAGE:String = "getLanguage";
         private static const COMMAND_LOADSTATDATA:String = "loadStatData";
         private static const COMMAND_LOADUSERDATA:String = "loadUserData";
         private static const COMMAND_LOGSTAT:String = "logstat";
@@ -42,6 +43,11 @@ package com.xvm.io
         public static function getGameRegion(target:Object, callback:String):void
         {
             _call(target, callback, [COMMAND_GETGAMEREGION]);
+        }
+
+        public static function getLanguage(target:Object, callback:String):void
+        {
+            _call(target, callback, [COMMAND_GETLANGUAGE]);
         }
 
         public static function loadStatData(players:Array):void
@@ -83,6 +89,7 @@ package com.xvm.io
             }
             else
             {
+                //App.environment.envoke
                 //Logger.add(">>> Cmd.send: " + com.xvm.JSONx.stringify(arguments, "", true));
                 var id:Number = 0;
                 args.unshift('xvm.cmd', id);

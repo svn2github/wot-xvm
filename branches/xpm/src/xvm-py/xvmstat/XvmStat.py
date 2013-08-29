@@ -9,7 +9,7 @@ import GUI
 from gui.mods.xpm import *
 
 from constants import *
-from gameregion import region
+from gameregion import region, language
 from logger import log
 from pinger import ping
 from stats import getStat, getUserData
@@ -33,6 +33,8 @@ class XvmStat(object):
                 res = json.dumps(list(GUI.screenResolution()))
             elif cmd == COMMAND_GETGAMEREGION:
                 res = region
+            elif cmd == COMMAND_GETLANGUAGE:
+                res = language
             elif cmd == COMMAND_LOADSTATDATA:
                 getStat(proxy, *args)
             elif cmd == COMMAND_LOADUSERDATA:
