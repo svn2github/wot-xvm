@@ -24,7 +24,10 @@ for (( i=0; i<${#files[@]}; i++ ));
     rm -rf ${files[$i]}-0
   done
 
+cp -f *.swf ../../../release/
+
+rm -f *.swf
 rm -f *.orig
-cp -f *.rej
+rm -f *.rej
 
 popd > /dev/null

@@ -11,38 +11,28 @@ popd > /dev/null
 
 #2. Detect WoT version
 pushd config/ > /dev/null
-wot_version_release=$(cat wot_version_release)
-wot_version_ct=$(cat wot_version_ct)
+wot_version=$(cat wot_version)
 popd > /dev/null
 
-#3. Build XVM
+#3. Build
 pushd sh > /dev/null
 ./xvm-build.sh
 popd > /dev/null
 
-#4. Make dirs
-mkdir -p ../../temp/rel/"$wot_version_release"/gui/flash
-mkdir -p ../../temp/ct/"$wot_version_ct"/gui/scaleform
+#4. Copy swfs,config,l10n,docs etc.
+mkdir -p ../../temp/"$wot_version"/gui/flash
+mkdir -p ../../temp/"$wot_version"/gui/scaleform
 
-#5. Copy swfs,config,l10n,docs etc.
-cp -rf ../../bin/* ../../temp/rel/"$wot_version_release"/gui/flash/
-cp -rf ../../bin/* ../../temp/ct/"$wot_version_ct"/gui/scaleform/
+cp -f ../../release/*.swf ../../temp/"$wot_version"/gui/flash/
+cp -rf ../../bin/* ../../temp/"$wot_version"/gui/scaleform/
+rm -rf ../../release/*.swf
+cp -rf ../../release/ ../../temp/xvm/
+mv -f ../../temp/xvm/xvm.xc.sample ../../temp/xvm/xvm.xc
 
-cp -rf ../../release/ ../../temp/rel/xvm/
-cp -rf ../../release/ ../../temp/ct/xvm/
+echo "$revision" >> ../../temp/"$revision"
+pushd ../../temp/ > /dev/null && zip -9 -r -q "$revision".zip ./ && popd > /dev/null
 
-mv -f ../../temp/rel/xvm/xvm.xc.sample ../../temp/rel/xvm/xvm.xc
-mv -f ../../temp/ct/xvm/xvm.xc.sample ../../temp/ct/xvm/xvm.xc
-
-#6. Build zips
-echo "$revision" >> ../../temp/rel/"$revision"
-echo "$revision" >> ../../temp/ct/"$revision"
-pushd ../../temp/rel/ > /dev/null && zip -9 -r -q "$revision"_release.zip ./ && popd > /dev/null
-pushd ../../temp/ct/ > /dev/null && zip -9 -r -q "$revision"_ct.zip ./ && popd > /dev/null
-
-#7. Move&Clean
 rm -rf ../../bin/*
-mv -f ../../temp/rel/"$revision"_release.zip ../../bin/
-mv -f ../../temp/ct/"$revision"_ct.zip ../../bin/
+mv -f ../../temp/"$revision".zip ../../bin/
 rm -rf ../../temp/
 

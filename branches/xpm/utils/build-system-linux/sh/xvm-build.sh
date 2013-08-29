@@ -8,8 +8,11 @@ rm -rf ../../../bin/*
 rm -rf ../../../src/xvm/include/
 rm -rf ../../../src/xvm/swf/*.swf
 
-./xvm-swf-patch.sh
-./xvm-swf-build.sh
+./xvm-swf-build-as3.sh
+./xvm-swf-patch-as3.sh
+
+./xvm-swf-patch-as2.sh
+./xvm-swf-build-as2.sh
 
 rm -rf ../../../src/xvm/include/
 rm -rf ../../../src/xvm/swf/*.swf
