@@ -28,6 +28,7 @@ package com.xvm.cfg
                     modMinVersion: Defines.XVM_VERSION
                 },
                 language: Defines.LOCALE_AUTO_DETECTION,
+                region: Defines.REGION_AUTO_DETECTION,
                 login: {
                     // Show ping to the servers
                     pingServers: {
