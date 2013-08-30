@@ -23,10 +23,14 @@ popd > /dev/null
 mkdir -p ../../temp/"$wot_version"/gui/flash
 mkdir -p ../../temp/"$wot_version"/gui/scaleform
 
-cp -f ../../release/*.swf ../../temp/"$wot_version"/gui/flash/
+cp -f ../../bin/as3/*.swf ../../temp/"$wot_version"/gui/flash/
+rm -rf ../../bin/as3/
+
 cp -rf ../../bin/* ../../temp/"$wot_version"/gui/scaleform/
-rm -rf ../../release/*.swf
+
 cp -rf ../../release/ ../../temp/xvm/
+rm -rf ../../release/*.swf
+
 mv -f ../../temp/xvm/xvm.xc.sample ../../temp/xvm/xvm.xc
 
 echo "$revision" >> ../../temp/"$revision"

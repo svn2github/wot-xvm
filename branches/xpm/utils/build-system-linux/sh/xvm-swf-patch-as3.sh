@@ -24,7 +24,8 @@ for (( i=0; i<${#files[@]}; i++ ));
     rm -rf ${files[$i]}-0
   done
 
-cp -f *.swf ../../../release/
+mkdir -p ../../../bin/as3
+cp -f *.swf ../../../bin/as3
 
 rm -f *.swf
 rm -f *.orig
