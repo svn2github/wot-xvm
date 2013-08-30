@@ -4,7 +4,9 @@
  */
 package com.xvm.cfg
 {
-    public dynamic class CVehicleNames extends Object
+    import flash.utils.Dictionary;
+
+    public class CVehicleNames extends Dictionary
     {
     }
 }

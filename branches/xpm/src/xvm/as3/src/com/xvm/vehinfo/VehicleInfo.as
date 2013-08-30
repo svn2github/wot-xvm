@@ -4,6 +4,8 @@
  */
 package com.xvm.vehinfo
 {
+    import com.xvm.cfg.CVehicleNames;
+
     public class VehicleInfo
     {
 /*        // icon = "../maps/icons/vehicle/contour/ussr-IS-3.png"
@@ -52,9 +54,9 @@ package com.xvm.vehinfo
             return res;
         }
 */
-        public static function getVehicleNamesData():Object
+        public static function getVehicleNamesData():CVehicleNames
         {
-            var result:Object = {};
+            var result:CVehicleNames = new CVehicleNames();
             for (var vname:String in VehicleInfoData.data)
                 result[vname] = {name:VehicleInfoData.data[vname].name, short:VehicleInfoData.data[vname].short};
             return result;

@@ -18,6 +18,8 @@ package com.xvm.cfg
             {
                 configVersion: Defines.CONFIG_VERSION,
                 editorVersion: Defines.EDITOR_VERSION,
+                language: Defines.LOCALE_AUTO_DETECTION,
+                region: Defines.REGION_AUTO_DETECTION,
                 definition: {
                     author: "XVM",
                     description: "Default settings for XVM",
@@ -27,8 +29,6 @@ package com.xvm.cfg
                     gameVersion: Defines.WOT_VERSION,
                     modMinVersion: Defines.XVM_VERSION
                 },
-                language: Defines.LOCALE_AUTO_DETECTION,
-                region: Defines.REGION_AUTO_DETECTION,
                 login: {
                     // Show ping to the servers
                     pingServers: {
