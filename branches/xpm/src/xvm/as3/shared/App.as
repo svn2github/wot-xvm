@@ -10,7 +10,6 @@ package
 
     public class App extends Object
     {
-        //native public static function set instance(arg1:net.wg.app.IApplication);
         native public static function get instance():net.wg.app.IApplication;
         native public static function get globalVarsMgr():net.wg.infrastructure.base.meta.IGlobalVarsMgrMeta;
         native public static function get soundMgr():net.wg.infrastructure.managers.ISoundManager;

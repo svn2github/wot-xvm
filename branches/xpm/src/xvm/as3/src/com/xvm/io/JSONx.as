@@ -122,6 +122,8 @@ package com.xvm.io
                             }
                             for each (ac in describeType(arg).accessor)
                             {
+                                if (ac.@access != "readonly" && ac.@access != "readwrite")
+                                    continue;
                                 if (s != '')
                                     s += compact ? ',' : ',\n';
                                 s += _stringifyVar(arg, ac.@name, indent, compact)
@@ -196,8 +198,14 @@ package com.xvm.io
                 case 'xml':
                     return '"' + arg.toString() + '"';
 
+                case 'function':
+                    return 'null' + (compact ? '' : ' /* [function] */');
+
+                case 'unknown':
+                    return 'null' + (compact ? '' : ' /* [unknown] ' + String(arg) + " */");
+
                 default:
-                    return 'null' + (compact ? '' : ' // unknown type: ' + (typeof arg));
+                    return 'null' + (compact ? '' : ' /* unknown type: ' + (typeof arg) + " */");
             }
         }
 

@@ -6,11 +6,8 @@ package scaleform.clik.core
     import flash.utils.*;
     import net.wg.infrastructure.interfaces.entity.*;
     import net.wg.utils.*;
-    import scaleform.clik.constants.*;
     import scaleform.clik.events.*;
     import scaleform.clik.layout.*;
-    import scaleform.clik.utils.*;
-    import scaleform.gfx.*;
 
     public class UIComponent extends flash.display.MovieClip implements net.wg.infrastructure.interfaces.entity.IDisposable
     {
@@ -48,6 +45,5 @@ package scaleform.clik.core
         native public final function setActualScale(arg1:Number, arg2:Number):void;
         native public function handleInput(arg1:scaleform.clik.events.InputEvent):void;
         native public function dispatchEventToGame(arg1:flash.events.Event):void;
-        native public var initialized:Boolean=false;
     }
 }

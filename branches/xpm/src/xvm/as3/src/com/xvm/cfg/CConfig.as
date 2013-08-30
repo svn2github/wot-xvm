@@ -14,6 +14,9 @@ package com.xvm.cfg
         public var rating:CRating;
         public var login:CLogin;
         public var hangar:CHangar;
+        public var userInfo:CUserInfo;
+        public var squad:CSquad;
+        public var finalStatistic:CFinalStatistic;
         public var battle:CBattle;
         public var battleLoading:CBattleLoading;
         public var statisticForm:CStatisticForm;

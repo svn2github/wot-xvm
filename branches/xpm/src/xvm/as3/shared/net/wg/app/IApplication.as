@@ -8,6 +8,8 @@ package net.wg.app
     
     public interface IApplication extends net.wg.infrastructure.base.meta.IApplicationMeta
     {
+        function onLangBarResize(arg1:Number, arg2:Number):void;
+
         function get appWidth():Number;
 
         function get appHeight():Number;

@@ -10,6 +10,7 @@ package xvm
     import com.xvm.Logger;
     import com.xvm.Config;
     import com.xvm.io.JSONxLoader;
+    import net.wg.infrastructure.interfaces.IView;
 
     [SWF(width="1", height="1", backgroundColor="#000000")]
 
@@ -33,7 +34,14 @@ package xvm
 
             try
             {
-                Logger.addObject(Config.config, "config", 3);
+                var view:IView = App.instance.containerMgr.lastFocusedView;
+                Logger.add("view: " + (view ? view.as_alias : "(null)"));
+                setInterval(function():void {
+                    view = App.instance.containerMgr.lastFocusedView;
+                    Logger.add("view: " + (view ? view.as_alias : "(null)"));
+                }, 1000);
+                //wrapper.version.text = value + "   XVM " + Defines.XVM_VERSION + " (WoT " + Defines.WOT_VERSION + ")";
+                //Logger.addObject(Config.config, "config", 10);
             }
             catch (e:*)
             {

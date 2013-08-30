@@ -6,6 +6,8 @@ package net.wg.infrastructure.base.meta
     {
         function saveSortingS(arg1:String, arg2:String):void;
 
+        function showQuestsWindowS(arg1:String):void;
+
         function as_setData(arg1:Object):void;
     }
 }

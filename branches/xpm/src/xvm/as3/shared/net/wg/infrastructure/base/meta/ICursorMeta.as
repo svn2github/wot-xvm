@@ -1,8 +1,6 @@
 package net.wg.infrastructure.base.meta 
 {
-    import flash.events.*;
-    
-    public interface ICursorMeta extends flash.events.IEventDispatcher
+    public interface ICursorMeta
     {
         function as_setCursor(arg1:String):void;
     }

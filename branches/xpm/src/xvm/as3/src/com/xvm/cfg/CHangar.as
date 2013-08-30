@@ -46,25 +46,5 @@ package com.xvm.cfg
                 //strength: 2
             //}
         //}
-        //squad: {
-            //enabled: true,     // Global switch
-            //romanNumbers: true, // Roman level numbers
-            //showClan: true,     // Show player clan
-            //leftLvlBorder: "",  // Grille [4
-            //rightLvlBorder: ""  // Grille 4]
-        //},
-        //userInfo: {
-            //showFilters: true,              // Show tank filters
-            //filterFocused: true,            // Set the default focus to the filter text input
-            //inHangarFilterEnabled: false,   // Enable In hangar radio button by default
-            //showEColumn: false,             // Show column for per-vehicle efficiency
-            //sortColumn: 6                   // Number of column for sorting
-        //},
-        //finalStatistic: {
-            //startPage: 1,
-            //sortColumn: 6, // XP
-            //showChances: false,
-            //showChancesExp: false
-        //},
     }
 }
