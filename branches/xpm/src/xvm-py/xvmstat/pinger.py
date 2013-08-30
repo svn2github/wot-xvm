@@ -37,7 +37,7 @@ def ping():
         return ret
 
     except Exception, ex:
-        log('ERROR: ping() exception: ' + str(ex) + "\n" + traceback.format_exc(ex))
+        log('ERROR: ping() exception: ' + traceback.format_exc(ex))
         return None
 
 #############################

@@ -140,7 +140,7 @@ class _Stat(object):
                 self.cache[cacheKey] = self._map(stat)
 
         except Exception, ex:
-            log('ERROR: _load_stat() exception: ' + str(ex) + "\n" + traceback.format_exc(ex))
+            log('ERROR: _load_stat() exception: ' + traceback.format_exc(ex))
 
 
     def _get_user(self, proxy, value, isId):
@@ -163,7 +163,7 @@ class _Stat(object):
                         self.cacheUser[str(data['_id']) + ",1"] = data
 
             except Exception, ex:
-                log('ERROR: _get_user() exception: ' + str(ex) + "\n" + traceback.format_exc(ex))
+                log('ERROR: _get_user() exception: ' + traceback.format_exc(ex))
 
         self._respond(proxy, RESPOND_USERDATA,
             self.cacheUser[cacheKey] if cacheKey in self.cacheUser else None)

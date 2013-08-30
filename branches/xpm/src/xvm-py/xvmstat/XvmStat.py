@@ -2,6 +2,9 @@
 
 import json
 from pprint import pprint
+import traceback
+import os
+import glob
 
 import BigWorld
 import GUI
@@ -14,7 +17,13 @@ from logger import log
 from pinger import ping
 from stats import getStat, getUserData
 
-NO_LOG_COMMANDS = ('ping', 'log', 'getGameRegion', 'getLanguage')
+NO_LOG_COMMANDS = (
+    'ping',
+    'log',
+    'getGameRegion',
+    'getLanguage',
+    'getMods',
+    )
 
 class XvmStat(object):
     def __init__(self):
@@ -37,6 +46,8 @@ class XvmStat(object):
                 res = region
             elif cmd == COMMAND_GETLANGUAGE:
                 res = language
+            elif cmd == COMMAND_GETMODS:
+                res = self.getMods()
             elif cmd == COMMAND_LOADSTATDATA:
                 getStat(proxy, *args)
             elif cmd == COMMAND_LOADUSERDATA:
@@ -48,8 +59,8 @@ class XvmStat(object):
             else:
                 log("WARNING: unknown command: " + str(cmd))
             proxy.movie.invoke(('xvm.respond', [id, res]))
-        except:
-            pass
+        except Exception, ex:
+            log('ERROR: ' + traceback.format_exc(ex))
 
     def onKeyDown(self, event):
         # do not handle keys when chat is active
@@ -62,6 +73,16 @@ class XvmStat(object):
         #    #return True
         #    pass
         return True
+
+    def getMods(self):
+        mods_dir = "res_mods/xvm/mods"
+        if not os.path.isdir(mods_dir):
+            return None
+        mods = []
+        for m in glob.iglob(mods_dir + "/*.swf"):
+            mods.append(m.replace('\\', '/'))
+        return json.dumps(mods) if mods else None
+
 
 g_xvm = XvmStat()
 
