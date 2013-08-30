@@ -116,22 +116,21 @@ package com.xvm.io
                         {
                             for (n in arg)
                             {
-                                c = _stringify(arg[n], compact ? '' : indent + '  ', compact);
                                 if (s != '')
                                     s += compact ? ',' : ',\n';
-                                s += compact
-                                    ? _stringify(n, '', true) + ':' + c
-                                    : indent + '  ' + _stringify(n, indent + '  ', false) + ': ' + c;
+                                s += _stringifyVar(arg, n, indent, compact)
                             }
                             for each (ac in describeType(arg).accessor)
                             {
-                                n = ac.@name;
-                                c = _stringify((arg[n] as Object), compact ? '' : indent + '  ', compact);
                                 if (s != '')
                                     s += compact ? ',' : ',\n';
-                                s += compact
-                                    ? _stringify(n, '', true) + ':' + c
-                                    : indent + '  ' + _stringify(n, indent + '  ', false) + ': ' + c;
+                                s += _stringifyVar(arg, ac.@name, indent, compact)
+                            }
+                            for each (ac in describeType(arg).variable)
+                            {
+                                if (s != '')
+                                    s += compact ? ',' : ',\n';
+                                s += _stringifyVar(arg, ac.@name, indent, compact)
                             }
                             if (compact)
                                 return '{' + s + '}';
@@ -200,6 +199,14 @@ package com.xvm.io
                 default:
                     return 'null' + (compact ? '' : ' // unknown type: ' + (typeof arg));
             }
+        }
+
+        private function _stringifyVar(arg:*, name:String, indent:String, compact:Boolean):String
+        {
+            var c:String = _stringify((arg[name] as Object), compact ? '' : indent + '  ', compact);
+            return compact
+                ? _stringify(name, '', true) + ':' + c
+                : indent + '  ' + _stringify(name, indent + '  ', false) + ': ' + c;
         }
 
         private function _parse(text:String):Object
