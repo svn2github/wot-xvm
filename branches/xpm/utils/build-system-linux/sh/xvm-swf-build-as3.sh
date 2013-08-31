@@ -6,6 +6,7 @@
 
 sdkfolder="/opt/apache-flex-4.10"
 projects=(
+        'testmod'
         'xvm'
        )
 
