@@ -4,7 +4,7 @@
   <output>
     <movie outputType="Application" />
     <movie input="swf\Minimap.swf" />
-    <movie path="..\..\..\bin\Minimap.swf" />
+    <movie path="..\..\bin\Minimap.swf" />
     <movie fps="30" />
     <movie width="800" />
     <movie height="600" />
@@ -69,7 +69,7 @@
   <options>
     <option showHiddenPaths="True" />
     <option testMovie="Custom" />
-    <option testMovieCommand="..\..\..\utils\test.sh" />
+    <option testMovieCommand="..\..\utils\test.sh" />
   </options>
   <!-- Plugin storage -->
   <storage />

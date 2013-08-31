@@ -2,7 +2,7 @@
  * XVM Test mod
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
-package xvm.mods.testmod
+package
 {
     import flash.display.MovieClip;
     import flash.events.Event;
@@ -34,6 +34,22 @@ package xvm.mods.testmod
             // entry point
 
             Logger.add("testmod running");
+
+            try
+            {
+                //var view:IView = App.instance.containerMgr.lastFocusedView;
+                //Logger.add("view: " + (view ? view.as_alias : "(null)"));
+                //setInterval(function():void {
+                //    view = App.instance.containerMgr.lastFocusedView;
+                //    Logger.add("view: " + (view ? view.as_alias : "(null)"));
+                //}, 1000);
+                //wrapper.version.text = value + "   XVM " + Defines.XVM_VERSION + " (WoT " + Defines.WOT_VERSION + ")";
+                //Logger.addObject(Config.config, "config", 10);
+            }
+            catch (e:*)
+            {
+                Logger.add(e.getStackTrace());
+            }
         }
     }
 }

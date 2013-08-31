@@ -18,6 +18,7 @@
     <class path="as3\mods" />
     <class path="as3\shared_xvm" />
     <class path="as3\shared" />
+    <class path="testmod" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -53,7 +54,7 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <!-- example: <element path="..." /> -->
+    <element path="lib\xvm.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
@@ -73,7 +74,7 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="as3\mods\xvm\mods\testmod\TestMod.as" />
+    <compile path="xvm-testmod\TestMod.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>

@@ -17,24 +17,5 @@ package com.xvm.cfg
         //clanIconsFolder: "clanicons/",   // Folder with clan icons
         // Visual elements
         //elements: []
-        //iconset: {
-            //battleLoading: "contour/",
-            //statisticForm: "contour/",
-            //playersPanel:  "contour/",
-            //vehicleMarker: "contour/"
-        //},
-        //fragCorrelation: {
-            //hideTeamTextFields: true
-        //},
-        //hotkeys: {
-            //minimapZoom: { enabled: false, onHold: true, keyCode: 17 } // 17 - Ctrl
-            ///*
-            //minimapExtended: { enabled: true, onHold: true, keycode: 16 } // 16 - Alt?
-            //messages: [
-              //{  enabled: true, keycode: 113, text: "ШАНСЫ 5% АЙДА ТАПИЦА" }, // F2
-              //{  enabled: true, keycode: 114, text: "☆\nhey!\n☆" } // .split("\n")
-            //]
-            //*/
-        //},
     }
 }

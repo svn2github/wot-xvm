@@ -62,51 +62,60 @@ package com.xvm
 
         // PRIVATE
 
-        function Config()
-        {
-            loadConfig();
-        }
-
         private var config:CConfig = null;
         private var loading:Boolean = false;
         private var loaded:Boolean = false;
         private var stateInfo:Object = null;
-        private var listeners:Vector.<Object> = new Vector.<Object>;
+        private var listeners:Vector.<Object> = null;
+
+        function Config()
+        {
+            listeners = new Vector.<Object>();
+            loadConfig();
+        }
 
         // Load XVM mod config; config data is shared between all instances, so
         // it should be loaded only once per session.
         private function loadConfig(target:Object = null, callback:Function = null):void
         {
             //Logger.add("TRACE: loadConfig(): target=" + String(target));
-            if (loaded)
+            try
             {
+                if (loaded)
+                {
+                    if (callback != null)
+                        callback.call(target);
+                    return;
+                }
+
                 if (callback != null)
-                    callback.call(target);
-                return;
+                    listeners.push( { target:target, callback:callback } );
+                if (loading)
+                    return;
+                loading = true;
+
+                config = DefaultConfig.config;
+
+                loadXvmXc(); // run Stage 1
             }
-
-            if (callback != null)
-                listeners.push( { target:target, callback:callback } );
-            if (loading)
-                return;
-            loading = true;
-
-            config = DefaultConfig.config;
-
-            loadXvmXc(); // run Stage 1
+            catch (e:Error)
+            {
+                Logger.add(e.getStackTrace());
+                throw e;
+            }
         }
 
         // STAGE 1 - xvm.xc
 
         private function loadXvmXc():void
         {
-            //Logger.add("TRACE: STAGE 1: loadXvmXc()");
+            Logger.add("TRACE: STAGE 1: loadXvmXc()");
             JSONxLoader.LoadAndParse(Defines.XVM_ROOT + Defines.CONFIG_FILE_NAME, this, loadXvmXcCallback);
         }
 
         private function loadXvmXcCallback(event:Object):void
         {
-            //Logger.add("TRACE: LoadConfigCallback()");
+            Logger.add("TRACE: LoadConfigCallback()");
             try
             {
                 ProcessConfig(event);

@@ -2,7 +2,7 @@
  * XVM Entry Point
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
-package xvm
+package
 {
     import flash.display.*;
     import flash.events.*;
@@ -34,22 +34,6 @@ package xvm
             // entry point
 
             Cmd.getMods(this, onGetModsComplete);
-
-            try
-            {
-                //var view:IView = App.instance.containerMgr.lastFocusedView;
-                //Logger.add("view: " + (view ? view.as_alias : "(null)"));
-                //setInterval(function():void {
-                //    view = App.instance.containerMgr.lastFocusedView;
-                //    Logger.add("view: " + (view ? view.as_alias : "(null)"));
-                //}, 1000);
-                //wrapper.version.text = value + "   XVM " + Defines.XVM_VERSION + " (WoT " + Defines.WOT_VERSION + ")";
-                //Logger.addObject(Config.config, "config", 10);
-            }
-            catch (e:*)
-            {
-                Logger.add(e.getStackTrace());
-            }
         }
 
         private function onGetModsComplete(mods:String):void
@@ -85,7 +69,7 @@ package xvm
             var loaderInfo:LoaderInfo = flash.display.LoaderInfo(e.currentTarget);
             loaderInfo.removeEventListener(Event.INIT, onLibLoaded);
             loaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onLibLoadError);
-            Logger.add("[XVM] Mod loaded: " + loaderInfo.url.replace(/^.*\//, ''));
+            //Logger.add("[XVM] Mod loaded: " + loaderInfo.url.replace(/^.*\//, ''));
             loaderInfo.loader.visible = false;
             (App.instance as MovieClip).addChild(loaderInfo.loader);
         }
