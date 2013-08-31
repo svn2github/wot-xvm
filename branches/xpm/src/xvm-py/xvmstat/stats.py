@@ -70,7 +70,7 @@ class _Stat(object):
             if cacheKey not in self.cache:
                 cacheKey = "%d" % (pl.playerId)
                 if cacheKey not in self.cache:
-                    playersSkip[str(pl.playerId)] = True
+                    self.playersSkip[str(pl.playerId)] = True
                     players[pl.name] = self._get_stat_stub(pl)
                     continue
             players[pl.name] = self.cache[cacheKey]

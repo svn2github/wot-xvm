@@ -34,7 +34,7 @@ package
 
             // entry point
 
-            Logger.add("testmod running, current view: " + App.containerMgr.lastFocusedView.as_alias);
+            Logger.add("testmod running, current view: " + (App.containerMgr.lastFocusedView ? App.containerMgr.lastFocusedView.as_alias : "None"));
             //Logger.addObject(App.containerMgr.loader, "loader");
 
             App.containerMgr.loader.addEventListener(LoaderEvent.VIEW_LOADED, onViewLoaded);
