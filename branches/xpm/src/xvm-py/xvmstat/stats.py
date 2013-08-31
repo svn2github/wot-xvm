@@ -169,7 +169,7 @@ class _Stat(object):
             self.cacheUser[cacheKey] if cacheKey in self.cacheUser else None)
 
 
-    def _get_stat_stub(self, player):
+    def _get_stat_stub(self, pl):
         return {
             'id': pl.playerId,
             'name': pl.name,
