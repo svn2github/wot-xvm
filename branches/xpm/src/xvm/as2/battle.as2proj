@@ -3,8 +3,8 @@
   <!-- Output SWF options -->
   <output>
     <movie outputType="Application" />
-    <movie input="swf\Minimap.swf" />
-    <movie path="..\..\bin\Minimap.swf" />
+    <movie input="swf\battle.swf" />
+    <movie path="..\..\..\bin\battle.swf" />
     <movie fps="30" />
     <movie width="800" />
     <movie height="600" />
@@ -25,7 +25,7 @@
     <option verbose="False" />
     <option strict="False" />
     <option infer="True" />
-    <option useMain="False" />
+    <option useMain="True" />
     <option useMX="False" />
     <option warnUnusedImports="False" />
     <option traceMode="Disable" />
@@ -38,8 +38,7 @@
   </build>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="wrapper\wot\wrapper\Minimap\Minimap.as" />
-    <compile path="wrapper\wot\wrapper\Minimap\MinimapEntry.as" />
+    <compile path="wrapper\wot\wrapper\battle\BattleMain.as" />
   </compileTargets>
   <!-- Assets to embed into the output SWF -->
   <library>
@@ -48,10 +47,10 @@
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
     <hidden path="src" />
-    <hidden path="wrapper\wot\wrapper\battle" />
     <hidden path="wrapper\wot\wrapper\battleloading" />
     <hidden path="wrapper\wot\wrapper\crew" />
     <hidden path="wrapper\wot\wrapper\FinalStatistic" />
+    <hidden path="wrapper\wot\wrapper\Minimap" />
     <hidden path="wrapper\wot\wrapper\PlayersPanel" />
     <hidden path="wrapper\wot\wrapper\SquadMemberRenderer" />
     <hidden path="wrapper\wot\wrapper\StatisticForm" />
@@ -69,7 +68,7 @@
   <options>
     <option showHiddenPaths="True" />
     <option testMovie="Custom" />
-    <option testMovieCommand="..\..\utils\test.sh" />
+    <option testMovieCommand="..\..\..\utils\test.sh" />
   </options>
   <!-- Plugin storage -->
   <storage />

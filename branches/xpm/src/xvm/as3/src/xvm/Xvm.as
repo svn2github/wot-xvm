@@ -33,8 +33,6 @@ package xvm
 
             // entry point
 
-            Logger.add("xvm");
-
             Cmd.getMods(this, onGetModsComplete);
 
             try
