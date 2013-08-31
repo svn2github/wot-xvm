@@ -10,6 +10,7 @@ package
     import com.xvm.Logger;
     import com.xvm.Config;
     import net.wg.infrastructure.interfaces.IView;
+    import net.wg.infrastructure.events.LoaderEvent;
 
     [SWF(width="1", height="1", backgroundColor="#111111")]
 
@@ -33,7 +34,13 @@ package
 
             // entry point
 
-            Logger.add("testmod running");
+            Logger.add("testmod running, current view: " + App.containerMgr.lastFocusedView.as_alias);
+            //Logger.addObject(App.containerMgr.loader, "loader");
+
+            App.containerMgr.loader.addEventListener(LoaderEvent.VIEW_LOADED, onViewLoaded);
+
+            //dispatchEvent(new net.wg.infrastructure.events.LoaderEvent(net.wg.infrastructure.events.LoaderEvent.VIEW_LOADED, config, token, view));
+
 
             try
             {
@@ -50,6 +57,11 @@ package
             {
                 Logger.add(e.getStackTrace());
             }
+        }
+
+        private function onViewLoaded(e:LoaderEvent):void
+        {
+            Logger.add("View loaded: " + e.view.as_alias);
         }
     }
 }

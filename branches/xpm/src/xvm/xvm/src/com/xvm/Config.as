@@ -109,13 +109,13 @@ package com.xvm
 
         private function loadXvmXc():void
         {
-            Logger.add("TRACE: STAGE 1: loadXvmXc()");
+            //Logger.add("TRACE: STAGE 1: loadXvmXc()");
             JSONxLoader.LoadAndParse(Defines.XVM_ROOT + Defines.CONFIG_FILE_NAME, this, loadXvmXcCallback);
         }
 
         private function loadXvmXcCallback(event:Object):void
         {
-            Logger.add("TRACE: LoadConfigCallback()");
+            //Logger.add("TRACE: LoadConfigCallback()");
             try
             {
                 ProcessConfig(event);

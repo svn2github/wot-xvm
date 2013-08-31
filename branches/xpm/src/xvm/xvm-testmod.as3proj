@@ -83,6 +83,8 @@
     <hidden path="include" />
     <hidden path="swf" />
     <hidden path="wrapper" />
+    <hidden path="xvm" />
+    <hidden path="build-swc.sh" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />

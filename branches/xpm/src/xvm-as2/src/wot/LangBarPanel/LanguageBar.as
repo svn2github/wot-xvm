@@ -38,26 +38,26 @@ class wot.LangBarPanel.LanguageBar
     private var currentLoadingName:String;
     private var mc_ping:MovieClip;
     private var mc_widgets:MovieClip;
-    
+
     private function LanguageBarCtor()
     {
         Utils.TraceXvmModule("LangBarPanel");
         //Logger.addObject(_root);
-        
+
         currentLoadingName = "";
         mc_ping = null;
         mc_widgets = null;
-        
+
         GlobalEventDispatcher.addEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         Config.LoadConfig();
     }
-    
+
     private function onConfigLoaded()
     {
         GlobalEventDispatcher.removeEventListener(Config.E_CONFIG_LOADED, this, onConfigLoaded);
         Utils.Interval(this, onTimer, 1000);
     }
-    
+
     private function onTimer()
     {
         // save carousel tanks in _global to be available from the Achievements dialog.
@@ -86,7 +86,7 @@ class wot.LangBarPanel.LanguageBar
             mc_widgets.removeMovieClip();
             mc_widgets = null;
         }
-        
+
         try
         {
             if (currentLoadingName == "login")
@@ -99,9 +99,9 @@ class wot.LangBarPanel.LanguageBar
             Logger.add("ERROR: " + e.message);
         }
     }
-    
+
     // PRIVATE
-    
+
     private function initLogin()
     {
         var main:MovieClip = _root.contentHolder.main;
@@ -112,7 +112,7 @@ class wot.LangBarPanel.LanguageBar
         mc_ping._x = Math.round((1024 - main.__width) / 2);
         mc_ping._y = Math.round((768 - main.__height) / 2);
         PingServers.initFeature(Config.s_config.login.pingServers, mc_ping);
-        
+
         // ------------------ DEBUG ------------------
         //var mc = main.createEmptyMovieClip("widgetsHolder", main.getNextHighestDepth());
         //WidgetsFactory.initialize(mc, "sirmax2",
@@ -120,7 +120,7 @@ class wot.LangBarPanel.LanguageBar
         //var wsd = new com.xvm.Components.Widgets.Settings.WidgetsSettingsDialog(main, "sirmax2");
         // ------------------ DEBUG ------------------
     }
-    
+
     private function initHangar()
     {
         var header:MovieClip = _root.header;
@@ -133,15 +133,15 @@ class wot.LangBarPanel.LanguageBar
         // PingServers component
         mc_ping = header.createEmptyMovieClip("pingHolder", header.getNextHighestDepth());
         PingServers.initFeature(Config.s_config.hangar.pingServers, mc_ping);
-        
+
         // Widgets
         if (Config.s_config.hangar.widgetsEnabled == true)
         {
             createMenuWidgetsButton();
-            Cmd.loadSettings(this, "onWidgetsSettingsLoaded");
+            Cmd.loadSettings(this, onWidgetsSettingsLoaded);
         }
     }
-    
+
     private function createMenuWidgetsButton()
     {
         var bar:ButtonBar = WGComponents.headerButtons;
@@ -155,7 +155,7 @@ class wot.LangBarPanel.LanguageBar
             bar.draw();
         }
     }
-    
+
     private function onWidgetsSettingsLoaded(str:String)
     {
         var widgetsSettings = null;

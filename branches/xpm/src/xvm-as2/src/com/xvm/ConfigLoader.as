@@ -20,7 +20,7 @@ class com.xvm.ConfigLoader
 
     // instance
     private static var instance:ConfigLoader = null;
-    
+
     // Load XVM mod config; config data is shared between all marker instances, so
     // it should be loaded only once per session. s_loaded flag indicates that
     // we've already initialized config loading process.
@@ -37,7 +37,7 @@ class com.xvm.ConfigLoader
             GlobalEventDispatcher.dispatchEvent({type: Config.E_CONFIG_LOADED});
             return;
         }
-        
+
         if (instance == null)
             instance = new ConfigLoader();
         instance.ReloadConfig();
@@ -78,7 +78,7 @@ class com.xvm.ConfigLoader
             if (finallyBugWorkaround)
                 return;
             finallyBugWorkaround = true;
-            Cmd.getGameRegion(this, "OnGameRegionReceived");
+            Cmd.getGameRegion(this, OnGameRegionReceived);
             Locale.loadLocale();
             //Logger.add("TRACE: ReloadConfigCallback(): finally::end");
         }

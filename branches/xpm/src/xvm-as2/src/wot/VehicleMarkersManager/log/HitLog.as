@@ -16,7 +16,7 @@ import com.xvm.VehicleInfo;
 class wot.VehicleMarkersManager.log.HitLog
 {
     public static var STYLE_NAME:String = "xvm_hitlog";
-    
+
     private static var groupHitsByPlayer:Boolean = false;
 
     private var x:Number;
@@ -36,7 +36,7 @@ class wot.VehicleMarkersManager.log.HitLog
     private var total:Number;
     private var players:Object;
     private var hits:Array;
-    
+
     private var text:String;
 
     public function HitLog(cfg:Object)
@@ -69,13 +69,13 @@ class wot.VehicleMarkersManager.log.HitLog
     {
         this.text = text;
     }
-    
+
     /** Invoked by LogLists */
     public function setHpText(text:String):Void
     {
         textField.htmlText = text;
     }
-    
+
     /** Invoked by LogLists */
     public function setHitText():Void
     {
@@ -155,16 +155,16 @@ class wot.VehicleMarkersManager.log.HitLog
     private function createControl()
     {
         //Logger.add("HitLog::createControl()");
-        Cmd.getScreenSize(this, "createControl2");
+        Cmd.getScreenSize(this, createControl2);
     }
-        
+
     private function createControl2(size)
     {
         //Logger.add("HitLog::createControl2()");
         var sz = JSONx.parse(size);
         var x = this.x >= 0 ? this.x : sz[0] + this.x;
         var y = this.y >= 0 ? this.y : sz[1] + this.y;
-        
+
         textField = _root.createTextField("xvmHitLog", _root.getNextHighestDepth(), x, y, w, h);
         //textField.border = true;
         //textField.borderColor = 0xFFFFFF;

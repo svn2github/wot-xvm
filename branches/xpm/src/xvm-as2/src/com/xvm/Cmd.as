@@ -1,4 +1,5 @@
-import gfx.io.GameDelegate;
+import flash.external.ExternalInterface;
+import com.xvm.Sandbox;
 
 class com.xvm.Cmd
 {
@@ -20,17 +21,17 @@ class com.xvm.Cmd
         _call(null, null, [COMMAND_LOG, str]);
     }
 
-    public static function ping(target:Object, callback:String)
+    public static function ping(target:Object, callback:Function)
     {
         _call(target, callback, [COMMAND_PING]);
     }
 
-    public static function getScreenSize(target:Object, callback:String)
+    public static function getScreenSize(target:Object, callback:Function)
     {
         _call(target, callback, [COMMAND_GETSCREENSIZE]);
     }
 
-    public static function getGameRegion(target:Object, callback:String)
+    public static function getGameRegion(target:Object, callback:Function)
     {
         _call(target, callback, [COMMAND_GETGAMEREGION]);
     }
@@ -50,7 +51,7 @@ class com.xvm.Cmd
         _call(null, null, [COMMAND_LOGSTAT]);
     }
 
-    public static function loadSettings(target:Object, callback:String)
+    public static function loadSettings(target:Object, callback:Function)
     {
         _call(target, callback, [COMMAND_LOAD_SETTINGS]);
     }
@@ -62,19 +63,44 @@ class com.xvm.Cmd
 
     /////////////////////////////////////////////////////////////////
 
-    private static function _call(target:Object, callback:String, args:Array):Void
+    private static var _listeners:Object = {};
+    private static var _counter:Number = 0;
+
+    private static var _xvm_sandbox_cmd_initialized:Boolean = false;
+    private static function _call(target:Object, callback:Function, args:Array)
     {
-        if (!_global._xvm_sandbox_cmd_initialized)
+        if (!_xvm_sandbox_cmd_initialized)
         {
-            _global.setTimeout(function() {
-                _global._xvm_sandbox_cmd_initialized = true;
+            ExternalInterface.addCallback("xvm.respond", null, _callback);
+            setTimeout(function() {
+                Cmd._xvm_sandbox_cmd_initialized = true;
                 Cmd._call(target, callback, args);
-            }, 100);
+            }, 1);
         }
         else
         {
             //Logger.add(">>> Cmd.send: " + com.xvm.JSONx.stringify(arguments, "", true));
-            GameDelegate.call("xvm.cmd", args, target, callback);
+            var id:String = Sandbox.GetCurrentSandboxPrefix() + String(++_counter);
+            if (callback != null)
+                _listeners[id] = {target:target, callback:callback};
+            args.unshift('xvm.cmd', id);
+            ExternalInterface.call.apply(null, args);
+        }
+    }
+
+    private static function _callback(id:String, data)
+    {
+        if (!_listeners.hasOwnProperty(id))
+            return;
+        try
+        {
+            var callback:Function = _listeners[id].callback;
+            if (callback != null)
+                callback.call(_listeners[id].target, data);
+        }
+        finally
+        {
+            delete _listeners[id];
         }
     }
 }

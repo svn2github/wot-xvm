@@ -8,7 +8,7 @@ import com.xvm.Components.PingServers.PingServersView;
 class com.xvm.Components.PingServers.PingServers
 {
     public static var instance:PingServers = null;
-    
+
     private var view:PingServersView;
     private var pingCommandCounter:Number;
     private var pingTimer:Function;
@@ -42,16 +42,16 @@ class com.xvm.Components.PingServers.PingServers
 
     private function showPing()
     {
-        Cmd.ping(this, "answerCallback");
+        Cmd.ping(this, answerCallback);
     }
-    
+
     private function answerCallback(answer):Void
     {
         if (answer == null || answer == "")
             return;
         view.update(parseAnswer(answer));
     }
-    
+
     private function parseAnswer(answer:String):Array
     {
         var parsedAnswerObj:Object = JSONx.parse(answer);
@@ -62,7 +62,7 @@ class com.xvm.Components.PingServers.PingServers
             responceTimeList.push({ cluster: cluster, time: parsedAnswerObj[i] });
         }
         responceTimeList.sortOn(["cluster"]);
-        
+
         return responceTimeList;
     }
 }
