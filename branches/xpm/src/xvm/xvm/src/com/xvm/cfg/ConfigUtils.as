@@ -4,13 +4,16 @@
  */
 package com.xvm.cfg
 {
+    import flash.utils.*;
     import com.adobe.utils.StringUtil;
     import com.xvm.utils.Utils;
+    import com.xvm.Logger;
+    import com.xvm.utils.ObjectConverter;
 
     public class ConfigUtils extends Object
     {
         /**
-         * Recursive walt default config and merge with loaded values.
+         * Recursive walk default config and merge with loaded values.
          */
         public static function MergeConfigs(config:*, def:*, prefix:String = "def"):*
         {
@@ -24,14 +27,33 @@ package com.xvm.cfg
                     }
                     if (def == null)
                         return (typeof config == 'string' || typeof config == 'number') ? config : null;
+
                     var result:Object = { };
+                    var descr:XML = describeType(def);
                     for (var name:String in def)
                     {
                         result[name] = config.hasOwnProperty(name)
                            ? MergeConfigs(config[name], def[name], prefix + "." + name)
                            : def[name];
                     }
-                    return result;
+                    var ac:XML;
+                    var xml:XMLList = descr.accessor;
+                    for each (ac in xml)
+                    {
+                        if (ac.@access != "readonly" && ac.@access != "readwrite")
+                            continue;
+                        result[ac.@name] = config.hasOwnProperty(ac.@name)
+                           ? MergeConfigs(config[ac.@name], def[ac.@name], prefix + "." + ac.@name)
+                           : def[ac.@name];
+                    }
+                    xml = descr.variable;
+                    for each (ac in xml)
+                    {
+                        result[ac.@name] = config.hasOwnProperty(ac.@name)
+                           ? MergeConfigs(config[ac.@name], def[ac.@name], prefix + "." + ac.@name)
+                           : def[ac.@name];
+                    }
+                    return ObjectConverter.convertData(result, Class(getDefinitionByName(getQualifiedClassName(def))));
 
                 case 'number':
                     if (!isNaN(parseFloat(config)))

@@ -121,6 +121,11 @@ package com.xvm
                 ProcessConfig(event);
                 ConfigUtils.TuneupConfig(config);
             }
+            catch (e:Error)
+            {
+                Logger.add(e.getStackTrace());
+                throw e;
+            }
             finally
             {
                 loadGameRegion(); // run Stage 2

@@ -120,7 +120,9 @@ package com.xvm.io
                                     s += compact ? ',' : ',\n';
                                 s += _stringifyVar(arg, n, indent, compact)
                             }
-                            for each (ac in describeType(arg).accessor)
+                            var descr:XML = describeType(arg);
+                            var xml:XMLList = descr.accessor;
+                            for each (ac in xml)
                             {
                                 if (ac.@access != "readonly" && ac.@access != "readwrite")
                                     continue;
@@ -128,7 +130,8 @@ package com.xvm.io
                                     s += compact ? ',' : ',\n';
                                 s += _stringifyVar(arg, ac.@name, indent, compact)
                             }
-                            for each (ac in describeType(arg).variable)
+                            xml = descr.variable;
+                            for each (ac in xml)
                             {
                                 if (s != '')
                                     s += compact ? ',' : ',\n';
