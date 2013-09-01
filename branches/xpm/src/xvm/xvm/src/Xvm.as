@@ -9,7 +9,6 @@ package
     import flash.net.URLRequest;
     import flash.utils.*;
     import flash.system.*;
-    import net.wg.infrastructure.interfaces.*;
     import com.xvm.*;
     import com.xvm.io.*;
 

@@ -1,15 +1,22 @@
 #!/bin/sh
 
 if [ "$OS" = "Windows_NT" ]; then
-    compc="$PROGRAMFILES/FlashDevelop/Tools/flexsdk/bin/compc.exe"
+    flexsdk="$PROGRAMFILES/FlashDevelop/Tools/flexsdk"
 else
-    compc="compc"
+    flexsdk="/usr/local"
 fi
+
+compc="$flexsdk/bin/compc.exe"
+frswc="$flexsdk/frameworks/libs/framework.swc"
 
 classes="
 Xvm
-net.wg.infrastructure.events.LoaderEvent
-net.wg.infrastructure.events.LifeCycleEvent
 "
 
-"$compc" -source-path xvm/src -source-path xvm/wg -output lib/xvm.swc -include-classes $classes
+"$compc" \
+    -framework="$flexsdk/frameworks" \
+    -source-path xvm/src \
+    -library-path=lib/wg.swc \
+    -library-path="$frswc" \
+    -output lib/xvm.swc \
+    -include-classes $classes

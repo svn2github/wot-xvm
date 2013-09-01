@@ -16,7 +16,6 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="xvm\src" />
-    <class path="xvm\wg" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -52,7 +51,7 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <!-- example: <element path="..." /> -->
+    <element path="lib\wg.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
@@ -77,7 +76,6 @@
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
     <hidden path="swf" />
-    <hidden path="as2" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />

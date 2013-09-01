@@ -50,7 +50,7 @@ package
                 //    Logger.add("view: " + (view ? view.as_alias : "(null)"));
                 //}, 1000);
                 //wrapper.version.text = value + "   XVM " + Defines.XVM_VERSION + " (WoT " + Defines.WOT_VERSION + ")";
-                Logger.addObject(Config.config, "config", 10);
+                //Logger.addObject(Config.config, "config", 10);
             }
             catch (e:*)
             {

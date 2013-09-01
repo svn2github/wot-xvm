@@ -30,22 +30,22 @@ package xvm
 
         public virtual function onBeforePopulate(e:LifeCycleEvent):void
         {
-            Logger.add("onBeforePopulate: " + _viewAlias);
+            //Logger.add("onBeforePopulate: " + _viewAlias);
         }
 
         public virtual function onAfterPopulate(e:LifeCycleEvent):void
         {
-            Logger.add("onAfterPopulate: " + _viewAlias);
+            //Logger.add("onAfterPopulate: " + _viewAlias);
         }
 
         public virtual function onBeforeDispose(e:LifeCycleEvent):void
         {
-            Logger.add("onBeforeDispose: " + _viewAlias);
+            //Logger.add("onBeforeDispose: " + _viewAlias);
         }
 
         public virtual function onAfterDispose(e:LifeCycleEvent):void
         {
-            Logger.add("onAfterDispose: " + _viewAlias);
+            //Logger.add("onAfterDispose: " + _viewAlias);
         }
     }
 
