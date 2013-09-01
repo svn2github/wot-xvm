@@ -15,7 +15,7 @@ files=(
         'VehicleMarkersManager'
        )
 
-pushd ../../../src/xvm/as2/swf/ > /dev/null
+pushd ../../../src/xvm-as2/swf/ > /dev/null
 mkdir -p temp
 
 for (( i=0; i<${#files[@]}; i++ ));

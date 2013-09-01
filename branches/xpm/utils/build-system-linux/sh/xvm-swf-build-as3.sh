@@ -6,19 +6,22 @@
 
 sdkfolder="/opt/apache-flex-4.10"
 projects=(
-        'testmod'
-        'xvm'
-       )
+          'xvm'
+          'xvm-testmod'
+         )
 
 pushd ../../../src/xvm/ > /dev/null
+
 #you need to "git clone git://github.com/nexussays/playerglobal.git $sdkfolder/frameworks/libs/player" first
 export PLAYERGLOBAL_HOME=$sdkfolder/frameworks/libs/player 
-export PATH=$PATH:../../utils/build-system-linux/bin/
+export PATH=$PATH:../../utils/build-system-linux/bin/:$sdkfolder/bin/
 
 for (( i=0; i<${#projects[@]}; i++ ));
   do
     mono ../../utils/build-system-linux/bin/fdbuild-as3.exe -compiler:"$sdkfolder" -cp:"" "${projects[$i]}.as3proj"
   done
 
+rm -rf lib/*
 rm -rf obj
+
 popd > /dev/null

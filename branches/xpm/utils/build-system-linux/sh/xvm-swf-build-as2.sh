@@ -16,12 +16,12 @@ projects=(
         'xvm'
        )
 
-pushd ../../../src/xvm/as2/ > /dev/null
-PATH=$PATH:../../../utils/build-system-linux/bin/
+pushd ../../../src/xvm-as2/ > /dev/null
+PATH=$PATH:../../utils/build-system-linux/bin/
 
 for (( i=0; i<${#projects[@]}; i++ ));
   do
-    mono ../../../utils/build-system-linux/bin/fdbuild.exe ${projects[$i]}.as2proj -version "1.14" -notrace
+    mono ../../utils/build-system-linux/bin/fdbuild.exe ${projects[$i]}.as2proj -version "1.14" -notrace
     rm -f swf/${projects[$i]}.swf
   done
 
