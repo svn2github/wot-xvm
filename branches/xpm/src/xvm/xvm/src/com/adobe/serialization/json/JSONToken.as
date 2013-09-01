@@ -30,29 +30,12 @@
   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-package com.adobe.serialization.json
-{
+package com.adobe.serialization.json {
+
+	public class JSONToken {
 	
-	public final class JSONToken
-	{
-		
-		/**
-		 * The type of the token.
-		 *
-		 * @langversion ActionScript 3.0
-		 * @playerversion Flash 9.0
-		 * @tiptext
-		 */
-		public var type:int;
-		
-		/**
-		 * The value of the token
-		 *
-		 * @langversion ActionScript 3.0
-		 * @playerversion Flash 9.0
-		 * @tiptext
-		 */
-		public var value:Object;
+		private var _type:int;
+		private var _value:Object;
 		
 		/**
 		 * Creates a new JSONToken with a specific token type and value.
@@ -63,30 +46,59 @@ package com.adobe.serialization.json
 		 * @playerversion Flash 9.0
 		 * @tiptext
 		 */
-		public function JSONToken( type:int = -1 /* JSONTokenType.UNKNOWN */, value:Object = null )
-		{
-			this.type = type;
-			this.value = value;
+		public function JSONToken( type:int = -1 /* JSONTokenType.UNKNOWN */, value:Object = null ) {
+			_type = type;
+			_value = value;
 		}
 		
 		/**
-		 * Reusable token instance.
-		 * 
-		 * @see #create()
+		 * Returns the type of the token.
+		 *
+		 * @see com.adobe.serialization.json.JSONTokenType
+		 * @langversion ActionScript 3.0
+		 * @playerversion Flash 9.0
+		 * @tiptext
 		 */
-		internal static const token:JSONToken = new JSONToken();
+		public function get type():int {
+			return _type;	
+		}
 		
 		/**
-		 * Factory method to create instances.  Because we don't need more than one instance
-		 * of a token at a time, we can always use the same instance to improve performance
-		 * and reduce memory consumption during decoding.
+		 * Sets the type of the token.
+		 *
+		 * @see com.adobe.serialization.json.JSONTokenType
+		 * @langversion ActionScript 3.0
+		 * @playerversion Flash 9.0
+		 * @tiptext
 		 */
-		internal static function create( type:int = -1 /* JSONTokenType.UNKNOWN */, value:Object = null ):JSONToken
-		{
-			token.type = type;
-			token.value = value;
-			
-			return token;
+		public function set type( value:int ):void {
+			_type = value;	
 		}
+		
+		/**
+		 * Gets the value of the token
+		 *
+		 * @see com.adobe.serialization.json.JSONTokenType
+		 * @langversion ActionScript 3.0
+		 * @playerversion Flash 9.0
+		 * @tiptext
+		 */
+		public function get value():Object {
+			return _value;	
+		}
+		
+		/**
+		 * Sets the value of the token
+		 *
+		 * @see com.adobe.serialization.json.JSONTokenType
+		 * @langversion ActionScript 3.0
+		 * @playerversion Flash 9.0
+		 * @tiptext
+		 */
+		public function set value ( v:Object ):void {
+			_value = v;	
+		}
+
 	}
+	
 }

@@ -54,7 +54,7 @@ package com.adobe.net
 	 * of URI.</p>
 	 * 
 	 * <p>URI will call this before performing URI comparisons in the
-	 * URI.getRelation() and URI.getCommonParent() functions.</p>
+	 * URI.getRelation() and URI.getCommonParent() functions.
 	 * 
 	 * @see URI.getRelation
 	 * @see URI.getCommonParent
