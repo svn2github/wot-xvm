@@ -9,6 +9,7 @@ fi
 classes="
 Xvm
 net.wg.infrastructure.events.LoaderEvent
+net.wg.infrastructure.events.LifeCycleEvent
 "
 
 "$compc" -source-path xvm/src -source-path xvm/wg -output lib/xvm.swc -include-classes $classes

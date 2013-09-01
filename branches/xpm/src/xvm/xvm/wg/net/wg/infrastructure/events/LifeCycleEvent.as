@@ -4,7 +4,11 @@ package net.wg.infrastructure.events
     
     public class LifeCycleEvent extends flash.events.Event
     {
-        native public function LifeCycleEvent(arg1:String, arg2:Boolean=false, arg3:Boolean=false);
+        public function LifeCycleEvent(arg1:String, arg2:Boolean=false, arg3:Boolean=false)
+        {
+            super(arg1, true, true);
+            throw new Error("Stub class LifeCycleEvent cannot be created");
+        }
         native public override function clone():flash.events.Event;
         public static const ON_BEFORE_POPULATE:String="onBeforePopulate";
         public static const ON_AFTER_POPULATE:String="onAfterPopulate";

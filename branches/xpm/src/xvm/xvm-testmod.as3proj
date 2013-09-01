@@ -19,6 +19,7 @@
     <class path="as3\shared_xvm" />
     <class path="as3\shared" />
     <class path="testmod" />
+    <class path="xvm-testmod" />
   </classpaths>
   <!-- Build options -->
   <build>
