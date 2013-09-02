@@ -30,10 +30,10 @@ def ping():
         g_preDefinedHosts._PreDefinedHostList__ping()
         hosts = g_preDefinedHosts._hosts;
         pings = g_preDefinedHosts._PreDefinedHostList__pingResult
-        pprint(pings)
-        res = dict(map(lambda x: (x.name, pings[x.url] if x.url in pings else "?"), hosts))
-        return res
+        if pings:
+            return dict(map(lambda x: (x.name, pings[x.url] if x.url in pings else "?"), hosts))
 
+        # Fallback to subprocess
         global thread
         if thread is None:
             thread = threading.Thread(target=pingAsync)
