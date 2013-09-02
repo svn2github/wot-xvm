@@ -1,20 +1,24 @@
 #!/bin/sh
 
 if [ "$OS" = "Windows_NT" ]; then
-    flexsdk="$PROGRAMFILES/FlashDevelop/Tools/flexsdk"
-    compc="$flexsdk/bin/compc.exe"
+    if [[ -z "$FLEXSDK" ]]; then
+        flexsdk="$PROGRAMFILES/FlashDevelop/Tools/flexsdk"
+		compc="$FLEXSDK/bin/compc.exe"
+    else
+	    compc="$FLEXSDK/bin/compc" #Apache Flex SDK has only bat and shell scripts
+    fi
 else
     compc="compc"
 fi
 
-frswc="$flexsdk/frameworks/libs/framework.swc"
+frswc="$FLEXSDK/frameworks/libs/framework.swc"
 
 classes="
 Xvm
 "
 
 "$compc" \
-    -framework="$flexsdk/frameworks" \
+    -framework="$FLEXSDK/frameworks" \
     -source-path xvm \
     -library-path=lib/wg.swc \
     -library-path="$frswc" \
