@@ -4,7 +4,7 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="..\..\release\mods\testmod.swf" />
+    <movie path="..\..\release\mods\xvm-hangar.swf" />
     <movie fps="30" />
     <movie width="800" />
     <movie height="600" />
@@ -15,7 +15,7 @@
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
-    <class path="xvm-testmod" />
+    <class path="xvm-hangar" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -57,7 +57,6 @@
   <externalLibraryPaths>
     <element path="lib\xvm.swc" />
     <element path="lib\wg.swc" />
-    <element path="" />
   </externalLibraryPaths>
   <!-- Runtime Shared Libraries -->
   <rslPaths>
@@ -73,7 +72,7 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="xvm-testmod\testmod\TestMod.as" />
+    <compile path="xvm-hangar\xvm\XvmHangar.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>

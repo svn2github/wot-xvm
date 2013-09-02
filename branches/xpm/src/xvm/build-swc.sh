@@ -15,7 +15,7 @@ Xvm
 
 "$compc" \
     -framework="$flexsdk/frameworks" \
-    -source-path xvm/src \
+    -source-path xvm \
     -library-path=lib/wg.swc \
     -library-path="$frswc" \
     -output lib/xvm.swc \

@@ -11,6 +11,7 @@ App
 net.wg.infrastructure.events.LoaderEvent
 net.wg.infrastructure.events.LifeCycleEvent
 net.wg.gui.login.impl.LoginPage
+org.idmedia.as3commons.util.StringUtils
 "
 
 "$compc" -source-path wg -output lib/wg.swc -include-classes $classes
