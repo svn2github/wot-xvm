@@ -173,7 +173,7 @@ package com.xvm.utils
             fontName:String, fontSize:Number, align:String, bold:Boolean, italic:Boolean):String
         {
             return "." + className + " {" +
-                "color:#" + Strings.padLeft(color.toString(16), 6, '0') + ";" +
+                "color:#" + StringUtils.leftPad(color.toString(16), 6, '0') + ";" +
                 "font-family:\"" + fontName + "\";" +
                 "font-size:" + fontSize + ";" +
                 "text-align:" + align + ";" +
@@ -349,6 +349,30 @@ package com.xvm.utils
                     + 0.07576)
                     - 7.25
                 )));
+        }
+
+//        public static function FormatDate(format:String, date:Date):String
+//        {
+//            var keys = {Y:"getFullYear", M:"getMonth", D:"getDate", H:"getHours", N:"getMinutes", S:"getSeconds"/*, I:"getMilliseconds"*///};
+/*            var str = "";
+            if (!date)
+                date = new Date();
+            var ci, meth;
+            var formatArr = format.split(""); // charAt() is slow
+            var format_len = formatArr.length;
+            for (var i = 0; i < format_len; ++i)
+            {
+                ci = formatArr[i];
+                if (keys[ci] == undefined)
+                {
+                    str += ci;
+                    continue;
+                }
+                meth = keys[ci];
+                var val = date[meth]() + ((meth == "getMonth") ? 1 : 0);
+                str += (val < 10) ? "0" + val : val;
+            }
+            return str;
         }
 */
         /**

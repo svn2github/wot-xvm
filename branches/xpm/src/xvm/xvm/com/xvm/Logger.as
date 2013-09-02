@@ -7,7 +7,7 @@ package com.xvm
     import com.xvm.io.Cmd;
     import com.xvm.io.JSONx;
     import com.xvm.utils.Sandbox;
-    import com.xvm.utils.Strings;
+    import org.idmedia.as3commons.util.StringUtils;
 
     public class Logger
     {
@@ -17,7 +17,7 @@ package com.xvm
         {
             try
             {
-                Cmd.log("[" + Sandbox.GetCurrentSandboxPrefix() + ":" + Strings..padLeft(String(counter++), 3, '0') + "] " + str);
+                Cmd.log("[" + Sandbox.GetCurrentSandboxPrefix() + ":" + StringUtils.leftPad(String(counter++), 3, '0') + "] " + str);
             }
             catch(e:Error)
             {
