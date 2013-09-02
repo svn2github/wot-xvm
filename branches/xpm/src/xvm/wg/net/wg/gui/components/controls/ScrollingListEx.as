@@ -1,4 +1,4 @@
-package net.wg.gui.components.controls 
+package net.wg.gui.components.controls
 {
     import flash.display.*;
     import flash.events.*;
@@ -12,7 +12,7 @@ package net.wg.gui.components.controls
     import scaleform.clik.interfaces.*;
     import scaleform.clik.ui.*;
     import scaleform.clik.utils.*;
-    
+
     public class ScrollingListEx extends net.wg.gui.components.controls.CoreListEx
     {
         public function ScrollingListEx()
@@ -24,14 +24,14 @@ package net.wg.gui.components.controls
         protected function updateScrollBar():void
         {
             var loc1:*=null;
-            if (this._scrollBar == null) 
+            if (this._scrollBar == null)
                 return;
-            if (this._scrollBar is scaleform.clik.controls.ScrollIndicator) 
+            if (this._scrollBar is scaleform.clik.controls.ScrollIndicator)
             {
                 loc1 = this._scrollBar as scaleform.clik.controls.ScrollIndicator;
-                if (_dataProvider.length > _totalRenderers) 
+                if (_dataProvider.length > _totalRenderers)
                     loc1.setScrollProperties(_totalRenderers, 0, _dataProvider.length - _totalRenderers);
-                else 
+                else
                     loc1.setScrollProperties(_dataProvider.length - _totalRenderers, 0, _dataProvider.length - _totalRenderers);
             }
             this._scrollBar.position = this._scrollPosition;
@@ -43,7 +43,7 @@ package net.wg.gui.components.controls
         {
             super.changeFocus();
             var loc1:*=getRendererAt(_selectedIndex, this._scrollPosition);
-            if (loc1 != null) 
+            if (loc1 != null)
             {
                 loc1.displayFocus = focused > 0;
                 loc1.validateNow();
@@ -62,28 +62,28 @@ package net.wg.gui.components.controls
 
         protected override function updateSelectedIndex():void
         {
-            if (_selectedIndex == _newSelectedIndex) 
+            if (_selectedIndex == _newSelectedIndex)
                 return;
-            if (_totalRenderers == 0) 
+            if (_totalRenderers == 0)
                 return;
             var loc1:*=getRendererAt(_selectedIndex, this.scrollPosition);
-            if (loc1 != null) 
+            if (loc1 != null)
             {
                 loc1.selected = false;
                 loc1.validateNow();
             }
             super.selectedIndex = _newSelectedIndex;
-            if (_selectedIndex < 0 || _selectedIndex >= _dataProvider.length) 
+            if (_selectedIndex < 0 || _selectedIndex >= _dataProvider.length)
                 return;
             loc1 = getRendererAt(_selectedIndex, this._scrollPosition);
-            if (loc1 == null) 
+            if (loc1 == null)
             {
                 this.scrollToIndex(_selectedIndex);
                 loc1 = getRendererAt(_selectedIndex, this.scrollPosition);
                 loc1.selected = true;
                 loc1.validateNow();
             }
-            else 
+            else
             {
                 loc1.selected = true;
                 loc1.validateNow();
@@ -94,7 +94,7 @@ package net.wg.gui.components.controls
         protected override function calculateRendererTotal(arg1:Number, arg2:Number):uint
         {
             var loc1:*=null;
-            if (isNaN(this._rowHeight) && isNaN(this._autoRowHeight)) 
+            if (isNaN(this._rowHeight) && isNaN(this._autoRowHeight))
             {
                 loc1 = createRenderer(0);
                 this._autoRowHeight = Math.round(loc1.height);
@@ -106,7 +106,7 @@ package net.wg.gui.components.controls
         public function set rowCount(arg1:uint):void
         {
             var loc1:*=this.rowHeight;
-            if (isNaN(this.rowHeight)) 
+            if (isNaN(this.rowHeight))
                 this.calculateRendererTotal(this.availableWidth, this.availableHeight);
             loc1 = this.rowHeight;
             height = loc1 * arg1 + this.margin * 2 + this.padding.vertical;
@@ -121,7 +121,7 @@ package net.wg.gui.components.controls
             var loc1:*=arg1.length;
             var loc2:*=_renderers.length;
             var loc3:*=0;
-            while (loc3 < loc2) 
+            while (loc3 < loc2)
             {
                 loc4 = getRendererAt(loc3);
                 loc5 = this._scrollPosition + loc3;
@@ -156,19 +156,20 @@ package net.wg.gui.components.controls
             var loc1:*=_renderers ? _renderers.length : 0;
             var loc6:*=App.utils.commons;
             --loc2;
-            while (loc2 >= 0) 
+            while (loc2 >= 0)
             {
                 loc3 = getRendererAt(loc2);
-                if (loc3 != null) 
+                if (loc3 != null)
                 {
                     cleanUpRenderer(loc3);
-                    if (loc4 = loc3 as net.wg.infrastructure.interfaces.entity.IDisposable) 
+                    loc4 = loc3 as net.wg.infrastructure.interfaces.entity.IDisposable;
+                    if (loc4)
                     {
                         loc4.dispose();
                         loc6.releaseReferences(loc4);
                     }
                     loc5 = loc3 as flash.display.DisplayObject;
-                    if (container.contains(loc5)) 
+                    if (container.contains(loc5))
                     {
                         loc6.releaseReferences(loc5);
                         container.removeChild(loc5);
@@ -177,7 +178,7 @@ package net.wg.gui.components.controls
                 _renderers.splice(loc2, 1);
                 --loc2;
             }
-            if (this._scrollBar) 
+            if (this._scrollBar)
             {
                 this._scrollBar.removeEventListener(flash.events.MouseEvent.MOUSE_WHEEL, this.blockMouseWheel, false);
                 this._scrollBar.removeEventListener(flash.events.Event.SCROLL, this.handleScroll, false);
@@ -187,7 +188,7 @@ package net.wg.gui.components.controls
                 loc6.releaseReferences(this._scrollBar);
                 this._scrollBar = null;
             }
-            if (container) 
+            if (container)
             {
                 loc6.releaseReferences(container);
                 removeChild(container);
@@ -211,7 +212,7 @@ package net.wg.gui.components.controls
 
         protected function cleanData():void
         {
-            if (_dataProvider) 
+            if (_dataProvider)
             {
                 _dataProvider.removeEventListener(flash.events.Event.CHANGE, handleDataChange, false);
                 _dataProvider.cleanUp();
@@ -252,7 +253,7 @@ package net.wg.gui.components.controls
 
         public function set inspectablePadding(arg1:Object):void
         {
-            if (!componentInspectorSetting) 
+            if (!componentInspectorSetting)
                 return;
             this.padding = new scaleform.clik.utils.Padding(arg1.top, arg1.right, arg1.bottom, arg1.left);
             return;
@@ -278,7 +279,7 @@ package net.wg.gui.components.controls
         public function set scrollPosition(arg1:Number):void
         {
             arg1 = Math.max(0, Math.min(_dataProvider.length - _totalRenderers, Math.round(arg1)));
-            if (this._scrollPosition == arg1) 
+            if (this._scrollPosition == arg1)
                 return;
             this._scrollPosition = arg1;
             invalidateData();
@@ -287,7 +288,7 @@ package net.wg.gui.components.controls
 
         public override function set selectedIndex(arg1:int):void
         {
-            if (arg1 == _selectedIndex || arg1 == _newSelectedIndex) 
+            if (arg1 == _selectedIndex || arg1 == _newSelectedIndex)
                 return;
             _newSelectedIndex = arg1;
             invalidateSelectedIndex();
@@ -312,10 +313,10 @@ package net.wg.gui.components.controls
 
         public function set rowHeight(arg1:Number):void
         {
-            if (arg1 == 0) 
+            if (arg1 == 0)
             {
                 arg1 = NaN;
-                if (_inspector) 
+                if (_inspector)
                     return;
             }
             this._rowHeight = arg1;
@@ -336,73 +337,73 @@ package net.wg.gui.components.controls
 
         public override function scrollToIndex(arg1:uint):void
         {
-            if (_totalRenderers == 0) 
+            if (_totalRenderers == 0)
                 return;
-            if (arg1 >= this._scrollPosition && arg1 < this._scrollPosition + _totalRenderers) 
+            if (arg1 >= this._scrollPosition && arg1 < this._scrollPosition + _totalRenderers)
                 return;
-            if (arg1 < this._scrollPosition) 
+            if (arg1 < this._scrollPosition)
                 this.scrollPosition = arg1;
-            else 
+            else
                 this.scrollPosition = arg1 - (_totalRenderers - 1);
             return;
         }
 
         public override function handleInput(arg1:scaleform.clik.events.InputEvent):void
         {
-            if (arg1.handled) 
+            if (arg1.handled)
                 return;
             var loc1:*=getRendererAt(_selectedIndex, this._scrollPosition);
-            if (loc1 != null) 
+            if (loc1 != null)
             {
                 loc1.handleInput(arg1);
-                if (arg1.handled) 
+                if (arg1.handled)
                     return;
             }
             var loc2:*=arg1.details;
             var loc3:*=loc2.value == scaleform.clik.constants.InputValue.KEY_DOWN || loc2.value == scaleform.clik.constants.InputValue.KEY_HOLD;
             var loc4:*=loc2.navEquivalent;
-            switch (loc4) 
+            switch (loc4)
             {
                 case scaleform.clik.constants.NavigationCode.UP:
-                    if (selectedIndex != -1) 
-                        if (_selectedIndex > 0) 
-                            if (loc3) 
+                    if (selectedIndex != -1)
+                        if (_selectedIndex > 0)
+                            if (loc3)
                                 selectedIndex--;
-                        else if (this.wrapping != scaleform.clik.constants.WrappingMode.STICK) 
-                            if (this.wrapping != scaleform.clik.constants.WrappingMode.WRAP) 
+                        else if (this.wrapping != scaleform.clik.constants.WrappingMode.STICK)
+                            if (this.wrapping != scaleform.clik.constants.WrappingMode.WRAP)
                                 return;
-                            else if (loc3) 
+                            else if (loc3)
                                 this.selectedIndex = (_dataProvider.length - 1);
-                    else if (loc3) 
+                    else if (loc3)
                         this.selectedIndex = (this.scrollPosition + _totalRenderers - 1);
                     break;
                 case scaleform.clik.constants.NavigationCode.DOWN:
-                    if (_selectedIndex != -1) 
-                        if (_selectedIndex < (_dataProvider.length - 1)) 
-                            if (loc3) 
+                    if (_selectedIndex != -1)
+                        if (_selectedIndex < (_dataProvider.length - 1))
+                            if (loc3)
                                 selectedIndex++;
-                        else if (this.wrapping != scaleform.clik.constants.WrappingMode.STICK) 
-                            if (this.wrapping != scaleform.clik.constants.WrappingMode.WRAP) 
+                        else if (this.wrapping != scaleform.clik.constants.WrappingMode.STICK)
+                            if (this.wrapping != scaleform.clik.constants.WrappingMode.WRAP)
                                 return;
-                            else if (loc3) 
+                            else if (loc3)
                                 this.selectedIndex = 0;
-                    else if (loc3) 
+                    else if (loc3)
                         this.selectedIndex = this._scrollPosition;
                     break;
                 case scaleform.clik.constants.NavigationCode.END:
-                    if (!loc3) 
+                    if (!loc3)
                         this.selectedIndex = (_dataProvider.length - 1);
                     break;
                 case scaleform.clik.constants.NavigationCode.HOME:
-                    if (!loc3) 
+                    if (!loc3)
                         this.selectedIndex = 0;
                     break;
                 case scaleform.clik.constants.NavigationCode.PAGE_UP:
-                    if (loc3) 
+                    if (loc3)
                         this.selectedIndex = Math.max(0, _selectedIndex - _totalRenderers);
                     break;
                 case scaleform.clik.constants.NavigationCode.PAGE_DOWN:
-                    if (loc3) 
+                    if (loc3)
                         this.selectedIndex = Math.min((_dataProvider.length - 1), _selectedIndex + _totalRenderers);
                     break;
                 default:
@@ -420,21 +421,21 @@ package net.wg.gui.components.controls
         protected override function configUI():void
         {
             super.configUI();
-            if (this.padding == null) 
+            if (this.padding == null)
                 this.padding = new scaleform.clik.utils.Padding();
-            if (_itemRenderer == null && !_usingExternalRenderers) 
+            if (_itemRenderer == null && !_usingExternalRenderers)
                 itemRendererName = _itemRendererName;
             return;
         }
 
         protected override function draw():void
         {
-            if (isInvalid(scaleform.clik.constants.InvalidationType.SCROLL_BAR)) 
+            if (isInvalid(scaleform.clik.constants.InvalidationType.SCROLL_BAR))
                 this.createScrollBar();
-            if (isInvalid(scaleform.clik.constants.InvalidationType.RENDERERS)) 
+            if (isInvalid(scaleform.clik.constants.InvalidationType.RENDERERS))
                 this._autoRowHeight = NaN;
             super.draw();
-            if (isInvalid(scaleform.clik.constants.InvalidationType.DATA)) 
+            if (isInvalid(scaleform.clik.constants.InvalidationType.DATA))
                 this.updateScrollBar();
             return;
         }
@@ -449,13 +450,13 @@ package net.wg.gui.components.controls
             var loc5:*=this.margin + this.padding.top;
             var loc6:*=isInvalid(scaleform.clik.constants.InvalidationType.DATA);
             var loc7:*=0;
-            while (loc7 < loc1) 
+            while (loc7 < loc1)
             {
                 (loc8 = getRendererAt(loc7)).x = Math.round(loc4);
                 loc8.y = Math.round(loc5 + loc7 * loc2);
                 loc8.width = loc3;
                 loc8.height = loc2;
-                if (!loc6) 
+                if (!loc6)
                     loc8.validateNow();
                 ++loc7;
             }
@@ -468,32 +469,32 @@ package net.wg.gui.components.controls
             var loc1:*=null;
             var loc2:*=null;
             var loc3:*=null;
-            if (this._scrollBar) 
+            if (this._scrollBar)
             {
                 this._scrollBar.removeEventListener(flash.events.Event.SCROLL, this.handleScroll, false);
                 this._scrollBar.removeEventListener(flash.events.Event.CHANGE, this.handleScroll, false);
                 this._scrollBar.focusTarget = null;
-                if (container.contains(this._scrollBar as flash.display.DisplayObject)) 
+                if (container.contains(this._scrollBar as flash.display.DisplayObject))
                     container.removeChild(this._scrollBar as flash.display.DisplayObject);
                 this._scrollBar = null;
             }
-            if (!this._scrollBarValue || this._scrollBarValue == "") 
+            if (!this._scrollBarValue || this._scrollBarValue == "")
                 return;
             this._autoScrollBar = false;
-            if (this._scrollBarValue is String) 
+            if (this._scrollBarValue is String)
             {
-                if (parent != null) 
+                if (parent != null)
                     loc1 = parent.getChildByName(this._scrollBarValue.toString()) as scaleform.clik.interfaces.IScrollBar;
-                if (loc1 == null) 
+                if (loc1 == null)
                 {
                     loc2 = flash.utils.getDefinitionByName(this._scrollBarValue.toString()) as Class;
-                    if (loc2) 
+                    if (loc2)
                         loc1 = new loc2() as scaleform.clik.interfaces.IScrollBar;
-                    if (loc1) 
+                    if (loc1)
                     {
                         this._autoScrollBar = true;
                         loc3 = loc1 as Object;
-                        if (loc3 && this.thumbOffset) 
+                        if (loc3 && this.thumbOffset)
                         {
                             loc3.offsetTop = this.thumbOffset.top;
                             loc3.offsetBottom = this.thumbOffset.bottom;
@@ -503,11 +504,11 @@ package net.wg.gui.components.controls
                     }
                 }
             }
-            else if (this._scrollBarValue is Class) 
+            else if (this._scrollBarValue is Class)
             {
                 loc1 = new (this._scrollBarValue as Class)() as scaleform.clik.interfaces.IScrollBar;
                 loc1.addEventListener(flash.events.MouseEvent.MOUSE_WHEEL, this.blockMouseWheel, false, 0, true);
-                if (loc1 != null) 
+                if (loc1 != null)
                 {
                     this._autoScrollBar = true;
                     (loc1 as Object).offsetTop = this.thumbOffset.top;
@@ -515,11 +516,11 @@ package net.wg.gui.components.controls
                     container.addChild(loc1 as flash.display.DisplayObject);
                 }
             }
-            else 
+            else
                 loc1 = this._scrollBarValue as scaleform.clik.interfaces.IScrollBar;
             this._scrollBar = loc1;
             invalidateSize();
-            if (this._scrollBar == null) 
+            if (this._scrollBar == null)
                 return;
             this._scrollBar.addEventListener(flash.events.Event.SCROLL, this.handleScroll, false, 0, true);
             this._scrollBar.addEventListener(flash.events.Event.CHANGE, this.handleScroll, false, 0, true);
@@ -530,7 +531,7 @@ package net.wg.gui.components.controls
 
         protected function drawScrollBar():void
         {
-            if (!this._autoScrollBar) 
+            if (!this._autoScrollBar)
                 return;
             this._scrollBar.x = _width - this._scrollBar.width - this.margin;
             this._scrollBar.y = this.margin;

@@ -17,7 +17,7 @@ package com.xvm.io
         private static const COMMAND_GETGAMEREGION:String = "getGameRegion";
         private static const COMMAND_GETLANGUAGE:String = "getLanguage";
         private static const COMMAND_GETMODS:String = "getMods";
-        private static const COMMAND_LOADSTATDATA:String = "loadStatData";
+        private static const COMMAND_LOADBATTLESTAT:String = "loadBattleStat";
         private static const COMMAND_LOADUSERDATA:String = "loadUserData";
         private static const COMMAND_LOGSTAT:String = "logstat";
         private static const COMMAND_SAVE_SETTINGS:String = "save_settings";
@@ -56,9 +56,9 @@ package com.xvm.io
             _call(target, callback, [COMMAND_GETMODS]);
         }
 
-        public static function loadStatData(players:Array):void
+        public static function loadBattleStat(players:Array = null):void
         {
-            _call(null, null, [COMMAND_LOADSTATDATA, players]);
+            _call(null, null, [COMMAND_LOADBATTLESTAT, players]);
         }
 
         public static function loadUserData(value:String, isId:Boolean):void

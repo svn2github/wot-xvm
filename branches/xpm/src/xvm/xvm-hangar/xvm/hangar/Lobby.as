@@ -51,10 +51,8 @@ package xvm.hangar
         {
             if (Config.config.hangar.hideTutorial == true)
             {
-                setTimeout(function()
-                {
-                    page.header.tutorialControl.visible = false;
-                }, 1);
+                page.header.tutorialControl.addEventListener(LifeCycleEvent.ON_AFTER_POPULATE,
+                    function():void { page.header.tutorialControl.visible = false; } );
             }
         }
 

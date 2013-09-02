@@ -15,7 +15,7 @@ from constants import *
 from gameregion import region, language
 from logger import log
 from pinger import ping
-from stats import getStat, getUserData
+from stats import getBattleStat, getUserData
 
 NO_LOG_COMMANDS = (
     'ping',
@@ -49,7 +49,9 @@ class XvmStat(object):
             elif cmd == COMMAND_GETMODS:
                 res = self.getMods()
             elif cmd == COMMAND_LOADSTATDATA:
-                getStat(proxy, *args)
+                getBattleStat(proxy, id, args, True)
+            elif cmd == COMMAND_LOADBATTLESTAT:
+                getBattleStat(proxy, id, args)
             elif cmd == COMMAND_LOADUSERDATA:
                 getUserData(proxy, *args)
             elif cmd == COMMAND_LOAD_SETTINGS:

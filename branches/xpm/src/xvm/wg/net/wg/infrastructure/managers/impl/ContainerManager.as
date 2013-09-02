@@ -1,4 +1,4 @@
-package net.wg.infrastructure.managers.impl 
+package net.wg.infrastructure.managers.impl
 {
     import flash.display.*;
     import flash.events.*;
@@ -12,7 +12,7 @@ package net.wg.infrastructure.managers.impl
     import net.wg.infrastructure.interfaces.*;
     import net.wg.infrastructure.interfaces.entity.*;
     import net.wg.infrastructure.managers.*;
-    
+
     public class ContainerManager extends net.wg.infrastructure.base.meta.impl.ContainerManagerMeta implements net.wg.infrastructure.managers.IContainerManager, net.wg.infrastructure.base.meta.IContainerManagerMeta
     {
         public function ContainerManager()
@@ -38,9 +38,9 @@ package net.wg.infrastructure.managers.impl
             var loc2:*=null;
             var loc3:*=0;
             var loc4:*=this.containersMap;
-            for (loc1 in loc4) 
+            for (loc1 in loc4)
             {
-                if (!(loc2 = this.containersMap[loc1]).manageSize) 
+                if (!(loc2 = this.containersMap[loc1]).manageSize)
                     continue;
                 loc2.updateStage(arg1, arg2);
             }
@@ -51,7 +51,7 @@ package net.wg.infrastructure.managers.impl
         {
             var loc2:*=null;
             var loc1:*=false;
-            if (this.nameToView.hasOwnProperty(arg1)) 
+            if (this.nameToView.hasOwnProperty(arg1))
             {
                 loc2 = this.nameToView[arg1];
                 loc2.setFocused();
@@ -64,7 +64,7 @@ package net.wg.infrastructure.managers.impl
         {
             var loc1:*=false;
             var loc2:*;
-            if ((loc2 = this.tokenToView[arg1]) && loc2.view) 
+            if ((loc2 = this.tokenToView[arg1]) && loc2.view)
             {
                 loc2.view.x = arg2;
                 loc2.view.y = arg3;
@@ -72,12 +72,12 @@ package net.wg.infrastructure.managers.impl
                 this.updateFocus();
                 this.nameToView[loc2.view.as_name] = loc2;
                 loc1 = true;
-                if (loc2.view.as_config.type == net.wg.data.constants.ContainerTypes.CURSOR) 
+                if (loc2.view.as_config.type == net.wg.data.constants.ContainerTypes.CURSOR)
                     dispatchEvent(new net.wg.infrastructure.events.LoaderEvent(net.wg.infrastructure.events.LoaderEvent.CURSOR_LOADED, loc2.view.as_config, arg1, loc2.view));
-                if (loc2.view.as_config.type == net.wg.data.constants.ContainerTypes.WAITING) 
+                if (loc2.view.as_config.type == net.wg.data.constants.ContainerTypes.WAITING)
                     dispatchEvent(new net.wg.infrastructure.events.LoaderEvent(net.wg.infrastructure.events.LoaderEvent.WAITING_LOADED, loc2.view.as_config, arg1, loc2.view));
             }
-            else 
+            else
                 throw new Error("net.wg.infrastructure.base.BaseView is not found using token = " + arg1);
             return loc1;
         }
@@ -86,7 +86,7 @@ package net.wg.infrastructure.managers.impl
         {
             var loc1:*=false;
             var loc2:*=this.tokenToView[arg1];
-            if (loc2) 
+            if (loc2)
             {
                 delete this.nameToView[loc2.view.as_name];
                 delete this.tokenToView[arg1];
@@ -95,7 +95,7 @@ package net.wg.infrastructure.managers.impl
                 loc1 = true;
                 this.updateFocus();
             }
-            else 
+            else
                 throw new Error("net.wg.infrastructure.base.AbstractView is not found using token = " + arg1);
             return loc1;
         }
@@ -142,7 +142,7 @@ package net.wg.infrastructure.managers.impl
             cType = arg1;
             vName = arg2;
             result = false;
-            try 
+            try
             {
                 obj = net.wg.gui.components.common.ManagedContainer(this._containersMap[cType]).getTopmostView();
                 result = obj && vName == this.getViewName(obj);
@@ -170,16 +170,16 @@ package net.wg.infrastructure.managers.impl
             i = 0;
             cType = arg1;
             vName = arg2;
-            try 
+            try
             {
                 container = net.wg.gui.components.common.ManagedContainer(this._containersMap[cType]);
                 currentView = null;
                 childrenCount = container.numChildren;
                 i = 0;
-                while (i < childrenCount) 
+                while (i < childrenCount)
                 {
                     currentView = container.getChildAt(i);
-                    if (this.getViewName(currentView) == vName) 
+                    if (this.getViewName(currentView) == vName)
                     {
                         container.setFocusedView(currentView);
                         return;
@@ -206,7 +206,7 @@ package net.wg.infrastructure.managers.impl
             this._containersMap = arg1;
             var loc3:*=0;
             var loc4:*=this.containersMap;
-            for (loc1 in loc4) 
+            for (loc1 in loc4)
             {
                 loc2 = this.containersMap[loc1];
                 loc2.addEventListener(flash.events.FocusEvent.FOCUS_OUT, this.onContainerFocusOut);
@@ -222,7 +222,7 @@ package net.wg.infrastructure.managers.impl
         public function set loader(arg1:net.wg.infrastructure.base.meta.ILoaderManagerMeta):void
         {
             this._loader = arg1;
-            if (this._loader) 
+            if (this._loader)
                 this._loader.addEventListener(net.wg.infrastructure.events.LoaderEvent.VIEW_LOADED, this.handleViewLoaded);
             return;
         }
@@ -234,7 +234,7 @@ package net.wg.infrastructure.managers.impl
 
         public function set lastFocusedView(arg1:net.wg.infrastructure.interfaces.IView):void
         {
-            if (this._lastFocusedView && !(this._lastFocusedView == arg1)) 
+            if (this._lastFocusedView && !(this._lastFocusedView == arg1))
                 this.lastFocusedView.removeFocus();
             this._lastFocusedView = arg1;
             return;
@@ -253,20 +253,20 @@ package net.wg.infrastructure.managers.impl
             var loc1:*;
             key = null;
             container = null;
-            try 
+            try
             {
-                loc2 = 0;
+                var loc2:Number = 0;
                 var loc3:*=this.tokenToView;
-                for (key in loc3) 
+                for (key in loc3)
                 {
-                    if (this.as_hide(key)) 
+                    if (this.as_hide(key))
                         continue;
                     delete this.tokenToView[key];
                 }
                 this.tokenToView = null;
                 loc2 = 0;
                 loc3 = this.containersMap;
-                for (key in loc3) 
+                for (key in loc3)
                 {
                     container = this.getContainer(key);
                     assert(!(container == null), "ContainerManager.onDispose container is null for type " + key);
@@ -276,7 +276,7 @@ package net.wg.infrastructure.managers.impl
                 }
                 this.containersMap = null;
                 this._lastFocusedView = null;
-                if (this.loader) 
+                if (this.loader)
                 {
                     this.loader.removeEventListener(net.wg.infrastructure.events.LoaderEvent.VIEW_LOADED, this.handleViewLoaded);
                     this.loader = null;
@@ -292,7 +292,7 @@ package net.wg.infrastructure.managers.impl
         internal function getContainer(arg1:String):net.wg.infrastructure.interfaces.IManagedContainer
         {
             var loc1:*=null;
-            if (this.containersMap.hasOwnProperty(arg1)) 
+            if (this.containersMap.hasOwnProperty(arg1))
                 loc1 = this.containersMap[arg1] as net.wg.infrastructure.interfaces.IManagedContainer;
             return loc1;
         }
@@ -310,7 +310,7 @@ package net.wg.infrastructure.managers.impl
             var loc1:*;
             container = null;
             e = arg1;
-            try 
+            try
             {
                 container = this.getContainer(e.view.as_config.type);
                 assert(!(container == null), "ContainerManager.handleViewLoaded container is null for type " + e.view.as_config.type);
@@ -325,7 +325,7 @@ package net.wg.infrastructure.managers.impl
 
         internal function onContainerFocusOut(arg1:flash.events.FocusEvent):void
         {
-            if (arg1.target == arg1.currentTarget) 
+            if (arg1.target == arg1.currentTarget)
                 this.updateFocus(arg1.target);
             return;
         }
@@ -336,10 +336,10 @@ package net.wg.infrastructure.managers.impl
             var loc2:*=null;
             var loc3:*=0;
             var loc4:*=net.wg.data.constants.ContainerTypes.CTNR_ORDER;
-            for each (loc1 in loc4) 
+            for each (loc1 in loc4)
             {
                 loc2 = this.getContainer(loc1);
-                if (!(loc2 && !(loc2 == arg1) && loc2.setFocused(true))) 
+                if (!(loc2 && !(loc2 == arg1) && loc2.setFocused(true)))
                     continue;
                 break;
             }
@@ -395,7 +395,7 @@ class ViewInfo extends Object
     public function removeView():void
     {
         var loc1:*=this.view is net.wg.infrastructure.interfaces.IAbstractWindowView ? flash.display.DisplayObject((this.view as net.wg.infrastructure.interfaces.IAbstractWindowView).window) : this.view;
-        if (this.container.contains(loc1)) 
+        if (this.container.contains(loc1))
             this.container.removeChild(this.view);
         return;
     }

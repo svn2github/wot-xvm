@@ -7,6 +7,8 @@ import traceback
 from random import randint
 from urllib2 import urlopen
 import threading
+import time
+from Queue import Queue
 
 import BigWorld
 from items.vehicles import VEHICLE_CLASS_TAGS
@@ -23,6 +25,9 @@ PUBLIC_TOKEN = 'xpm'
 class _Stat(object):
     def __init__(self):
         player = BigWorld.player()
+        self.queue = Queue()
+        self.thread = None
+        self.req = None
         self.arenaId = None
         self.players = None
         self.playersSkip = None
@@ -36,23 +41,40 @@ class _Stat(object):
     def __del__(self):
         pass
 
-    def getStat(self, proxy, ids):
+
+    def processQueue(self):
+        if self.thread is not None:
+            return
+        if self.queue.empty():
+            return
+        self.req = self.queue.get()
+        self.thread = threading.Thread(target=self.req['func'])
+        self.thread.daemon = True
+        self.thread.start()
+
+
+    def getBattleStat(self):
         player = BigWorld.player()
         if player.arena is None:
+            self._respond(None)
             return
-        self._get_stat(proxy, ids)
+        self._get_battle()
 
 
-    def getUserData(self, proxy, value, isId):
-        self._get_user(proxy, value, isId)
+    def getUserData(self):
+        self._get_user()
 
 
-    def _respond(self, proxy, method, data):
+    def _respond(self, data):
         #log("DEBUG: respond: " + method)
-        proxy.call(method, [json.dumps(data)])
+        if not self.req['as2']:
+            self.req['proxy'].movie.invoke((self.req['method'], [json.dumps(data)]))
+        else:
+            self.req['proxy'].call(self.req['method'], [json.dumps(data)])
+        self.thread = None
+        self.processQueue()
 
-
-    def _get_stat(self, proxy, ids):
+    def _get_battle(self):
         player = BigWorld.player()
         if player.arenaUniqueID != self.arenaId:
             self.arenaId = player.arenaUniqueID
@@ -71,12 +93,12 @@ class _Stat(object):
                 cacheKey = "%d" % (pl.playerId)
                 if cacheKey not in self.cache:
                     self.playersSkip[str(pl.playerId)] = True
-                    players[pl.name] = self._get_stat_stub(pl)
+                    players[pl.name] = self._get_battle_stub(pl)
                     continue
             players[pl.name] = self.cache[cacheKey]
         #pprint(players)
 
-        self._respond(proxy, RESPOND_STATDATA, {'players': players, 'info': self.info})
+        self._respond({'players': players, 'info': self.info})
 
 
     def _update_players(self):
@@ -143,7 +165,8 @@ class _Stat(object):
             log('ERROR: _load_stat() exception: ' + traceback.format_exc(ex))
 
 
-    def _get_user(self, proxy, value, isId):
+    def _get_user(self):
+        (value, isId) = self.req['args']
         if isId:
             value = str(int(value))
         cacheKey = "%s,%d" % (value, isId)
@@ -165,11 +188,10 @@ class _Stat(object):
             except Exception, ex:
                 log('ERROR: _get_user() exception: ' + traceback.format_exc(ex))
 
-        self._respond(proxy, RESPOND_USERDATA,
-            self.cacheUser[cacheKey] if cacheKey in self.cacheUser else None)
+        self._respond(self.cacheUser[cacheKey] if cacheKey in self.cacheUser else None)
 
 
-    def _get_stat_stub(self, pl):
+    def _get_battle_stub(self, pl):
         return {
             'id': pl.playerId,
             'name': pl.name,
@@ -254,10 +276,24 @@ _stat = _Stat()
 #############################
 # Command
 
-def getStat(proxy, *args):
-    _stat.getStat(proxy, args[0])
+def getBattleStat(proxy, id, args, as2 = False):
+    _stat.queue.put({
+        'func':_stat.getBattleStat,
+        'proxy':proxy,
+        'id':id,
+        'method':RESPOND_STATDATA,
+        'args':args,
+        'as2':as2})
+    _stat.processQueue()
     pass
 
-def getUserData(proxy, *args):
-    _stat.getUserData(proxy, args[0], args[1])
+def getUserData(proxy, id, args):
+    _stat.queue.put({
+        'func':_stat.getUserStat,
+        'proxy':proxy,
+        'id':id,
+        'method':RESPOND_USERDATA,
+        'args':args,
+        'as2':False})
+    _stat.processQueue()
     pass
