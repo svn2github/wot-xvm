@@ -4,6 +4,7 @@
  */
 package xvm.hangar
 {
+    import com.xvm.cfg.CPingServers;
     import flash.display.*;
     import flash.utils.*;
     import net.wg.gui.lobby.LobbyPage;
@@ -39,12 +40,10 @@ package xvm.hangar
 
         private function initPing():void
         {
-            if (!Config.config.hangar.pingServers.enabled)
-                return;
-
-            // PingServers component
-            PingServers.initFeature(Config.config.login.pingServers);
-            page.addChild(new PingServersView(Config.config.hangar.pingServers));
+            var cfg:CPingServers = Config.config.hangar.pingServers;
+            PingServers.initFeature(cfg);
+            if (cfg.enabled)
+                page.addChild(new PingServersView(cfg));
         }
     }
 

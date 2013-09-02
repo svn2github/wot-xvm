@@ -69,7 +69,7 @@ package xvm.hangar.components.PingServers
 
         private function defineQuality(time:String):String
         {
-            var t:int = parseInt(time);
+            var t:Number = parseInt(time);
             if (isNaN(t))
                 return QUALITY_BAD;
             if (t < cfg.threshold[QUALITY_GREAT])

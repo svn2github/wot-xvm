@@ -21,9 +21,19 @@ pingResults = None
 #############################
 # Command
 
-
+"""
+BigWorld.WGPinger can crash client, and it is blocking operation. Don't use it.
+ICMP requires root privileges. Don't use it.
+"""
 def ping():
     try:
+        g_preDefinedHosts._PreDefinedHostList__ping()
+        hosts = g_preDefinedHosts._hosts;
+        pings = g_preDefinedHosts._PreDefinedHostList__pingResult
+        pprint(pings)
+        res = dict(map(lambda x: (x.name, pings[x.url] if x.url in pings else "?"), hosts))
+        return res
+
         global thread
         if thread is None:
             thread = threading.Thread(target=pingAsync)
@@ -42,10 +52,6 @@ def ping():
 
 #############################
 
-"""
-BigWorld.WGPinger can crash client, and it is blocking operation. Don't use it.
-ICMP requires root privileges. Don't use it.
-"""
 def pingAsync():
     try:
         if os.name == 'nt':
