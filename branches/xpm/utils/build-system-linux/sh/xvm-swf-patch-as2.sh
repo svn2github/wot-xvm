@@ -6,8 +6,6 @@
 
 files=(
         'battle'
-        'battleloading'
-        'LangBarPanel'
         'Minimap'
         'PlayersPanel'
         'StatisticForm'

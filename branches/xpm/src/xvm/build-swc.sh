@@ -2,11 +2,11 @@
 
 if [ "$OS" = "Windows_NT" ]; then
     flexsdk="$PROGRAMFILES/FlashDevelop/Tools/flexsdk"
+    compc="$flexsdk/bin/compc.exe"
 else
-    flexsdk="/usr/local"
+    compc="compc"
 fi
 
-compc="$flexsdk/bin/compc.exe"
 frswc="$flexsdk/frameworks/libs/framework.swc"
 
 classes="

@@ -6,8 +6,6 @@
 
 projects=(
         'battle'
-        'battleloading'
-        'LangBarPanel'
         'Minimap'
         'PlayersPanel'
         'StatisticForm'
