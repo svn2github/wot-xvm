@@ -1,11 +1,11 @@
 #!/bin/sh
 
 if [ "$OS" = "Windows_NT" ]; then
-    if [[ -z "$FLEXSDK" ]]; then
-        flexsdk="$PROGRAMFILES/FlashDevelop/Tools/flexsdk"
-		compc="$FLEXSDK/bin/compc.exe"
+    if [ "$FLEXSDK" = "" ]; then
+        FLEXSDK="$PROGRAMFILES/FlashDevelop/Tools/flexsdk"
+        compc="$FLEXSDK/bin/compc.exe"
     else
-	    compc="$FLEXSDK/bin/compc" #Apache Flex SDK has only bat and shell scripts
+        compc="$FLEXSDK/bin/compc" #Apache Flex SDK has only bat and shell scripts
     fi
 else
     compc="compc"
