@@ -4,7 +4,7 @@
 #Part of XVM build system
 #Do not change anything in this file if you are not sure
 
-export flexsdk="/opt/apache-flex-4.10"
+export FLEXSDK="/opt/apache-flex-4.10"
 projects=(
           'wg'
           'xvm'
@@ -20,7 +20,7 @@ export PATH=$PATH:../../utils/build-system-linux/bin/:$flexsdk/bin/
 
 for (( i=0; i<${#projects[@]}; i++ ));
   do
-    mono ../../utils/build-system-linux/bin/fdbuild-as3.exe -compiler:"$flexsdk" -cp:"" "${projects[$i]}.as3proj"
+    mono ../../utils/build-system-linux/bin/fdbuild-as3.exe -compiler:"$FLEXSDK" -cp:"" "${projects[$i]}.as3proj"
   done
 
 rm -rf lib/*
