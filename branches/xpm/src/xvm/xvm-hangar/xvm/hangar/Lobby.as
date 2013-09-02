@@ -31,6 +31,7 @@ package xvm.hangar
             {
                 //Logger.addObject("onAfterPopulate: " + view.as_alias);
                 initPing();
+                hideTutorial();
             }
             catch (ex:Error)
             {
@@ -45,6 +46,18 @@ package xvm.hangar
             if (cfg.enabled)
                 page.addChild(new PingServersView(cfg));
         }
+
+        private function hideTutorial():void
+        {
+            if (Config.config.hangar.hideTutorial == true)
+            {
+                setTimeout(function()
+                {
+                    page.header.tutorialControl.visible = false;
+                }, 1);
+            }
+        }
+
     }
 
 }

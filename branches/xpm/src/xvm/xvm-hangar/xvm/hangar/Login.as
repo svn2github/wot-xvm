@@ -36,6 +36,13 @@ package xvm.hangar
                 //Logger.addObject("onAfterPopulate: " + view.as_alias);
                 setTimeout(setVersion, 1);
                 initPing();
+
+                // ------------------ DEBUG ------------------
+                //var mc = main.createEmptyMovieClip("widgetsHolder", main.getNextHighestDepth());
+                //WidgetsFactory.initialize(mc, "sirmax2",
+                //    [ com.xvm.Components.Widgets.Settings.WidgetsSettingsDialog.DEFAULT_WIDGET_SETTINGS ]);
+                //var wsd = new com.xvm.Components.Widgets.Settings.WidgetsSettingsDialog(main, "sirmax2");
+                // ------------------ DEBUG ------------------
             }
             catch (ex:Error)
             {
