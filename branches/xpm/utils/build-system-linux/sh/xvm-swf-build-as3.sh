@@ -14,9 +14,9 @@ projects=(
 
 pushd ../../../src/xvm/ > /dev/null
 
-#you need to "git clone git://github.com/nexussays/playerglobal.git $flexsdk/frameworks/libs/player" first
-export PLAYERGLOBAL_HOME=$flexsdk/frameworks/libs/player 
-export PATH=$PATH:../../utils/build-system-linux/bin/:$flexsdk/bin/
+#you need to "git clone git://github.com/nexussays/playerglobal.git $FLEXSDK/frameworks/libs/player" first
+export PLAYERGLOBAL_HOME=$FLEXSDK/frameworks/libs/player 
+export PATH=$PATH:../../utils/build-system-linux/bin/:$FLEXSDK/bin/
 
 for (( i=0; i<${#projects[@]}; i++ ));
   do
