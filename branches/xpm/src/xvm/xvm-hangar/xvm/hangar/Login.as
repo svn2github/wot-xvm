@@ -4,10 +4,7 @@
  */
 package xvm.hangar
 {
-    import flash.display.MovieClip;
-    import flash.display.Sprite;
     import flash.events.Event;
-    import flash.text.TextField;
     import flash.utils.*;
     import net.wg.gui.login.impl.LoginPage;
     import net.wg.infrastructure.interfaces.IView;

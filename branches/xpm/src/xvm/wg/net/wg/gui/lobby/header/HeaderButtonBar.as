@@ -1,4 +1,4 @@
-package net.wg.gui.lobby.header 
+package net.wg.gui.lobby.header
 {
     import flash.display.*;
     import flash.text.*;
@@ -8,7 +8,7 @@ package net.wg.gui.lobby.header
     import scaleform.clik.constants.*;
     import scaleform.clik.controls.*;
     import scaleform.clik.events.*;
-    
+
     public class HeaderButtonBar extends scaleform.clik.controls.ButtonBar implements net.wg.infrastructure.interfaces.IHelpLayoutComponent
     {
         public function HeaderButtonBar()
@@ -22,7 +22,7 @@ package net.wg.gui.lobby.header
         {
             var loc1:*=_renderers.length;
             var loc2:*=1;
-            while (loc2 < (loc1 - 1)) 
+            while (loc2 < (loc1 - 1))
             {
                 (_renderers[loc2] as net.wg.infrastructure.interfaces.IHelpLayoutComponent).showHelpLayout();
                 ++loc2;
@@ -34,7 +34,7 @@ package net.wg.gui.lobby.header
         {
             var loc1:*=_renderers.length;
             var loc2:*=1;
-            while (loc2 < (loc1 - 1)) 
+            while (loc2 < (loc1 - 1))
             {
                 (_renderers[loc2] as net.wg.infrastructure.interfaces.IHelpLayoutComponent).closeHelpLayout();
                 ++loc2;
@@ -51,7 +51,7 @@ package net.wg.gui.lobby.header
 
         public override function handleInput(arg1:scaleform.clik.events.InputEvent):void
         {
-            if (!this._disableNav) 
+            if (!this._disableNav)
                 super.handleInput(arg1);
             return;
         }
@@ -66,51 +66,51 @@ package net.wg.gui.lobby.header
             var loc1:*=this.paddingLeft;
             var loc2:*=this.paddingTop;
             var loc3:*=-1;
-            if (_renderers[0] is Class(_itemRendererClass)) 
-                while (_renderers.length > _dataProvider.length) 
+            if (_renderers[0] is Class(_itemRendererClass))
+                while (_renderers.length > _dataProvider.length)
                 {
                     loc5 = (_renderers.length - 1);
-                    if (container.contains(_renderers[loc5])) 
+                    if (container.contains(_renderers[loc5]))
                         container.removeChild(_renderers[loc5]);
                     _renderers.splice(loc5--, 1);
                 }
-            else 
+            else
             {
-                while (container.numChildren > 0) 
+                while (container.numChildren > 0)
                     container.removeChildAt(0);
                 _renderers.length = 0;
             }
             var loc4:*=0;
-            while (loc4 < _dataProvider.length && loc3 == -1) 
+            while (loc4 < _dataProvider.length && loc3 == -1)
             {
                 loc7 = false;
-                if (loc4 < _renderers.length) 
+                if (loc4 < _renderers.length)
                     loc6 = _renderers[loc4];
-                else 
+                else
                 {
                     loc6 = new _itemRendererClass();
                     setupRenderer(loc6, loc4);
                     loc7 = true;
                 }
                 this.populateRendererData(loc6, loc4);
-                if (_autoSize == flash.text.TextFieldAutoSize.NONE && _buttonWidth > 0) 
+                if (_autoSize == flash.text.TextFieldAutoSize.NONE && _buttonWidth > 0)
                     loc6.width = Math.round(_buttonWidth);
-                else if (_autoSize != flash.text.TextFieldAutoSize.NONE) 
+                else if (_autoSize != flash.text.TextFieldAutoSize.NONE)
                     loc6.autoSize = _autoSize;
                 loc6.validateNow();
-                if (loc6.width + _spacing + loc1 < MAX_WIDTH) 
+                if (loc6.width + _spacing + loc1 < MAX_WIDTH)
                 {
                     loc6.y = this.paddingTop;
                     loc6.x = Math.round(loc1);
                     loc1 = loc1 + (loc6.width + _spacing);
                     loc2 = Math.round(loc6.height + this.paddingTop);
                 }
-                else 
+                else
                 {
                     loc3 = loc4;
                     loc6 = null;
                 }
-                if (loc7 && !(loc6 == null)) 
+                if (loc7 && !(loc6 == null))
                 {
                     loc6.group = _group;
                     container.addChild(loc6);
@@ -118,14 +118,15 @@ package net.wg.gui.lobby.header
                 }
                 ++loc4;
             }
-            if (loc3 > -1) 
+            if (loc3 > -1)
             {
                 loc8 = (_renderers.length - 1);
-                while (loc8 >= loc3) 
+                while (loc8 >= loc3)
                 {
-                    if (loc9 = _renderers[loc8]) 
+                    loc9 = _renderers[loc8];
+                    if (loc9)
                     {
-                        if (container.contains(loc9)) 
+                        if (container.contains(loc9))
                             container.removeChild(loc9);
                         _renderers.splice(loc8, 1);
                     }
@@ -144,16 +145,16 @@ package net.wg.gui.lobby.header
             arg1.label = itemToLabel(_dataProvider.requestItemAt(arg2));
             arg1.data = _dataProvider.requestItemAt(arg2);
             arg1.selected = arg2 == selectedIndex;
-            if (_dataProvider[arg2].textColor) 
+            if (_dataProvider[arg2].textColor)
                 net.wg.gui.components.controls.SoundButtonEx(arg1).textColor = _dataProvider[arg2].textColor;
-            if (_dataProvider[arg2].tooltip) 
+            if (_dataProvider[arg2].tooltip)
                 net.wg.gui.components.controls.SoundButtonEx(arg1).tooltip = _dataProvider[arg2].tooltip;
             return;
         }
 
         protected override function draw():void
         {
-            if (isInvalid(scaleform.clik.constants.InvalidationType.RENDERERS) || isInvalid(scaleform.clik.constants.InvalidationType.DATA) || isInvalid(scaleform.clik.constants.InvalidationType.SETTINGS) || isInvalid(scaleform.clik.constants.InvalidationType.SIZE)) 
+            if (isInvalid(scaleform.clik.constants.InvalidationType.RENDERERS) || isInvalid(scaleform.clik.constants.InvalidationType.DATA) || isInvalid(scaleform.clik.constants.InvalidationType.SETTINGS) || isInvalid(scaleform.clik.constants.InvalidationType.SIZE))
             {
                 this.visible = true;
                 removeChild(container);

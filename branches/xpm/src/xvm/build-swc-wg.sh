@@ -10,8 +10,9 @@ classes="
 App
 net.wg.infrastructure.events.LoaderEvent
 net.wg.infrastructure.events.LifeCycleEvent
-net.wg.gui.login.impl.LoginPage
 org.idmedia.as3commons.util.StringUtils
+net.wg.gui.login.impl.LoginPage
+net.wg.gui.lobby.LobbyPage
 "
 
 "$compc" -source-path wg -output lib/wg.swc -include-classes $classes

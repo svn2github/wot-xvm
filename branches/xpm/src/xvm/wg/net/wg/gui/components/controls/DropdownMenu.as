@@ -1,4 +1,4 @@
-package net.wg.gui.components.controls 
+package net.wg.gui.components.controls
 {
     import flash.display.*;
     import flash.events.*;
@@ -10,7 +10,7 @@ package net.wg.gui.components.controls
     import scaleform.clik.events.*;
     import scaleform.clik.interfaces.*;
     import scaleform.clik.managers.*;
-    
+
     public class DropdownMenu extends scaleform.clik.controls.DropdownMenu implements net.wg.infrastructure.interfaces.entity.ISoundable
     {
         public function DropdownMenu()
@@ -21,9 +21,9 @@ package net.wg.gui.components.controls
 
         protected override function handleStageClick(arg1:flash.events.MouseEvent):void
         {
-            if (this.contains(arg1.target as flash.display.DisplayObject)) 
+            if (this.contains(arg1.target as flash.display.DisplayObject))
                 return;
-            if (this._dropdownRef && this._dropdownRef.contains(arg1.target as flash.display.DisplayObject)) 
+            if (this._dropdownRef && this._dropdownRef.contains(arg1.target as flash.display.DisplayObject))
                 return;
             close();
             return;
@@ -31,12 +31,12 @@ package net.wg.gui.components.controls
 
         public override function set dataProvider(arg1:scaleform.clik.interfaces.IDataProvider):void
         {
-            if (_dataProvider == arg1) 
+            if (_dataProvider == arg1)
                 return;
-            if (_dataProvider != null) 
+            if (_dataProvider != null)
                 _dataProvider.removeEventListener(flash.events.Event.CHANGE, handleDataChange, false);
             _dataProvider = arg1;
-            if (_dataProvider == null) 
+            if (_dataProvider == null)
                 return;
             this.calcMenuAvailableRowCount();
             _dataProvider.addEventListener(flash.events.Event.CHANGE, handleDataChange, false, 0, true);
@@ -47,22 +47,22 @@ package net.wg.gui.components.controls
         internal function calcMenuAvailableRowCount():void
         {
             var loc1:*=_dataProvider ? _dataProvider.length : 0;
-            if (menuRowsFixed) 
+            if (menuRowsFixed)
             {
                 menuRowCount = this._maxRowCount;
                 this.allowScrolling = true;
             }
-            else if (this._maxRowCount < 0) 
+            else if (this._maxRowCount < 0)
             {
                 menuRowCount = loc1;
                 this.allowScrolling = false;
             }
-            else if (this._maxRowCount < loc1) 
+            else if (this._maxRowCount < loc1)
             {
                 menuRowCount = this._maxRowCount;
                 this.allowScrolling = true;
             }
-            else 
+            else
             {
                 menuRowCount = loc1;
                 this.allowScrolling = false;
@@ -90,7 +90,7 @@ package net.wg.gui.components.controls
 
         public function set handleScroll(arg1:Boolean):void
         {
-            if (this._handleScroll != arg1) 
+            if (this._handleScroll != arg1)
             {
                 this._handleScroll = arg1;
                 invalidate(HANDLE_SCROLL_INV);
@@ -109,26 +109,26 @@ package net.wg.gui.components.controls
             removeEventListener(flash.events.MouseEvent.DOUBLE_CLICK, handleMouseRelease, false);
             removeEventListener(scaleform.clik.events.InputEvent.INPUT, handleInput, false);
             removeEventListener(flash.events.MouseEvent.MOUSE_WHEEL, this.mouseWheelHandler, false);
-            if (_repeatTimer) 
+            if (_repeatTimer)
             {
                 _repeatTimer.removeEventListener(flash.events.TimerEvent.TIMER_COMPLETE, beginRepeat, false);
                 _repeatTimer.removeEventListener(flash.events.TimerEvent.TIMER, handleRepeat, false);
             }
-            if (_dropdownRef) 
+            if (_dropdownRef)
             {
                 _dropdownRef.removeEventListener(scaleform.clik.events.ListEvent.ITEM_CLICK, handleMenuItemClick, false);
-                if (_dropdownRef is net.wg.infrastructure.interfaces.entity.IDisposable) 
+                if (_dropdownRef is net.wg.infrastructure.interfaces.entity.IDisposable)
                     net.wg.infrastructure.interfaces.entity.IDisposable(_dropdownRef).dispose();
                 _dropdownRef.parent.removeChild(_dropdownRef);
                 _dropdownRef = null;
             }
-            if (_dataProvider) 
+            if (_dataProvider)
             {
                 _dataProvider.removeEventListener(flash.events.Event.CHANGE, handleDataChange, false);
                 _dataProvider.cleanUp();
                 _dataProvider = null;
             }
-            if (scrollBar && scrollBar is net.wg.infrastructure.interfaces.entity.IDisposable) 
+            if (scrollBar && scrollBar is net.wg.infrastructure.interfaces.entity.IDisposable)
                 net.wg.infrastructure.interfaces.entity.IDisposable(scrollBar).dispose();
             scrollBar = null;
             super.dispose();
@@ -165,7 +165,7 @@ package net.wg.gui.components.controls
             super.configUI();
             this.hitArea = this.hitMc;
             buttonMode = true;
-            if (App.soundMgr) 
+            if (App.soundMgr)
                 App.soundMgr.addSoundsHdlrs(this);
             this.calcMenuAvailableRowCount();
             return;
@@ -174,10 +174,10 @@ package net.wg.gui.components.controls
         protected override function draw():void
         {
             super.draw();
-            if (isInvalid(HANDLE_SCROLL_INV)) 
+            if (isInvalid(HANDLE_SCROLL_INV))
             {
                 removeEventListener(flash.events.MouseEvent.MOUSE_WHEEL, this.mouseWheelHandler);
-                if (this._handleScroll) 
+                if (this._handleScroll)
                     addEventListener(flash.events.MouseEvent.MOUSE_WHEEL, this.mouseWheelHandler, false, 0, true);
             }
             return;
@@ -187,26 +187,26 @@ package net.wg.gui.components.controls
         {
             var loc1:*=null;
             var loc2:*=null;
-            if (dropdown == null) 
+            if (dropdown == null)
                 return;
-            if (menuWidth == -1) 
+            if (menuWidth == -1)
                 menuWidth = width - this.SHADOW_WIDTH;
-            if (dropdown is String && !(dropdown == "")) 
+            if (dropdown is String && !(dropdown == ""))
             {
                 loc2 = flash.utils.getDefinitionByName(dropdown.toString()) as Class;
-                if (loc2 != null) 
+                if (loc2 != null)
                     loc1 = new loc2() as scaleform.clik.controls.CoreList;
             }
-            if (loc1) 
+            if (loc1)
             {
-                if (itemRenderer is String && !(itemRenderer == "")) 
+                if (itemRenderer is String && !(itemRenderer == ""))
                     loc1.itemRenderer = flash.utils.getDefinitionByName(itemRenderer.toString()) as Class;
-                else if (itemRenderer is Class) 
+                else if (itemRenderer is Class)
                     loc1.itemRenderer = itemRenderer as Class;
-                if (this.allowScrolling) 
-                    if (scrollBar is String && !(scrollBar == "")) 
+                if (this.allowScrolling)
+                    if (scrollBar is String && !(scrollBar == ""))
                         loc1.scrollBar = flash.utils.getDefinitionByName(scrollBar.toString()) as Class;
-                    else if (scrollBar is Class) 
+                    else if (scrollBar is Class)
                         loc1.scrollBar = scrollBar as Class;
                 loc1.selectedIndex = _selectedIndex;
                 loc1.width = menuWidth != -1 ? menuWidth : width + menuOffset.left + menuOffset.right;
@@ -232,12 +232,13 @@ package net.wg.gui.components.controls
             var loc3:*=null;
             var loc1:*=arg1.delta > 0 ? -1 : 1;
             var loc2:*=_selectedIndex + loc1;
-            if (loc2 < 0) 
+            if (loc2 < 0)
                 loc2 = 0;
-            else if (loc2 >= _dataProvider.length) 
+            else if (loc2 >= _dataProvider.length)
                 loc2 = (_dataProvider.length - 1);
-            if (_dropdownRef && !(loc2 == _selectedIndex)) 
-                if (loc3 = _dropdownRef as scaleform.clik.controls.ScrollingList) 
+            if (_dropdownRef && !(loc2 == _selectedIndex))
+                loc3 = _dropdownRef as scaleform.clik.controls.ScrollingList;
+                if (loc3)
                     _dropdownRef.selectedIndex = loc2;
             this.selectedIndex = loc2;
             return;
@@ -247,13 +248,13 @@ package net.wg.gui.components.controls
         {
             var loc1:*=null;
             var loc2:*=0;
-            if (_selectedIndex == arg1) 
+            if (_selectedIndex == arg1)
                 return;
             _selectedIndex = arg1;
             invalidateSelectedIndex();
-            if (_dropdownRef == null) 
+            if (_dropdownRef == null)
                 dispatchEvent(new scaleform.clik.events.ListEvent(scaleform.clik.events.ListEvent.INDEX_CHANGE, true, false, _selectedIndex, -1, -1, null, _dataProvider[_selectedIndex]));
-            else 
+            else
             {
                 loc1 = _dropdownRef as scaleform.clik.controls.CoreList;
                 loc2 = loc1 is scaleform.clik.controls.ScrollingList ? (loc1 as scaleform.clik.controls.ScrollingList).scrollPosition : 0;
@@ -286,17 +287,17 @@ package net.wg.gui.components.controls
 
         public override function set enabled(arg1:Boolean):void
         {
-            if (super.enabled == arg1) 
+            if (super.enabled == arg1)
                 return;
             super.enabled = arg1;
-            if (stage) 
+            if (stage)
                 this.close();
             return;
         }
 
         protected override function updateText():void
         {
-            if (!(_label == null) && !(textField == null)) 
+            if (!(_label == null) && !(textField == null))
                 textField.htmlText = _label;
             return;
         }

@@ -1,10 +1,10 @@
-package scaleform.clik.motion 
+package scaleform.clik.motion
 {
     import flash.display.*;
     import flash.events.*;
     import flash.geom.*;
     import flash.utils.*;
-    
+
     public class Tween extends Object
     {
         public function Tween(arg1:Number, arg2:Object=null, arg3:Object=null, arg4:Object=null)
@@ -12,20 +12,20 @@ package scaleform.clik.motion
             super();
             this.duration = arg1;
             this.target = arg2;
-            if (arg2 is flash.display.DisplayObject) 
+            if (arg2 is flash.display.DisplayObject)
             {
                 this.targetDO = flash.display.DisplayObject(arg2);
                 this.transform = this.targetDO.transform;
             }
             this.props = arg3;
-            if (arg4) 
+            if (arg4)
                 this.quickSet(arg4);
-            if (arg4 == null || arg4.paused == null) 
+            if (arg4 == null || arg4.paused == null)
                 this.paused = false;
             return;
         }
 
-        
+
         {
             ticker = new flash.display.Shape();
             workingMatrix = new flash.geom.Matrix();
@@ -53,20 +53,20 @@ package scaleform.clik.motion
 
         public function set paused(arg1:Boolean):void
         {
-            if (arg1 == this._paused) 
+            if (arg1 == this._paused)
                 return;
             this._paused = arg1;
-            if (arg1) 
+            if (arg1)
                 removeTween(this);
-            else 
+            else
             {
-                if (firstTween) 
+                if (firstTween)
                 {
                     firstTween.prev = this;
                     this.next = firstTween;
                 }
                 firstTween = this;
-                if (this._position >= this.delay + this.duration) 
+                if (this._position >= this.delay + this.duration)
                     this._position = 0;
             }
             return;
@@ -83,7 +83,7 @@ package scaleform.clik.motion
             var loc1:*=null;
             var loc2:*=0;
             var loc3:*=arg1;
-            for (loc1 in loc3) 
+            for (loc1 in loc3)
                 this[loc1] = arg1[loc1];
             return;
         }
@@ -93,7 +93,7 @@ package scaleform.clik.motion
             var loc1:*=new Prop();
             loc1.name = arg1;
             loc1.prev = null;
-            if (this.firstProp) 
+            if (this.firstProp)
                 this.firstProp.prev = loc1;
             loc1.next = this.firstProp;
             var loc2:*;
@@ -108,9 +108,9 @@ package scaleform.clik.motion
             var loc1:*=false;
             var loc4:*=0;
             var loc5:*=this.props;
-            for (loc2 in loc5) 
+            for (loc2 in loc5)
             {
-                if (this.fastTransform && this.transform && propsDO[loc2]) 
+                if (this.fastTransform && this.transform && propsDO[loc2])
                 {
                     loc1 = true;
                     continue;
@@ -120,7 +120,7 @@ package scaleform.clik.motion
                 loc3.start = loc6 = this.target[loc2];
                 loc3.delta = this.props[loc2] - loc6;
             }
-            if (loc1) 
+            if (loc1)
             {
                 this.startMatrix = new flash.geom.Matrix(this.targetDO.scaleX, this.targetDO.rotation * degToRad, this.targetDO.alpha, this.targetDO.scaleY, this.targetDO.x, this.targetDO.y);
                 this.deltaMatrix = new flash.geom.Matrix(isNaN(this.props.scaleX) ? 0 : this.props.scaleX - this.startMatrix.a, isNaN(this.props.rotation) ? 0 : (this.props.rotation - this.targetDO.rotation) * degToRad, isNaN(this.props.alpha) ? 0 : this.props.alpha - this.startMatrix.c, isNaN(this.props.scaleY) ? 0 : this.props.scaleY - this.startMatrix.d, isNaN(this.props.x) ? 0 : this.props.x - this.startMatrix.tx, isNaN(this.props.y) ? 0 : this.props.y - this.startMatrix.ty);
@@ -134,34 +134,35 @@ package scaleform.clik.motion
             var loc4:*=NaN;
             var loc5:*=NaN;
             var loc6:*=NaN;
-            if (this.target == null) 
+            if (this.target == null)
             {
                 this.paused = true;
                 var loc2:*=true;
                 return;
             }
             this._position = this._position + arg1;
-            if (this._position <= this.delay) 
+            if (this._position <= this.delay)
                 return;
-            if (this.props) 
+            if (this.props)
                 this.init();
             var loc1:*=(this._position - this.delay) / this.duration;
             loc2 = loc1 >= 1;
-            if (loc2) 
+            if (loc2)
             {
                 loc1 = 1;
                 this._position = this.duration + this.delay;
             }
-            if (this.ease != null) 
+            if (this.ease != null)
                 loc1 = this.easeParam != null ? this.ease(loc1, 0, 1, 1, this.easeParam) : this.ease(loc1, 0, 1, 1);
-            if (this.startMatrix) 
+            if (this.startMatrix)
             {
-                if (loc4 = this.startMatrix.b + this.deltaMatrix.b * loc1) 
+                loc4 = this.startMatrix.b + this.deltaMatrix.b * loc1;
+                if (loc4)
                 {
                     loc5 = Math.cos(loc4);
                     loc6 = Math.sin(loc4);
                 }
-                else 
+                else
                 {
                     loc5 = 1;
                     loc6 = 0;
@@ -173,26 +174,26 @@ package scaleform.clik.motion
                 workingMatrix.tx = this.startMatrix.tx + this.deltaMatrix.tx * loc1;
                 workingMatrix.ty = this.startMatrix.ty + this.deltaMatrix.ty * loc1;
                 this.transform.matrix = workingMatrix;
-                if (this.deltaMatrix.c) 
+                if (this.deltaMatrix.c)
                     this.targetDO.alpha = this.startMatrix.c + this.deltaMatrix.c * loc1;
             }
             var loc3:*=this.firstProp;
-            while (loc3) 
+            while (loc3)
             {
                 this.target[loc3.name] = loc3.start + loc3.delta * loc1;
                 loc3 = loc3.next;
             }
-            if (this.onChange != null) 
+            if (this.onChange != null)
                 this.onChange(this);
-            if (loc2) 
+            if (loc2)
             {
-                if (this.loop) 
+                if (this.loop)
                     this.reset();
-                else 
+                else
                     this.paused = true;
-                if (this.nextTween) 
+                if (this.nextTween)
                     this.nextTween.paused = false;
-                if (this.onComplete != null) 
+                if (this.onComplete != null)
                     this.onComplete(this);
             }
             return;
@@ -205,7 +206,7 @@ package scaleform.clik.motion
             var loc2:*=loc1 - lastTime;
             lastTime = loc1;
             var loc3:*=firstTween;
-            while (loc3) 
+            while (loc3)
             {
                 loc4 = loc3.next;
                 loc3.updatePosition(loc3.frameBased ? 1 : loc2);
@@ -216,11 +217,11 @@ package scaleform.clik.motion
 
         protected static function removeTween(arg1:scaleform.clik.motion.Tween):void
         {
-            if (arg1.prev) 
+            if (arg1.prev)
                 arg1.prev.next = arg1.next;
-            if (arg1.next) 
+            if (arg1.next)
                 arg1.next.prev = arg1.prev;
-            if (arg1 == firstTween) 
+            if (arg1 == firstTween)
                 firstTween = arg1.next;
             var loc1:*;
             arg1.next = loc1 = null;
