@@ -8,7 +8,7 @@ package com.xvm.utils
     import flash.text.*;
     import flash.filters.*;
     import org.idmedia.as3commons.util.StringUtils;
-    import com.xvm.Logger;
+    import com.xvm.*;
 
     public class Utils
     {
@@ -64,19 +64,6 @@ package com.xvm.utils
             return path;
         }
 
-        //public static function indexOf(array:Array, value:Object):Number
-        //{
-            //var i:Number = 0;
-            //var len:Number = array.length;
-            //while(i < len)
-            //{
-                //if (array[i] === value)
-                    //return i;
-                //++i;
-            //}
-            //return -1;
-        //}
-
         // 0 - equal, -1 - v1<v2, 1 - v1>v2, -2 - error
         public static function compareVersions(v1:String, v2:String):Number
         {
@@ -117,26 +104,6 @@ package com.xvm.utils
             return 0;
         }
 
-        /**
-         * Get children MovieClips of MovieClip
-         * FIXIT: skips TextField?
-         */
-/*        public static function getChildrenOf(target:MovieClip, recursive:Boolean):Array
-        {
-            var result:Array = [];
-            for (var i in target)
-            {
-                if (target[i] instanceof MovieClip)
-                {
-                    result.push(target[i]);
-
-                    // Concatenate children of clips at this level,recurse
-                    if (recursive)
-                        result = result.concat(getChildrenOf(target[i],true));
-                }
-            }
-            return result;
-        }
 
         /**
          * Array subtraction
@@ -202,13 +169,14 @@ package com.xvm.utils
             style.parseCSS(css);
             return style;
         }
-/*
+
         // Fix <img src='xvmres://...'> to <img src='img://XVMRES_ROOT/...'> (res_mods/xvm/res)
         public static function fixImgTag(str:String):String
         {
             return str.split("xvmres://").join("img://" + Defines.XVMRES_IMG_ROOT);
         }
 
+/*
         // Duplicate text field
         public static function duplicateTextField(mc:MovieClip, name:String, textField:TextField, yOffset:Number, align:String):TextField
         {
@@ -320,35 +288,6 @@ package com.xvm.utils
         private static function hideTooltip(e:Object):Void
         {
             net.wargaming.managers.ToolTipManager.instance.hide();
-        }
-
-        // http://www.koreanrandom.com/forum/topic/2625-/
-        public static function XEFF(value:Number):Number
-        {
-            return value < 420 ? 0 :
-                Math.round(Math.max(0, Math.min(100,
-                    value * (value * (value * (value * (value * (value *
-                    0.000000000000000045254
-                    - 0.00000000000033131)
-                    + 0.00000000094164)
-                    - 0.0000013227)
-                    + 0.00095664)
-                    - 0.2598)
-                    + 13.23
-                )));
-        }
-
-        public static function XWN(value:Number):Number
-        {
-            return value > 2160 ? 100 :
-                Math.round(Math.max(0, Math.min(100,
-                    value * (value * (value * (value *
-                    - 0.00000000001268
-                    + 0.00000005147)
-                    - 0.00006418)
-                    + 0.07576)
-                    - 7.25
-                )));
         }
 */
         /**

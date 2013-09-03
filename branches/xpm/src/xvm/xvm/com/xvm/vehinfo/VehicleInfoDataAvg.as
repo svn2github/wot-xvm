@@ -3,11 +3,21 @@ package com.xvm.vehinfo
 
 public class VehicleInfoDataAvg
 {
-    // Statistics summary for all regions
-        public static function get data():Dictionary
-        {
-            var d:Dictionary = new Dictionary();
+    import flash.utils.Dictionary;
 
+    private static var _data:Dictionary = null;
+    public static function get data():Dictionary
+    {
+        if (_data == null)
+            _data = _initData();
+        return _data;
+    }
+
+    private static function _initData():Dictionary
+    {
+        var d:Dictionary = new Dictionary();
+
+// Statistics summary for all regions
 d["ms_1"]={R:0.476955295,D:63,E:0.631623409,F:0.459117771,S:0.599677381,U:0.239176015};
 d["ltraktor"]={R:0.478969037,D:63,E:0.485044014,F:0.446591897,S:0.682488068,U:0.238970451};
 d["t1_cunningham"]={R:0.48242422,D:58,E:0.502825199,F:0.402486026,S:0.867554345,U:0.205973091};

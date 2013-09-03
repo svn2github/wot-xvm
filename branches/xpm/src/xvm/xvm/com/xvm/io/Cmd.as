@@ -56,9 +56,9 @@ package com.xvm.io
             _call(target, callback, [COMMAND_GETMODS]);
         }
 
-        public static function loadBattleStat(players:Array = null):void
+        public static function loadBattleStat(allowNetwork:Boolean = false, players:Array = null):void
         {
-            _call(null, null, [COMMAND_LOADBATTLESTAT, players]);
+            _call(null, null, [COMMAND_LOADBATTLESTAT, allowNetwork, players]);
         }
 
         public static function loadUserData(value:String, isId:Boolean):void

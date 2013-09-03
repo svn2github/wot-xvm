@@ -8,7 +8,16 @@ package com.xvm.vehinfo
 
     public class VehicleInfoData
     {
+        private static var _data:Dictionary = null;
+
         public static function get data():Dictionary
+        {
+            if (_data == null)
+                _data = _initData();
+            return _data;
+        }
+
+        private static function _initData():Dictionary
         {
             var d:Dictionary = new Dictionary();
 

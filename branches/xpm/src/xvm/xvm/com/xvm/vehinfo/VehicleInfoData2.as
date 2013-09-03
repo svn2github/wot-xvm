@@ -4,11 +4,28 @@
 */
 package com.xvm.vehinfo
 {
-
     import flash.utils.Dictionary;
 
     public class VehicleInfoData2
     {
+        private static var _data:Dictionary = null;
+        public static function get data():Dictionary
+        {
+            if (_data == null)
+                _data = _initData();
+            return _data;
+        }
+
+        private static var _vidToVname:Array = null;
+        public static function get vidToVname():Array
+        {
+            if (_vidToVname == null)
+                _vidToVname = _initVidToVname();
+            return _vidToVname;
+        }
+
+        // private
+
         /**
         * Vehicles in list has two turret modules.
         * Format:
@@ -16,7 +33,7 @@ package com.xvm.vehinfo
         * Turret status: 2 - unable to mount top gun to stock turret, 1 - able
         */
 
-        public static function get data():Dictionary
+        private static function _initData():Dictionary
         {
             var d:Dictionary = new Dictionary();
 
@@ -375,7 +392,7 @@ package com.xvm.vehinfo
             return d;
         }
 
-        public static function vidToVname():Object
+        private static function _initVidToVname():Array
         {
             var a:Array = new Array(); // Array is sparse in AS3
 

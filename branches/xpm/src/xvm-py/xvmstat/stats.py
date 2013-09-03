@@ -137,15 +137,21 @@ class _Stat(object):
             return
 
         try:
-            updateRequest = updateRequest.replace('?', '%3F') # for Chinese server
-            server = self.servers[randint(0, len(self.servers) - 1)]
-            responseFromServer, duration = self.loadUrl(server, updateRequest)
+            if self.req.args[0] == True: # allowNetwork
+                updateRequest = updateRequest.replace('?', '%3F') # for Chinese server
+                server = self.servers[randint(0, len(self.servers) - 1)]
+                responseFromServer, duration = self.loadUrl(server, updateRequest)
 
-            if len(responseFromServer) <= 0:
-                log('WARNING: Empty response or parsing error')
-                return
+                if len(responseFromServer) <= 0:
+                    log('WARNING: Empty response or parsing error')
+                    return
 
-            data = json.loads(responseFromServer)
+                data = json.loads(responseFromServer)
+            else:
+                players = []
+                for vehId in self.players:
+                    players.append(self._get_battle_stub(self.players[vehId]))
+                data = {'players':players}
 
             if 'info' in data and region in data['info']:
                 self.info = data['info'][region]
@@ -155,11 +161,12 @@ class _Stat(object):
                 return
 
             for stat in data['players']:
+                self._fix(stat)
                 #pprint(stat)
-                if 'name' not in stat or not stat['name']:
+                if 'nm' not in stat or not stat['nm']:
                     continue
-                cacheKey = "%d%s" % (stat['id'], "=" + stat['vname'] if stat['vname'] else '')
-                self.cache[cacheKey] = self._map(stat)
+                cacheKey = "%d%s" % (stat['_id'], "=" + stat['vname'] if stat['vname'] else '')
+                self.cache[cacheKey] = stat
 
         except Exception, ex:
             log('ERROR: _load_stat() exception: ' + traceback.format_exc(ex))
@@ -193,8 +200,8 @@ class _Stat(object):
 
     def _get_battle_stub(self, pl):
         return {
-            'id': pl.playerId,
-            'name': pl.name,
+            '_id': pl.playerId,
+            'nm': pl.name,
             'vname': pl.vName,
         }
 
@@ -234,18 +241,48 @@ class _Stat(object):
 
         return responseFromServer, duration
 
-    def _map(self, stat):
-        r = stat
-        if 'battles' in r:
-            if not 'b' in r:
-                r['b'] = r['battles']
-        if 'wins' in r:
-            if not 'w' in r:
-                r['w'] = r['wins']
-        if 'eff' in r:
-            if not 'e' in r:
-                r['e'] = r['eff']
-        return r
+    def _fix(self, stat):
+        self._r(stat, 'id', '_id')
+        self._r(stat, 'name', 'nm')
+        self._r(stat, 'date', 'dt')
+        self._r(stat, 'status', 'st')
+        self._r(stat, 'battles', 'b')
+        self._r(stat, 'wins', 'w')
+        self._r(stat, 'eff', 'e')
+        self._r(stat, 'vname', 'vn')
+
+        # TODO: optimize
+        for vehId in self.players:
+            pl = self.players[vehId]
+            if pl.playerId == stat['_id']:
+                stat['clan'] = pl.clan
+                stat['name'] = pl.name
+                if pl.vn == stat['vname']:
+                    stat['vname'] = pl.vName
+                    pass
+                break;
+
+
+    def update(self, vData):
+        self.vName = vData['vehicleType'].type.shortUserString
+        vId = vData['vehicleType'].type.id
+        self.vId = (vId[0] << 4) | (vId[1] << 8)
+        self.vLevel = vData['vehicleType'].type.level
+        self.maxHealth = vData['vehicleType'].maxHealth
+        self.vIcon = vData['vehicleType'].type.name.replace(':', '-')
+        self.vn = vData['vehicleType'].type.name
+        self.vn = self.vn[self.vn.find(':')+1:].upper()
+        self.vType = set(VEHICLE_CLASS_TAGS.intersection(vData['vehicleType'].type.tags)).pop()
+        self.team = vData['team'] - 1
+
+
+        return stat
+
+    def _r(self, r, a, b):
+        if a in r:
+            if not b in r:
+                r[b] = r[a]
+            del r[a]
 
 
 class _Player(object):
