@@ -21,14 +21,17 @@ package com.xvm.types
         public var _id:Number;          // player account id (long int)
         public var cr:Number;           // created (int)
         public var hip:Number;          // hit percent (int)
-        public var vn:String;           // internal vehicle name ("T-34")
+        public var vn:String;           // internal vehicle name ("IS-3")
         public var cap:Number;          // capture (int)
         public var wn:Number;           // WN6 rating
-        public var v:Dictionary;        // vehicle stat data, key - vname
+        public var vdata:Dictionary;    // vehicle stat data, key - vname
+        public var v:VData;             // current vehicle stat data
 
         public var clan:String;         // clan name
-        //public var vname:String;        // localized vehicle name ("T-34")
         //public var name:String;         // player name in current game ("sirmax2_RU" for Common Test)
+        //public var vname:String;        // localized vehicle name ("ИС-3")
+        public var icon:String;         // icon file name without path: "ussr-IS-3.png")
+        public var maxHealth:Number;    // maximum health (int)
 
         // calculated
         public var r:int;               // global win rate

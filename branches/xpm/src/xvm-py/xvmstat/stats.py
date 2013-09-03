@@ -259,6 +259,8 @@ class _Stat(object):
                 stat['name'] = pl.name
                 if pl.vn == stat['vname']:
                     stat['vname'] = pl.vName
+                    stat['icon'] = pl.vIcon
+                    stat['maxHealth'] = pl.maxHealth
                     pass
                 break;
 

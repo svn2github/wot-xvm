@@ -12,23 +12,19 @@ package com.xvm.utils
 
     public class Utils
     {
-        public static function toInt(value:Object, defaultValue:Number):Number
+        public static function toInt(value:Object, defaultValue:int = 0):int
         {
-            if (!defaultValue)
-                defaultValue = 0;
             if (!value)
                 return defaultValue;
-            var n: Number = parseInt(value.toString());
-            return isNaN(n) ? defaultValue : n;
+            var n:Number = parseInt(String(value));
+            return isNaN(n) ? defaultValue : int(n);
         }
 
-        public static function toFloat(value:Object, defaultValue:Number):Number
+        public static function toFloat(value:Object, defaultValue:Number = 0):Number
         {
-            if (!defaultValue)
-                defaultValue = 0;
             if (!value)
                 return defaultValue;
-            var n: Number = parseFloat(value.toString());
+            var n:Number = parseFloat(String(value));
             return isNaN(n) ? defaultValue : n;
         }
 
@@ -51,10 +47,10 @@ package com.xvm.utils
             return new PhpDate(date).format(format);
         }
 
-        public static function elapsedMSec(start:Date, end:Date):Number
+        /*public static function elapsedMSec(start:Date, end:Date):Number
         {
             return end.getTime() - start.getTime();
-        }
+        }*/
 
         public static function fixPath(path:String):String
         {

@@ -126,7 +126,7 @@ package com.xvm
                         // TODO
                         //StatData.s_data[nm].loadstate = (StatData.s_data[nm].vehicleKey == "UNKNOWN")
                         //    ? Defines.LOADSTATE_UNKNOWN : Defines.LOADSTATE_DONE;
-//                        Macros.RegisterMacrosData(name);
+                        Macros.RegisterMacrosData(name);
                         //Logger.addObject(stat[name], "stat[" + name + "]", 3);
                     }
                 }
