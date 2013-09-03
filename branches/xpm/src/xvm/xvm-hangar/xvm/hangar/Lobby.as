@@ -4,13 +4,13 @@
  */
 package xvm.hangar
 {
-    import com.xvm.cfg.CPingServers;
     import flash.display.*;
     import flash.utils.*;
     import net.wg.gui.lobby.LobbyPage;
     import net.wg.infrastructure.events.LifeCycleEvent;
     import net.wg.infrastructure.interfaces.IView;
     import com.xvm.*;
+    import com.xvm.types.cfg.*;
     import xvm.hangar.components.PingServers.*;
 
     public class Lobby extends XvmModBase

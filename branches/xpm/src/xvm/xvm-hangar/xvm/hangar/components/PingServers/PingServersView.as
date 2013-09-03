@@ -3,10 +3,10 @@ package xvm.hangar.components.PingServers
     import flash.display.*;
     import flash.text.*;
     import flash.filters.*;
-    import com.xvm.Logger;
-    import com.xvm.cfg.CPingServers;
-    import com.xvm.events.ObjectEvent;
-    import com.xvm.utils.Utils;
+    import com.xvm.*;
+    import com.xvm.types.cfg.*;
+    import com.xvm.events.*;
+    import com.xvm.utils.*;
 
     public class PingServersView extends Sprite
     {

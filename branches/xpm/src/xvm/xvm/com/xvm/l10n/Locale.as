@@ -14,7 +14,7 @@ package com.xvm.l10n
     import com.xvm.Defines;
     import com.xvm.Logger;
     import com.xvm.io.JSONxLoader;
-    import com.xvm.cfg.ConfigUtils;
+    import com.xvm.misc.ConfigUtils;
     import flash.events.SampleDataEvent;
 
     public class Locale extends EventDispatcher
@@ -32,17 +32,19 @@ package com.xvm.l10n
 
         public static function LoadLocaleFile():void
         {
-            JSONxLoader.LoadAndParse(Defines.XVM_ROOT + "l10n/" + Config.Language + ".xc", Instance, Instance.languageFileCallback);
+            JSONxLoader.LoadAndParse(Defines.XVM_ROOT + "l10n/" + Config.language + ".xc", Instance, Instance.languageFileCallback);
         }
 
-        public static function get(text:String):String
+        public static function get(format:String):String
         {
             //Logger.add("Locale[get]: string: " + text + " | string: " + s_lang.locale[text] + " | fallback string: " + s_lang_fallback[text] + " | language: " + _language );
-            return s_lang.locale[text] || s_lang_fallback[text] || text;
-        }
+            format = s_lang.locale[format] || s_lang_fallback[format] || format;
+        //    return format;
+        //}
 
-        public static function formatMacros(format:String):String
-        {
+        //public static function formatMacros(format:String):String
+        //{
+
             /** each item in array begin with macro */
             var formatParts:Vector.<String> = Vector.<String>(format.split("{{" + MACRO_PREFIX + ":"));
 
@@ -80,6 +82,9 @@ package com.xvm.l10n
         /** Hardcoded RU language */
         private static const FALLBACK_RU:Object = {
             "XVM_translator": "XVM Team",
+
+            // BattleLoading
+            "New version available": "Доступна новая версия",
 
             // Win chance
             "Chance error": "Ошибка расчета шансов",
@@ -235,7 +240,7 @@ package com.xvm.l10n
         function Locale()
         {
             // This strings will be used if .xc not found
-            s_lang_fallback = (Config.GameRegion == "RU") ? FALLBACK_RU : FALLBACK_EN;
+            s_lang_fallback = (Config.gameRegion == "RU") ? FALLBACK_RU : FALLBACK_EN;
         }
 
         private function languageFileCallback(event:Object):void
@@ -246,7 +251,7 @@ package com.xvm.l10n
                 if (event.error == null)
                 {
                     s_lang = event.data;
-                    Logger.add("Locale: Loaded '" + Config.Language + "' language by " + get("XVM_translator"));
+                    Logger.add("Locale: Loaded '" + Config.language + "' language by " + get("XVM_translator"));
                 }
                 else
                 {

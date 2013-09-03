@@ -4,18 +4,14 @@
  */
 package xvm.hangar
 {
-    import com.xvm.cfg.CPingServers;
-    import flash.events.Event;
+    import flash.events.*;
     import flash.utils.*;
     import net.wg.gui.login.impl.LoginPage;
     import net.wg.infrastructure.interfaces.IView;
-    import net.wg.infrastructure.base.meta.ILoginPageMeta
     import net.wg.infrastructure.events.LifeCycleEvent;
-    import com.xvm.Config;
-    import com.xvm.Logger;
-    import com.xvm.Defines;
-    import xvm.hangar.components.PingServers.PingServers;
-    import xvm.hangar.components.PingServers.PingServersView;
+    import com.xvm.*;
+    import com.xvm.types.cfg.*;
+    import xvm.hangar.components.PingServers.*;
 
     public class Login extends XvmModBase
     {

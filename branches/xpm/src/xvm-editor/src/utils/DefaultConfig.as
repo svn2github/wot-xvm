@@ -109,8 +109,7 @@ public class DefaultConfig
                 highlightVehicleIcon: true,      // False - disable highlighting of selected vehicle icon and squad.
                 useStandardMarkers: false,       // Use original wot markers.
                 // Show the clock on the Debug Panel (near FPS).
-                // Format: Y:year, M:month, D:day, H:hour, N:minutes, S:seconds.
-                clockFormat: "H:N",
+                clockFormat: "H:i",              // Format: http://php.net/date
                 clanIconsFolder: "clanicons/",   // Folder with clan icons
                 // Visual elements
                 elements: []
@@ -154,8 +153,7 @@ public class DefaultConfig
                 // ### Is there a clock:on\off switch variable supposed to be? ###
                 // A: No, it is possible to set clockFormat: "" to disable clock.
 
-                // Format: Y:year, M:month, D:day, H:hour, N:minutes, S:seconds.
-                clockFormat: "H:N:S",
+                clockFormat: "H:i:s",   // Format: http://php.net/date
                 showChances: false,     // Show game round win chances percentage.
                 showChancesExp: false,  // Show experimental "chance to win" formula.
                 removeSquadIcon: false, // Hide squad icon.

@@ -323,11 +323,10 @@
     Záporné hodnoty x, y umístí text k pravé dolní hranici
 
   Hodiny v bitvě a při načítání bitvy.
-    Formát: Y:rok, M:měsích, D:den, H:hodina, N:minuta, S:sekunda. "" - odstraní hodiny.
+    Formát: PHP Date: http://php.net/date
     Příklady:
-      "clockFormat": "H:N"          => 01:23
-      "clockFormat": "Y.M.D H:N:S"  => 2013.05.20 01:23:45
-    Je možné použít HTML pro hodiny v bitvě.
+      "clockFormat": "H:i"          => 01:23
+      "clockFormat": "Y.m.d H:i:s"  => 2013.05.20 01:23:45
 
   Rozsahy pro efektivitu {{teff}}, {{e}}.
     TEFF       E

@@ -4,7 +4,7 @@
  */
 package com.xvm.vehinfo
 {
-    import com.xvm.cfg.CVehicleNames;
+    import com.xvm.types.cfg.CVehicleNames;
 
     public class VehicleInfo
     {

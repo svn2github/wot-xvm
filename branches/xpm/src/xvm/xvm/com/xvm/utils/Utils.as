@@ -8,6 +8,7 @@ package com.xvm.utils
     import flash.text.*;
     import flash.filters.*;
     import org.idmedia.as3commons.util.StringUtils;
+    import com.xvm.Logger;
 
     public class Utils
     {
@@ -41,14 +42,13 @@ package com.xvm.utils
             return defaultValue ? value != "false" : value == "true";
         }
 
-        public static function Timeout(target:Object, callback:Function, timeout:Number):uint
+        /**
+         * @param format http://php.net/date
+         * https://code.google.com/p/as3-php-date/wiki/Documentation
+         */
+        public static function FormatDate(format:String, date:Date):String
         {
-            return setTimeout(function():void { callback.call(target) }, timeout);
-        }
-
-        public static function Interval(target:Object, callback:Function, timeout:Number):uint
-        {
-            return setInterval(function():void { callback.call(target) }, timeout);
+            return new PhpDate(date).format(format);
         }
 
         public static function elapsedMSec(start:Date, end:Date):Number
@@ -349,30 +349,6 @@ package com.xvm.utils
                     + 0.07576)
                     - 7.25
                 )));
-        }
-
-//        public static function FormatDate(format:String, date:Date):String
-//        {
-//            var keys = {Y:"getFullYear", M:"getMonth", D:"getDate", H:"getHours", N:"getMinutes", S:"getSeconds"/*, I:"getMilliseconds"*///};
-/*            var str = "";
-            if (!date)
-                date = new Date();
-            var ci, meth;
-            var formatArr = format.split(""); // charAt() is slow
-            var format_len = formatArr.length;
-            for (var i = 0; i < format_len; ++i)
-            {
-                ci = formatArr[i];
-                if (keys[ci] == undefined)
-                {
-                    str += ci;
-                    continue;
-                }
-                meth = keys[ci];
-                var val = date[meth]() + ((meth == "getMonth") ? 1 : 0);
-                str += (val < 10) ? "0" + val : val;
-            }
-            return str;
         }
 */
         /**

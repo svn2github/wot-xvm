@@ -1,14 +1,12 @@
 package xvm.hangar.components.PingServers
 {
-    import com.xvm.events.ObjectEvent;
     import flash.events.*;
     import flash.utils.*;
-    import com.xvm.cfg.CPingServers;
-    import com.xvm.Config;
-    import com.xvm.Defines;
-    import com.xvm.io.Cmd;
-    import com.xvm.io.JSONx;
     import org.idmedia.as3commons.util.StringUtils;
+    import com.xvm.types.cfg.*;
+    import com.xvm.*;
+    import com.xvm.events.*;
+    import com.xvm.io.*;
 
     public class PingServers extends EventDispatcher
     {

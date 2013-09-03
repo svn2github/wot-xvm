@@ -298,11 +298,10 @@
   Will work only with running xvm-stat!
 
   Clock in battle and in battle loading screen.
-  Format: Y:year, M:month, D:day, H:hour, N:minute, S:second. "" - remove clock.
+  Formát: PHP Date: http://php.net/date
   For example:
-  "clockFormat": "H:N"          => 01:23
-  "clockFormat": "Y.M.D H:N:S"  => 2013.05.20 01:23:45
-  Also possible to use HTML in clock in battle.
+      "clockFormat": "H:i"          => 01:23
+      "clockFormat": "Y.m.d H:i:s"  => 2013.05.20 01:23:45
 
   Efficiency ranges for {{teff}}, {{e}}.
     TEFF       E

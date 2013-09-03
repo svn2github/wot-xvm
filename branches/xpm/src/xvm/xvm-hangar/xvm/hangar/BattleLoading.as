@@ -6,12 +6,12 @@ package xvm.hangar
 {
     import flash.events.*;
     import flash.utils.*;
-    import flash.external.ExternalInterface;
     import net.wg.gui.lobby.battleloading.*;
     import net.wg.infrastructure.interfaces.IView;
     import net.wg.infrastructure.events.LifeCycleEvent;
     import com.xvm.*;
-    import com.xvm.io.Cmd;
+    import xvm.hangar.components.BattleLoading.*;
+    import xvm.hangar.components.WinChances.WinChances;
 
     public class BattleLoading extends XvmModBase
     {
@@ -29,15 +29,18 @@ package xvm.hangar
         {
             try
             {
-                //Logger.add("onAfterPopulate: " + view.as_alias);
-                ExternalInterface.addCallback(Cmd.RESPOND_STATDATA, Logger.add);
-                Cmd.loadBattleStat();
+                logBriefConfigurationInfo();
 
-                //if (page.initialized)
-                initBattleLoading();
-                //else
-                //    page.addEventListener(
-                //initBattleLoading();
+                //Logger.add("onAfterPopulate: " + view.as_alias);
+                Stat.loadBattleStat(this, statLoaded, true);
+
+                if (page.initialized)
+                    initBattleLoading();
+                else
+                {
+                    // TODO: find event
+                    setTimeout(initBattleLoading, 1);
+                }
             }
             catch (ex:Error)
             {
@@ -52,14 +55,39 @@ package xvm.hangar
 
         // PRIVATE
 
-        private function initBattleLoading():void
+        private function logBriefConfigurationInfo():void
         {
-            //page.form.helpTip.htmlText = "#@#$@#$@#$";
+            Logger.add(
+                "[BattleLoading]\n" +
+                "    XVM_VERSION=" + Defines.XVM_VERSION + " for WoT " + Defines.WOT_VERSION +"\n" +
+                "    gameRegion=" + Config.gameRegion + "\n" +
+                "    configVersion=" + Config.config.configVersion + "\n" +
+                "    showPlayersStatistics=" + Config.config.rating.showPlayersStatistics + "\n" +
+                // TODO "    loadEnemyStatsInFogOfWar=" + Config.config.rating.loadEnemyStatsInFogOfWar + "\n" +
+                "    useStandardMarkers=" + Config.config.battle.useStandardMarkers);
         }
 
-        private function statLoaded(data:Object):void
+        private function initBattleLoading():void
         {
-            Logger.addObject(data, "statLoaded");
+            try
+            {
+                // Components
+                new WinChances(page); // Winning chance info above players list.
+                new TipField(page);   // Information field below players list.
+                new Clock(page);  // Realworld time at right side of TipField.
+            }
+            catch (ex:Error)
+            {
+                Logger.add(ex.getStackTrace());
+            }
+        }
+
+        private function statLoaded():void
+        {
+            //Logger.addObject(Stat.stat, "statLoaded");
+
+            //TODO if (Config.config.rating.enableStatisticsLog == true)
+            //    StatsLogger.saveStatistics("setup", StatData.s_data);
         }
     }
 }

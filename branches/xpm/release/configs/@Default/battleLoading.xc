@@ -4,9 +4,10 @@
  */
 {
   "battleLoading": {
-    // Format of clock on the Battle Loading Screen. Format: Y:year, M:month, D:day, H:hour, N:minutes, S:seconds. "" - remove clock.
-    // Формат часов на экране загрузки боя. Формат: Y:год, M:месяц, D:день, H:часы, N:минуты, S:секунды. "" - убрать часы.
-    "clockFormat": "H:N:S",
+    // Format of clock on the Battle Loading Screen.
+    // Формат часов на экране загрузки боя.
+    // http://php.net/date
+    "clockFormat": "H:i:s",
     // true - Enable display of "chance to win" (only with xvm-stat) Read more: http://www.koreanrandom.com/forum/topic/1663-/
     // true - включить отображение шансов на победу (только с xvm-stat). Прочитать подробней: http://www.koreanrandom.com/forum/topic/1663-/
     "showChances": false,

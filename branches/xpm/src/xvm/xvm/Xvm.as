@@ -4,6 +4,8 @@
  */
 package
 {
+    XvmLinks;
+
     import flash.display.*;
     import flash.events.*;
     import flash.net.URLRequest;

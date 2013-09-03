@@ -7,9 +7,8 @@ package com.xvm
     import flash.display.MovieClip;
     import flash.events.Event;
     import flash.events.IEventDispatcher;
-    import com.xvm.cfg.CConfig;
-    import com.xvm.cfg.DefaultConfig;
-    import com.xvm.cfg.ConfigUtils;
+    import com.xvm.types.cfg.CConfig;
+    import com.xvm.misc.*;
     import com.xvm.events.ObjectEvent;
     import com.xvm.io.Cmd;
     import com.xvm.io.JSONxLoader;
@@ -27,7 +26,7 @@ package com.xvm
             return _instance;
         }
 
-        public static function get Loaded():Boolean
+        public static function get loaded():Boolean
         {
             return instance.loaded;
         }
@@ -37,17 +36,17 @@ package com.xvm
             return instance.config;
         }
 
-        public static function get GameRegion():String
+        public static function get gameRegion():String
         {
             return config.region;
         }
 
-        public static function get Language():String
+        public static function get language():String
         {
             return config.language;
         }
 
-        public static function get StateInfo():Object
+        public static function get stateInfo():Object
         {
             return instance.stateInfo;
         }
@@ -62,14 +61,18 @@ package com.xvm
 
         // PRIVATE
 
-        private var config:CConfig = null;
-        private var loading:Boolean = false;
-        private var loaded:Boolean = false;
-        private var stateInfo:Object = null;
-        private var listeners:Vector.<Object> = null;
+        private var config:CConfig;
+        private var loading:Boolean;
+        private var loaded:Boolean;
+        private var stateInfo:Object;
+        private var listeners:Vector.<Object>;
 
         function Config()
         {
+            config = null;
+            loading = false;
+            loaded = false;
+            stateInfo = { };
             listeners = new Vector.<Object>();
             loadConfig();
         }
@@ -200,7 +203,7 @@ package com.xvm
         {
             Locale.Instance.removeEventListener(Defines.E_LOCALE_LOADED, setConfigLoaded);
 
-            if (e.result != null && e.result.error != null && stateInfo == null && stateInfo.error == null)
+            if (e.result != null && e.result.error != null && stateInfo.error == null)
                 stateInfo = { error: e.result.error };
 
             Logger.add(StringUtil.substitute("Config loaded. Region: {0} ({1}), Language: {2} ({3})",
@@ -227,6 +230,7 @@ package com.xvm
                     Logger.addObject(e, "exception");
                 }
             }
+            listeners = new Vector.<Object>();
         }
     }
 }
