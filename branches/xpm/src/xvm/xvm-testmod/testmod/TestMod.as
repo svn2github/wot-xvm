@@ -38,8 +38,6 @@ package testmod
             try
             {
                 Logger.add("testmod running, current view: " + (App.containerMgr.lastFocusedView ? App.containerMgr.lastFocusedView.as_alias : "None"));
-
-                App.containerMgr.loader.addEventListener(LoaderEvent.VIEW_LOADED, onViewLoaded);
                 App.containerMgr.loader.addEventListener(LoaderEvent.VIEW_LOADED, onViewLoaded);
             }
             catch (ex:Error)

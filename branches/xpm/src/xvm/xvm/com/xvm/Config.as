@@ -8,12 +8,11 @@ package com.xvm
     import flash.events.Event;
     import flash.events.IEventDispatcher;
     import com.xvm.types.cfg.CConfig;
-    import com.xvm.misc.*;
     import com.xvm.events.ObjectEvent;
-    import com.xvm.io.Cmd;
-    import com.xvm.io.JSONxLoader;
+    import com.xvm.io.*;
+    import com.xvm.utils.*;
     import com.xvm.l10n.Locale;
-    import mx.utils.StringUtil;
+    import com.xvm.misc.*;
 
     public class Config
     {
@@ -206,7 +205,7 @@ package com.xvm
             if (e.result != null && e.result.error != null && stateInfo.error == null)
                 stateInfo = { error: e.result.error };
 
-            Logger.add(StringUtil.substitute("Config loaded. Region: {0} ({1}), Language: {2} ({3})",
+            Logger.add(printf.format("Config loaded. Region: %s (%s), Language: %s (%s)",
                 config.region,
                 config.regionDetected ? "detected" : "config",
                 config.language,

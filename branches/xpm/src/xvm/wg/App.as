@@ -1,5 +1,7 @@
 package 
 {
+    $AppLinks;
+
     import flash.display.*;
     import net.wg.app.*;
     import net.wg.data.constants.*;
