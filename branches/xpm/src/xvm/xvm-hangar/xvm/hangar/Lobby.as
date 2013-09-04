@@ -50,10 +50,7 @@ package xvm.hangar
         private function hideTutorial():void
         {
             if (Config.config.hangar.hideTutorial == true)
-            {
-                page.header.tutorialControl.addEventListener(LifeCycleEvent.ON_AFTER_POPULATE,
-                    function():void { page.header.tutorialControl.visible = false; } );
-            }
+                App.utils.scheduler.envokeInNextFrame(function():void { page.header.tutorialControl.visible = false; } );
         }
 
     }
