@@ -37,7 +37,7 @@ package xvm.hangar
 
         private function initCrew():void
         {
-            Crew.init(page);
+            CrewLoader.init(page);
         }
     }
 

@@ -10,41 +10,25 @@ package com.xvm.vehinfo
 
     public class VehicleInfo
     {
-        // icon = "ussr-IS-3.png" or "../maps/icons/vehicle/contour/ussr-IS-3.png"
-        // return: "ussr-IS-3"
-        public static function getFullVehicleName(icon: String): String
-        {
-            var idx:int = icon.lastIndexOf("/");
-            if (idx >= 0)
-                icon = icon.slice(idx + 1);
-            idx = icon.lastIndexOf(".");
-            if (idx >= 0)
-                icon = icon.slice(0, idx);
-            icon = StringUtils.trim(icon);
-            return icon;
-        }
-
-        // icon = "ussr-IS-3.png" or "../maps/icons/vehicle/contour/ussr-IS-3.png"
+        // icon = "ussr-IS-3"
         // return: "IS-3"
         public static function getShortVehicleName(icon: String): String
         {
-            icon = getFullVehicleName(icon);
             icon = icon.slice(icon.indexOf("-") + 1);
             icon = StringUtils.trim(icon);
             return icon;
         }
 
-        // icon = "ussr-IS-3.png" or "../maps/icons/vehicle/contour/ussr-IS-3.png"
+        // icon = "ussr-IS-3"
         // return: "ussr_IS_3"
         public static function getVehicleKey1(icon:String):String
         {
-            icon = getFullVehicleName(icon);
             icon = icon.replace("-", "_");
             icon = StringUtils.trim(icon);
             return icon;
         }
 
-        // icon = "ussr-IS-3.png" or "../maps/icons/vehicle/contour/ussr-IS-3.png"
+        // icon = "ussr-IS-3"
         // return: "is_3"
         public static function getVehicleKey2(icon:String):String
         {

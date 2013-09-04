@@ -80,6 +80,7 @@
     <hidden path="xvm" />
     <hidden path="build-swc.sh" />
     <hidden path="wg" />
+    <hidden path="build-swc-wg.sh" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />

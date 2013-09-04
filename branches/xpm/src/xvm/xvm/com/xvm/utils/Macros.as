@@ -9,7 +9,7 @@ package com.xvm.utils
     import com.xvm.*;
     import com.xvm.l10n.Locale;
     import com.xvm.utils.*;
-    import com.xvm.types.StatData;
+    import com.xvm.types.stat.*;
     import com.xvm.vehinfo.VehicleInfo;
     import scaleform.clik.constants.ConstrainMode;
 
@@ -92,7 +92,7 @@ package com.xvm.utils
             // {{vehicle}}
             pdata["vehicle"] = VehicleInfo.mapVehicleName(data.icon, data.vname);
             // {{vehiclename}} - usa-M24_Chaffee
-            pdata["vehiclename"] = VehicleInfo.getFullVehicleName(data.icon);
+            pdata["vehiclename"] = data.icon;
             // {{vtype}}
             pdata["vtype"] = VehicleInfo.GetVTypeValue(data.icon);
             // {{c:vtype}}

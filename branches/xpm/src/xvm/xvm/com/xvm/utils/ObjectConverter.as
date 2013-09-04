@@ -25,38 +25,38 @@ package com.xvm.utils
 
         private static function createData(rawData: Object, clazz: Class): *
         {
-            if (clazz == Object) {
+            if (clazz == Object)
                 return rawData;
-            }
-            if (rawData != null) {
-                if (_simpleTypes.indexOf(clazz) > -1) {
-                    return rawData;
-                } else {
-                    var result:Object = new clazz();
-                    var describeTypeXML:XML = describeType(clazz);
-                    var isDynamic:Boolean = describeTypeXML..type.@isDynamic;
-                    var variables:XMLList = describeTypeXML..variable;
-                    var accessors:XMLList = describeTypeXML..accessor;
-                    for (var nm:String in rawData)
-                    {
-                        var a:XML = (accessors.(@name == nm) as XMLList || [null])[0];
-                        var v:XML = (variables.(@name == nm) as XMLList || [null])[0];
-                        if (a != null && a.@access != "readwrite")
-                            continue;
 
-                        if (a == null && v == null)
-                        {
-                            if (isDynamic)
-                                result[nm] = rawData[nm];
-                            continue;
-                        }
+            if (rawData == null)
+                return null;
 
-                        processVar(a || v, rawData, result);
-                    }
-                    return result;
+            if (_simpleTypes.indexOf(clazz) > -1)
+                return rawData;
+
+            var result:Object = new clazz();
+            var describeTypeXML:XML = describeType(clazz);
+            var isDynamic:Boolean = describeTypeXML..type.@isDynamic;
+            var variables:XMLList = describeTypeXML..variable;
+            var accessors:XMLList = describeTypeXML..accessor;
+            for (var nm:String in rawData)
+            {
+                var a:XML = (accessors.(@name == nm) as XMLList || [null])[0];
+                var v:XML = (variables.(@name == nm) as XMLList || [null])[0];
+                if (a != null && a.@access != "readwrite")
+                    continue;
+
+                if (a == null && v == null)
+                {
+                    if (isDynamic)
+                        result[nm] = rawData[nm];
+                }
+                else
+                {
+                    processVar(a || v, rawData, result);
                 }
             }
-            return null;
+            return result;
         }
 
         private static function processVar(variable:XML, rawData:Object, result:Object):void

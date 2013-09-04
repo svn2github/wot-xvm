@@ -1,4 +1,4 @@
-package com.xvm.types
+package com.xvm.types.stat
 {
     import flash.utils.Dictionary;
 
@@ -16,7 +16,7 @@ package com.xvm.types
         public var w:Number;            // wins (int)
         public var lvl:Number;          // level (float)
         public var twr:Number;          // TWR (int?)
-        public var dt:Date;             // XVM update date ("2013-09-02T01:21:20.080Z"),
+        public var dt:String;           // XVM update date ("2013-09-02T01:21:20.080Z"),
         public var frg:Number;          // frags
         public var _id:Number;          // player account id (long int)
         public var cr:Number;           // created (int)
@@ -28,8 +28,8 @@ package com.xvm.types
         public var v:VData;             // current vehicle stat data
 
         public var clan:String;         // clan name
-        //public var name:String;         // player name in current game ("sirmax2_RU" for Common Test)
-        //public var vname:String;        // localized vehicle name ("ИС-3")
+        public var name:String;         // player name in current game ("sirmax2_RU" for Common Test)
+        public var vname:String;        // localized vehicle name ("ИС-3")
         public var icon:String;         // icon file name without path: "ussr-IS-3.png")
         public var maxHealth:Number;    // maximum health (int)
 
@@ -38,24 +38,4 @@ package com.xvm.types
         public var xeff:int;            // Eff in XVM Scale
         public var xwn:int;             // WN6 in XVM Scale
     }
-}
-
-class VData
-{
-    // received
-    public var b:Number;
-    public var w:Number;
-    public var l:Number;
-    public var d:Number;
-    public var f:Number;
-    public var s:Number;
-
-    // calculated
-    public var r:int;              // current vehicle win rate
-    public var db:int;
-    public var fb:int;
-    public var sb:int;
-    public var dv:int;
-    public var te:int;
-    public var teff:int;
 }

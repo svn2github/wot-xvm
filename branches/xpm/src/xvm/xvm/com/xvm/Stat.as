@@ -4,12 +4,12 @@
  */
 package com.xvm
 {
-    import com.xvm.types.StatData;
     import flash.accessibility.AccessibilityProperties;
     import flash.external.ExternalInterface;
     import flash.utils.Dictionary;
     import com.xvm.io.*;
     import com.xvm.utils.*;
+    import com.xvm.types.stat.*;
     import com.xvm.vehinfo.VehicleInfo;
 
     public class Stat
@@ -111,7 +111,7 @@ package com.xvm
             try
             {
                 var response:Object = JSONx.parse(json_str);
-                Logger.addObject(response, "response", 3);
+                //Logger.addObject(response, "response", 3);
 
                 if (response.info)
                     info = response.info;
@@ -120,7 +120,7 @@ package com.xvm
                 {
                     for (var name:String in response.players)
                     {
-                        var sd:StatData = response.players[name];
+                        var sd:StatData = ObjectConverter.convertData(response.players[name], StatData);
                         calculateStatValues(sd);
                         stat[name] = sd;
                         // TODO
@@ -187,7 +187,7 @@ package com.xvm
             try
             {
                 var response:Object = JSONx.parse(json_str);
-                Logger.addObject(response, "response", 2);
+                //Logger.addObject(response, "response", 2);
             }
             catch (e:Error)
             {
@@ -219,7 +219,9 @@ package com.xvm
             stat.r = stat.b > 0 ? Math.round(stat.w / stat.b * 100) : 0;
 
             // tank rating
-            if (stat.v == null || stat.v.b <= 0 || stat.v.l <= 0)
+            if (stat.v == null)
+                stat.v = new VData();
+            if (stat.v.b <= 0 || stat.v.l <= 0)
                 stat.v.r = stat.r;
             else
             {
@@ -238,22 +240,22 @@ package com.xvm
             // XVM Scale: http://www.koreanrandom.com/forum/topic/2625-xvm-scale
 
             // xeff
-            stat.xeff = -1;
+            stat.xeff = 0;
             if (stat.e > 0)
                 stat.xeff = XvmScale.XEFF(stat.e);
 
             // xwn
-            stat.xwn = -1;
+            stat.xwn = 0;
             if (stat.wn > 0)
                 stat.xwn = XvmScale.XWN(stat.wn);
 
             // tdb, tfb, tsb, tdv, te, teff (last)
-            stat.v.db = -1;
-            stat.v.fb = -1;
-            stat.v.sb = -1;
-            stat.v.dv = -1;
-            stat.v.te = -1;
-            stat.v.teff = -1;
+            stat.v.db = 0;
+            stat.v.fb = 0;
+            stat.v.sb = 0;
+            stat.v.dv = 0;
+            stat.v.te = 0;
+            stat.v.teff = 0;
             // skip v.b less then 10, because of WG bug:
             // http://www.koreanrandom.com/forum/topic/1643-/page-19#entry26189
             // forceTeff used in UserInfo, there is not this bug there.

@@ -17,13 +17,13 @@ package xvm.hangar.components.Crew
     import com.xvm.utils.*;
     import com.xvm.l10n.Locale;
 
-    public class Crew extends Sprite
+    public class CrewLoader extends Sprite
     {
-        private static var _instance:Crew = null;
-        private static function get instance():Crew
+        private static var _instance:CrewLoader = null;
+        private static function get instance():CrewLoader
         {
             if (_instance == null)
-                _instance = new Crew();
+                _instance = new CrewLoader();
             return _instance;
         }
 
@@ -37,7 +37,7 @@ package xvm.hangar.components.Crew
 
         private var page:Hangar;
 
-        function Crew():void
+        function CrewLoader():void
         {
             page = null;
         }
@@ -71,7 +71,10 @@ package xvm.hangar.components.Crew
 
         private function onContextMenuAction(e:ContextMenuEvent):void
         {
-            Logger.addObject(e);
+            //Logger.addObject(e);
+            var crew:Crew = e.memberItemData as Crew;
+            Logger.addObject(crew);
+
             switch (e.id)
             {
                 case "PutOwnCrew":

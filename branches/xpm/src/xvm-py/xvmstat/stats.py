@@ -137,7 +137,7 @@ class _Stat(object):
             return
 
         try:
-            if self.req.args[0] == True: # allowNetwork
+            if self.req['args'][0] == True: # allowNetwork
                 updateRequest = updateRequest.replace('?', '%3F') # for Chinese server
                 server = self.servers[randint(0, len(self.servers) - 1)]
                 responseFromServer, duration = self.loadUrl(server, updateRequest)
@@ -161,11 +161,12 @@ class _Stat(object):
                 return
 
             for stat in data['players']:
+                //log(json.dumps(stat))
                 self._fix(stat)
                 #pprint(stat)
                 if 'nm' not in stat or not stat['nm']:
                     continue
-                cacheKey = "%d%s" % (stat['_id'], "=" + stat['vname'] if stat['vname'] else '')
+                cacheKey = "%d%s" % (stat['_id'], "=" + stat['vn'] if stat['vn'] else '')
                 self.cache[cacheKey] = stat
 
         except Exception, ex:
@@ -202,7 +203,7 @@ class _Stat(object):
         return {
             '_id': pl.playerId,
             'nm': pl.name,
-            'vname': pl.vName,
+            'vn': pl.vn,
         }
 
     def loadUrl(self, url, members, test=False):
@@ -257,7 +258,7 @@ class _Stat(object):
             if pl.playerId == stat['_id']:
                 stat['clan'] = pl.clan
                 stat['name'] = pl.name
-                if pl.vn == stat['vname']:
+                if pl.vn == stat['vn'].upper():
                     stat['vname'] = pl.vName
                     stat['icon'] = pl.vIcon
                     stat['maxHealth'] = pl.maxHealth
