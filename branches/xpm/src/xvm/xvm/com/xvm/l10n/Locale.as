@@ -78,6 +78,9 @@ package com.xvm.l10n
         private static const FALLBACK_RU:Object = {
             "XVM_translator": "XVM Team",
 
+            // Ping
+            "Initialization": "Инициализация",
+
             // BattleLoading
             "New version available": "Доступна новая версия",
 

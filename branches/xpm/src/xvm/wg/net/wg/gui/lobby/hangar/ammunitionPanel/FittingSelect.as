@@ -1,4 +1,4 @@
-package net.wg.gui.lobby.hangar.ammunitionPanel 
+package net.wg.gui.lobby.hangar.ammunitionPanel
 {
     import flash.events.*;
     import flash.geom.*;
@@ -9,7 +9,7 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
     import scaleform.clik.controls.*;
     import scaleform.clik.events.*;
     import scaleform.clik.interfaces.*;
-    
+
     public class FittingSelect extends net.wg.gui.components.controls.DropdownMenu
     {
         public function FittingSelect()
@@ -30,7 +30,7 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
 
         public override function close():void
         {
-            if (!selected || this.closeOnlyClickItem && !this.itemClicked) 
+            if (!selected || this.closeOnlyClickItem && !this.itemClicked)
                 return;
             super.close();
             focused = 0;
@@ -42,7 +42,7 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
         {
             var loc1:*=null;
             super.showDropdown();
-            if (_dropdownRef) 
+            if (_dropdownRef)
             {
                 loc1 = App.utils.events;
                 loc1.disableDisposingForObj(_dropdownRef);
@@ -70,12 +70,14 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
             var loc3:*=NaN;
             var loc4:*=null;
             super.draw();
-            if (isInvalid(SIZE_INVALID, scaleform.clik.constants.InvalidationType.DATA)) 
+            if (isInvalid(SIZE_INVALID, scaleform.clik.constants.InvalidationType.DATA))
             {
                 loc1 = 58;
-                if (_dropdownRef && _dropdownRef as scaleform.clik.controls.CoreList) 
-                    if (loc4 = (_dropdownRef as scaleform.clik.controls.CoreList).getRendererAt(0)) 
-                        loc1 = loc4.height;
+                if (_dropdownRef && _dropdownRef as scaleform.clik.controls.CoreList)
+                {
+//                    if (loc4 = (_dropdownRef as scaleform.clik.controls.CoreList).getRendererAt(0))
+//                        loc1 = loc4.height;
+                }
                 loc2 = menuPadding ? menuPadding.top + menuPadding.bottom : 0;
                 loc3 = 15;
                 rowCount = Math.floor((this._availableSize.y - loc2 - loc3) / loc1);
@@ -95,7 +97,7 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
         protected override function hideDropdown():void
         {
             var loc1:*=null;
-            if (_dropdownRef) 
+            if (_dropdownRef)
             {
                 loc1 = _dropdownRef as scaleform.clik.controls.CoreList;
                 loc1.dataProvider = null;

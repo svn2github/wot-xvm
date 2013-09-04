@@ -1,4 +1,4 @@
-package net.wg.gui.lobby.hangar.ammunitionPanel 
+package net.wg.gui.lobby.hangar.ammunitionPanel
 {
     import flash.display.*;
     import flash.events.*;
@@ -13,7 +13,7 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
     import net.wg.utils.*;
     import scaleform.clik.events.*;
     import scaleform.gfx.*;
-    
+
     public class AmmunitionPanel extends net.wg.infrastructure.base.meta.impl.AmmunitionPanelMeta implements net.wg.infrastructure.interfaces.IHelpLayoutComponent, net.wg.infrastructure.base.meta.IAmmunitionPanelMeta
     {
         public function AmmunitionPanel()
@@ -35,7 +35,7 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
             var loc2:*=[this.gun, this.turret, this.engine, this.chassis, this.radio, this.optionalDevice1, this.optionalDevice2, this.optionalDevice3];
             var loc3:*=0;
             var loc4:*=loc2;
-            for each (loc1 in loc4) 
+            for each (loc1 in loc4)
                 loc1.updateStage(arg1, arg2);
             return;
         }
@@ -57,7 +57,7 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
             var loc3:*=[this.gun, this.turret, this.chassis, this.engine, this.radio, this.optionalDevice1, this.optionalDevice2, this.optionalDevice3, this.equipment1, this.equipment2, this.equipment3];
             var loc4:*=0;
             var loc5:*=loc3;
-            for each (loc1 in loc5) 
+            for each (loc1 in loc5)
             {
                 this.unsubscribeSlot(loc1);
                 loc1.dispose();
@@ -65,7 +65,7 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
             loc3 = [this.shell1, this.shell2, this.shell3];
             loc4 = 0;
             loc5 = loc3;
-            for each (loc2 in loc5) 
+            for each (loc2 in loc5)
             {
                 this.events.removeEvent(loc2, flash.events.MouseEvent.CLICK, this.onModuleClick);
                 loc2.dispose();
@@ -82,10 +82,10 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
             var loc1:*;
             data = arg1;
             type = arg2;
-            try 
+            try
             {
-                loc2 = type;
-                switch (loc2) 
+                var loc2:* = type;
+                switch (loc2)
                 {
                     case net.wg.data.constants.FittingTypes.VEHICLE_CHASSIS:
                         this.chassis.setValues(data);
@@ -139,7 +139,7 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
             shells = null;
             isFlashBtn = false;
             data = arg1;
-            try 
+            try
             {
                 this.__setVehicleStatus(data.stateMsg, this.__stateLevelToColor(data.stateLevel));
                 loaded = 0;
@@ -147,13 +147,13 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
                 shellsCount = data.shells.length;
                 shells = [this.shell1, this.shell2, this.shell3];
                 i = 0;
-                while (i < SHELLS_COUNT) 
+                while (i < SHELLS_COUNT)
                 {
                     shell = shells[i] as net.wg.gui.components.advanced.ShellButton;
                     shell.onOut(null);
                     shell.clear();
                     shell.enabled = false;
-                    if (shells.indexOf(shell) < shellsCount) 
+                    if (shells.indexOf(shell) < shellsCount)
                     {
                         shell.enabled = !data.vehicleLocked;
                         shell.id = data.shells[i].id;
@@ -179,7 +179,7 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
         public function setVehicleStatus(arg1:String, arg2:String):void
         {
             arg1 = App.utils.locale.makeString(arg1);
-            if (initialized && arg1.length > 0) 
+            if (initialized && arg1.length > 0)
                 this.__setVehicleStatus(arg1, this.__stateLevelToColor(arg2));
             return;
         }
@@ -207,7 +207,7 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
             var loc3:*=[this.gun, this.turret, this.chassis, this.engine, this.radio];
             var loc4:*=0;
             var loc5:*=loc3;
-            for each (loc1 in loc5) 
+            for each (loc1 in loc5)
             {
                 this.subscribeSlot(loc1);
                 loc1.type = net.wg.data.constants.FittingTypes.MANDATORY_SLOTS[loc3.indexOf(loc1)];
@@ -215,7 +215,7 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
             loc3 = [this.optionalDevice1, this.optionalDevice2, this.optionalDevice3];
             loc4 = 0;
             loc5 = loc3;
-            for each (loc1 in loc5) 
+            for each (loc1 in loc5)
             {
                 loc1.slotIndex = loc3.indexOf(loc1);
                 loc1.type = net.wg.data.constants.FittingTypes.OPTIONAL_DEVICE;
@@ -224,7 +224,7 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
             loc3 = [this.equipment1, this.equipment2, this.equipment3];
             loc4 = 0;
             loc5 = loc3;
-            for each (loc1 in loc5) 
+            for each (loc1 in loc5)
             {
                 loc1.type = net.wg.data.constants.FittingTypes.EQUIPMENT;
                 this.subscribeSlot(loc1);
@@ -232,7 +232,7 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
             loc3 = [this.shell1, this.shell2, this.shell3];
             loc4 = 0;
             loc5 = loc3;
-            for each (loc2 in loc5) 
+            for each (loc2 in loc5)
                 this.events.addEvent(loc2, flash.events.MouseEvent.CLICK, this.onModuleClick);
             this.events.addEvent(App.stage, net.wg.gui.events.ModuleInfoEvent.SHOW_INFO, this.onShowModuleInfo);
             this.events.addEvent(App.stage, net.wg.gui.events.DeviceEvent.DEVICE_REMOVE, this.onDeviceRemove);
@@ -271,13 +271,13 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
         {
             var loc1:*=null;
             App.toolTipMgr.hide();
-            if (arg1 is scaleform.gfx.MouseEventEx) 
+            if (arg1 is scaleform.gfx.MouseEventEx)
             {
                 loc1 = arg1 as scaleform.gfx.MouseEventEx;
-                if (loc1.buttonIdx != scaleform.gfx.MouseEventEx.RIGHT_BUTTON) 
-                    if (loc1.buttonIdx == scaleform.gfx.MouseEventEx.LEFT_BUTTON && !([this.shell1, this.shell2, this.shell3, this.equipment1, this.equipment2, this.equipment3].indexOf(arg1.currentTarget) == -1)) 
+                if (loc1.buttonIdx != scaleform.gfx.MouseEventEx.RIGHT_BUTTON)
+                    if (loc1.buttonIdx == scaleform.gfx.MouseEventEx.LEFT_BUTTON && !([this.shell1, this.shell2, this.shell3, this.equipment1, this.equipment2, this.equipment3].indexOf(arg1.currentTarget) == -1))
                         showTechnicalMaintenanceS();
-                else if (loc1.currentTarget.id) 
+                else if (loc1.currentTarget.id)
                     showModuleInfoS(arg1.currentTarget.id);
             }
             return;
@@ -297,7 +297,7 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
 
         internal function onHighlightParams(arg1:net.wg.gui.events.ParamsEvent):void
         {
-            if ([this.gun, this.turret, this.engine, this.chassis, this.radio].indexOf(arg1.target) > -1) 
+            if ([this.gun, this.turret, this.engine, this.chassis, this.radio].indexOf(arg1.target) > -1)
                 highlightParamsS(arg1.paramsType);
             return;
         }
@@ -311,10 +311,10 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
         internal function showTooltip(arg1:flash.events.MouseEvent):void
         {
             var loc1:*=null;
-            if (arg1.target != this.maitenanceBtn) 
-                if (arg1.target == this.tuningBtn) 
+            if (arg1.target != this.maitenanceBtn)
+                if (arg1.target == this.tuningBtn)
                     loc1 = TOOLTIPS.HANGAR_TUNING;
-            else 
+            else
                 loc1 = TOOLTIPS.HANGAR_MAINTENANCE;
             App.toolTipMgr.showComplex(loc1);
             return;
@@ -329,7 +329,7 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
         internal function __setVehicleStatus(arg1:String, arg2:uint):void
         {
             var loc1:*=null;
-            if (this.vehicleStateMsg) 
+            if (this.vehicleStateMsg)
             {
                 this.vehicleStateMsg.text = arg1;
                 loc1 = this.vehicleStateMsg.getTextFormat();
@@ -344,7 +344,7 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
         internal function __stateLevelToColor(arg1:String):uint
         {
             var loc1:*=arg1;
-            switch (loc1) 
+            switch (loc1)
             {
                 case "info":
                     return GREEN_COLOR;
@@ -387,9 +387,9 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
             var loc2:*=[this.gun, this.turret, this.engine, this.chassis, this.radio, this.optionalDevice1, this.optionalDevice2, this.optionalDevice3, this.equipment1, this.equipment2, this.equipment3];
             var loc3:*=0;
             var loc4:*=loc2;
-            for each (loc1 in loc4) 
+            for each (loc1 in loc4)
             {
-                if (loc1 != this.turret) 
+                if (loc1 != this.turret)
                 {
                     loc1.enabled = !arg1;
                     continue;

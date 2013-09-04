@@ -27,6 +27,8 @@ package com.xvm
 
         public static function addObject(obj:Object, name:String = "obj", depth:Number = 1):void
         {
+            if (name == "")
+                name = "obj";
             add(name + ": " + JSONx.stringifyDepth(obj, depth));
         }
     }

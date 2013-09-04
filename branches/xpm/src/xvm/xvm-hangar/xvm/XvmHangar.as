@@ -83,6 +83,9 @@ package xvm
                 case "lobby":
                     mod = new Lobby(view);
                     break;
+                case "hangar":
+                    mod = new Hangar(view);
+                    break;
                 case "battleLoading":
                     mod = new BattleLoading(view);
                     break;

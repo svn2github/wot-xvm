@@ -7,6 +7,7 @@ package xvm.hangar.components.PingServers
     import com.xvm.types.cfg.*;
     import com.xvm.events.*;
     import com.xvm.utils.*;
+    import com.xvm.l10n.Locale;
 
     public class PingServersView extends Sprite
     {
@@ -24,7 +25,7 @@ package xvm.hangar.components.PingServers
             this.cfg = cfg;
             fields = new Vector.<TextField>();
             var f:TextField = createNewField();
-            f.htmlText = makeStyledRow( { cluster: "Initialization", time: "..." } );
+            f.htmlText = makeStyledRow( { cluster: Locale.get("Initialization"), time: "..." } );
             PingServers.addListener(update);
         }
 

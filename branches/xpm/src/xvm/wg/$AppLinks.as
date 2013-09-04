@@ -10,17 +10,16 @@ internal class $AppLinks
  *  beyond those that are found by dependecy analysis starting
  *  from the classes specified in manifest.xml.
  */
-import org.idmedia.as3commons.util.StringUtils; StringUtils;
-import net.wg.infrastructure.events.LoaderEvent; LoaderEvent;
-import net.wg.infrastructure.events.LifeCycleEvent; LifeCycleEvent;
-import net.wg.infrastructure.managers.impl.ContainerManager; ContainerManager;
-import net.wg.gui.components.common.MainViewContainer; MainViewContainer;
-import net.wg.gui.login.impl.LoginPage; LoginPage;
-import net.wg.gui.lobby.LobbyPage; LobbyPage;
-import net.wg.gui.lobby.header.TutorialControl; TutorialControl;
-import net.wg.gui.lobby.hangar.crew.Crew; Crew;
-import net.wg.gui.lobby.hangar.crew.CrewItemRenderer; CrewItemRenderer;
-import net.wg.gui.lobby.battleloading.BattleLoading; BattleLoading;
+import org.idmedia.as3commons.util.*; StringUtils;
+import net.wg.infrastructure.events.*; LoaderEvent; LifeCycleEvent;
+import net.wg.infrastructure.managers.impl.*; ContainerManager;
+import net.wg.gui.components.common.*; MainViewContainer;
+import net.wg.gui.login.impl.*; LoginPage;
+import net.wg.gui.lobby.*; LobbyPage;
+import net.wg.gui.lobby.header.*; TutorialControl;
+import net.wg.gui.lobby.hangar.*; Hangar;
+import net.wg.gui.lobby.hangar.crew.*; Crew; RecruitRendererVO; CrewItemRenderer; 
+import net.wg.gui.lobby.battleloading.*; BattleLoading;
 
 }
 

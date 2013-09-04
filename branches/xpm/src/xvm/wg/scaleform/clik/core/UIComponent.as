@@ -42,18 +42,18 @@ package scaleform.clik.core
             return;
         }
 
-        public override function addEventListener(arg1:String, arg2:Function, arg3:Boolean=false, arg4:int=0, arg5:Boolean=false):void
+        public override function addEventListener(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void
         {
             this.throwLifeCycleException();
             var loc1:*;
             if ((loc1 = App.instance ? App.utils : null) && loc1.events && this._listenerFlag)
             {
                 this._listenerFlag = false;
-                loc1.events.addEvent(this, arg1, arg2, arg3, arg4, arg5);
+                loc1.events.addEvent(this, type, listener, useCapture, priority, useWeakReference);
                 this._listenerFlag = true;
             }
             else
-                super.addEventListener(arg1, arg2, arg3, arg4, arg5);
+                super.addEventListener(type, listener, useCapture, priority, useWeakReference);
             return;
         }
 
