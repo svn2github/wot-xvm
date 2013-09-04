@@ -46,13 +46,12 @@ class com.xvm.Macros
         return Utils.fixImgTag(res);
     }
 
-    /**
-     * @param pname !!!NORMALIZED player name (Utils.GetNormalizedPlayerName(playerName))!!!
-     */
-    public static function RegisterPlayerData(pname:String, data:Object, team:Number)
+    public static function RegisterPlayerData(name:String, data:Object, team:Number)
     {
         if (!data)
             return;
+
+        var pname = Utils.GetNormalizedPlayerName(name);
 
         // Load stat in FogOfWar
         if (StatData.s_loaded && Config.s_config.rating.loadEnemyStatsInFogOfWar)
@@ -61,7 +60,7 @@ class com.xvm.Macros
                 data.uid = StatData.s_data[pname].playerId;
             var pdata = StatData.s_data[pname];
             //Logger.addObject(pdata);
-            //Logger.add("pname=" + pname + " uid=" + data.uid + " r=" + stat.r + " eff=" + stat.eff);
+            //Logger.add("pname=" + pname + " uid=" + data.uid + " r=" + stat.r + " eff=" + stat.e);
             if ((!pdata || (!pdata.stat && pdata.loadstate == Defines.LOADSTATE_NONE)) ||
                 (StatData.s_data[pname].loadstate == Defines.LOADSTATE_UNKNOWN && VehicleInfo.getInfo2(data.icon).name != "UNKNOWN"))
             {
@@ -176,7 +175,7 @@ class com.xvm.Macros
         var tbK:Number = Math.round(tb / 100) / 10;
 
         // {{avglvl}}
-        var avglvl = Math.round(Utils.toFloat(stat.avglvl, 0));
+        var avglvl = Math.round(Utils.toFloat(stat.lvl, 0));
         pdata["avglvl"] = avglvl < 1 ? "-" : avglvl == 10 ? "X" : avglvl;
         // {{xeff}}
         pdata["xeff"] = stat.xeff == null ? "--" : stat.xeff == 100 ? "XX" : (stat.xeff < 10 ? "0" : "") + stat.xeff;

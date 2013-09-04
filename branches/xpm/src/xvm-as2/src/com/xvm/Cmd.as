@@ -7,7 +7,7 @@ class com.xvm.Cmd
     private static var COMMAND_PING:String = "ping";
     private static var COMMAND_GETSCREENSIZE:String = "getScreenSize";
     private static var COMMAND_GETGAMEREGION:String = "getGameRegion";
-    private static var COMMAND_LOADSTATDATA:String = "loadStatData";
+    private static var COMMAND_LOADBATTLESTAT:String = "loadBattleStat";
     private static var COMMAND_LOADUSERDATA:String = "loadUserData";
     private static var COMMAND_LOGSTAT:String = "logstat";
     private static var COMMAND_SAVE_SETTINGS:String = "save_settings";
@@ -36,9 +36,9 @@ class com.xvm.Cmd
         _call(target, callback, [COMMAND_GETGAMEREGION]);
     }
 
-    public static function loadStatData(players:Array)
+    public static function loadBattleStat(players:Array)
     {
-        _call(null, null, [COMMAND_LOADSTATDATA, players]);
+        _call(null, null, [COMMAND_LOADBATTLESTAT, players]);
     }
 
     public static function loadUserData(value:String, isId:Boolean)

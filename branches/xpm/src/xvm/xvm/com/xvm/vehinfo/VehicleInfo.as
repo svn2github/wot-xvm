@@ -14,6 +14,8 @@ package com.xvm.vehinfo
         // return: "IS-3"
         public static function getShortVehicleName(icon: String): String
         {
+            if (!icon)
+                return null;
             icon = icon.slice(icon.indexOf("-") + 1);
             icon = StringUtils.trim(icon);
             return icon;
@@ -23,6 +25,8 @@ package com.xvm.vehinfo
         // return: "ussr_IS_3"
         public static function getVehicleKey1(icon:String):String
         {
+            if (!icon)
+                return null;
             icon = icon.replace("-", "_");
             icon = StringUtils.trim(icon);
             return icon;
@@ -32,6 +36,8 @@ package com.xvm.vehinfo
         // return: "is_3"
         public static function getVehicleKey2(icon:String):String
         {
+            if (!icon)
+                return null;
             icon = getShortVehicleName(icon);
             icon = icon.replace("-", "_");
             icon = icon.toLowerCase();
@@ -42,6 +48,8 @@ package com.xvm.vehinfo
         // return: "is_3"
         public static function getVehicleKey2ByVname(vname:String):String
         {
+            if (!vname)
+                return null;
             vname = StringUtils.trim(vname);
             vname = vname.replace("-", "_");
             vname = vname.toLowerCase();

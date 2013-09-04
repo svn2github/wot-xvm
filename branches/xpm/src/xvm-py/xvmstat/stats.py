@@ -67,10 +67,7 @@ class _Stat(object):
 
     def _respond(self, data):
         #log("DEBUG: respond: " + method)
-        if not self.req['as2']:
-            self.req['proxy'].movie.invoke((self.req['method'], [json.dumps(data)]))
-        else:
-            self.req['proxy'].call(self.req['method'], [json.dumps(data)])
+        self.req['proxy'].movie.invoke((self.req['method'], [json.dumps(data)]))
         self.thread = None
         self.processQueue()
 
@@ -161,7 +158,7 @@ class _Stat(object):
                 return
 
             for stat in data['players']:
-                //log(json.dumps(stat))
+                #log(json.dumps(stat))
                 self._fix(stat)
                 #pprint(stat)
                 if 'nm' not in stat or not stat['nm']:
@@ -316,14 +313,13 @@ _stat = _Stat()
 #############################
 # Command
 
-def getBattleStat(proxy, id, args, as2 = False):
+def getBattleStat(proxy, id, args):
     _stat.queue.put({
         'func':_stat.getBattleStat,
         'proxy':proxy,
         'id':id,
         'method':RESPOND_STATDATA,
-        'args':args,
-        'as2':as2})
+        'args':args})
     _stat.processQueue()
     pass
 
@@ -333,7 +329,6 @@ def getUserData(proxy, id, args):
         'proxy':proxy,
         'id':id,
         'method':RESPOND_USERDATA,
-        'args':args,
-        'as2':False})
+        'args':args})
     _stat.processQueue()
     pass

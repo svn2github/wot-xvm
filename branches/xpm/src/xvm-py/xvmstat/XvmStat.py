@@ -48,8 +48,6 @@ class XvmStat(object):
                 res = language
             elif cmd == COMMAND_GETMODS:
                 res = self.getMods()
-            elif cmd == COMMAND_LOADSTATDATA:
-                getBattleStat(proxy, id, args, True)
             elif cmd == COMMAND_LOADBATTLESTAT:
                 getBattleStat(proxy, id, args)
             elif cmd == COMMAND_LOADUSERDATA:

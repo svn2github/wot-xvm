@@ -1,3 +1,4 @@
+import flash.external.ExternalInterface;
 import gfx.io.GameDelegate;
 import com.xvm.Cmd;
 import com.xvm.Config;
@@ -30,23 +31,26 @@ class com.xvm.StatLoader
         if (instance._loading)
             return;
         instance._loading = true;
-        GameDelegate.addCallBack(Cmd.RESPOND_STATDATA, instance, "LoadStatDataCallback");
-        Cmd.loadStatData(null);
+        Cmd.loadBattleStat(null);
     }
 
     public static function LoadUserData(value:String, isId:Boolean)
     {
-        GameDelegate.addCallBack(Cmd.RESPOND_USERDATA, instance, "LoadUserDataCallback");
         Cmd.loadUserData(value, isId);
     }
 
     // PRIVATE
-    
+
     private var _loading = false;
+
+    private function StatLoader()
+    {
+        ExternalInterface.addCallback(Cmd.RESPOND_STATDATA, this, LoadStatDataCallback);
+        ExternalInterface.addCallback(Cmd.RESPOND_USERDATA, this, LoadUserDataCallback);
+    }
 
     private function LoadStatDataCallback(json_str)
     {
-        GameDelegate.removeCallBack(Cmd.RESPOND_STATDATA);
         var finallyBugWorkaround: Boolean = false; // Workaround: finally block have a bug - it can be called twice. Why? How?
         try
         {
@@ -96,9 +100,9 @@ class com.xvm.StatLoader
     public function CalculateStatValues(stat:Stat, forceTeff:Boolean):Stat
     {
         // rating (GWR)
-        stat.r = stat.battles > 0 ? Math.round(stat.w / stat.battles * 100) : 0;
+        stat.r = stat.b > 0 ? Math.round(stat.w / stat.b * 100) : 0;
 
-        if (!stat.v || !stat.v.b || stat.v.b <= 0 || !stat.v.l || stat.v.l <= 0)
+        if (!stat.v.b || stat.v.b <= 0 || !stat.v.l || stat.v.l <= 0)
             stat.tr = stat.r;
         else
         {
@@ -116,8 +120,8 @@ class com.xvm.StatLoader
 
         // xeff
         stat.xeff = null;
-        if (stat.eff != null && stat.eff > 0)
-            stat.xeff = Utils.XEFF(stat.eff);
+        if (stat.e != null && stat.e > 0)
+            stat.xeff = Utils.XEFF(stat.e);
 
         // xwn
         stat.xwn = null;
@@ -142,7 +146,7 @@ class com.xvm.StatLoader
         stat.tsb = (stat.v.s == null || stat.v.s < 0) ? null : Math.round(stat.v.s / stat.v.b * 10) / 10;
         //Logger.addObject(stat);
 
-        var vi2 = VehicleInfo.getInfo2("/-" + stat.vname + ".");
+        var vi2 = VehicleInfo.getInfo2("/-" + stat.vn + ".");
         if (!vi2 || !vi2.type || !vi2.level)
         {
             //Logger.add("WARNING: vehicle info (3) missed: " + stat.vn);
@@ -204,7 +208,6 @@ class com.xvm.StatLoader
     private function LoadUserDataCallback(str)
     {
         //Logger.addObject(arguments, "LoadUserDataCallback", 2)
-        GameDelegate.removeCallBack(Cmd.RESPOND_USERDATA);
         var data = null;
         var error = null;
         if (!str)
