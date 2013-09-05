@@ -30,20 +30,21 @@ package xvm.hangar
         {
             try
             {
+                //Logger.add("onAfterPopulate: " + view.as_alias);
+
                 logBriefConfigurationInfo();
 
                 page.form.team1List.itemRenderer = LeftItemRendererWrapper;
                 page.form.team2List.itemRenderer = RightItemRendererWrapper;
 
-                //Logger.add("onAfterPopulate: " + view.as_alias);
-                Stat.loadBattleStat(this, statLoaded, true);
-
                 if (page.initialized)
-                    initBattleLoading();
+                {
+                    initBattleLoadingComponents();
+                }
                 else
                 {
                     // TODO: find event
-                    setTimeout(initBattleLoading, 1);
+                    setTimeout(initBattleLoadingComponents, 1);
                 }
             }
             catch (ex:Error)
@@ -71,7 +72,7 @@ package xvm.hangar
                 "                               useStandardMarkers=" + Config.config.battle.useStandardMarkers);
         }
 
-        private function initBattleLoading():void
+        private function initBattleLoadingComponents():void
         {
             try
             {
@@ -84,14 +85,6 @@ package xvm.hangar
             {
                 Logger.add(ex.getStackTrace());
             }
-        }
-
-        private function statLoaded():void
-        {
-            //Logger.addObject(Stat.stat, "statLoaded");
-
-            //TODO if (Config.config.rating.enableStatisticsLog == true)
-            //    StatsLogger.saveStatistics("setup", StatData.s_data);
         }
     }
 }

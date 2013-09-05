@@ -4,16 +4,18 @@ package xvm.hangar.components.BattleLoading
 
     public class LeftItemRendererWrapper extends LeftItemRendererUI
     {
+        private var worker:BattleLoadingItemRenderer;
 
         public function LeftItemRendererWrapper()
         {
             super();
-            this.vehicleField.visible = false;
+            worker = new BattleLoadingItemRenderer(this);
         }
 
-        override protected function configUI():void
+        override public function setData(data:Object):void
         {
-            super.configUI();
+            super.setData(data);
+            worker.setData(data);
         }
     }
 

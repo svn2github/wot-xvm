@@ -10,7 +10,8 @@ internal class XvmLinks
  *  beyond those that are found by dependecy analysis starting
  *  from the classes specified in manifest.xml.
  */
-import com.xvm.Stat; Stat;
+import com.xvm.*; Stat;
+import com.xvm.misc.*;  IconLoader;
 
 }
 

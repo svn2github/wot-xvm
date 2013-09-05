@@ -77,7 +77,6 @@
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
     <hidden path="swf" />
-    <hidden path="xvm" />
     <hidden path="build-swc.sh" />
     <hidden path="wg" />
     <hidden path="build-swc-wg.sh" />

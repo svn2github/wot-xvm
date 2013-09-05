@@ -150,8 +150,8 @@ return;
             if (bestTankman == null)
                 return true;
 
-            var current = getPenality(actualTankman, theTank);
-            var best = getPenality(bestTankman, theTank);
+            var current:Number = getPenality(actualTankman, theTank);
+            var best:Number = getPenality(bestTankman, theTank);
 
             // CASE 1 : bestTankman is better than actual
             // conserve the bestTankman
@@ -191,13 +191,11 @@ return;
          * @param dummyTankman current tank's
          * @return Tankman's efficiencyLevel - penality
          */
-        private function getPenality(tankman:Object, dummyTankman:Object)
+        private function getPenality(tankman:Object, dummyTankman:Object):Number
         {
-            var res = 1;
+            var res:Number = 1;
 
-            if (tankman["vehicleType"] == dummyTankman["curVehicleName"])
-                res = 1;
-            else
+            if (tankman["vehicleType"] != dummyTankman["curVehicleName"])
             {
                 if (tankman["tankType"] == dummyTankman["curVehicleType"])
                 {
@@ -215,7 +213,7 @@ return;
 
         private function TankmanInArray(list:Array, elem:Object):Boolean
         {
-            for (var i = 0; i < list.length; ++i)
+            for (var i:int = 0; i < list.length; ++i)
             {
                 if (list[i]["tankmanID"] == elem["tankmanID"])
                     return true;
