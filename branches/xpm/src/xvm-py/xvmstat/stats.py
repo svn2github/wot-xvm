@@ -1,5 +1,32 @@
 """ xvm-stat (c) sirmax 2013 """
 
+#############################
+# Command
+
+def getBattleStat(proxy, id, args):
+    _stat.queue.put({
+        'func':_stat.getBattleStat,
+        'proxy':proxy,
+        'id':id,
+        'method':RESPOND_STATDATA,
+        'args':args})
+    _stat.processQueue()
+    pass
+
+def getUserData(proxy, id, args):
+    _stat.queue.put({
+        'func':_stat.getUserStat,
+        'proxy':proxy,
+        'id':id,
+        'method':RESPOND_USERDATA,
+        'args':args})
+    _stat.processQueue()
+    pass
+
+
+#############################
+# Private
+
 from pprint import pprint
 import datetime
 import json
@@ -15,12 +42,12 @@ from items.vehicles import VEHICLE_CLASS_TAGS
 
 from gui.mods.xpm import *
 from constants import *
-from logger import log
+from logger import *
 from gameregion import region
 
 #############################
 
-PUBLIC_TOKEN = 'xpm'
+_PUBLIC_TOKEN = 'xpm'
 
 class _Stat(object):
     def __init__(self):
@@ -66,7 +93,7 @@ class _Stat(object):
 
 
     def _respond(self, data):
-        #log("DEBUG: respond: " + method)
+        #debug("respond: " + method)
         self.req['proxy'].movie.invoke((self.req['method'], [json.dumps(data)]))
         self.thread = None
         self.processQueue()
@@ -130,7 +157,7 @@ class _Stat(object):
         updateRequest = ','.join(requestList)
 
         if self.servers is None or len(self.servers) <= 0:
-            log('WARNING: Cannot read statistics: no suitable server was found.')
+            err('Cannot read statistics: no suitable server was found.')
             return
 
         try:
@@ -140,7 +167,7 @@ class _Stat(object):
                 responseFromServer, duration = self.loadUrl(server, updateRequest)
 
                 if len(responseFromServer) <= 0:
-                    log('WARNING: Empty response or parsing error')
+                    err('Empty response or parsing error')
                     return
 
                 data = json.loads(responseFromServer)
@@ -154,11 +181,11 @@ class _Stat(object):
                 self.info = data['info'][region]
 
             if 'players' not in data:
-                log('WARNING: Stat request failed: ' + str(responseFromServer))
+                err('Stat request failed: ' + str(responseFromServer))
                 return
 
             for stat in data['players']:
-                #log(json.dumps(stat))
+                #debug(json.dumps(stat))
                 self._fix(stat)
                 #pprint(stat)
                 if 'nm' not in stat or not stat['nm']:
@@ -167,7 +194,7 @@ class _Stat(object):
                 self.cache[cacheKey] = stat
 
         except Exception, ex:
-            log('ERROR: _load_stat() exception: ' + traceback.format_exc(ex))
+            err('_load_stat() exception: ' + traceback.format_exc(ex))
 
 
     def _get_user(self):
@@ -183,7 +210,7 @@ class _Stat(object):
                 responseFromServer, duration = self.loadUrl(server, req)
 
                 if not responseFromServer:
-                    log('WARNING: Empty response or parsing error')
+                    err('Empty response or parsing error')
                 else:
                     data = json.loads(responseFromServer)[0]
                     if data is not None and 'nm' in data and '_id' in data:
@@ -191,7 +218,7 @@ class _Stat(object):
                         self.cacheUser[str(data['_id']) + ",1"] = data
 
             except Exception, ex:
-                log('ERROR: _get_user() exception: ' + traceback.format_exc(ex))
+                err('_get_user() exception: ' + traceback.format_exc(ex))
 
         self._respond(self.cacheUser[cacheKey] if cacheKey in self.cacheUser else None)
 
@@ -205,10 +232,10 @@ class _Stat(object):
 
     def loadUrl(self, url, members, test=False):
         if not test:
-            log('INFO:  HTTP: ' + str(members))
+            log('  HTTP: ' + str(members), '[INFO]  ')
 
-        url = url.replace('%1', members).replace('%2', PUBLIC_TOKEN)
-        #log('DEBUG: loadUrl: ' + url )
+        url = url.replace('%1', members).replace('%2', _PUBLIC_TOKEN)
+        #debug('loadUrl: ' + url )
 
         duration = None
         responseFromServer = ''
@@ -224,15 +251,15 @@ class _Stat(object):
                 responseFromServer = response.read()
 
         except Exception, ex:
-            log('ERROR: loadUrl failed: ' + str(ex))
+            err('loadUrl failed: ' + str(ex))
         finally:
             if response is not None:
                 response.close()
 
         elapsed = datetime.datetime.now() - startTime
         msec = elapsed.seconds * 1000 + elapsed.microseconds / 1000
-        log("INFO:    Time: %d ms, Size: %d bytes" % (msec, len(responseFromServer)))
-        #log('DEBUG: responseFromServer: ' + responseFromServer)
+        log("  Time: %d ms, Size: %d bytes" % (msec, len(responseFromServer)), '[INFO]  ')
+        #debug('responseFromServer: ' + responseFromServer)
 
         if not responseFromServer.lower().startswith('onexception'):
             duration = msec
@@ -309,26 +336,3 @@ class _Player(object):
 
 
 _stat = _Stat()
-
-#############################
-# Command
-
-def getBattleStat(proxy, id, args):
-    _stat.queue.put({
-        'func':_stat.getBattleStat,
-        'proxy':proxy,
-        'id':id,
-        'method':RESPOND_STATDATA,
-        'args':args})
-    _stat.processQueue()
-    pass
-
-def getUserData(proxy, id, args):
-    _stat.queue.put({
-        'func':_stat.getUserStat,
-        'proxy':proxy,
-        'id':id,
-        'method':RESPOND_USERDATA,
-        'args':args})
-    _stat.processQueue()
-    pass

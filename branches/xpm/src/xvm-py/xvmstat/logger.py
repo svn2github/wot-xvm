@@ -1,13 +1,29 @@
 """ xvm-stat (c) sirmax 2013 """
 
 import datetime
-import json
 
 from gui.mods.xpm import *
 from constants import XVM_LOG_FILE_NAME
 
 #############################
-# Init
+# Command
+
+def log(s, prefix=""):
+    _logger.add(prefix + str(s))
+
+def err(*args):
+    log(s, '[ERROR] ')
+
+def debug(s):
+    if IS_DEVELOPMENT:
+        log(s, '[DEBUG] ')
+
+def trace(*args):
+    if IS_DEVELOPMENT:
+        log(s, '[TRACE] ')
+
+#############################
+# Private
 
 class _Logger(object):
     def __init__(self):
@@ -24,10 +40,3 @@ class _Logger(object):
             logtrace(__file__)
 
 _logger = _Logger()
-
-#############################
-# Command
-
-def log(*args):
-    for x in args:
-        _logger.add(str(x))
