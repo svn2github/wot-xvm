@@ -81,6 +81,7 @@
     <hidden path="build-swc.sh" />
     <hidden path="wg" />
     <hidden path="build-swc-wg.sh" />
+    <hidden path="xvm-testmod" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />

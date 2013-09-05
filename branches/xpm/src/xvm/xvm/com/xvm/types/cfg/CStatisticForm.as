@@ -4,17 +4,16 @@
  */
 package com.xvm.types.cfg
 {
-    public dynamic class CStatisticForm extends Object
+    public class CStatisticForm extends Object
     {
-        //statisticForm: {
-            //showChances: false,     // Show game round win chances percentage.
-            //showChancesExp: false,  // Show experimental "chance to win" formula.
-            //removeSquadIcon: false, // Hide squad icon.
-            // Playes/clan icon parameters.
-            //clanIcon: { show: true, x: 0, y: 6, xr: 0, yr: 6, h: 16, w: 16, alpha: 90 },
-            // Dispay format.
-            //formatLeft: "{{vehicle}}<font face='Lucida Console' size='12'> <font color='{{c:kb}}'>{{kb:3}}</font> <font color='{{c:xwn}}'>{{xwn}}</font> <font color='{{c:rating}}'>{{rating:3}}</font></font>",
-            //formatRight: "<font face='Lucida Console' size='12'><font color='{{c:rating}}'>{{rating:3}}</font> <font color='{{c:xwn}}'>{{xwn}}</font> <font color='{{c:kb}}'>{{kb:3}}</font> </font>{{vehicle}}"
-        //},
+        public var showChances:Boolean;     // Show game round win chances percentage.
+        public var showChancesExp:Boolean;  // Show experimental "chance to win" formula.
+        public var removeSquadIcon:Boolean; // Hide squad icon.
+        public var clanIcon:CClanIcon;      // Playes/clan icon parameters.
+        // Dispay formats.
+        public var formatLeftNick:String;
+        public var formatLeftVehicle:String;
+        public var formatRightNick:String;
+        public var formatRightVehicle:String;
     }
 }

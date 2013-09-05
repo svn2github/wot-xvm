@@ -6,6 +6,7 @@ package xvm.hangar
 {
     import flash.events.*;
     import flash.utils.*;
+    import net.wg.gui.components.controls.ReadOnlyScrollingList;
     import net.wg.gui.lobby.battleloading.*;
     import net.wg.infrastructure.interfaces.IView;
     import net.wg.infrastructure.events.LifeCycleEvent;
@@ -30,6 +31,9 @@ package xvm.hangar
             try
             {
                 logBriefConfigurationInfo();
+
+                page.form.team1List.itemRenderer = LeftItemRendererWrapper;
+                page.form.team2List.itemRenderer = RightItemRendererWrapper;
 
                 //Logger.add("onAfterPopulate: " + view.as_alias);
                 Stat.loadBattleStat(this, statLoaded, true);
@@ -59,12 +63,12 @@ package xvm.hangar
         {
             Logger.add(
                 "[BattleLoading]\n" +
-                "    XVM_VERSION=" + Defines.XVM_VERSION + " for WoT " + Defines.WOT_VERSION +"\n" +
-                "    gameRegion=" + Config.gameRegion + "\n" +
-                "    configVersion=" + Config.config.configVersion + "\n" +
-                "    showPlayersStatistics=" + Config.config.rating.showPlayersStatistics + "\n" +
-                // TODO "    loadEnemyStatsInFogOfWar=" + Config.config.rating.loadEnemyStatsInFogOfWar + "\n" +
-                "    useStandardMarkers=" + Config.config.battle.useStandardMarkers);
+                "                               XVM_VERSION=" + Defines.XVM_VERSION + " for WoT " + Defines.WOT_VERSION +"\n" +
+                "                               gameRegion=" + Config.gameRegion + "\n" +
+                "                               configVersion=" + Config.config.configVersion + "\n" +
+                "                               showPlayersStatistics=" + Config.config.rating.showPlayersStatistics + "\n" +
+                // TODO "                               loadEnemyStatsInFogOfWar=" + Config.config.rating.loadEnemyStatsInFogOfWar + "\n" +
+                "                               useStandardMarkers=" + Config.config.battle.useStandardMarkers);
         }
 
         private function initBattleLoading():void

@@ -18,8 +18,10 @@ import net.wg.gui.login.impl.*; LoginPage;
 import net.wg.gui.lobby.*; LobbyPage;
 import net.wg.gui.lobby.header.*; TutorialControl;
 import net.wg.gui.lobby.hangar.*; Hangar;
-import net.wg.gui.lobby.hangar.crew.*; Crew; RecruitRendererVO; CrewItemRenderer; 
-import net.wg.gui.lobby.battleloading.*; BattleLoading;
+import net.wg.gui.lobby.hangar.crew.*; Crew; RecruitRendererVO; CrewItemRenderer;
+import net.wg.gui.lobby.battleloading.*; BattleLoading; PlayerItemRenderer;
+
+LeftItemRendererUI; RightItemRendererUI;
 
 }
 

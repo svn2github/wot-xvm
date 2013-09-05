@@ -44,6 +44,7 @@ package xvm.hangar.components.Crew
 
         private function handleMouseRelease(e:MouseEvent):void
         {
+return;
             var item:CrewItemRenderer = e.target as CrewItemRenderer;
             if (item == null)
                 return;

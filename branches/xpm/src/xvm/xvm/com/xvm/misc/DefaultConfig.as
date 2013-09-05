@@ -239,8 +239,10 @@ package com.xvm.misc
             c.clanIcon.w = 16;
             c.clanIcon.alpha = 90;
             // Dispay format. Macro-substitutiones allowed.
-            c.formatLeft = "{{vehicle}}<font face='Lucida Console' size='12'> <font color='{{c:kb}}'>{{kb:3}}</font> <font color='{{c:xwn}}'>{{xwn}}</font> <font color='{{c:rating}}'>{{rating:3}}</font></font>";
-            c.formatRight = "<font face='Lucida Console' size='12'><font color='{{c:rating}}'>{{rating:3}}</font> <font color='{{c:xwn}}'>{{xwn}}</font> <font color='{{c:kb}}'>{{kb:3}}</font> </font>{{vehicle}}";
+            c.formatLeftNick = "{{nick}}";
+            c.formatLeftVehicle = "{{vehicle}}<font face='Lucida Console' size='12'> <font color='{{c:kb}}'>{{kb:3}}</font> <font color='{{c:xwn}}'>{{xwn}}</font> <font color='{{c:rating}}'>{{rating:3}}</font></font>";
+            c.formatRightNick = "{{nick}}";
+            c.formatRightVehicle = "<font face='Lucida Console' size='12'><font color='{{c:rating}}'>{{rating:3}}</font> <font color='{{c:xwn}}'>{{xwn}}</font> <font color='{{c:kb}}'>{{kb:3}}</font> </font>{{vehicle}}";
             return c;
         }
 
@@ -251,10 +253,20 @@ package com.xvm.misc
             c.showChancesExp = false;  // Show experimental "chance to win" formula.
             c.removeSquadIcon = false; // Hide squad icon.
             // Playes/clan icon parameters.
-            c.clanIcon = { show: true, x: 0, y: 6, xr: 0, yr: 6, h: 16, w: 16, alpha: 90 };
+            c.clanIcon = new CClanIcon();
+            c.clanIcon.show = true;
+            c.clanIcon.x = 0;
+            c.clanIcon.y = 6;
+            c.clanIcon.xr = 0;
+            c.clanIcon.yr = 6;
+            c.clanIcon.h = 16;
+            c.clanIcon.w = 16;
+            c.clanIcon.alpha = 90;
             // Dispay format.
-            c.formatLeft = "{{vehicle}}<font face='Lucida Console' size='12'> <font color='{{c:kb}}'>{{kb:3}}</font> <font color='{{c:xwn}}'>{{xwn}}</font> <font color='{{c:rating}}'>{{rating:3}}</font></font>";
-            c.formatRight = "<font face='Lucida Console' size='12'><font color='{{c:rating}}'>{{rating:3}}</font> <font color='{{c:xwn}}'>{{xwn}}</font> <font color='{{c:kb}}'>{{kb:3}}</font> </font>{{vehicle}}";
+            c.formatLeftNick = "{{nick}}";
+            c.formatLeftVehicle = "{{vehicle}}<font face='Lucida Console' size='12'> <font color='{{c:kb}}'>{{kb:3}}</font> <font color='{{c:xwn}}'>{{xwn}}</font> <font color='{{c:rating}}'>{{rating:3}}</font></font>";
+            c.formatRightNick = "{{nick}}";
+            c.formatRightVehicle = "<font face='Lucida Console' size='12'><font color='{{c:rating}}'>{{rating:3}}</font> <font color='{{c:xwn}}'>{{xwn}}</font> <font color='{{c:kb}}'>{{kb:3}}</font> </font>{{vehicle}}";
             return c;
         }
 
