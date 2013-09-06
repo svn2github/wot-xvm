@@ -100,9 +100,8 @@ package com.xvm
         public static const DYNAMIC_COLOR_TFB:int = 9;
         public static const DYNAMIC_COLOR_TSB:int = 10;
         public static const DYNAMIC_COLOR_E:int = 11;
-        public static const DYNAMIC_COLOR_TWR:int = 12;
-        public static const DYNAMIC_COLOR_WN:int = 13;
-        public static const DYNAMIC_COLOR_X:int = 14;
+        public static const DYNAMIC_COLOR_WN:int = 12;
+        public static const DYNAMIC_COLOR_X:int = 13;
 
         // Dynamic alpha types
         public static const DYNAMIC_ALPHA_EFF:int = 1;
@@ -116,9 +115,8 @@ package com.xvm
         public static const DYNAMIC_ALPHA_TFB:int = 9;
         public static const DYNAMIC_ALPHA_TSB:int = 10;
         public static const DYNAMIC_ALPHA_E:int = 11;
-        public static const DYNAMIC_ALPHA_TWR:int = 12;
-        public static const DYNAMIC_ALPHA_WN:int = 13;
-        public static const DYNAMIC_ALPHA_X:int = 14;
+        public static const DYNAMIC_ALPHA_WN:int = 12;
+        public static const DYNAMIC_ALPHA_X:int = 13;
 
         // Damage flag at Xvm.as: updateHealth
         public static const FROM_UNKNOWN:int = 0;

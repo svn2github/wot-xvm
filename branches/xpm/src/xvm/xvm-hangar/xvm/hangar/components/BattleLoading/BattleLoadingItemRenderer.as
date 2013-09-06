@@ -7,11 +7,14 @@ package xvm.hangar.components.BattleLoading
     import net.wg.gui.lobby.battleloading.PlayerItemRenderer;
     import com.xvm.utils.WGUtils;
     import com.xvm.*;
+    import com.xvm.utils.*;
     import xvm.hangar.components.ClanIcon.ClanIcon;
 
     public class BattleLoadingItemRenderer
     {
         private var proxy:PlayerItemRenderer;
+
+        private var playerName:String = null;
 
         public function BattleLoadingItemRenderer(proxy:PlayerItemRenderer)
         {
@@ -19,22 +22,44 @@ package xvm.hangar.components.BattleLoading
 
             proxy.iconLoader.addEventListener(UILoaderEvent.COMPLETE, onVehicleIconLoadComplete);
 
+            // Remove squad icon.
+            if (Config.config.battleLoading.removeSquadIcon && proxy.squad != null)
+                proxy.squad.visible = false;
+
+            proxy.vehicleField.condenseWhite = true;
+
+            // Add stat loading handler
             Stat.loadBattleStat(this, onStatLoaded, true);
         }
 
         internal function setData(data:Object):void
         {
-            if (data)
-                attachClanIconToPlayer(data);
+            if (data == null)
+                return;
+
+            if (playerName == null)
+                playerName = data.label;
+
+            // ClanIcon
+            attachClanIconToPlayer(data);
+
+            // Format strings
+            //if (Stat.loaded)
+            {
+                Logger.add(data.label);
+                //Logger.addObject(data);
+                Macros.RegisterMinimalMacrosData(data.label, data.clanAbbrev, Utils.clearIcon(data.icon), data.vehicle);
+                data.label = Macros.Format(playerName,
+                    team == Defines.TEAM_ALLY ? Config.config.battleLoading.formatLeftNick : Config.config.battleLoading.formatRightNick);
+                //data.vehicle = Macros.Format(playerName,
+                //    team == Defines.TEAM_ALLY ? Config.config.battleLoading.formatLeftVehicle : Config.config.battleLoading.formatRightVehicle);
+            }
 
             // Alternative icon set
             if (proxy.iconLoader.sourceAlt == Defines.WG_CONTOUR_ICON_NOIMAGE)
-                proxy.iconLoader.sourceAlt = proxy.data.icon;
-            proxy.data.icon = proxy.data.icon.replace(Defines.WG_CONTOUR_ICON_PATH, Defines.XVMRES_ROOT + Config.config.iconset.battleLoading);
-
-            // Remove squad icon.
-            if (Config.config.battleLoading.removeSquadIcon && proxy.squad != null)
-                proxy.squad.visible = false;
+                proxy.iconLoader.sourceAlt = data.icon;
+            if (data.icon == proxy.iconLoader.sourceAlt)
+                data.icon = data.icon.replace(Defines.WG_CONTOUR_ICON_PATH, Defines.XVMRES_ROOT + Config.config.iconset.battleLoading);
         }
 
         private function get team():int
@@ -84,6 +109,7 @@ package xvm.hangar.components.BattleLoading
         private function onStatLoaded():void
         {
             Logger.add("onStatLoaded: " + proxy.data.label);
+            proxy.setData(proxy.data);
         }
     }
 

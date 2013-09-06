@@ -27,11 +27,6 @@ package com.xvm.utils
             return (pos < 0) ? fullplayername : StringUtils.trim(fullplayername.slice(0, pos));
         }
 
-        public static function GetNormalizedPlayerName(fullplayername:String):String
-        {
-            return GetPlayerName(fullplayername).toUpperCase();
-        }
-
         public static function GetClanName(fullplayername:String):String
         {
             var pos:Number = fullplayername.indexOf("[");

@@ -267,6 +267,7 @@ class _Stat(object):
         return responseFromServer, duration
 
     def _fix(self, stat):
+        del stat['twr']
         self._r(stat, 'id', '_id')
         self._r(stat, 'name', 'nm')
         self._r(stat, 'date', 'dt')
@@ -286,6 +287,8 @@ class _Stat(object):
                     stat['vname'] = pl.vName
                     stat['icon'] = pl.vIcon
                     stat['maxHealth'] = pl.maxHealth
+                    stat['vtype'] = pl.vtype
+                    stat['level'] = pl.vLevel
                     pass
                 break;
 

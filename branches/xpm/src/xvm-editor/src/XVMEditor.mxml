@@ -362,9 +362,6 @@
                             <s:NavigatorContent id="nc_colors_rating" label="{_('DynamicColorWinRate')}" width="100%" height="100%">
                                 <p:PDynamicValues id="p_colors_rating" config="colors.rating" minimum="0" maximum="101" editorClass="DynamicColorEdit" valueChanged="updateValue(event)" setDefaultValue="onSetDefaultValue(event); RefreshCurrentPage();" creationComplete="{RefreshCurrentPage()}"/>
                             </s:NavigatorContent>
-                            <s:NavigatorContent id="nc_colors_twr" label="{_('DynamicColorTWR')}" width="100%" height="100%">
-                                <p:PDynamicValues id="p_colors_twr" config="colors.twr" minimum="0" maximum="101" editorClass="DynamicColorEdit" valueChanged="updateValue(event)" setDefaultValue="onSetDefaultValue(event); RefreshCurrentPage();" creationComplete="{RefreshCurrentPage()}"/>
-                            </s:NavigatorContent>
                             <s:NavigatorContent id="nc_colors_kb" label="{_('DynamicColorKiloBattles')}" width="100%" height="100%">
                                 <p:PDynamicValues id="p_colors_kb" config="colors.kb" minimum="0" maximum="100" editorClass="DynamicColorEdit" valueChanged="updateValue(event)" setDefaultValue="onSetDefaultValue(event); RefreshCurrentPage();" creationComplete="{RefreshCurrentPage()}"/>
                             </s:NavigatorContent>
@@ -407,9 +404,6 @@
                         </s:NavigatorContent>
                         <s:NavigatorContent id="nc_alpha_rating" label="{_('DynamicAlphaWinRate')}" width="100%" height="100%">
                             <p:PDynamicValues id="p_alpha_rating" config="alpha.rating" minimum="0" maximum="101" editorClass="DynamicAlphaEdit" valueChanged="updateValue(event)" setDefaultValue="onSetDefaultValue(event); RefreshCurrentPage();" creationComplete="{RefreshCurrentPage()}"/>
-                        </s:NavigatorContent>
-                        <s:NavigatorContent id="nc_alpha_twr" label="{_('DynamicAlphaTWR')}" width="100%" height="100%">
-                            <p:PDynamicValues id="p_alpha_twr" config="alpha.twr" minimum="0" maximum="101" editorClass="DynamicAlphaEdit" valueChanged="updateValue(event)" setDefaultValue="onSetDefaultValue(event); RefreshCurrentPage();" creationComplete="{RefreshCurrentPage()}"/>
                         </s:NavigatorContent>
                         <s:NavigatorContent id="nc_alpha_kb" label="{_('DynamicAlphaKiloBattles')}" width="100%" height="100%">
                             <p:PDynamicValues id="p_alpha_kb" config="alpha.kb" minimum="0" maximum="100" editorClass="DynamicAlphaEdit" valueChanged="updateValue(event)" setDefaultValue="onSetDefaultValue(event); RefreshCurrentPage();" creationComplete="{RefreshCurrentPage()}"/>

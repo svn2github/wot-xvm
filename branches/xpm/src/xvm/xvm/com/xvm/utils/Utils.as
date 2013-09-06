@@ -60,6 +60,16 @@ package com.xvm.utils
             return path;
         }
 
+        // Strip path and file extendion from icon
+        public static function clearIcon(icon:String):String
+        {
+            if (!icon)
+                return null;
+            icon = icon.slice(icon.lastIndexOf("/") + 1);
+            icon = icon.slice(0, icon.lastIndexOf("."));
+            return icon;
+        }
+
         // 0 - equal, -1 - v1<v2, 1 - v1>v2, -2 - error
         public static function compareVersions(v1:String, v2:String):Number
         {

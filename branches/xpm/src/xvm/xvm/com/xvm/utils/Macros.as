@@ -15,10 +15,10 @@ package com.xvm.utils
 
     public class Macros
     {
-        // { PLAYERNAME1: { macro1: func || value, macro2:... }, PLAYERNAME2: {...} }
+        // { PlayerName: { macro1: func || value, macro2:... }, PlayerName: {...} }
         private static var dict:Dictionary = new Dictionary();
 
-        public static function Format(playerName:String, format:String, options:MacrosFormatOptions):String
+        public static function Format(playerName:String, format:String, options:MacrosFormatOptions = null):String
         {
             var formatArr:Array = format.split("{{");
 
@@ -26,7 +26,7 @@ package com.xvm.utils
             if (len > 1)
             {
                 var res:String = formatArr[0];
-                var pdata:Object = dict[WGUtils.GetNormalizedPlayerName(playerName)];
+                var pdata:Object = dict[WGUtils.GetPlayerName(playerName)];
                 for (var i:int = 1; i < len; ++i)
                 {
                     var arr2:Array = formatArr[i].split("}}", 2);
@@ -44,17 +44,48 @@ package com.xvm.utils
                 }
             }
 
-            //Logger.add(playerName + "> " + format);
-            //Logger.add(playerName + "> " + res);
+            Logger.add(playerName + "> " + format);
+            Logger.add(playerName + "> " + res);
             return Utils.fixImgTag(res);
         }
 
-        public static function RegisterMacrosData(name:String):void
+        public static function RegisterMinimalMacrosData(name:String, clanWithoutBrackets:String, vicon:String, vname:String):void
         {
-            var pname:String = WGUtils.GetNormalizedPlayerName(name);
+            // check if already registered
+            if (dict.hasOwnProperty(name))
+                return;
+
+            dict[name] = new Dictionary();
+            var pdata:Dictionary = dict[name];
+
+            var nick:String = modXvmDevLabel(name);
+            var clanWithBrackets:String = (clanWithoutBrackets == null || clanWithoutBrackets == "") ? "" : "[" + clanWithoutBrackets + "]";
+
+            // {{nick}}
+            pdata["nick"] = nick + clanWithBrackets;
+            // {{name}}
+            pdata["name"] = nick;
+            // {{clan}}
+            pdata["clan"] = clanWithBrackets;
+            // {{clannb}}
+            pdata["clannb"] = clanWithoutBrackets;
+
+            // {{vehicle}}
+            pdata["vehicle"] = VehicleInfo.mapVehicleName(vicon, vname);
+            // {{vehiclename}} - usa-M24_Chaffee
+            pdata["vehiclename"] = vicon;
+            // {{vtype}}
+            pdata["vtype"] = VehicleInfo.GetVTypeValue(vicon);
+        }
+
+        public static function RegisterMacrosData(fullPlayerName:String):void
+        {
+            var pname:String = WGUtils.GetPlayerName(fullPlayerName);
             var data:StatData = Stat.getData(pname);
             if (data == null)
                 return;
+
+            RegisterMinimalMacrosData(data.name, data.clan, data.icon, data.vname);
 
             // TODO: Load stat in FogOfWar
             /*if (Stat.loaded && Config.s_config.rating.loadEnemyStatsInFogOfWar)
@@ -74,33 +105,14 @@ package com.xvm.utils
                 }
             }*/
 
-            if (!dict.hasOwnProperty(pname))
-                dict[pname] = new Dictionary();
-            var pdata:Dictionary = Macros.dict[pname];
+            var pdata:Dictionary = dict[pname];
 
-            // vars
-            var nick:String = Macros.modXvmDevLabel(data.nm + (data.clan != null && data.clan != "" ? "[" + data.clan + "]" : ""));
-
-            // {{nick}}
-            pdata["nick"] = nick;
-            // {{name}}
-            pdata["name"] = WGUtils.GetPlayerName(nick);
-            // {{clan}}
-            pdata["clan"] = WGUtils.GetClanNameWithBrackets(nick);
-            // {{clannb}}
-            pdata["clannb"] = WGUtils.GetClanName(nick);
-            // {{vehicle}}
-            pdata["vehicle"] = VehicleInfo.mapVehicleName(data.icon, data.vname);
-            // {{vehiclename}} - usa-M24_Chaffee
-            pdata["vehiclename"] = data.icon;
-            // {{vtype}}
-            pdata["vtype"] = VehicleInfo.GetVTypeValue(data.icon);
             // {{c:vtype}}
             pdata["c:vtype"] = MacrosUtil.GetVTypeColorValue(data.icon, data.vtype);
 
             // VMM only - static
             // {{squad}}
-            pdata["squad"] = data.squad || "";
+            //TODO pdata["squad"] = data.squad || "";
             // {{level}}
             pdata["level"] = data.level ? String(data.level) : "";
             // {{rlevel}}
@@ -108,7 +120,7 @@ package com.xvm.utils
             // {{hp-max}}
             pdata["hp-max"] = data.maxHealth ? String(data.maxHealth) : "";
             // {{turret}}
-            pdata["turret"] = data.turret || "";
+            //TODO pdata["turret"] = data.turret || "";
 
             // VMM only - dynamic
             // {{hp}}
@@ -143,12 +155,12 @@ package com.xvm.utils
             }
             pdata["c:hp_ratio"] = pdata["c:hp-ratio"];
             // {{c:dmg}}
-            pdata["c:dmg"] = function(o:MacrosFormatOptions):String {
-                return o.delta ? MacrosUtil.GetDmgSrcColorValue(
-                    Macros.damageFlagToDamageSource(o.damageFlag),
-                    o.entityName == 'teamKiller' ? (data.team + "tk") : o.entityName,
-                    o.dead, o.blowedUp) : "";
-            }
+            //TODOpdata["c:dmg"] = function(o:MacrosFormatOptions):String {
+            //TODO    return o.delta ? MacrosUtil.GetDmgSrcColorValue(
+            //TODO        Macros.damageFlagToDamageSource(o.damageFlag),
+            //TODO        o.entityName == 'teamKiller' ? (data.team + "tk") : o.entityName,
+            //TODO        o.dead, o.blowedUp) : "";
+            //TODO}
             // {{c:dmg-kind}}, {{c:dmg_kind}}
             pdata["c:dmg-kind"] = function(o:MacrosFormatOptions):String {
                 return o || o.delta < 0 || !o.damageType ? "" : MacrosUtil.GetDmgKindValue(o.damageType);
@@ -202,12 +214,10 @@ package com.xvm.utils
             pdata["eff:4"] = eff <= 0 ? "----" : StringUtils.leftPad(pdata["eff"], 4, ' ');
             // {{wn}}
             pdata["wn"] = data.wn <= 0 ? "----" : StringUtils.leftPad(String(data.wn), 4, ' ');
-            // {{twr}}
-            pdata["twr"] = data.twr <= 0 ? "--%" : StringUtils.leftPad(String(data.twr) + "%", 3, ' ');
             // {{e}}
-            pdata["e"] = data.te == null ? "-" : data.te >= 10 ? "E" : String(data.te);
+            pdata["e"] = data.v.teff <= 0 ? "-" : data.v.te >= 10 ? "E" : String(data.v.te);
             // {{teff}}
-            pdata["teff"] = data.teff == null ? "----" : StringUtils.leftPad(String(data.teff), 4, ' ');
+            pdata["teff"] = data.v.teff <= 0 ? "----" : StringUtils.leftPad(String(data.v.teff), 4, ' ');
 
             // {{rating}}, {{rating:3}}
             pdata["rating"] = r <= 0 ? "--%" : String(r) + "%";
@@ -236,14 +246,14 @@ package com.xvm.utils
             pdata["t-hb"] = tb <= 0 ? "--h" : String(Math.round(tb / 100)) + "h";
             pdata["t-hb:3"] = StringUtils.leftPad(pdata["t-hb"], 3, ' ');
             // {{tdb}}, {{tdb:4}}
-            pdata["tdb"] = data.tdb == null ? "----" : String(data.tdb);
+            pdata["tdb"] = data.v.db <= 0 ? "----" : String(data.v.db);
             pdata["tdb:4"] = StringUtils.leftPad(pdata["tdb"], 4, ' ');
             // {{tdv}}
-            pdata["tdv"] = data.tdv == null ? "-.-" : printf.format("%.1f", data.tdv);
+            pdata["tdv"] = data.v.dv <= 0 ? "-.-" : printf.format("%.1f", data.v.dv);
             // {{tfb}}
-            pdata["tfb"] = data.tfb == null ? "-.-" : printf.format("%.1f", data.tfb);
+            pdata["tfb"] = data.v.fb <= 0 ? "-.-" : printf.format("%.1f", data.v.fb);
             // {{tsb}}
-            pdata["tsb"] = data.tsb == null ? "-.-" : printf.format("%.1f", data.tsb);
+            pdata["tsb"] = data.v.sb <= 0 ? "-.-" : printf.format("%.1f", data.v.sb);
 
             // Dynamic colors
             // {{c:xeff}}
@@ -263,12 +273,8 @@ package com.xvm.utils
                 return MacrosUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_WN, data.wn, "#", o.darken);
             }
             // {{c:e}}
-            pdata["c:e"] = data.te <= 0 ? "" : function(o:MacrosFormatOptions):String {
-                return MacrosUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_E, data.te, "#", o.darken);
-            }
-            // {{c:twr}}
-            pdata["c:twr"] = data.twr <= 0 ? "" : function(o:MacrosFormatOptions):String {
-                return MacrosUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_TWR, data.twr, "#", o.darken);
+            pdata["c:e"] = data.v.teff <= 0 ? "" : function(o:MacrosFormatOptions):String {
+                return MacrosUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_E, data.v.te, "#", o.darken);
             }
             // {{c:rating}}
             pdata["c:rating"] = r <= 0 ? "" : function(o:MacrosFormatOptions):String {
@@ -289,20 +295,20 @@ package com.xvm.utils
             }
             pdata["c:t_battles"] = pdata["c:t-battles"];
             // {{c:tdb}}
-            pdata["c:tdb"] = data.tdb <= 0 ? "" : function(o:MacrosFormatOptions):String {
-                return MacrosUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_TDB, data.tdb, "#", o.darken);
+            pdata["c:tdb"] = data.v.db <= 0 ? "" : function(o:MacrosFormatOptions):String {
+                return MacrosUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_TDB, data.v.db, "#", o.darken);
             }
             // {{c:tdv}}
-            pdata["c:tdv"] = data.tdv <= 0 ? "" : function(o:MacrosFormatOptions):String {
-                return MacrosUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_TDV, data.tdv, "#", o.darken);
+            pdata["c:tdv"] = data.v.dv <= 0 ? "" : function(o:MacrosFormatOptions):String {
+                return MacrosUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_TDV, data.v.dv, "#", o.darken);
             }
             // {{c:tfb}}
-            pdata["c:tfb"] = data.tfb <= 0 ? "" : function(o:MacrosFormatOptions):String {
-                return MacrosUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_TFB, data.tfb, "#", o.darken);
+            pdata["c:tfb"] = data.v.fb <= 0 ? "" : function(o:MacrosFormatOptions):String {
+                return MacrosUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_TFB, data.v.fb, "#", o.darken);
             }
             // {{c:tsb}}
-            pdata["c:tsb"] = data.tsb <= 0 ? "" : function(o:MacrosFormatOptions):String {
-                return MacrosUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_TSB, data.tsb, "#", o.darken);
+            pdata["c:tsb"] = data.v.sb <= 0 ? "" : function(o:MacrosFormatOptions):String {
+                return MacrosUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_TSB, data.v.sb, "#", o.darken);
             }
 
             // Alpha
@@ -324,11 +330,7 @@ package com.xvm.utils
             }
             // {{a:e}}
             pdata["a:e"] = function(o:MacrosFormatOptions):Number {
-                return MacrosUtil.GetDynamicAlphaValue(Defines.DYNAMIC_ALPHA_E, data.te);
-            }
-            // {{a:twr}}
-            pdata["a:twr"] = function(o:MacrosFormatOptions):Number {
-                return MacrosUtil.GetDynamicAlphaValue(Defines.DYNAMIC_ALPHA_TWR, data.twr);
+                return MacrosUtil.GetDynamicAlphaValue(Defines.DYNAMIC_ALPHA_E, data.v.te);
             }
             // {{a:rating}}
             pdata["a:rating"] = function(o:MacrosFormatOptions):Number {
@@ -348,19 +350,19 @@ package com.xvm.utils
             }
             // {{a:tdb}}
             pdata["a:tdb"] = function(o:MacrosFormatOptions):Number {
-                return MacrosUtil.GetDynamicAlphaValue(Defines.DYNAMIC_ALPHA_TDB, data.tdb);
+                return MacrosUtil.GetDynamicAlphaValue(Defines.DYNAMIC_ALPHA_TDB, data.v.db);
             }
             // {{a:tdv}}
             pdata["a:tdv"] = function(o:MacrosFormatOptions):Number {
-                return MacrosUtil.GetDynamicAlphaValue(Defines.DYNAMIC_ALPHA_TDV, data.tdv);
+                return MacrosUtil.GetDynamicAlphaValue(Defines.DYNAMIC_ALPHA_TDV, data.v.dv);
             }
             // {{a:tfb}}
             pdata["a:tfb"] = function(o:MacrosFormatOptions):Number {
-                return MacrosUtil.GetDynamicAlphaValue(Defines.DYNAMIC_ALPHA_TFB, data.tfb);
+                return MacrosUtil.GetDynamicAlphaValue(Defines.DYNAMIC_ALPHA_TFB, data.v.fb);
             }
             // {{a:tsb}}
             pdata["a:tsb"] = function(o:MacrosFormatOptions):Number {
-                return MacrosUtil.GetDynamicAlphaValue(Defines.DYNAMIC_ALPHA_TSB, data.tsb);
+                return MacrosUtil.GetDynamicAlphaValue(Defines.DYNAMIC_ALPHA_TSB, data.v.sb);
             }
         }
 
@@ -368,34 +370,33 @@ package com.xvm.utils
 
         private static function modXvmDevLabel(name:String):String
         {
-            var label:String = WGUtils.GetPlayerName(name);
             switch (Config.gameRegion)
             {
                 case "RU":
-                    if (label == "M_r_A")
+                    if (name == "M_r_A")
                         return "Флаттершай - лучшая пони!";
-                    if (label == "XlebniDizele4ku")
+                    if (name == "XlebniDizele4ku")
                         return "как ник зделал поруски!!!";
-                    if (label == "sirmax2" || label == "0x01" || label == "_SirMax_")
+                    if (name == "sirmax2" || name == "0x01" || name == "_SirMax_")
                         return "«сэр Макс» (XVM)";
                     break;
 
                 case "CT":
-                    if (label == "M_r_A_RU" || label == "M_r_A_EU")
+                    if (name == "M_r_A_RU" || name == "M_r_A_EU")
                         return "Fluttershy is best pony!";
-                    if (label == "sirmax2_RU" || label == "sirmax2_EU" || label == "sirmax_NA" || label == "0x01_RU")
+                    if (name == "sirmax2_RU" || name == "sirmax2_EU" || name == "sirmax_NA" || name == "0x01_RU")
                         return "«sir Max» (XVM)";
                     break;
 
                 case "EU":
-                    if (label == "M_r_A")
+                    if (name == "M_r_A")
                         return "Fluttershy is best pony!";
-                    if (label == "sirmax2" || label == "0x01" || label == "_SirMax_")
+                    if (name == "sirmax2" || name == "0x01" || name == "_SirMax_")
                         return "«sir Max» (XVM)";
                     break;
 
                 case "US":
-                    if (label == "sirmax" || label == "0x01" || label == "_SirMax_")
+                    if (name == "sirmax" || name == "0x01" || name == "_SirMax_")
                         return "«sir Max» (XVM)";
                     break;
             }

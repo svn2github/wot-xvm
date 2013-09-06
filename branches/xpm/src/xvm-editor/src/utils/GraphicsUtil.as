@@ -162,9 +162,6 @@ public class GraphicsUtil
             case Defines.DYNAMIC_COLOR_RATING:
                 cfg = cfg_root.rating;
                 break;
-            case Defines.DYNAMIC_COLOR_TWR:
-                cfg = cfg_root.twr;
-                break;
             case Defines.DYNAMIC_COLOR_KB:
                 cfg = cfg_root.kb;
                 break;

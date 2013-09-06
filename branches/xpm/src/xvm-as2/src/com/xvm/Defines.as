@@ -68,7 +68,6 @@ class com.xvm.Defines
     public static var DYNAMIC_COLOR_TFB:Number = 9;
     public static var DYNAMIC_COLOR_TSB:Number = 10;
     public static var DYNAMIC_COLOR_E:Number = 11;
-    public static var DYNAMIC_COLOR_TWR:Number = 12;
     public static var DYNAMIC_COLOR_WN:Number = 13;
     public static var DYNAMIC_COLOR_X:Number = 14;
 
@@ -84,7 +83,6 @@ class com.xvm.Defines
     public static var DYNAMIC_ALPHA_TFB:Number = 9;
     public static var DYNAMIC_ALPHA_TSB:Number = 10;
     public static var DYNAMIC_ALPHA_E:Number = 11;
-    public static var DYNAMIC_ALPHA_TWR:Number = 12;
     public static var DYNAMIC_ALPHA_WN:Number = 13;
     public static var DYNAMIC_ALPHA_X:Number = 14;
 

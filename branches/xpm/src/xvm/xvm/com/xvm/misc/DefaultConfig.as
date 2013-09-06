@@ -917,14 +917,6 @@ package com.xvm.misc
                 { value: 64,  color: Defines.C_BLUE },     // very good
                 { value: 101, color: Defines.C_PURPLE }    // unique
             ];
-            c.twr = [
-                { value: 47,  color: Defines.C_RED },      // very bad
-                { value: 49,  color: Defines.C_ORANGE },   // bad
-                { value: 52,  color: Defines.C_YELLOW },   // normal
-                { value: 57,  color: Defines.C_GREEN },    // good
-                { value: 62,  color: Defines.C_BLUE },     // very good
-                { value: 101, color: Defines.C_PURPLE }    // unique
-            ];
             c.e = [
                 { value: 3,    color: Defines.C_RED },     // very bad
                 { value: 6,    color: Defines.C_ORANGE },  // bad
@@ -1016,12 +1008,6 @@ package com.xvm.misc
                 { value: 9999, alpha: 40 }
             ];
             c.rating = [
-                { value: 49,  alpha: 100 },
-                { value: 53,  alpha: 80 },
-                { value: 60,  alpha: 60 },
-                { value: 101, alpha: 40 }
-            ];
-            c.twr = [
                 { value: 49,  alpha: 100 },
                 { value: 53,  alpha: 80 },
                 { value: 60,  alpha: 60 },

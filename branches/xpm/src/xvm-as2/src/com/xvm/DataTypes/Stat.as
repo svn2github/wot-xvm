@@ -13,7 +13,6 @@ class com.xvm.DataTypes.Stat
     public var xeff:Number;         // xeff (*)
     public var wn:Number;           // WN
     public var xwn:Number;          // xwn (*)
-    public var twr:Number;          // TWR
     public var lvl:Number;          // Average level
 
     public var st:String;       // status (always "ok"?)

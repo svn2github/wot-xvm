@@ -218,7 +218,6 @@
       {{eff}}         - efektivita hráče: http://wot-news.com/index.php/stat/calc/en/
       {{eff:4}}       - efektivita hráče, zaokrouhlená na 4 místa zleva
       {{teff}}, {{e}} - efektivita hráče, dle vozidel: http://www.koreanrandom.com/forum/topic/1643-
-      {{twr}}         - TWR (T-Calc): http://www.koreanrandom.com/forum/topic/2389-
       {{wn}}          - WN6 hodnocení: http://www.koreanrandom.com/forum/topic/2575-
       {{xeff}}        - XVM rozsah pro efektivitu (hodnoty 00-99, XX pro nejlepší)
       {{xwn}}         - XVM rozsah pro WN6 (hodnoty 00-99, XX pro nejlepší)
@@ -245,7 +244,6 @@
       {{c:tdb}}, {{c:tdv}}, {{c:tfb}}, {{c:tsb}} - dynamické barvy pro makra
       {{c:eff}}       - barva závislá na efektivitě hráče
       {{c:e}}         - barva závislá na efektivitě hráče, dle vozidel
-      {{c:twr}}       - barva závislá na TWR (T-Calc)
       {{c:wn}}        - barva závislá na WN6 hodnocení
       {{c:xeff}}      - barva závislá na XVM rozsah pro efektivitu
       {{c:xwn}}       - barva závislá na XVM rozsah pro WN6

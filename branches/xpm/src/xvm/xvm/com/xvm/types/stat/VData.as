@@ -1,6 +1,6 @@
 package com.xvm.types.stat
 {
-    public class VData
+    public dynamic class VData
     {
         // received
         public var b:Number;

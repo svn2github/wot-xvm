@@ -204,7 +204,6 @@
       {{eff}}         - player efficiency: http://wot-news.com/index.php/stat/calc/en/
       {{eff:4}}       - player efficiency aligned from left to 4 chars
       {{teff}}, {{e}} - player per-vehicle efficiency: http://www.koreanrandom.com/forum/topic/1643-
-      {{twr}}         - TWR (T-Calc): http://www.koreanrandom.com/forum/topic/2389-
       {{wn}}          - WN6 rating: http://www.koreanrandom.com/forum/topic/2575-
       {{xeff}}        - XVM Scale for efficiency (values 00-99, XX for Tops)
       {{xwn}}         - XVM Scale for WN6 (values 00-99, XX for Tops)
@@ -231,7 +230,6 @@
       {{c:tdb}}, {{c:tdv}}, {{c:tfb}}, {{c:tsb}} - dynamic colors for this macros
       {{c:eff}}       - color depended from player efficiency
       {{c:e}}         - color depended from player per-vehicle efficiency
-      {{c:twr}}       - color depended from TWR (T-Calc)
       {{c:wn}}        - color depended from WN6 rating
       {{c:xeff}}      - color depended from XVM Scale for efficiency
       {{c:xwn}}       - color depended from XVM Scale for WN6

@@ -161,14 +161,6 @@ package com.xvm.types.cfg
             //{ value: 64,  color: ColorPalette.blue },     // very good
             //{ value: 101, color: ColorPalette.purple }    // unique
         //],
-        //twr: [
-            //{ value: 47,  color: ColorPalette.red },      // very bad
-            //{ value: 49,  color: ColorPalette.orange },   // bad
-            //{ value: 52,  color: ColorPalette.yellow },   // normal
-            //{ value: 57,  color: ColorPalette.green },    // good
-            //{ value: 62,  color: ColorPalette.blue },     // very good
-            //{ value: 101, color: ColorPalette.purple }    // unique
-        //],
         //e: [
             //{ value: 3,    color: ColorPalette.red },     // very bad
             //{ value: 6,    color: ColorPalette.orange },  // bad

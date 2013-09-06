@@ -33,6 +33,11 @@ package com.xvm
             return instance.info.message;
         }
 
+        public static function get loaded():Boolean
+        {
+            return instance.loaded;
+        }
+
         public static function getData(name:String):StatData
         {
             return instance.stat[name];

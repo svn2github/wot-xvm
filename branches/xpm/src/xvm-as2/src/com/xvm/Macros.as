@@ -186,8 +186,6 @@ class com.xvm.Macros
         pdata["eff:4"] = eff <= 0 ? "----" : Strings.padLeft(pdata["eff"], 4);
         // {{wn}}
         pdata["wn"] = stat.wn <= 0 ? "----" : Strings.padLeft(String(stat.wn), 4);
-        // {{twr}}
-        pdata["twr"] = stat.twr <= 0 ? "--%" : Strings.padLeft(String(stat.twr) + "%", 3);
         // {{e}}
         pdata["e"] = stat.te == null ? "-" : stat.te >= 10 ? "E" : String(stat.te);
         // {{teff}}
@@ -247,9 +245,6 @@ class com.xvm.Macros
         // {{c:e}}
         pdata["c:e"] = stat.te == null ? ""
             : function(o) { return GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_E, stat.te, "#", o.darken); }
-        // {{c:twr}}
-        pdata["c:twr"] = !stat.twr ? ""
-            : function(o) { return GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_TWR, stat.twr, "#", o.darken); }
         // {{c:rating}}
         pdata["c:rating"] = r <= 0 ? ""
             : function(o) { return GraphicsUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_RATING, r, "#", o.darken); }
@@ -288,8 +283,6 @@ class com.xvm.Macros
         pdata["a:wn"] = function(o) { return GraphicsUtil.GetDynamicAlphaValue(Defines.DYNAMIC_ALPHA_WN, stat.wn); }
         // {{a:e}}
         pdata["a:e"] = function(o) { return GraphicsUtil.GetDynamicAlphaValue(Defines.DYNAMIC_ALPHA_E, stat.te); }
-        // {{a:twr}}
-        pdata["a:twr"] = function(o) { return GraphicsUtil.GetDynamicAlphaValue(Defines.DYNAMIC_ALPHA_TWR, stat.twr); }
         // {{a:rating}}
         pdata["a:rating"] = function(o) { return GraphicsUtil.GetDynamicAlphaValue(Defines.DYNAMIC_ALPHA_RATING, r); }
         // {{a:kb}}

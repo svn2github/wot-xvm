@@ -15,7 +15,6 @@ package com.xvm.types.stat
         public var dmg:Number;          // damage (int)
         public var w:Number;            // wins (int)
         public var lvl:Number;          // level (float)
-        public var twr:Number;          // TWR (int?)
         public var dt:String;           // XVM update date ("2013-09-02T01:21:20.080Z"),
         public var frg:Number;          // frags
         public var _id:Number;          // player account id (long int)
@@ -32,6 +31,8 @@ package com.xvm.types.stat
         public var vname:String;        // localized vehicle name ("ИС-3")
         public var icon:String;         // icon file name without path: "ussr-IS-3.png")
         public var maxHealth:Number;    // maximum health (int)
+        public var vtype:String;        // vehicle type ("mediumTank")
+        public var level:Number;        // vehicle level (int)
 
         // calculated
         public var r:int;               // global win rate

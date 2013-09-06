@@ -43,12 +43,6 @@ package com.xvm.types.cfg
             //{ value: 60,  alpha: 60 },
             //{ value: 101, alpha: 40 }
         //],
-        //twr: [
-            //{ value: 49,  alpha: 100 },
-            //{ value: 53,  alpha: 80 },
-            //{ value: 60,  alpha: 60 },
-            //{ value: 101, alpha: 40 }
-        //],
         //e: [
             //{ value: 5,  alpha: 100 },
             //{ value: 7,  alpha: 80 },
