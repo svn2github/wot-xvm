@@ -4,7 +4,6 @@
 #Part of XVM build system
 #Do not change anything in this file if you are not sure
 
-export FLEXSDK="/opt/apache-flex-4.10"
 projects=(
           'wg'
           'xvm'

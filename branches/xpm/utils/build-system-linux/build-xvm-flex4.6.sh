@@ -5,7 +5,7 @@
 #Do not change anything in this file if you are not sure
 
 #0. Define Flex SDK path
-export FLEXSDK="/opt/apache-flex-4.10"
+export FLEXSDK="/opt/adobe-flex-4.6"
 
 #1. Detect revision
 pushd ../../ > /dev/null
@@ -37,8 +37,8 @@ rm -rf ../../release/*.swf
 mv -f ../../temp/xvm/xvm.xc.sample ../../temp/xvm/xvm.xc
 
 echo "$revision" >> ../../temp/"$revision"
-pushd ../../temp/ > /dev/null && zip -9 -r -q "$revision"_xvm.zip ./ && popd > /dev/null
+pushd ../../temp/ > /dev/null && zip -9 -r -q "$revision"_xvm_flex4.6.zip ./ && popd > /dev/null
 
 rm -rf ../../bin/*
-mv -f ../../temp/"$revision"_xvm.zip ../../bin/
+mv -f ../../temp/"$revision"_xvm_flex4.6.zip ../../bin/
 rm -rf ../../temp/
