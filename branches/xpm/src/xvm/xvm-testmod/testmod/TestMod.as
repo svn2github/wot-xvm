@@ -4,18 +4,16 @@
  */
 package testmod
 {
-    import flash.display.MovieClip;
-    import flash.events.Event;
-    import flash.utils.setInterval;
-    import com.xvm.Logger;
-    import com.xvm.Config;
+    import flash.display.*;
+    import flash.events.*;
+    import flash.utils.*;
     import net.wg.infrastructure.events.LoaderEvent;
-    import testmod.xvm.Login;
-    import testmod.xvm.Lobby;
+    import com.xvm.*;
+    import testmod.xvm.*;
 
     [SWF(width="1", height="1", backgroundColor="#111111")]
 
-    public class TestMod extends MovieClip
+    public class TestMod extends Sprite
     {
         public function TestMod():void
         {

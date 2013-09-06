@@ -1,5 +1,6 @@
 package xvm.hangar.components.BattleLoading
 {
+    import flash.text.*;
     import flash.geom.Transform;
     import com.xvm.misc.IconLoader;
     import net.wg.gui.components.controls.UILoaderAlt;
@@ -45,17 +46,20 @@ package xvm.hangar.components.BattleLoading
             if (playerName == null)
                 playerName = data.label;
 
+            Macros.RegisterMinimalMacrosData(playerName, data.clanAbbrev, Utils.clearIcon(data.icon), data.vehicle);
+            data.label = Macros.Format(playerName, "{{nick}}");
+
+
             // ClanIcon
             attachClanIconToPlayer(data);
 
             // Alternative icon set
             if (proxy.iconLoader.sourceAlt == Defines.WG_CONTOUR_ICON_NOIMAGE)
+            {
                 proxy.iconLoader.sourceAlt = data.icon;
-            if (data.icon == proxy.iconLoader.sourceAlt)
-                data.icon = data.icon.replace(Defines.WG_CONTOUR_ICON_PATH, Defines.XVMRES_ROOT + Config.config.iconset.battleLoading);
-
-            Macros.RegisterMinimalMacrosData(playerName, data.clanAbbrev, Utils.clearIcon(data.icon), data.vehicle);
-            data.label = Macros.Format(playerName, "{{nick}}");
+                if (data.icon == proxy.iconLoader.sourceAlt)
+                    data.icon = data.icon.replace(Defines.WG_CONTOUR_ICON_PATH, Defines.XVMRES_ROOT + Config.config.iconset.battleLoading);
+            }
         }
 
         internal function draw():void
@@ -108,32 +112,20 @@ package xvm.hangar.components.BattleLoading
         private function onVehicleIconLoadComplete(e:UILoaderEvent):void
         {
             //Logger.add("onVehicleIconLoadComplete");
-
             if (Config.config.battle.mirroredVehicleIcons == false && team == Defines.TEAM_ENEMY)
             {
-                proxy.iconLoader.scaleX = -proxy.iconLoader.scaleX;
+                proxy.iconLoader.scaleX = -1;
                 proxy.iconLoader.x -= 82;
                 //Logger.add(proxy.iconLoader.width + "x" + proxy.iconLoader.height);
             }
-
-            /*if (m_iconLoaded)
-                return;
-            m_iconLoaded = true;
-
-            wrapper.vehicleField._width += 80;
-            if (team == Defines.TEAM_ALLY)
-                wrapper.vehicleField._x -= 113; // sirmax: why this value?
-            else
-                wrapper.vehicleField._x += 5;
-            }
-            */
         }
 
         private function onStatLoaded():void
         {
             //Logger.add("onStatLoaded: " + proxy.data.label);
             proxy.vehicleField.condenseWhite = false; // TODO StatData.s_empty;
-            proxy.invalidate();
+//            proxy.invalidate();
+            draw();
         }
     }
 

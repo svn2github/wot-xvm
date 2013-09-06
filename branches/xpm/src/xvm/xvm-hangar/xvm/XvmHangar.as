@@ -21,6 +21,7 @@ package xvm
     {
         public function XvmHangar():void
         {
+            Logger.add("XvmHangar: .ctor()");
             if (stage)
             {
                 init();
@@ -33,6 +34,7 @@ package xvm
 
         private function init(e:Event = null):void
         {
+            Logger.add("XvmHangar: init()");
             removeEventListener(Event.ADDED_TO_STAGE, init);
 
             // entry point
