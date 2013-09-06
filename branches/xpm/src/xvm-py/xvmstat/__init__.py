@@ -17,7 +17,7 @@ from gui.mods.xpm import *
 from logger import *
 from XvmStat import g_xvm
 
-_SKIP_SWFS = [ 'gamageIndicator.swf' ]
+_SKIP_SWFS = [ 'DamageIndicator.swf' ]
 
 #####################################################################
 # event handlers

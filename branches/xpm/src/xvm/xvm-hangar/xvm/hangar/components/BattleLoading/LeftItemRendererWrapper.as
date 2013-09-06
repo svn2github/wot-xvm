@@ -18,5 +18,4 @@ package xvm.hangar.components.BattleLoading
             worker.setData(data);
         }
     }
-
 }

@@ -10,17 +10,19 @@ package xvm.hangar.components.ClanIcon
     import com.xvm.misc.IconLoader;
     import com.xvm.*;
     import com.xvm.types.cfg.CClanIcon;
+    import net.wg.gui.components.controls.UILoaderAlt;
 
-    public class ClanIcon extends Sprite
+    public class ClanIcon extends IconLoader
     {
-        private static var s_playersIconSources:Dictionary = new Dictionary();;
+        private static var s_playersIconSources:Dictionary = new Dictionary();
 
         private var cfg:CClanIcon;
-        private var icon:IconLoader;
         private var nick:String;
 
         public function ClanIcon(cfg:CClanIcon, dx:Number, dy:Number, team:Number, nick:String, clan:String)
         {
+            super();
+
             this.cfg = cfg;
             this.nick = nick;
 
@@ -28,18 +30,11 @@ package xvm.hangar.components.ClanIcon
             if (team == Defines.TEAM_ENEMY)
                 x -= cfg.w;
             y = dy + (team == Defines.TEAM_ALLY ? cfg.y : cfg.yr);
-return;
-            icon = new IconLoader(this, completeLoadIcon);
-            icon.name = "clanIcon";
-            icon.x = 0;
-            icon.y = 0;
-            icon.alpha = isFinite(cfg.alpha) ? cfg.alpha : 100;
-            icon.visible = false;
-            addChild(icon);
 
-            //icon["claninfo"] = { w: cfg.w, h: cfg.h };
-            //icon["holder"] = holder;
-            //icon["iconloader"] = il;
+            alpha = isFinite(cfg.alpha) ? cfg.alpha : 100;
+
+            autoSize = false;
+            visible = false;
 
             setSource(nick, clan);
         }
@@ -53,7 +48,7 @@ return;
             {
                 if (src == "")
                 {
-                    icon.unload();
+                    unload();
                     return;
                 }
                 paths.push(s_playersIconSources[nick]);
@@ -70,27 +65,34 @@ return;
                 paths.push(prefix + "nick/default.png");
             }
 
-            icon.setSources(paths);
+            setSources(paths);
         }
 
-        private function completeLoadIcon(e:Event):void
+        override protected function onLoadComplete2(e:Event):void
         {
-            icon.autoSize = false;
-            icon.width = cfg.w;
-            icon.height = cfg.h;
-            icon.invalidate();
-            icon.visible = true;
-            if (!s_playersIconSources.hasOwnProperty(nick))
-                s_playersIconSources[nick] = icon.source;
+            try
+            {
+                if (!s_playersIconSources.hasOwnProperty(nick))
+                    s_playersIconSources[nick] = source;
 
-            //icon["holder"].onEnterFrame = function()
-            //{
-                //if (icon.invalidationIntervalID)
-                    //return;
-                //this.onEnterFrame = null;
-                //this.stop();
-                //icon.visible = true;
-            //}
+                if (maintainAspectRatio)
+                {
+                    var c:Number = Math.min(cfg.w / loader.width, cfg.h / loader.height);
+                    loader.width *= c;
+                    loader.height *= c;
+                }
+                else
+                {
+                    loader.width = cfg.w;
+                    loader.height = cfg.h;
+                }
+
+                visible = true;
+            }
+            catch (ex:Error)
+            {
+                Logger.addObject(ex.getStackTrace());
+            }
         }
     }
 }

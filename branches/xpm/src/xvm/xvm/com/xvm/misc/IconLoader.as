@@ -4,75 +4,85 @@
  */
 package com.xvm.misc
 {
-    import flash.events.Event;
+    import flash.display.*;
+    import flash.events.*;
     import net.wg.gui.components.controls.UILoaderAlt;
+    import com.xvm.*;
 
     public class IconLoader extends UILoaderAlt
     {
-      private static var s_failIcons:Vector.<String> = new Vector.<String>();
+        private static var s_failIcons:Vector.<String> = new Vector.<String>();
 
-      private var m_owner: Object;
-      private var m_completeFunc: Function;
-      private var m_altIcons:Vector.<String>;
-      private var m_currentIndex: Number;
+        private var m_altIcons:Vector.<String>;
+        private var m_currentIndex: Number;
 
-      public function IconLoader(target:Object, completeFunc:Function)
-      {
-        m_owner = target;
-        m_completeFunc = completeFunc;
-        addEventListener("ioError", errorLoad);
-        addEventListener("complete", completeLoad);
-      }
-
-      public function setSources(altIcons:Vector.<String>, useNoImage:Boolean = false):void
-      {
-        m_altIcons = new Vector.<String>();
-
-        var len:int = altIcons.length;
-        for (var i:int = 0; i < len; ++i)
+        public function IconLoader()
         {
-          var icon:String = altIcons[i];
-          if (s_failIcons.indexOf(icon) < 0)
-            m_altIcons.push(icon);
+            this.background = new Sprite();
+            super();
+            loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete2);
+            loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onIOError2);
         }
 
-        if (sourceAlt != "")
+        public function get loader():Loader
         {
-          if (s_failIcons.indexOf(sourceAlt) < 0)
-            m_altIcons.push(sourceAlt);
-          sourceAlt = "";
+            for (var i:int = 0; i < numChildren; ++i)
+            {
+                var ldr:Loader = getChildAt(i) as Loader;
+                if (ldr != null)
+                    return ldr;
+            }
+            throw new UninitializedError("cannot find loader item");
         }
 
-        if (useNoImage)
-            m_altIcons.push("../maps/icons/vehicle/contour/noImage.png");
-
-        m_currentIndex = 0;
-
-        icon.source = currentIcon;
-      }
-
-      public function get currentIcon():String
-      {
-        return (m_currentIndex < m_altIcons.length) ? m_altIcons[m_currentIndex] : "";
-      }
-
-      private function errorLoad(e:Event):void
-      {
-        m_currentIndex++;
-        var next:String = currentIcon;
-        s_failIcons.push(source);
-        source = next;
-        if (next == "" && m_owner != null && m_completeFunc != null)
+        public function setSources(altIcons:Vector.<String>):void
         {
-            source = "";
-            m_completeFunc.call(m_owner, e);
-        }
-      }
+            m_altIcons = new Vector.<String>();
 
-      private function completeLoad(e:Event):void
-      {
-        if (m_owner != null && m_completeFunc != null)
-          m_completeFunc.call(m_owner, e);
-      }
+            var len:int = altIcons.length;
+            for (var i:int = 0; i < len; ++i)
+            {
+                var ic:String = altIcons[i];
+                if (s_failIcons.indexOf(ic) < 0)
+                    m_altIcons.push(ic);
+            }
+
+            if (sourceAlt != "")
+            {
+                if (s_failIcons.indexOf(sourceAlt) < 0)
+                    m_altIcons.push(sourceAlt);
+                sourceAlt = "";
+            }
+
+            //if (useNoImage)
+            //    m_altIcons.push("../maps/icons/vehicle/contour/noImage.png");
+
+            m_currentIndex = 0;
+
+            source = currentIcon;
+        }
+
+        public function get currentIcon():String
+        {
+            return (m_currentIndex < m_altIcons.length) ? m_altIcons[m_currentIndex] : "";
+        }
+
+        protected function onIOError2(e:IOErrorEvent):void
+        {
+            m_currentIndex++;
+            var next:String = currentIcon;
+            s_failIcons.push(source);
+            source = next;
+            if (next == "")
+            {
+                source = "";
+                dispatchEvent(new Event(Event.COMPLETE));
+            }
+        }
+
+        protected function onLoadComplete2(e:Event):void
+        {
+            dispatchEvent(new Event(Event.COMPLETE));
+        }
     }
 }
