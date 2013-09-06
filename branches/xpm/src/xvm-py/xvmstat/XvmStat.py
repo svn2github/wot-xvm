@@ -87,3 +87,5 @@ g_xvm = XvmStat()
 
 from . import XPM_MOD_VERSION, XPM_MOD_URL, XPM_GAME_VERSIONS
 log("xvm-stat %s (%s) for WoT %s" % (XPM_MOD_VERSION, XPM_MOD_URL, ", ".join(XPM_GAME_VERSIONS)))
+if IS_DEVELOPMENT:
+  log("$Rev$ $Date$ $Author$")
