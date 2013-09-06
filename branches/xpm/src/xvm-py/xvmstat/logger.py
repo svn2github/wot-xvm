@@ -11,7 +11,7 @@ from constants import XVM_LOG_FILE_NAME
 def log(s, prefix=""):
     _logger.add(prefix + str(s))
 
-def err(*args):
+def err(s):
     log(s, '[ERROR] ')
 
 def debug(s):

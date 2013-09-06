@@ -287,7 +287,7 @@ class _Stat(object):
                     stat['vname'] = pl.vName
                     stat['icon'] = pl.vIcon
                     stat['maxHealth'] = pl.maxHealth
-                    stat['vtype'] = pl.vtype
+                    stat['vtype'] = pl.vType
                     stat['level'] = pl.vLevel
                     pass
                 break;

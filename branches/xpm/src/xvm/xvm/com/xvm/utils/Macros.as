@@ -20,33 +20,42 @@ package com.xvm.utils
 
         public static function Format(playerName:String, format:String, options:MacrosFormatOptions = null):String
         {
-            var formatArr:Array = format.split("{{");
-
-            var len:int = formatArr.length;
-            if (len > 1)
+            var res:String = "";
+            try
             {
-                var res:String = formatArr[0];
-                var pdata:Object = dict[WGUtils.GetPlayerName(playerName)];
-                for (var i:int = 1; i < len; ++i)
+                var formatArr:Array = format.split("{{");
+
+                var len:int = formatArr.length;
+                if (len > 1)
                 {
-                    var arr2:Array = formatArr[i].split("}}", 2);
-                    if (arr2.length == 1 || (options && options.skip && options.skip.hasOwnProperty[arr2[0]]))
-                        res += "{{" + formatArr[i];
-                    else
+                    res = formatArr[0];
+                    var pdata:Object = dict[WGUtils.GetPlayerName(playerName)];
+                    for (var i:int = 1; i < len; ++i)
                     {
-                        var value:* = !pdata ? "" : pdata[arr2[0]] || "";
-                        if (typeof value == "function")
-                            res += options ? value(options) : "{{" + arr2[0] + "}}";
+                        var arr2:Array = formatArr[i].split("}}", 2);
+                        if (arr2.length == 1 || (options && options.skip && options.skip.hasOwnProperty[arr2[0]]))
+                            res += "{{" + formatArr[i];
                         else
-                            res += value;
-                        res += arr2[1];
+                        {
+                            var value:* = !pdata ? "" : pdata[arr2[0]] || "";
+                            if (typeof value == "function")
+                                res += options ? value(options) : "{{" + arr2[0] + "}}";
+                            else
+                                res += value;
+                            res += arr2[1];
+                        }
                     }
                 }
-            }
 
-            Logger.add(playerName + "> " + format);
-            Logger.add(playerName + "> " + res);
-            return Utils.fixImgTag(res);
+                //Logger.add(playerName + "> " + format);
+                //Logger.add(playerName + "> " + res);
+                return Utils.fixImgTag(res);
+            }
+            catch (ex:Error)
+            {
+                Logger.add(ex.getStackTrace());
+            }
+            return res;
         }
 
         public static function RegisterMinimalMacrosData(name:String, clanWithoutBrackets:String, vicon:String, vname:String):void

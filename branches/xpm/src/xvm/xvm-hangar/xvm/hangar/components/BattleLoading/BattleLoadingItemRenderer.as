@@ -46,7 +46,7 @@ package xvm.hangar.components.BattleLoading
             // Format strings
             //if (Stat.loaded)
             {
-                Logger.add(data.label);
+                //Logger.add(data.label);
                 //Logger.addObject(data);
                 Macros.RegisterMinimalMacrosData(data.label, data.clanAbbrev, Utils.clearIcon(data.icon), data.vehicle);
                 data.label = Macros.Format(playerName,
@@ -108,7 +108,7 @@ package xvm.hangar.components.BattleLoading
 
         private function onStatLoaded():void
         {
-            Logger.add("onStatLoaded: " + proxy.data.label);
+            //Logger.add("onStatLoaded: " + proxy.data.label);
             proxy.setData(proxy.data);
         }
     }

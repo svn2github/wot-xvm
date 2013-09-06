@@ -1,5 +1,6 @@
 import flash.external.ExternalInterface;
 import com.xvm.Sandbox;
+import com.xvm.Config;
 
 class com.xvm.Cmd
 {
@@ -38,7 +39,7 @@ class com.xvm.Cmd
 
     public static function loadBattleStat(players:Array)
     {
-        _call(null, null, [COMMAND_LOADBATTLESTAT, players]);
+        _call(null, null, [COMMAND_LOADBATTLESTAT, Config.s_config.rating.showPlayersStatistics, players]);
     }
 
     public static function loadUserData(value:String, isId:Boolean)
