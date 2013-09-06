@@ -22,5 +22,5 @@ for (( i=0; i<${#projects[@]}; i++ ));
     mono ../../utils/build-system-linux/bin/fdbuild.exe ${projects[$i]}.as2proj -version "1.14" -notrace
     rm -f swf/${projects[$i]}.swf
   done
-
+rm -rf include
 popd > /dev/null
