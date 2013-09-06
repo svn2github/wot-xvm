@@ -17,5 +17,11 @@ package xvm.hangar.components.BattleLoading
             super.setData(data);
             worker.setData(data);
         }
+
+        override protected function draw():void
+        {
+            super.draw();
+            worker.draw();
+        }
     }
 }

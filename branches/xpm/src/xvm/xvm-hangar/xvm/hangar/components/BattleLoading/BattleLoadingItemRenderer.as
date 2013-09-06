@@ -1,5 +1,6 @@
 package xvm.hangar.components.BattleLoading
 {
+    import flash.geom.Transform;
     import com.xvm.misc.IconLoader;
     import net.wg.gui.components.controls.UILoaderAlt;
     import net.wg.gui.events.UILoaderEvent;
@@ -9,6 +10,7 @@ package xvm.hangar.components.BattleLoading
     import com.xvm.*;
     import com.xvm.utils.*;
     import xvm.hangar.components.ClanIcon.ClanIcon;
+    import org.idmedia.as3commons.util.StringUtils;
 
     public class BattleLoadingItemRenderer
     {
@@ -26,6 +28,9 @@ package xvm.hangar.components.BattleLoading
             if (Config.config.battleLoading.removeSquadIcon && proxy.squad != null)
                 proxy.squad.visible = false;
 
+            proxy.vehicleField.width += 100;
+            if (team == Defines.TEAM_ALLY)
+                proxy.vehicleField.x -= 137;
             proxy.vehicleField.condenseWhite = true;
 
             // Add stat loading handler
@@ -43,24 +48,41 @@ package xvm.hangar.components.BattleLoading
             // ClanIcon
             attachClanIconToPlayer(data);
 
-            // Format strings
-            //if (Stat.loaded)
-            {
-                //Logger.add(data.label);
-                //Logger.addObject(data);
-                Macros.RegisterMinimalMacrosData(data.label, data.clanAbbrev, Utils.clearIcon(data.icon), data.vehicle);
-                data.label = Macros.Format(playerName,
-                    team == Defines.TEAM_ALLY ? Config.config.battleLoading.formatLeftNick : Config.config.battleLoading.formatRightNick);
-                //data.vehicle = Macros.Format(playerName,
-                //    team == Defines.TEAM_ALLY ? Config.config.battleLoading.formatLeftVehicle : Config.config.battleLoading.formatRightVehicle);
-            }
-
             // Alternative icon set
             if (proxy.iconLoader.sourceAlt == Defines.WG_CONTOUR_ICON_NOIMAGE)
                 proxy.iconLoader.sourceAlt = data.icon;
             if (data.icon == proxy.iconLoader.sourceAlt)
                 data.icon = data.icon.replace(Defines.WG_CONTOUR_ICON_PATH, Defines.XVMRES_ROOT + Config.config.iconset.battleLoading);
+
+            Macros.RegisterMinimalMacrosData(playerName, data.clanAbbrev, Utils.clearIcon(data.icon), data.vehicle);
+            data.label = Macros.Format(playerName, "{{nick}}");
         }
+
+        internal function draw():void
+        {
+            try
+            {
+                if (proxy.data == null)
+                    return;
+                if (Config.config.battle.highlightVehicleIcon == false)
+                    proxy.iconLoader.transform.colorTransform = App.colorSchemeMgr.getScheme(proxy.enabled ? "normal" : "normal_dead").colorTransform;
+
+                // Set Text Fields
+                var c:String = proxy.textField.htmlText.match(/ COLOR="(#[0-9A-F]{6})"/)[1];
+                var a:String = Macros.Format(playerName, team == Defines.TEAM_ALLY ? Config.config.battleLoading.formatLeftNick : Config.config.battleLoading.formatRightNick);
+                var b:String = Macros.Format(playerName, team == Defines.TEAM_ALLY ? Config.config.battleLoading.formatLeftVehicle : Config.config.battleLoading.formatRightVehicle);
+                proxy.textField.htmlText = "<font color='" + c + "'>" + a + "</font>";
+                proxy.vehicleField.htmlText = "<font color='" + c + "'>" + b + "</font>";
+                //Logger.add(b);
+                //Logger.add(proxy.vehicleField.htmlText);
+            }
+            catch (ex:Error)
+            {
+                Logger.add(ex.getStackTrace());
+            }
+        }
+
+        // PRIVATE
 
         private function get team():int
         {
@@ -93,6 +115,7 @@ package xvm.hangar.components.BattleLoading
                 proxy.iconLoader.x -= 82;
                 //Logger.add(proxy.iconLoader.width + "x" + proxy.iconLoader.height);
             }
+
             /*if (m_iconLoaded)
                 return;
             m_iconLoaded = true;
@@ -109,7 +132,8 @@ package xvm.hangar.components.BattleLoading
         private function onStatLoaded():void
         {
             //Logger.add("onStatLoaded: " + proxy.data.label);
-            proxy.setData(proxy.data);
+            proxy.vehicleField.condenseWhite = false; // TODO StatData.s_empty;
+            proxy.invalidate();
         }
     }
 

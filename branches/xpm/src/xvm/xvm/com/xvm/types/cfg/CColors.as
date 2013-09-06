@@ -169,6 +169,7 @@ package com.xvm.types.cfg
             //{ value: 9,    color: ColorPalette.blue },    // very good
             //{ value: 20,   color: ColorPalette.purple }   // unique
         //],
+        //avglvl
         //kb: [
             //{ value: 2,   color: ColorPalette.red },
             //{ value: 5,   color: ColorPalette.orange },

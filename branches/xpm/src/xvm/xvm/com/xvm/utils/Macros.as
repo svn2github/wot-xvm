@@ -23,6 +23,9 @@ package com.xvm.utils
             var res:String = "";
             try
             {
+                if (options == null)
+                    options = new MacrosFormatOptions();
+
                 var formatArr:Array = format.split("{{");
 
                 var len:int = formatArr.length;
@@ -39,9 +42,13 @@ package com.xvm.utils
                         {
                             var value:* = !pdata ? "" : pdata[arr2[0]] || "";
                             if (typeof value == "function")
+                            {
                                 res += options ? value(options) : "{{" + arr2[0] + "}}";
+                            }
                             else
+                            {
                                 res += value;
+                            }
                             res += arr2[1];
                         }
                     }
@@ -213,7 +220,7 @@ package com.xvm.utils
             var tbK:Number = tb / 1000.0;
 
             // {{avglvl}}
-            pdata["avglvl"] = printf.format("%.1fk", data.v.l);
+            pdata["avglvl"] = printf.format("%.1f", data.lvl);
             // {{xeff}}
             pdata["xeff"] = data.xeff < 0 ? "--" : data.xeff == 100 ? "XX" : (data.xeff < 10 ? "0" : "") + data.xeff;
             // {{xwn}}
@@ -293,6 +300,10 @@ package com.xvm.utils
             pdata["c:kb"] = b <= 0 ? "" : function(o:MacrosFormatOptions):String {
                 return MacrosUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_KB, b / 1000.0, "#", o.darken);
             }
+            // {{c:avglvl}}
+            pdata["c:avglvl"] = data.lvl <= 0 ? "" : function(o:MacrosFormatOptions):String {
+                return MacrosUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_AVGLVL, data.lvl, "#", o.darken);
+            }
             // {{c:t-rating}}, {{c:t_rating}}
             pdata["c:t-rating"] = tr <= 0 ? "" : function(o:MacrosFormatOptions):String {
                 return MacrosUtil.GetDynamicColorValue(Defines.DYNAMIC_COLOR_RATING, tr, "#", o.darken);
@@ -348,6 +359,10 @@ package com.xvm.utils
             // {{a:kb}}
             pdata["a:kb"] = function(o:MacrosFormatOptions):Number {
                 return MacrosUtil.GetDynamicAlphaValue(Defines.DYNAMIC_ALPHA_KB, b / 1000);
+            }
+            // {{a:avglvl}}
+            pdata["a:avglvl"] = function(o:MacrosFormatOptions):Number {
+                return MacrosUtil.GetDynamicAlphaValue(Defines.DYNAMIC_ALPHA_AVGLVL, data.lvl);
             }
             // {{a:t-rating}}
             pdata["a:t-rating"] = function(o:MacrosFormatOptions):Number {

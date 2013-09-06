@@ -933,6 +933,14 @@ package com.xvm.misc
                 { value: 20,  color: Defines.C_BLUE },
                 { value: 999, color: Defines.C_PURPLE }
             ];
+            c.avglvl = [
+                { value: 2,  color: Defines.C_RED },
+                { value: 3,  color: Defines.C_ORANGE },
+                { value: 5,  color: Defines.C_YELLOW },
+                { value: 7,  color: Defines.C_GREEN },
+                { value: 9,  color: Defines.C_BLUE },
+                { value: 11, color: Defines.C_PURPLE }
+            ];
             c.t_battles = [
                 { value: 100,   color: Defines.C_RED },
                 { value: 250,   color: Defines.C_ORANGE },
@@ -1024,6 +1032,9 @@ package com.xvm.misc
                 { value: 10,  alpha: 80 },
                 { value: 20,  alpha: 60 },
                 { value: 999, alpha: 40 }
+            ];
+            c.avglvl = [
+                { value: 11,  alpha: 100 }
             ];
             c.t_battles = [
                 { value: 250,  alpha: 100 },
