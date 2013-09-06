@@ -20,8 +20,8 @@ package com.xvm.misc
         {
             this.background = new Sprite();
             super();
-            loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete2);
-            loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onIOError2);
+            loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
+            loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
         }
 
         public function get loader():Loader
@@ -54,9 +54,6 @@ package com.xvm.misc
                 sourceAlt = "";
             }
 
-            //if (useNoImage)
-            //    m_altIcons.push("../maps/icons/vehicle/contour/noImage.png");
-
             m_currentIndex = 0;
 
             source = currentIcon;
@@ -67,7 +64,7 @@ package com.xvm.misc
             return (m_currentIndex < m_altIcons.length) ? m_altIcons[m_currentIndex] : "";
         }
 
-        protected function onIOError2(e:IOErrorEvent):void
+        protected function onIOError(e:IOErrorEvent):void
         {
             m_currentIndex++;
             var next:String = currentIcon;
@@ -80,7 +77,7 @@ package com.xvm.misc
             }
         }
 
-        protected function onLoadComplete2(e:Event):void
+        protected function onLoadComplete(e:Event):void
         {
             dispatchEvent(new Event(Event.COMPLETE));
         }

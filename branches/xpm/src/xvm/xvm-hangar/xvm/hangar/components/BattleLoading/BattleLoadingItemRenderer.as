@@ -1,5 +1,7 @@
 package xvm.hangar.components.BattleLoading
 {
+    import com.xvm.misc.IconLoader;
+    import net.wg.gui.components.controls.UILoaderAlt;
     import net.wg.gui.events.UILoaderEvent;
     import com.xvm.types.cfg.CClanIcon;
     import net.wg.gui.lobby.battleloading.PlayerItemRenderer;
@@ -16,7 +18,8 @@ package xvm.hangar.components.BattleLoading
             this.proxy = proxy;
 
             proxy.iconLoader.addEventListener(UILoaderEvent.COMPLETE, onVehicleIconLoadComplete);
-            //Stat.loadBattleStat(this, onStatLoaded, true);
+
+            Stat.loadBattleStat(this, onStatLoaded, true);
         }
 
         internal function setData(data:Object):void
@@ -24,7 +27,10 @@ package xvm.hangar.components.BattleLoading
             if (data)
                 attachClanIconToPlayer(data);
 
-            //proxy.data.icon = proxy.data.icon.replace(Defines.WG_CONTOUR_ICON_PATH, Defines.XVMRES_ROOT + Config.config.iconset.battleLoading);
+            // Alternative icon set
+            if (proxy.iconLoader.sourceAlt == Defines.WG_CONTOUR_ICON_NOIMAGE)
+                proxy.iconLoader.sourceAlt = proxy.data.icon;
+            proxy.data.icon = proxy.data.icon.replace(Defines.WG_CONTOUR_ICON_PATH, Defines.XVMRES_ROOT + Config.config.iconset.battleLoading);
 
             // Remove squad icon.
             if (Config.config.battleLoading.removeSquadIcon && proxy.squad != null)
@@ -56,7 +62,7 @@ package xvm.hangar.components.BattleLoading
         {
             //Logger.add("onVehicleIconLoadComplete");
 
-            if (!Config.config.battle.mirroredVehicleIcons && team == Defines.TEAM_ENEMY)
+            if (Config.config.battle.mirroredVehicleIcons == false && team == Defines.TEAM_ENEMY)
             {
                 proxy.iconLoader.scaleX = -proxy.iconLoader.scaleX;
                 proxy.iconLoader.x -= 82;

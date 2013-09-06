@@ -68,7 +68,7 @@ package xvm.hangar.components.ClanIcon
             setSources(paths);
         }
 
-        override protected function onLoadComplete2(e:Event):void
+        override protected function onLoadComplete(e:Event):void
         {
             try
             {

@@ -47,6 +47,7 @@ package com.xvm
 
         // Default path to vehicle icons (relative)
         public static const WG_CONTOUR_ICON_PATH:String = "../maps/icons/vehicle/contour/";
+        public static const WG_CONTOUR_ICON_NOIMAGE:String = WG_CONTOUR_ICON_PATH + "noImage.png";
 
         // Events
         public static const E_CONFIG_LOADED:String = "config_loaded";
