@@ -51,5 +51,5 @@ rm -rf ../../bin/*
 echo "$revision" >> ../../temp/"$revision"
 pushd ../../temp/ > /dev/null && zip -9 -r -q "$revision"_xvm"$archive_postfix".zip ./ && popd > /dev/null
 
-mv -f ../../temp/"$revision"_xvm.zip ../../bin/
+mv -f ../../temp/"$revision"_xvm"$archive_postfix".zip ../../bin/
 rm -rf ../../temp/
