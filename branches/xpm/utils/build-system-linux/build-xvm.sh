@@ -6,6 +6,7 @@
 
 #0. Define Flex SDK path
 export FLEXSDK="/opt/apache-flex-4.10"
+archive_postfix=""
 
 #1. Detect revision
 pushd ../../ > /dev/null
@@ -36,9 +37,19 @@ rm -rf ../../release/*.swf
 
 mv -f ../../temp/xvm/xvm.xc.sample ../../temp/xvm/xvm.xc
 
-echo "$revision" >> ../../temp/"$revision"
-pushd ../../temp/ > /dev/null && zip -9 -r -q "$revision"_xvm.zip ./ && popd > /dev/null
-
 rm -rf ../../bin/*
+
+#5. Build xvm-py
+pushd sh > /dev/null
+./xvmpy-build.sh
+popd > /dev/null
+
+cp -rf ../../bin/xpm/* ../../temp/"$wot_version"/
+rm -rf ../../bin/*
+
+#6. Build archive
+echo "$revision" >> ../../temp/"$revision"
+pushd ../../temp/ > /dev/null && zip -9 -r -q "$revision"_xvm"$archive_postfix".zip ./ && popd > /dev/null
+
 mv -f ../../temp/"$revision"_xvm.zip ../../bin/
 rm -rf ../../temp/
