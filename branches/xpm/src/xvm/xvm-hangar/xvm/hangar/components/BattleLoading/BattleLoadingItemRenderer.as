@@ -55,11 +55,9 @@ package xvm.hangar.components.BattleLoading
 
             // Alternative icon set
             if (proxy.iconLoader.sourceAlt == Defines.WG_CONTOUR_ICON_NOIMAGE)
-            {
                 proxy.iconLoader.sourceAlt = data.icon;
-                if (data.icon == proxy.iconLoader.sourceAlt)
-                    data.icon = data.icon.replace(Defines.WG_CONTOUR_ICON_PATH, Defines.XVMRES_ROOT + Config.config.iconset.battleLoading);
-            }
+            if (data.icon == proxy.iconLoader.sourceAlt)
+                data.icon = data.icon.replace(Defines.WG_CONTOUR_ICON_PATH, Defines.XVMRES_ROOT + Config.config.iconset.battleLoading);
         }
 
         internal function draw():void
@@ -109,8 +107,13 @@ package xvm.hangar.components.BattleLoading
                 proxy.addChild(icon);
         }
 
+        private var _iconLoaded:Boolean = false;
         private function onVehicleIconLoadComplete(e:UILoaderEvent):void
         {
+            if (_iconLoaded)
+                return;
+            _iconLoaded = true;
+
             //Logger.add("onVehicleIconLoadComplete");
             if (Config.config.battle.mirroredVehicleIcons == false && team == Defines.TEAM_ENEMY)
             {
