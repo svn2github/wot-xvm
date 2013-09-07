@@ -139,6 +139,7 @@ package com.xvm
             catch (ex:Error)
             {
                 Logger.add(ex.getStackTrace());
+                Logger.add(json_str);
                 throw ex;
             }
             finally

@@ -276,7 +276,8 @@ class _Stat(object):
         self._r(stat, 'wins', 'w')
         self._r(stat, 'eff', 'e')
         self._r(stat, 'vname', 'vn')
-
+        self._d(stat, 'lvl', '0')
+       
         # TODO: optimize
         for vehId in self.players:
             pl = self.players[vehId]
@@ -313,6 +314,10 @@ class _Stat(object):
             if not b in r:
                 r[b] = r[a]
             del r[a]
+
+    def _d(self, r, a, d):
+        if a not in r:
+            r[a] = d
 
 
 class _Player(object):

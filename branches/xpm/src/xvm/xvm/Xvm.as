@@ -48,17 +48,32 @@ package
             {
                 if (mods == null)
                     return;
+
                 var list:Array = JSONx.parse(mods) as Array;
                 if (list == null || list.length == 0)
                     return;
                 //_libraries = new Vector.<Loader>();
+
                 var ctx:LoaderContext = new LoaderContext(false, ApplicationDomain.currentDomain);
+
+                var preload:Array = ["battleLoading.swf"]; // TODO make configurable dependencies
+                for (var x:int = 0; x < preload.length; ++x)
+                {
+                    var swf:String = (preload[x] as String).replace(/^.*\//, '');
+                    Logger.add("[XVM] Preloading swf: " + swf);
+                    var requestSwf:URLRequest = new URLRequest(swf);
+                    var loaderSwf:Loader = new Loader();
+                    loaderSwf.contentLoaderInfo.addEventListener(Event.INIT, onLibLoaded);
+                    loaderSwf.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onLibLoadError);
+                    loaderSwf.load(requestSwf, ctx);
+                }
+
                 for (var i:int = 0; i < list.length; ++i)
                 {
                     var mod:String = (list[i] as String).replace(/^.*\//, '');
                     Logger.add("[XVM] Loading mod: " + mod);
                     var request:URLRequest = new URLRequest(Defines.XVMMODS_ROOT + mod);
-                    var loader:Loader = new flash.display.Loader();
+                    var loader:Loader = new Loader();
                     loader.contentLoaderInfo.addEventListener(Event.INIT, onLibLoaded);
                     loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onLibLoadError);
                     loader.load(request, ctx);

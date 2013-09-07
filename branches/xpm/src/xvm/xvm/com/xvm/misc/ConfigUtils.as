@@ -93,18 +93,21 @@ package com.xvm.misc
             config.iconset.statisticForm = Utils.fixPath(config.iconset.statisticForm);
             config.iconset.vehicleMarker = Utils.fixPath(config.iconset.vehicleMarker);
 
-            if (isNaN(config.battleLoading.clanIcon.xr))
-                config.battleLoading.clanIcon.xr = config.battleLoading.clanIcon.x;
-            if (isNaN(config.battleLoading.clanIcon.yr))
-                config.battleLoading.clanIcon.yr = config.battleLoading.clanIcon.y;
-            if (isNaN(config.statisticForm.clanIcon.xr))
-                config.statisticForm.clanIcon.xr = config.statisticForm.clanIcon.x;
-            if (isNaN(config.statisticForm.clanIcon.yr))
-                config.statisticForm.clanIcon.yr = config.statisticForm.clanIcon.y;
-            if (isNaN(config.playersPanel.clanIcon.xr))
-                config.playersPanel.clanIcon.xr = config.playersPanel.clanIcon.x;
-            if (isNaN(config.playersPanel.clanIcon.yr))
-                config.playersPanel.clanIcon.yr = config.playersPanel.clanIcon.y;
+            if (config && config.battleLoading && config.battleLoading.clanIcon)
+            {
+                if (isNaN(config.battleLoading.clanIcon.xr))
+                    config.battleLoading.clanIcon.xr = config.battleLoading.clanIcon.x;
+                if (isNaN(config.battleLoading.clanIcon.yr))
+                    config.battleLoading.clanIcon.yr = config.battleLoading.clanIcon.y;
+                if (isNaN(config.statisticForm.clanIcon.xr))
+                    config.statisticForm.clanIcon.xr = config.statisticForm.clanIcon.x;
+                if (isNaN(config.statisticForm.clanIcon.yr))
+                    config.statisticForm.clanIcon.yr = config.statisticForm.clanIcon.y;
+                if (isNaN(config.playersPanel.clanIcon.xr))
+                    config.playersPanel.clanIcon.xr = config.playersPanel.clanIcon.x;
+                if (isNaN(config.playersPanel.clanIcon.yr))
+                    config.playersPanel.clanIcon.yr = config.playersPanel.clanIcon.y;
+            }
         }
 
         /**

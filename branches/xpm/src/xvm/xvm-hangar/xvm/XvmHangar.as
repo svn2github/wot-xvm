@@ -15,26 +15,31 @@ package xvm
     import net.wg.infrastructure.managers.impl.ContainerManager;
     import xvm.hangar.*;
 
-    [SWF(width="100", height="100", backgroundColor="#666666")]
-
     public class XvmHangar extends Sprite
     {
         public function XvmHangar():void
         {
-            Logger.add("XvmHangar: .ctor()");
-            if (stage)
+            //Logger.add("XvmHangar: .ctor()");
+            try
             {
-                init();
+                if (stage)
+                {
+                    init();
+                }
+                else
+                {
+                    addEventListener(Event.ADDED_TO_STAGE, init);
+                }
             }
-            else
+            catch (ex:Error)
             {
-                addEventListener(Event.ADDED_TO_STAGE, init);
+                Logger.add(ex.getStackTrace());
             }
         }
 
         private function init(e:Event = null):void
         {
-            Logger.add("XvmHangar: init()");
+            //Logger.add("XvmHangar: init()");
             removeEventListener(Event.ADDED_TO_STAGE, init);
 
             // entry point

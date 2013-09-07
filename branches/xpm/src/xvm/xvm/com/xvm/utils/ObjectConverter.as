@@ -8,6 +8,7 @@ package com.xvm.utils
 {
     import flash.utils.describeType;
     import flash.utils.getDefinitionByName;
+    import com.xvm.Logger;
 
     public class ObjectConverter
     {
@@ -23,13 +24,16 @@ package com.xvm.utils
         }
 
 
-        private static function createData(rawData: Object, clazz: Class): *
+        private static function createData(rawData:Object, clazz:Class):*
         {
             if (clazz == Object)
                 return rawData;
 
             if (rawData == null)
                 return null;
+
+            if (rawData is clazz)
+                return rawData;
 
             if (_simpleTypes.indexOf(clazz) > -1)
                 return rawData;
@@ -41,15 +45,33 @@ package com.xvm.utils
             var accessors:XMLList = describeTypeXML..accessor;
             for (var nm:String in rawData)
             {
-                var a:XML = (accessors.(@name == nm) as XMLList || [null])[0];
-                var v:XML = (variables.(@name == nm) as XMLList || [null])[0];
+                var a:XML = null;
+                for each (var accessor:XML in accessors)
+                {
+                    if (accessor.@name == nm)
+                    {
+                        v = accessor;
+                        break;
+                    }
+                }
+                var v:XML = null;
+                for each (var variable:XML in variables)
+                {
+                    if (variable.@name == nm)
+                    {
+                        v = variable;
+                        break;
+                    }
+                }
                 if (a != null && a.@access != "readwrite")
                     continue;
 
                 if (a == null && v == null)
                 {
                     if (isDynamic)
+                    {
                         result[nm] = rawData[nm];
+                    }
                 }
                 else
                 {
@@ -68,6 +90,7 @@ package com.xvm.utils
                     for each (var metadata: XML in variable..metadata) {
                         if (metadata.@name == "ArrayElementType") {
                             metaType = getDefinitionByName(metadata..arg.@value) as Class;
+                            break;
                         }
                     }
                     result[variable.@name] = populateArray(array, metaType);

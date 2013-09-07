@@ -6,12 +6,12 @@
     <movie input="" />
     <movie path="..\..\release\mods\xvm-hangar.swf" />
     <movie fps="30" />
-    <movie width="800" />
-    <movie height="600" />
+    <movie width="1" />
+    <movie height="1" />
     <movie version="10" />
     <movie minorVersion="2" />
     <movie platform="Flash Player" />
-    <movie background="#FFFFFF" />
+    <movie background="#123456" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
@@ -34,7 +34,7 @@
     <option showDeprecationWarnings="True" />
     <option showUnusedTypeSelectorWarnings="True" />
     <option strict="True" />
-    <option useNetwork="True" />
+    <option useNetwork="False" />
     <option useResourceBundleMetadata="True" />
     <option warnings="True" />
     <option verboseStackTraces="True" />

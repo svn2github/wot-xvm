@@ -11,8 +11,6 @@ package testmod
     import com.xvm.*;
     import testmod.xvm.*;
 
-    [SWF(width="1", height="1", backgroundColor="#111111")]
-
     public class TestMod extends Sprite
     {
         public function TestMod():void

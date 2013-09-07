@@ -54,6 +54,8 @@ package com.xvm.utils
 
         public static function fixPath(path:String):String
         {
+            if (path == null)
+                return null;
             path = path.split("\\").join("/");
             if (!StringUtils.endsWith("/", path))
                 path += "/";
