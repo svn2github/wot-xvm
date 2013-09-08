@@ -138,35 +138,43 @@ package com.xvm
             }
             catch (ex:Error)
             {
-                Logger.add(ex.getStackTrace());
-                Logger.add(json_str);
-                throw ex;
+                //Logger.add(ex.getStackTrace());
+                //Logger.add(json_str);
+                //throw ex;
             }
             finally
             {
+                //Logger.add("TRACE: battleLoaded(): 1");
                 loaded = true;
                 loading = false;
                 //Logger.add("Stat Loaded");
 
                 for each (var l:Object in listenersBattle)
                 {
+                    //Logger.add("TRACE: battleLoaded(): 2");
                     try
                     {
+                        //Logger.add("TRACE: battleLoaded(): 3");
                         l.callback.call(l.target);
                     }
                     catch (e:Error)
                     {
-                        Logger.add(e.getStackTrace());
+                        //Logger.add("TRACE: battleLoaded(): 4");
+                        //Logger.add(e.getStackTrace());
                     }
                     catch (e:*)
                     {
-                        Logger.addObject(e, "exception");
+                        //Logger.add("TRACE: battleLoaded(): 5");
+                        //Logger.addObject(e, "exception");
+                        //Logger.add("TRACE: battleLoaded(): 6");
                     }
                 }
+                //Logger.add("TRACE: battleLoaded(): 7");
                 listenersBattle = new Vector.<Object>();
+                //Logger.add("TRACE: battleLoaded(): 8");
             }
 
-            Logger.add("TRACE: battleLoaded(): end");
+            //Logger.add("TRACE: battleLoaded(): end");
         }
 
         private function loadUserData(target:Object, callback:Function, value:String, isId:Boolean):void
