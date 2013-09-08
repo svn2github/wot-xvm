@@ -72,9 +72,17 @@ package xvm
             }
         }
 
+        private static var _views:Vector.<String> = Vector.<String>([
+            "login",
+            "lobby",
+            "hangar",
+            "battleLoading"
+        ]);
         private function onViewLoaded(e:LoaderEvent):void
         {
-            Logger.add("View loaded: " + e.view.as_alias);
+            var alias:String = e.view.as_alias;
+            if (_views.indexOf(alias) >= 0)
+                Logger.add("View loaded: " + alias);
             processView(e.view);
         }
 

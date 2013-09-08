@@ -118,6 +118,10 @@ package com.xvm.io
                 if (callback != null)
                     callback.call(_listeners[id].target, data);
             }
+            catch (ex:Error)
+            {
+                Logger.add(ex.getStackTrace());
+            }
             finally
             {
                 delete _listeners[id];

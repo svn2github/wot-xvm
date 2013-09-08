@@ -35,7 +35,7 @@ package xvm.hangar.components.BattleLoading
             proxy.vehicleField.condenseWhite = true;
 
             // Add stat loading handler
-            Stat.loadBattleStat(this, onStatLoaded, true);
+            Stat.loadBattleStat(this, onStatLoaded);
         }
 
         internal function setData(data:Object):void
@@ -66,7 +66,7 @@ package xvm.hangar.components.BattleLoading
             {
                 if (proxy.data == null)
                     return;
-                if (Config.config.battle.highlightVehicleIcon == false)
+                if (Config.config.battle.highlightVehicleIcon == false && App.colorSchemeMgr != null)
                     proxy.iconLoader.transform.colorTransform = App.colorSchemeMgr.getScheme(proxy.enabled ? "normal" : "normal_dead").colorTransform;
 
                 // Set Text Fields
