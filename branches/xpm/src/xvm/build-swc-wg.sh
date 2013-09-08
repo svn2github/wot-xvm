@@ -21,4 +21,7 @@ classes="
 App
 "
 
-"$compc" -source-path wg -output lib/wg.swc -include-classes $classes
+"$compc" \
+	-source-path wg \
+	-output lib/wg.swc \
+	-include-classes $classes
