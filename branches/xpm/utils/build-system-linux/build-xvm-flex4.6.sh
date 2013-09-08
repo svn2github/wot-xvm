@@ -47,6 +47,9 @@ popd > /dev/null
 cp -rf ../../bin/xpm/* ../../temp/"$wot_version"/
 rm -rf ../../bin/*
 
+#del testmod
+rm -rf ../../temp/xvm/mods/testmod.swf
+
 #6. Build archive
 echo "$revision" >> ../../temp/"$revision"
 pushd ../../temp/ > /dev/null && zip -9 -r -q "$revision"_xvm"$archive_postfix".zip ./ && popd > /dev/null
