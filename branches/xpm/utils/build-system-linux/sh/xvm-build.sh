@@ -5,8 +5,12 @@
 #Do not change anything in this file if you are not sure
 
 rm -rf ../../../bin/*
-rm -rf ../../../src/xvm/include/
-rm -rf ../../../src/xvm/swf/*.swf
+rm -rf ../../../temp/*
+
+rm -rf ../../../src/xvm/lib/*
+rm -rf ../../../src/xvm/obj/
+rm -rf ../../../src/xvm-as2/include/
+rm -rf ../../../src/xvm-as2/swf/*.swf
 
 ./xvm-swf-build-as3.sh
 ./xvm-swf-patch-as3.sh
@@ -14,5 +18,7 @@ rm -rf ../../../src/xvm/swf/*.swf
 ./xvm-swf-patch-as2.sh
 ./xvm-swf-build-as2.sh
 
-rm -rf ../../../src/xvm/include/
-rm -rf ../../../src/xvm/swf/*.swf
+rm -rf ../../../src/xvm/lib/*
+rm -rf ../../../src/xvm/obj/
+rm -rf ../../../src/xvm-as2/include/
+rm -rf ../../../src/xvm-as2/swf/*.swf
