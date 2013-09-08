@@ -2,9 +2,15 @@
 
 cd $(dirname $0)
 
-WOT_ROOT=/cygdrive/d/work/games/WoT-CT
-#VER="0.8.7"
-VER="0.8.8 Common Test"
+if [ "$OS" = "Windows_NT" ]; then
+  #VER="0.8.7"
+  VER="0.8.8 Common Test"
+
+  python_exe="/cygdrive/c/Python26/python.exe"
+  WOT_ROOT=/cygdrive/d/work/games/WoT-CT
+else
+  python_exe="python2.6"
+fi
 
 clear()
 {
@@ -18,7 +24,7 @@ build()
   d=${f%/*}
   [ "$d" = "$f" ] && d=""
 
-  /cygdrive/c/Python26/python.exe -c "import py_compile; py_compile.compile('$1')"
+  "$python_exe" -c "import py_compile; py_compile.compile('$1')"
   [ ! -f $1c ] && exit
   
   if [ -z "$2" ]; then
@@ -29,13 +35,6 @@ build()
     cp $1c "../../bin/xpm/scripts/client/gui/$2/${f}c"
   fi
   rm -f $1c
-}
-
-run()
-{
-  rm -rf "$WOT_ROOT/res_mods/$VER/scripts"
-  cp -R ../../bin/xpm/scripts "$WOT_ROOT/res_mods/$VER"
-  sh "../../utils/test.sh" --no-deploy
 }
 
 clear                       
@@ -55,4 +54,13 @@ for fn in $(find . -type "f" -name "*.py"); do
   fi
 done
 
-run
+if [ "$OS" = "Windows_NT" ]; then
+  run()
+  {
+    rm -rf "$WOT_ROOT/res_mods/$VER/scripts"
+    cp -R ../../bin/xpm/scripts "$WOT_ROOT/res_mods/$VER"
+    sh "../../utils/test.sh" --no-deploy
+  }
+
+  run
+fi

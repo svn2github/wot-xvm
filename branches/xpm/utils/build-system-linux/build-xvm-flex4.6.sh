@@ -40,8 +40,8 @@ mv -f ../../temp/xvm/xvm.xc.sample ../../temp/xvm/xvm.xc
 rm -rf ../../bin/*
 
 #5. Build xvm-py
-pushd sh > /dev/null
-./xvmpy-build.sh
+pushd ../../src/xvm-py/ > /dev/null
+./build-all.sh
 popd > /dev/null
 
 cp -rf ../../bin/xpm/* ../../temp/"$wot_version"/
