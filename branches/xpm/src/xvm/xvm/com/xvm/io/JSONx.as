@@ -44,11 +44,9 @@ ported to AS3 2013-08-23 by Maxim Schedriviy <m.schedriviy@gmail.com>, www.modxv
 
 package com.xvm.io
 {
-    import adobe.utils.CustomActions;
-    import flash.display.Stage;
-    import flash.text.TextField;
     import flash.utils.describeType;
     import flash.utils.getQualifiedClassName;
+    import com.xvm.Logger;
 
     public class JSONx
     {
@@ -160,10 +158,12 @@ package com.xvm.io
 
                 case 'string':
                     s = '"';
-                    len = arg.length;
+                    // charAt is much slower in Scaleform then array
+                    var ca:Vector.<String> = Vector.<String>((arg as String).split(''));
+                    len = ca.length;
                     for (i = 0; i < len; i += 1)
                     {
-                        c = arg.charAt(i);
+                        c = ca[i];
                         if (c >= ' ') {
                             if (c == '\\' || c == '"')
                                 s += '\\';
@@ -224,9 +224,9 @@ package com.xvm.io
         {
             if (text == null || text == '')
                 return null;
-            //var ta: Array = text.split(''); // charAt is much slower in Flash then array
-            //var talen = ta.length;
-            var len:int = text.length;
+            // charAt is much slower in Scaleform then array
+            var ta:Array = text.split('');
+            var talen:int = ta.length;
             var at:int = 0;
             var ch:String = ' ';
             var _value:Function;
@@ -241,7 +241,7 @@ package com.xvm.io
             }
 
             var _next:Function = function():String {
-                ch = (at >= len) ? '' : text.charAt(at);
+                ch = (at >= talen) ? '' : ta[at];
                 at++;
                 return ch;
             }
