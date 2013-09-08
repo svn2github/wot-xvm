@@ -97,6 +97,9 @@ class _Stat(object):
             debug("respond: " + self.req['method'])
             if self.req['proxy'] and self.req['proxy'].component and self.req['proxy'].movie:
                 self.req['proxy'].movie.invoke((self.req['method'], [json.dumps(data)]))
+                debug("respond: " + self.req['method'] + " ok")
+            else:
+                debug("respond: " + self.req['method'] + " skip")
         except Exception, ex:
             err('_load_stat() exception: ' + traceback.format_exc(ex))
         self.thread = None

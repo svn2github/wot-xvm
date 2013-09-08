@@ -111,7 +111,7 @@ package com.xvm
 
         private function battleLoaded(json_str:String):void
         {
-            //Logger.add("TRACE: battleLoaded()");
+            Logger.add("TRACE: battleLoaded(): start");
 
             try
             {
@@ -165,6 +165,8 @@ package com.xvm
                 }
                 listenersBattle = new Vector.<Object>();
             }
+
+            Logger.add("TRACE: battleLoaded(): end");
         }
 
         private function loadUserData(target:Object, callback:Function, value:String, isId:Boolean):void
