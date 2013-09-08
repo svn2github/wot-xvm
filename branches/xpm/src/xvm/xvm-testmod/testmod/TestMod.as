@@ -46,7 +46,7 @@ package testmod
         {
             try
             {
-                Logger.add("View loaded: " + e.view.as_alias);
+                //Logger.add("View loaded: " + e.view.as_alias);
 
                 switch (e.view.as_alias)
                 {

@@ -4,7 +4,7 @@
  */
 package com.xvm.types.cfg
 {
-    public class CBattleLoading extends Object
+    public dynamic class CBattleLoading extends Object
     {
         // Show clock at Battle Loading Screen.
         // ### Is there a clock:on\off switch variable supposed to be? ###

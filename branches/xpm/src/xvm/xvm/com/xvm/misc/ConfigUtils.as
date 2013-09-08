@@ -4,6 +4,7 @@
  */
 package com.xvm.misc
 {
+    import com.xvm.types.cfg.CColors;
     import flash.utils.*;
     import org.idmedia.as3commons.util.StringUtils;
     import com.xvm.utils.*;
@@ -118,10 +119,38 @@ package com.xvm.misc
             if (!config)
                 return undefined;
 
-            var v: String = config.configVersion;
+            var v:String = config.configVersion;
+            var s:* = null;
 
-            if (!v || v == "" || Utils.compareVersions(v, "5.0.0") < 0)
+            if (!v || v == "" || Utils.compareVersions(v, "4.0.0") < 0)
+                v = "4.0.0";
+
+            if (v == "4.0.0")
+            {
+                s = config.battleLoading;
+                if (s != null)
+                {
+                    if (s.formatLeft != null && s.formatLeftVehicle == null)
+                        s.formatLeftVehicle = s.formatLeft;
+                    if (s.formatRight != null && s.formatRightVehicle == null)
+                        s.formatRightVehicle = s.formatRight;
+                }
+                s = config.statisticForm;
+                if (s != null)
+                {
+                    if (s.formatLeft != null && s.formatLeftVehicle == null)
+                    {
+                        s.formatLeftVehicle = s.formatLeft;
+                        delete s.formatLeft;
+                    }
+                    if (s.formatRight != null && s.formatRightVehicle == null)
+                    {
+                        s.formatRightVehicle = s.formatRight;
+                        delete s.formatRight;
+                    }
+                }
                 v = "5.0.0";
+            }
 
     /*
             if (v == "5.x.x")

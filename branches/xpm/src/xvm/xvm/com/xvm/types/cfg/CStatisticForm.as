@@ -4,7 +4,7 @@
  */
 package com.xvm.types.cfg
 {
-    public class CStatisticForm extends Object
+    public dynamic class CStatisticForm extends Object
     {
         public var showChances:Boolean;     // Show game round win chances percentage.
         public var showChancesExp:Boolean;  // Show experimental "chance to win" formula.
