@@ -35,8 +35,6 @@ cp -rf ../../bin/* ../../temp/"$wot_version"/gui/scaleform/
 cp -rf ../../release/ ../../temp/xvm/
 rm -rf ../../release/*.swf
 
-mv -f ../../temp/xvm/xvm.xc.sample ../../temp/xvm/xvm.xc
-
 rm -rf ../../bin/*
 
 #5. Build xvm-py
