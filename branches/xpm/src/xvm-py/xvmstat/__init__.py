@@ -8,8 +8,6 @@ XPM_MOD_URL        = "http://www.modxvm.com/"
 XPM_MOD_UPDATE_URL = "http://www.modxvm.com/en/download-xvm/"
 XPM_GAME_VERSIONS  = ["0.8.8"]
 
-XVM_SVN_ID         = "$Id$"
-
 #####################################################################
 
 import BigWorld

@@ -14,13 +14,13 @@ clear()
 build()
 {
   echo "Build: $1"
-  /cygdrive/c/Python26/python.exe -c "import py_compile; py_compile.compile('$1')"
-  if [ ! -f $1c ]; then
-    exit
-  fi
   f=${1#*/}
   d=${f%/*}
   [ "$d" = "$f" ] && d=""
+
+  /cygdrive/c/Python26/python.exe -c "import py_compile; py_compile.compile('$1')"
+  [ ! -f $1c ] && exit
+  
   if [ -z "$2" ]; then
     mkdir -p "../../bin/xpm/scripts/client/gui/$d"
     cp $1c "../../bin/xpm/scripts/client/gui/${f}c"
@@ -40,7 +40,12 @@ run()
 
 clear                       
 
-for fn in $(find . -name "*.py"); do
+for dir in $(find . -type "d" ! -path "./xpm*" ! -path "."); do
+  echo "# This file was created automatically from build script" > $dir/__version__.py
+  echo "__revision__ = '`cd $dir && svnversion -n .`'" >> $dir/__version__.py
+done
+
+for fn in $(find . -type "f" -name "*.py"); do
   f=${fn#./}
   m=${f%%/*}
   if [ "$m" = "xpm" ]; then

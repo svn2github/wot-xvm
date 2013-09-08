@@ -88,4 +88,8 @@ g_xvm = XvmStat()
 from . import XPM_MOD_VERSION, XPM_MOD_URL, XPM_GAME_VERSIONS
 log("xvm-stat %s (%s) for WoT %s" % (XPM_MOD_VERSION, XPM_MOD_URL, ", ".join(XPM_GAME_VERSIONS)))
 if IS_DEVELOPMENT:
-  log(XVM_SVN_ID)
+    try:
+        from __version__ import __revision__
+        log("Revision: " + __revision__)
+    except Exception, ex:
+        err(traceback.format_exc(ex))
