@@ -8,6 +8,8 @@ XPM_MOD_URL        = "http://www.modxvm.com/"
 XPM_MOD_UPDATE_URL = "http://www.modxvm.com/en/download-xvm/"
 XPM_GAME_VERSIONS  = ["0.8.8"]
 
+XVM_SVN_ID         = "$Id$"
+
 #####################################################################
 
 import BigWorld
@@ -17,7 +19,11 @@ from gui.mods.xpm import *
 from logger import *
 from XvmStat import g_xvm
 
-_SKIP_SWFS = [ 'DamageIndicator.swf' ]
+_SWFS = [
+    'Application.swf',
+    'battle.swf',
+    'VehicleMarkersManager.swf',
+    ]
 
 #####################################################################
 # event handlers
@@ -26,9 +32,16 @@ def handleKeyEvent(event):
     g_xvm.onKeyDown(event)
 
 def FlashInit(self, swf, className = 'Flash', args = None, path = None):
-    if swf not in _SKIP_SWFS:
-        debug("FlashInit: " + swf)
+    self.swf = swf
+    if self.swf not in _SWFS:
+        return
+    debug("FlashInit: " + self.swf)
     self.addExternalCallback('xvm.cmd', lambda *args: g_xvm.onXvmCommand(self, *args))
+
+def FlashBeforeDelete(self):
+    if self.swf not in _SWFS:
+        return
+    debug("FlashBeforeDelete: " + self.swf)
 
 #####################################################################
 # Register events
@@ -36,11 +49,12 @@ def FlashInit(self, swf, className = 'Flash', args = None, path = None):
 # Early registration
 from gui.Scaleform.Flash import Flash
 RegisterEvent(Flash, '__init__', FlashInit)
+RegisterEvent(Flash, 'beforeDelete', FlashBeforeDelete)
 
 # Delayed registration
 def _RegisterEvents():
-    #import game
-    #RegisterEvent(game, 'handleKeyEvent', handleKeyEvent)
+    import game
+    RegisterEvent(game, 'handleKeyEvent', handleKeyEvent)
 
     #from Avatar import PlayerAvatar
     #RegisterEvent(PlayerAvatar, 'onEnterWorld', onEnterWorld)

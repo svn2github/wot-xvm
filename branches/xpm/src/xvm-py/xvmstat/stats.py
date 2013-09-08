@@ -93,8 +93,12 @@ class _Stat(object):
 
 
     def _respond(self, data):
-        #debug("respond: " + method)
-        self.req['proxy'].movie.invoke((self.req['method'], [json.dumps(data)]))
+        try:
+            debug("respond: " + self.req['method'])
+            if self.req['proxy'] and self.req['proxy'].component and self.req['proxy'].movie:
+                self.req['proxy'].movie.invoke((self.req['method'], [json.dumps(data)]))
+        except Exception, ex:
+            err('_load_stat() exception: ' + traceback.format_exc(ex))
         self.thread = None
         self.processQueue()
 
@@ -236,6 +240,7 @@ class _Stat(object):
 
         url = url.replace('%1', members).replace('%2', _PUBLIC_TOKEN)
         #debug('loadUrl: ' + url )
+        #time.sleep(10)
 
         duration = None
         responseFromServer = ''
@@ -277,7 +282,7 @@ class _Stat(object):
         self._r(stat, 'eff', 'e')
         self._r(stat, 'vname', 'vn')
         self._d(stat, 'lvl', '0')
-       
+
         # TODO: optimize
         for vehId in self.players:
             pl = self.players[vehId]
