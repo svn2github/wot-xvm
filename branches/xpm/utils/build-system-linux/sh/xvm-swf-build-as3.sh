@@ -8,7 +8,6 @@ projects=(
           'wg'
           'xvm'
           'xvm-hangar'
-          'xvm-testmod'
          )
 
 pushd ../../../src/xvm/ > /dev/null
