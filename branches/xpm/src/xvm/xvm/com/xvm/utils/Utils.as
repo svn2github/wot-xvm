@@ -140,6 +140,7 @@ package com.xvm.utils
 
             return difference;
         }
+*/
 
         /**
          * Create CSS

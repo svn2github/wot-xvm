@@ -3,16 +3,16 @@ package xvm.hangar.components.BattleLoading
     import flash.text.*;
     import flash.utils.*;
     import flash.geom.Transform;
-    import com.xvm.misc.IconLoader;
+    import scaleform.gfx.TextFieldEx;
     import net.wg.gui.components.controls.UILoaderAlt;
     import net.wg.gui.events.UILoaderEvent;
-    import com.xvm.types.cfg.CClanIcon;
     import net.wg.gui.lobby.battleloading.PlayerItemRenderer;
-    import com.xvm.utils.WGUtils;
+    import org.idmedia.as3commons.util.StringUtils;
     import com.xvm.*;
     import com.xvm.utils.*;
+    import com.xvm.misc.IconLoader;
+    import com.xvm.types.cfg.CClanIcon;
     import xvm.hangar.components.ClanIcon.ClanIcon;
-    import org.idmedia.as3commons.util.StringUtils;
 
     public class BattleLoadingItemRenderer
     {
@@ -29,6 +29,9 @@ package xvm.hangar.components.BattleLoading
             // Remove squad icon.
             if (Config.config.battleLoading.removeSquadIcon && proxy.squad != null)
                 proxy.squad.visible = false;
+
+            TextFieldEx.setVerticalAutoSize(proxy.textField, TextFieldAutoSize.CENTER);
+            TextFieldEx.setVerticalAutoSize(proxy.vehicleField, TextFieldAutoSize.CENTER);
 
             proxy.vehicleField.width += 100;
             if (team == Defines.TEAM_ALLY)
@@ -119,7 +122,7 @@ package xvm.hangar.components.BattleLoading
             if (!cfg.show)
                 return;
             var icon:ClanIcon = new ClanIcon(cfg, proxy.iconLoader.x, proxy.iconLoader.y, team,
-				WGUtils.GetPlayerName(playerName), WGUtils.GetClanName(playerName));
+                WGUtils.GetPlayerName(playerName), WGUtils.GetClanName(playerName));
             if (icon != null)
                 proxy.addChild(icon);
         }

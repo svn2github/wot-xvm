@@ -239,9 +239,9 @@ package com.xvm.misc
             c.clanIcon.w = 16;
             c.clanIcon.alpha = 90;
             // Dispay format. Macro-substitutiones allowed.
-            c.formatLeftNick = "{{nick}}";
+            c.formatLeftNick = "{{name}}{{clan}}";
             c.formatLeftVehicle = "{{vehicle}}<font face='Lucida Console' size='12'> <font color='{{c:kb}}'>{{kb:3}}</font> <font color='{{c:xwn}}'>{{xwn}}</font> <font color='{{c:rating}}'>{{rating:3}}</font></font>";
-            c.formatRightNick = "{{nick}}";
+            c.formatRightNick = "{{name}}{{clan}}";
             c.formatRightVehicle = "<font face='Lucida Console' size='12'><font color='{{c:rating}}'>{{rating:3}}</font> <font color='{{c:xwn}}'>{{xwn}}</font> <font color='{{c:kb}}'>{{kb:3}}</font> </font>{{vehicle}}";
             return c;
         }

@@ -72,7 +72,7 @@ package org.idmedia.as3commons.util
             return arg1.replace(arg2, EMPTY);
         }
 
-        public static function left(arg1:String, arg2:int):String
+        public static function left(str:String, len:int):String
         {
             if (arg1 == null)
                 return null;
