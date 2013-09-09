@@ -163,6 +163,7 @@ package com.xvm.l10n
             // Crew
             "PutOwnCrew": "Родной экипаж",
             "PutBestCrew": "Лучший экипаж",
+            "PutClassCrew": "Экипаж того же класса",
 
             // Squad
             "Vehicle": "Танк",
@@ -214,6 +215,7 @@ package com.xvm.l10n
             // Crew
             "PutOwnCrew": "Put own crew",
             "PutBestCrew": "Put best crew",
+            "PutClassCrew": "Put same class crew",
 
             // Squad
             "ussr": "USSR",

@@ -57,8 +57,10 @@ return;
                     App.contextMenuMgr.show(Vector.<IContextItem>([
                         new ContextItem("PutOwnCrew", Locale.get("PutOwnCrew")),
                         new SeparateItem(),
-                        new ContextItem("PutBestCrew", Locale.get("PutBestCrew"))]),
-                        this, this.onContextMenuAction, page.crew);
+                        new ContextItem("PutBestCrew", Locale.get("PutBestCrew")),
+                        new SeparateItem(),
+                        new ContextItem("PutClassCrew", Locale.get("PutClassCrew"))]),
+                        this, this.onContextMenuAction);
                 }
             }
         }
@@ -72,117 +74,115 @@ return;
 
         private function onContextMenuAction(e:ContextMenuEvent):void
         {
-            //Logger.addObject(e);
-            var crew:Crew = e.memberItemData as Crew;
-            Logger.addObject(crew);
-
-            switch (e.id)
+            try
             {
-                case "PutOwnCrew":
-                    //LoadCrew(GetCrew(CheckOwn));
-                    break;
+                var tankmans:Vector.<Object> = new Vector.<Object>();
+                switch (e.id)
+                {
+                    case "PutOwnCrew":
+                        tankmans = GetCrew(CheckOwn);
+                        break;
 
-                case "PutBestCrew":
-                    //LoadCrew(GetCrew(CheckBest));
-                    break;
+                    case "PutBestCrew":
+                        tankmans = GetCrew(CheckBest);
+                        break;
+
+                    case "PutClassCrew":
+                        tankmans = GetCrew(CheckClass);
+                        break;
+                }
+
+                //Logger.addObject(tankmans);
+                for each (var tankman:Object in tankmans)
+                    page.crew.equipTankman(tankman.id, tankman.slot);
+            }
+            catch (ex:Error)
+            {
+                Logger.add(ex.getStackTrace());
             }
         }
 
-        private function LoadCrew(crew:Vector.<Object>):void
+        private function GetCrew(checkFunc:Function):Vector.<Object>
         {
-            var len:int = crew.length;
-            for (var i:int = 0; i < crew.length; ++i)
-            {
-                var t:Object = crew[i];
-                //if (t["compact"] != "")
-                //    gfx.io.GameDelegate.call("tankmen.equipTankman", [t["compact"], null, t["slot"]]);
-            }
-        }
+            //var tnkObj:Object = s_defaultCrew[0];
+            var tankmans:Vector.<Object> = new Vector.<Object>();
 
-        /*private function GetCrew(checkFunc:Function):Vector.<Object>
-        {
-            var tnkObj:Object = s_defaultCrew[0];
-            var tankmanList = new Array();
-
-            for (var index:Object in s_defaultCrew)
+            //Logger.addObject(page.crew.list.dataProvider, "data", 2);
+            for each (var renderer:RecruitRendererVO in page.crew.list.dataProvider)
             {
-                var slot = s_defaultCrew[index];
-                if (slot["inTank"] == true)
+                if (renderer.inTank == true)
                     continue;
+                var slot:int = renderer.slot;
 
-                var mostSuitable = null;
-                var theRecruits = slot["recruitList"];
-                for (var y in theRecruits)
+                var best:Object = null;
+                for (var i:int = 1; i < renderer.recruitList.length; ++i)
                 {
-                    var tankMan = theRecruits[y];
-                    if (tankMan["compact"] == null || tankMan["inTank"] == true || TankmanInArray(tankmanList, tankMan))
+                    var tankman:Object = renderer.recruitList[i];
+                    if (tankman.inTank == true || tankmans.indexOf(tankman.tankmanID) >= 0)
                         continue;
-                    if (!checkFunc(tankMan, mostSuitable, tnkObj))
+                    //if (!checkFunc(tankman, best, renderer.recruitList[0]))
                         continue;
-                    mostSuitable = tankMan;
+                    best = tankman;
                 }
-                if (mostSuitable != null)
-                {
-                    mostSuitable["slot"] = slot["slot"];
-                    tankmanList.push(mostSuitable);
-                }
+                if (best != null)
+                    tankmans.push( { id:best.tankmanID, slot:slot } );
             }
-            return tankmanList;
+            return tankmans;
         }
 
-        private function CheckOwn(actualTankman:Object, bestTankman:Object, theTank:Object)
+        private function CheckOwn(tankman:Object, best:Object, slot:Object):Boolean
         {
-            if (actualTankman["vehicleType"] != s_defaultCrew[0]["curVehicleName"])
+            if (tankman.vehicleType != slot.vehicleType)
                 return false;
-            return CheckBest(actualTankman, bestTankman, theTank);
+            return CheckBest(tankman, best, slot);
         }
-*/
-        /**
-         * Compares two tankman
-         * @param actualTankman current candidate
-         * @param bestTankman current best candidate
-         * @param theTank
-         * @return
-         */
-        private function CheckBest(actualTankman:Object, bestTankman:Object, theTank:Object):Boolean
+
+        private function CheckClass(tankman:Object, best:Object, slot:Object):Boolean
+        {
+            if (tankman.tankType != slot.tankType)
+                return false;
+            return CheckBest(tankman, best, slot);
+        }
+
+        private function CheckBest(tankman:Object, best:Object, slot:Object):Boolean
         {
             // No bestTankman : select first tankman met
-            if (bestTankman == null)
+            //if (best == null)
                 return true;
 
-            var current:Number = getPenality(actualTankman, theTank);
-            var best:Number = getPenality(bestTankman, theTank);
-
+            //var current:Number = getPenality(actualTankman, theTank);
+            //var best:Number = getPenality(bestTankman, theTank);
+//
             // CASE 1 : bestTankman is better than actual
             // conserve the bestTankman
-            if (best > current)
-                return false;
-
+            //if (best > current)
+                //return false;
+//
             // CASE 3 : actual tankman is better than bestTankman
             // select the actualTankman
-            if (best < current)
-                return true;
-
+            //if (best < current)
+                //return true;
+//
             // CASE 2 : bestTankman's capacity is equal with the actualTankman's skill
             // Need deeper analysis
-
+//
             //CASE 2.1 : bestTankman has more skills than actualTankman
             //conserve the bestTankman
-            if (bestTankman["skills"].length > actualTankman["skills"].length)
-                return false;
-
+            //if (bestTankman["skills"].length > actualTankman["skills"].length)
+                //return false;
+//
             //CASE 2.2 : bestTankman has less skills than actualTankman
             //select the actualTankman
-            if (bestTankman["skills"].length < actualTankman["skills"].length)
-                return true;
-
+            //if (bestTankman["skills"].length < actualTankman["skills"].length)
+                //return true;
+//
             //CASE 2.3 : bestTankman has the same number of skills that the actualTankman
             //if the bestTankman's lastskilllevel is < that actualTankman's
             //select the actualTankman
-            if (bestTankman["lastSkillLevel"] < actualTankman["lastSkillLevel"])
-                return true;
-
-            return false;
+            //if (bestTankman["lastSkillLevel"] < actualTankman["lastSkillLevel"])
+                //return true;
+//
+            //return false;
         }
 
         /**
