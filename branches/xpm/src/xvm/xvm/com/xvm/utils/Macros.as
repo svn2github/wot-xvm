@@ -28,10 +28,10 @@ package com.xvm.utils
 
                 var formatArr:Array = format.split("{{");
 
+                res = formatArr[0];
                 var len:int = formatArr.length;
                 if (len > 1)
                 {
-                    res = formatArr[0];
                     var pdata:Object = dict[WGUtils.GetPlayerName(playerName)];
                     for (var i:int = 1; i < len; ++i)
                     {
