@@ -74,13 +74,13 @@ package org.idmedia.as3commons.util
 
         public static function left(str:String, len:int):String
         {
-            if (arg1 == null)
+            if (str == null)
                 return null;
-            if (arg2 < 0)
+            if (len < 0)
                 return EMPTY;
-            if (arg1.length <= arg2)
-                return arg1;
-            return arg1.substring(0, arg2);
+            if (str.length <= len)
+                return str;
+            return str.substring(0, len);
         }
 
         public static function center(arg1:String, arg2:int, arg3:String):String

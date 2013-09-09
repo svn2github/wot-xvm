@@ -81,6 +81,7 @@
     <hidden path="wg" />
     <hidden path="build-swc-wg.sh" />
     <hidden path="xvm-testmod" />
+    <hidden path="xvm-testmod.as3proj" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />
