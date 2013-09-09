@@ -6,7 +6,7 @@ package com.xvm.io
 {
     import flash.external.ExternalInterface;
     import flash.utils.setTimeout;
-    import com.xvm.Logger;
+    import com.xvm.*;
     import com.xvm.utils.Sandbox;
 
     public class Cmd
@@ -56,9 +56,9 @@ package com.xvm.io
             _call(target, callback, [COMMAND_GETMODS]);
         }
 
-        public static function loadBattleStat(allowNetwork:Boolean = false, players:Array = null):void
+        public static function loadBattleStat(players:Array = null):void
         {
-            _call(null, null, [COMMAND_LOADBATTLESTAT, allowNetwork, players]);
+            _call(null, null, [COMMAND_LOADBATTLESTAT, Config.config.rating.showPlayersStatistics, players]);
         }
 
         public static function loadUserData(value:String, isId:Boolean):void
