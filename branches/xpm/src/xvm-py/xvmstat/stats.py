@@ -53,8 +53,10 @@ class _Stat(object):
     def __init__(self):
         player = BigWorld.player()
         self.queue = Queue()
+        self.lock = threading.RLock()
         self.thread = None
         self.req = None
+        self.resp = None
         self.arenaId = None
         self.players = None
         self.playersSkip = None
@@ -70,20 +72,45 @@ class _Stat(object):
 
 
     def processQueue(self):
-        if self.thread is not None:
-            return
+        with self.lock:
+            if self.thread is not None:
+                return
         if self.queue.empty():
             return
         self.req = self.queue.get()
+        self.resp = None
         self.thread = threading.Thread(target=self.req['func'])
         self.thread.daemon = True
         self.thread.start()
+        BigWorld.callback(0.05, self._checkResult)
 
+    def _checkResult(self):
+        with self.lock:
+            #debug("checkResult: " + ("no" if self.resp is None else "yes"))
+            try:
+                if self.resp is None:
+                    BigWorld.callback(0.05, self._checkResult)
+                    return
+                self._respond(self.resp)
+            except Exception, ex:
+                err('_checkResult() exception: ' + traceback.format_exc(ex))
+            finally:
+                self.thread = None
+                self.processQueue()
+
+    def _respond(self, data):
+        debug("respond: " + self.req['method'])
+        if self.req['proxy'] and self.req['proxy'].component and self.req['proxy'].movie:
+            strdata = json.dumps(data)
+            self.req['proxy'].movie.invoke((self.req['method'], [strdata]))
+
+    # Threaded
 
     def getBattleStat(self):
         player = BigWorld.player()
         if player.arena is None:
-            self._respond(None)
+            with self.lock:
+                self.resp = {}
             return
         self._get_battle()
 
@@ -91,19 +118,6 @@ class _Stat(object):
     def getUserData(self):
         self._get_user()
 
-
-    def _respond(self, data):
-        try:
-            debug("respond: " + self.req['method'])
-            if self.req['proxy'] and self.req['proxy'].component and self.req['proxy'].movie:
-                self.req['proxy'].movie.invoke((self.req['method'], [json.dumps(data)]))
-                debug("respond: " + self.req['method'] + " ok")
-            else:
-                debug("respond: " + self.req['method'] + " skip")
-        except Exception, ex:
-            err('_load_stat() exception: ' + traceback.format_exc(ex))
-        self.thread = None
-        self.processQueue()
 
     def _get_battle(self):
         player = BigWorld.player()
@@ -129,7 +143,8 @@ class _Stat(object):
             players[pl.name] = self.cache[cacheKey]
         #pprint(players)
 
-        self._respond({'players': players, 'info': self.info})
+        with self.lock:
+            self.resp = {'players': players, 'info': self.info}
 
 
     def _update_players(self):
@@ -227,7 +242,8 @@ class _Stat(object):
             except Exception, ex:
                 err('_get_user() exception: ' + traceback.format_exc(ex))
 
-        self._respond(self.cacheUser[cacheKey] if cacheKey in self.cacheUser else None)
+        with self.lock:
+            self.resp = self.cacheUser[cacheKey] if cacheKey in self.cacheUser else None
 
 
     def _get_battle_stub(self, pl):

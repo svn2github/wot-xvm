@@ -111,15 +111,13 @@ package com.xvm
 
         private function battleLoaded(json_str:String):void
         {
-//return; // 1
-            //Logger.add("TRACE: battleLoaded(): start");
+            //Logger.add("TRACE: battleLoaded()");
 
             try
             {
                 var response:Object = JSONx.parse(json_str);
                 //Logger.addObject(response, "response", 3);
 
-//return; // 3
                 if (response.info)
                     info = response.info;
 
@@ -140,41 +138,32 @@ package com.xvm
             }
             catch (ex:Error)
             {
-                //Logger.add(ex.getStackTrace());
-                //Logger.add(json_str);
-                //throw ex;
+                Logger.add(ex.getStackTrace());
+                Logger.add(json_str);
+                throw ex;
             }
             finally
             {
-                //Logger.add("TRACE: battleLoaded(): 1");
                 loaded = true;
                 loading = false;
                 //Logger.add("Stat Loaded");
 
-//return; // 2
                 for each (var l:Object in listenersBattle)
                 {
-                    //Logger.add("TRACE: battleLoaded(): 2");
                     try
                     {
-                        //Logger.add("TRACE: battleLoaded(): 3");
                         l.callback.call(l.target);
                     }
                     catch (e:Error)
                     {
-                        //Logger.add("TRACE: battleLoaded(): 4");
-                        //Logger.add(e.getStackTrace());
+                        Logger.add(e.getStackTrace());
                     }
                     catch (e:*)
                     {
-                        //Logger.add("TRACE: battleLoaded(): 5");
-                        //Logger.addObject(e, "exception");
-                        //Logger.add("TRACE: battleLoaded(): 6");
+                        Logger.addObject(e, "exception");
                     }
                 }
-                //Logger.add("TRACE: battleLoaded(): 7");
                 listenersBattle = new Vector.<Object>();
-                //Logger.add("TRACE: battleLoaded(): 8");
             }
 
             //Logger.add("TRACE: battleLoaded(): end");

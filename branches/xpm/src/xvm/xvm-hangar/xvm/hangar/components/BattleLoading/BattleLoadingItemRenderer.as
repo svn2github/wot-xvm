@@ -1,6 +1,7 @@
 package xvm.hangar.components.BattleLoading
 {
     import flash.text.*;
+    import flash.utils.*;
     import flash.geom.Transform;
     import com.xvm.misc.IconLoader;
     import net.wg.gui.components.controls.UILoaderAlt;
@@ -36,10 +37,13 @@ package xvm.hangar.components.BattleLoading
 
             // Add stat loading handler
             Stat.loadBattleStat(this, onStatLoaded);
+
+            //setInterval(function() { proxy.setData(proxy.data) }, 10); // DEBUG
         }
 
         internal function setData(data:Object):void
         {
+            //Logger.add("setData: " + (data == null ? "(null)" : data.label));
             if (data == null)
                 return;
 
@@ -57,7 +61,10 @@ package xvm.hangar.components.BattleLoading
             if (proxy.iconLoader.sourceAlt == Defines.WG_CONTOUR_ICON_NOIMAGE)
                 proxy.iconLoader.sourceAlt = data.icon;
             if (data.icon == proxy.iconLoader.sourceAlt)
-                data.icon = data.icon.replace(Defines.WG_CONTOUR_ICON_PATH, Defines.XVMRES_ROOT + Config.config.iconset.battleLoading);
+            {
+                data.icon = proxy.iconLoader.sourceAlt.replace(Defines.WG_CONTOUR_ICON_PATH,
+                    Defines.XVMRES_ROOT + Config.config.iconset.battleLoading);
+            }
         }
 
         internal function draw():void
@@ -67,12 +74,19 @@ package xvm.hangar.components.BattleLoading
                 if (proxy.data == null)
                     return;
                 if (Config.config.battle.highlightVehicleIcon == false && App.colorSchemeMgr != null)
-                    proxy.iconLoader.transform.colorTransform = App.colorSchemeMgr.getScheme(proxy.enabled ? "normal" : "normal_dead").colorTransform;
+                {
+                    proxy.iconLoader.transform.colorTransform =
+                        App.colorSchemeMgr.getScheme(proxy.enabled ? "normal" : "normal_dead").colorTransform;
+                }
 
                 // Set Text Fields
                 var c:String = proxy.textField.htmlText.match(/ COLOR="(#[0-9A-F]{6})"/)[1];
-                var a:String = Macros.Format(playerName, team == Defines.TEAM_ALLY ? Config.config.battleLoading.formatLeftNick : Config.config.battleLoading.formatRightNick);
-                var b:String = Macros.Format(playerName, team == Defines.TEAM_ALLY ? Config.config.battleLoading.formatLeftVehicle : Config.config.battleLoading.formatRightVehicle);
+                var a:String = Macros.Format(playerName, team == Defines.TEAM_ALLY
+                    ? Config.config.battleLoading.formatLeftNick
+                    : Config.config.battleLoading.formatRightNick);
+                var b:String = Macros.Format(playerName, team == Defines.TEAM_ALLY
+                    ? Config.config.battleLoading.formatLeftVehicle
+                    : Config.config.battleLoading.formatRightVehicle);
                 proxy.textField.htmlText = "<font color='" + c + "'>" + a + "</font>";
                 proxy.vehicleField.htmlText = "<font color='" + c + "'>" + b + "</font>";
                 //Logger.add(b);
@@ -107,18 +121,20 @@ package xvm.hangar.components.BattleLoading
                 proxy.addChild(icon);
         }
 
-        private var _iconLoaded:Boolean = false;
         private function onVehicleIconLoadComplete(e:UILoaderEvent):void
         {
-            if (_iconLoaded)
-                return;
-            _iconLoaded = true;
-
-            //Logger.add("onVehicleIconLoadComplete");
+            //Logger.add("onVehicleIconLoadComplete: " + playerName);
+            if (/*proxy.iconLoader.width > 84 ||*/ proxy.iconLoader.height > 24)
+            {
+                //var c:Number = Math.min(84 / proxy.iconLoader.width, 24 / proxy.iconLoader.height);
+                var c:Number = 24 / proxy.iconLoader.height;
+                proxy.iconLoader.scaleX = c;
+                proxy.iconLoader.scaleY = c;
+            }
             if (Config.config.battle.mirroredVehicleIcons == false && team == Defines.TEAM_ENEMY)
             {
-                proxy.iconLoader.scaleX = -1;
-                proxy.iconLoader.x -= 82;
+	            proxy.iconLoader.scaleX = -1;
+                proxy.iconLoader.x = 4;
                 //Logger.add(proxy.iconLoader.width + "x" + proxy.iconLoader.height);
             }
         }
