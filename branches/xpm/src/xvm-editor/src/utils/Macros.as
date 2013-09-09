@@ -79,7 +79,7 @@ package utils
             format = format.split("{{c:system}}").join("#FBFBFB");
 
             // Transparency
-            format = format.split("{{a:hp}}").join(alphaHpRatio);
+            format = format.split("{{a:hp}}").join(alphaHp);
             format = format.split("{{a:hp-ratio}}").join(alphaHpRatio);
 
             // Statistics
@@ -101,7 +101,7 @@ package utils
             format = format.split("{{wins}}").join("7260");
             format = format.split("{{rating:3}}").join("66%");
             format = format.split("{{eff:4}}").join("1800");
-            format = format.split("{{kb:3}}").join(" 11k");
+            format = format.split("{{kb:3}}").join("11k");
             format = format.split("{{t-rating}}").join("55%");
             format = format.split("{{t-kb}}").join(".5k");
             format = format.split("{{t-kb-0}}").join("0.5k");
