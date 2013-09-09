@@ -59,11 +59,14 @@ package xvm.hangar.components.BattleLoading
 
             // Alternative icon set
             if (proxy.iconLoader.sourceAlt == Defines.WG_CONTOUR_ICON_NOIMAGE)
-                proxy.iconLoader.sourceAlt = data.icon;
-            if (data.icon == proxy.iconLoader.sourceAlt)
             {
-                data.icon = proxy.iconLoader.sourceAlt.replace(Defines.WG_CONTOUR_ICON_PATH,
+                proxy.iconLoader.sourceAlt = data.icon;
+                data.icon = data.icon.replace(Defines.WG_CONTOUR_ICON_PATH,
                     Defines.XVMRES_ROOT + Config.config.iconset.battleLoading);
+            }
+            else
+            {
+                data.icon = proxy.iconLoader.source;
             }
         }
 
@@ -133,7 +136,7 @@ package xvm.hangar.components.BattleLoading
             }
             if (Config.config.battle.mirroredVehicleIcons == false && team == Defines.TEAM_ENEMY)
             {
-	            proxy.iconLoader.scaleX = -1;
+                proxy.iconLoader.scaleX = -1;
                 proxy.iconLoader.x = 4;
                 //Logger.add(proxy.iconLoader.width + "x" + proxy.iconLoader.height);
             }
@@ -143,7 +146,6 @@ package xvm.hangar.components.BattleLoading
         {
             //Logger.add("onStatLoaded: " + proxy.data.label);
             proxy.vehicleField.condenseWhite = false; // TODO StatData.s_empty;
-//            proxy.invalidate();
             draw();
         }
     }
