@@ -56,8 +56,8 @@ package com.xvm.utils
         {
             if (path == null)
                 return null;
-            path = path.split("\\").join("/");
-            if (!StringUtils.endsWith("/", path))
+            path = path.replace("\\", "/");
+            if (!StringUtils.endsWith(path, "/"))
                 path += "/";
             return path;
         }

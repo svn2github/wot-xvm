@@ -119,7 +119,7 @@ package xvm.hangar.components.BattleLoading
             if (!cfg.show)
                 return;
             var icon:ClanIcon = new ClanIcon(cfg, proxy.iconLoader.x, proxy.iconLoader.y, team,
-                WGUtils.GetPlayerName(data.label), WGUtils.GetClanName(data.label));
+				WGUtils.GetPlayerName(playerName), WGUtils.GetClanName(playerName));
             if (icon != null)
                 proxy.addChild(icon);
         }
