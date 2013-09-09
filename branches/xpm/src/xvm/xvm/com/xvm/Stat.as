@@ -100,7 +100,7 @@ package com.xvm
                     return;
                 loading = true;
 
-                Cmd.loadBattleStat(Config.config.rating.showPlayersStatistics);
+                Cmd.loadBattleStat();
             }
             catch (e:Error)
             {

@@ -116,7 +116,7 @@ class com.xvm.DefaultConfig
                 elements: []
             },
             rating: {
-                showPlayersStatistics: true,    // Global switch. Handles whole statisctics module.
+                showPlayersStatistics: false,   // Global switch. Handles whole statisctics module.
                 loadEnemyStatsInFogOfWar: true, // Load players data in "fog of war".
                 enableStatisticsLog: false,     // Enable saving statistics to "xvm-stat.log" file
                 enableUserInfoStatistics: true, // Enable statistics in the user info window

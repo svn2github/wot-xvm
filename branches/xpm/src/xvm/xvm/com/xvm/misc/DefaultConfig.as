@@ -166,7 +166,7 @@ package com.xvm.misc
         private static function getRatingSection():CRating
         {
             var c:CRating = new CRating();
-            c.showPlayersStatistics = true;    // Global switch. Handles whole statisctics module.
+            c.showPlayersStatistics = false;   // Global switch. Handles whole statisctics module.
             c.loadEnemyStatsInFogOfWar = true; // Load players data in "fog of war".
             c.enableStatisticsLog = false;     // Enable saving statistics to "xvm-stat.log" file
             c.enableUserInfoStatistics = true; // Enable statistics in the user info window

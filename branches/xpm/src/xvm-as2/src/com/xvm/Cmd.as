@@ -37,7 +37,7 @@ class com.xvm.Cmd
         _call(target, callback, [COMMAND_GETGAMEREGION]);
     }
 
-    public static function loadBattleStat(players:Array)
+    public static function loadBattleStat(players:Array = null)
     {
         _call(null, null, [COMMAND_LOADBATTLESTAT, Config.s_config.rating.showPlayersStatistics, players]);
     }
