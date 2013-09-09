@@ -122,10 +122,10 @@ package com.xvm.misc
             var v:String = config.configVersion;
             var s:* = null;
 
-            if (!v || v == "" || Utils.compareVersions(v, "4.0.0") < 0)
-                v = "4.0.0";
+            if (!v || v == "" || Utils.compareVersions(v, "5.0.0") < 0)
+                v = "4.99.0";
 
-            if (v == "4.0.0")
+            if (v == "4.99.0")
             {
                 s = config.battleLoading;
                 if (s != null)

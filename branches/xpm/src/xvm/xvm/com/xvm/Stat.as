@@ -111,13 +111,15 @@ package com.xvm
 
         private function battleLoaded(json_str:String):void
         {
-            Logger.add("TRACE: battleLoaded(): start");
+//return; // 1
+            //Logger.add("TRACE: battleLoaded(): start");
 
             try
             {
                 var response:Object = JSONx.parse(json_str);
                 //Logger.addObject(response, "response", 3);
 
+//return; // 3
                 if (response.info)
                     info = response.info;
 
@@ -149,6 +151,7 @@ package com.xvm
                 loading = false;
                 //Logger.add("Stat Loaded");
 
+//return; // 2
                 for each (var l:Object in listenersBattle)
                 {
                     //Logger.add("TRACE: battleLoaded(): 2");
