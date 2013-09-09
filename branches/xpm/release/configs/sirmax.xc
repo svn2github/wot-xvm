@@ -1,5 +1,5 @@
 {
-  "configVersion": "4.0.0",
+  "configVersion": "5.0.0",
   "def": {
     //"standardMarkers": true,
     "standardMarkers": false,

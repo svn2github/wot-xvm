@@ -30,13 +30,17 @@ package xvm.hangar.components.BattleLoading
             if (Config.config.battleLoading.removeSquadIcon && proxy.squad != null)
                 proxy.squad.visible = false;
 
-            TextFieldEx.setVerticalAutoSize(proxy.textField, TextFieldAutoSize.CENTER);
+            // FIXIT
+            //TextFieldEx.setVerticalAlign(proxy.textField,  TextFieldAutoSize.CENTER);
+            //TextFieldEx.setVerticalAutoSize(proxy.textField, TextFieldAutoSize.CENTER);
+
+            TextFieldEx.setVerticalAlign(proxy.vehicleField, TextFieldAutoSize.CENTER);
             TextFieldEx.setVerticalAutoSize(proxy.vehicleField, TextFieldAutoSize.CENTER);
+            proxy.vehicleField.condenseWhite = true;
 
             proxy.vehicleField.width += 100;
             if (team == Defines.TEAM_ALLY)
                 proxy.vehicleField.x -= 137;
-            proxy.vehicleField.condenseWhite = true;
 
             // Add stat loading handler
             Stat.loadBattleStat(this, onStatLoaded);
@@ -95,6 +99,7 @@ package xvm.hangar.components.BattleLoading
                     : Config.config.battleLoading.formatRightVehicle);
                 proxy.textField.htmlText = "<font color='" + c + "'>" + a + "</font>";
                 proxy.vehicleField.htmlText = "<font color='" + c + "'>" + b + "</font>";
+
                 //Logger.add(b);
                 //Logger.add(proxy.vehicleField.htmlText);
             }
