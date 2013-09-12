@@ -1,11 +1,11 @@
 {
     "RU": {
-        "ver": "4.1.1",
-        "message": "  * для WoT 0.8.7\n  * новые возможности\n  * улучшения и исправления"
+        "ver": "5.0.0-test1",
+        "message": "  * для WoT 0.8.8\n  * новые возможности\n  * улучшения и исправления"
     },
     "EU": {
-        "ver": "4.1.1",
-        "message": "  * for WoT 0.8.7\n  * new features\n  * improvements and bugfixes"
+        "ver": "5.0.0-test1",
+        "message": "  * for WoT 0.8.8\n  * new features\n  * improvements and bugfixes"
     },
     "US": {
         "ver": "4.1.1",
