@@ -1,10 +1,10 @@
 {
     "RU": {
-        "ver": "5.0.0-test1",
+        "ver": "5.0.0-test2",
         "message": "  * для WoT 0.8.8\n  * новые возможности\n  * улучшения и исправления"
     },
     "EU": {
-        "ver": "5.0.0-test1",
+        "ver": "5.0.0-test2",
         "message": "  * for WoT 0.8.8\n  * new features\n  * improvements and bugfixes"
     },
     "US": {
