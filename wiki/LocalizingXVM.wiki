@@ -31,20 +31,41 @@ To translate XVM you need:
 
 == Languages ==
 ===Updated===
-||||Czech (cs)||English (en)||Russian (ru)||
+Belarusian (be)(unofficial)
+Czech (cs)
+English (en)
+Finnish (fi)
+German (de)
+Romanian (ro)
+Russian (ru)
 
 ===Update needed===
-||Belarusian (be)(unofficial)||Danish (da)||Dutch (nl)||
-||Finnish (fi)||French (fr)||German (de)||
-||Hungarian (hu)||Italian (it)||Korean (ko)||
-||Polish (pl)||Spanish (es)||Turkish (tr)||
-||Ukrainian (uk)(unofficial)||Vietnamese (vi)||
+Danish (da)
+Dutch (nl)
+French (fr)
+Hungarian (hu)
+Italian (it)
+Korean (ko)
+Polish (pl)
+Spanish (es)
+Turkish (tr)
+Ukrainian (uk)(unofficial)
+Vietnamese (vi)
 
 ===To do===
-||Bulgarian (bg)||Chinese (China)(Simplified?)(zh_CN)||Chinese (Taiwan)(Traditional?)(zh_TW)||
-||Croatian (hr)||Danish (da)||Estonian (et)||
-||Filipino (fil)||Indonesian (id)||Japanese (ja)||
-||Latvian (lv)||Lithuanian (lt)||Malay (ms)||
-||Norwegian (no)||Portuguese (Brazil)(pt_BR)||Portuguese (pt)||
-||Romanian (ro)||Serbian (latin?)(sr)||Swedish (sv)||
-||Thai (th)||
+Bulgarian (bg)
+Chinese (China)(Simplified?)(zh_CN)
+Chinese (Taiwan)(Traditional?)(zh_TW)
+Croatian (hr)
+Estonian (et)
+Filipino (fil)
+Indonesian (id)
+Japanese (ja)
+Latvian (lv)
+Lithuanian (lt)
+Malay (ms)
+Norwegian (no)
+Portuguese (Brazil)(pt_BR)
+Portuguese (pt)
+Serbian (latin?)(sr)Swedish (sv)
+Thai (th)
