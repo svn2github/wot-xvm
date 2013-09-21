@@ -39,6 +39,7 @@ To translate XVM you need:
   * Hungarian (hu)
   * Romanian (ro)
   * Russian (ru)
+  * Ukrainian (uk)(unofficial)
 
 ===Update needed===
   * Danish (da)
@@ -49,7 +50,6 @@ To translate XVM you need:
   * Polish (pl)
   * Spanish (es)
   * Turkish (tr)
-  * Ukrainian (uk)(unofficial)
   * Vietnamese (vi)
 
 ===To do===
