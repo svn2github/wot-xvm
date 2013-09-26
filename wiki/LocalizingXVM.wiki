@@ -32,6 +32,7 @@ To translate XVM you need:
 == Languages ==
 ===Updated===
   * Belarusian (be)(unofficial)
+  * Bulgarian (bg)
   * Czech (cs)
   * English (en)
   * Finnish (fi)
@@ -53,7 +54,6 @@ To translate XVM you need:
   * Ukrainian (uk)(unofficial)
 
 ===To do===
-  * Bulgarian (bg)
   * Chinese (China)(Simplified?)(zh_CN)
   * Chinese (Taiwan)(Traditional?)(zh_TW)
   * Croatian (hr)
