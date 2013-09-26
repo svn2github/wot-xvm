@@ -1,23 +1,23 @@
 {
     "RU": {
-        "ver": "5.0.0-test2",
+        "ver": "5.0.0-test3",
         "message": "  * для WoT 0.8.8\n  * новые возможности\n  * улучшения и исправления"
     },
     "EU": {
-        "ver": "5.0.0-test2",
+        "ver": "5.0.0-test3",
         "message": "  * for WoT 0.8.8\n  * new features\n  * improvements and bugfixes"
     },
     "US": {
-        "ver": "5.0.0-test2",
+        "ver": "5.0.0-test3",
         "message": "  * for WoT 0.8.8\n  * new features\n  * improvements and bugfixes"
     },
     "SEA": {
-        "ver": "5.0.0-test2",
+        "ver": "5.0.0-test3",
         "message": "  * for WoT 0.8.8\n  * new features\n  * improvements and bugfixes"
     },
     "VTC": {
-        "ver": "5.0.0-test2",
+        "ver": "5.0.0-test3",
         "message": "  * for WoT 0.8.8\n  * new features\n  * improvements and bugfixes"
     },
-    "CT":  { "ver": "4.1.1", "message": "" }
+    "CT":  { "ver": "5.0.0-test3", "message": "" }
 }
