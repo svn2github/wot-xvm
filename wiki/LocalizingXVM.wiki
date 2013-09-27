@@ -38,12 +38,12 @@ To translate XVM you need:
   * Finnish (fi)
   * French (fr)
   * German (de)
+  * Hungarian (hu)
   * Russian (ru)
 
 ===Update needed===
   * Danish (da)
   * Dutch (nl)
-  * Hungarian (hu)
   * Italian (it)
   * Korean (ko)
   * Polish (pl)
