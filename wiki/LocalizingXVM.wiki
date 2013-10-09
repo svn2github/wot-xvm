@@ -31,32 +31,30 @@ To translate XVM you need:
 
 == Languages ==
 ===Updated===
+  * Belarusian (be)(unofficial)
   * Czech (cs)
   * English (en)
   * Finnish (fi)
+  * Hungarian (hu)
   * Russian (ru)
   * Spanish (es)
   * Ukrainian (uk)(unofficial)
 
 ===Not fully translated===
-  * Belarusian (be)(unofficial)
   * Serbian (sr)
 
 ===Update needed===
   * Bulgarian (bg)
   * French (fr)
   * German (de)
-  * Hungarian (hu)
   * Danish (da)
   * Dutch (nl)
   * Italian (it)
   * Korean (ko)
   * Polish (pl)
   * Romanian (ro)
-
   * Turkish (tr)
   * Vietnamese (vi)
-  
 
 ===To do===
   * Chinese (China)(Simplified?)(zh_CN)
