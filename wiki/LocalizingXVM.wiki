@@ -31,17 +31,20 @@ To translate XVM you need:
 
 == Languages ==
 ===Updated===
-  * Belarusian (be)(unofficial)
-  * Bulgarian (bg)
   * Czech (cs)
   * English (en)
   * Finnish (fi)
+  * Russian (ru)
+
+===Not fully translated===
+  * Serbian (sr)
+
+===Update needed===
+  * Belarusian (be)(unofficial)
+  * Bulgarian (bg)
   * French (fr)
   * German (de)
   * Hungarian (hu)
-  * Russian (ru)
-
-===Update needed===
   * Danish (da)
   * Dutch (nl)
   * Italian (it)
@@ -67,5 +70,5 @@ To translate XVM you need:
   * Norwegian (no)
   * Portuguese (Brazil)(pt_BR)
   * Portuguese (pt)
-  * Serbian (latin?)(sr)Swedish (sv)
+  * Swedish (sv)
   * Thai (th)
