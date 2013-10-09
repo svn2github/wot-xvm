@@ -36,11 +36,11 @@ To translate XVM you need:
   * Finnish (fi)
   * Russian (ru)
   * Spanish (es)
+  * Ukrainian (uk)(unofficial)
 
 ===Not fully translated===
   * Belarusian (be)(unofficial)
   * Serbian (sr)
-  * Ukrainian (uk)(unofficial)
 
 ===Update needed===
   * Bulgarian (bg)
