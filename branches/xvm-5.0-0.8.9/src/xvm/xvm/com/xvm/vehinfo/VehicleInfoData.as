@@ -39,11 +39,13 @@ package com.xvm.vehinfo
             d["germany_PzII"] =                      { tiers: [ 2, 3 ], name: null, short: "Pz2" };
             d["usa_M2_lt"] =                         { tiers: [ 2, 3 ], name: null, short: "M2LT" };
             d["usa_T1_E6"] =                         { tiers: [ 2, 3 ], name: null, short: "T1E6" };
+            d["usa_T7_Combat_Car"] =                 { tiers: [ 2, 3 ], name: null, short: "T7" };
             d["china_Ch07_Vickers_MkE_Type_BT26"] =  { tiers: [ 2, 3 ], name: null, short: "BT26" };
             d["france_D1"] =                         { tiers: [ 2, 3 ], name: null, short: "D1" };
             d["france_Hotchkiss_H35"] =              { tiers: [ 2, 3 ], name: null, short: "H35" };
             d["uk_GB03_Cruiser_Mk_I"] =              { tiers: [ 2, 3 ], name: null, short: "Cru1" };
             d["uk_GB58_Cruiser_Mk_III"] =            { tiers: [ 2, 3 ], name: null, short: "Crui3" };
+            d["uk_GB76_Mk_VIC"] =                    { tiers: [ 2, 3 ], name: null, short: "Mk6c" };
             d["usa_T2_med"] =                        { tiers: [ 2, 3 ], name: null, short: "T2MT" };
             d["uk_GB05_Vickers_Medium_Mk_II"] =      { tiers: [ 2, 3 ], name: null, short: "Mk2" };
             d["ussr_AT_1"] =                         { tiers: [ 2, 3 ], name: null, short: "AT-1" };
@@ -79,7 +81,7 @@ package com.xvm.vehinfo
             d["france_D2"] =                         { tiers: [ 3, 5 ], name: null, short: "D2" };
             d["uk_GB06_Vickers_Medium_Mk_III"] =     { tiers: [ 3, 5 ], name: null, short: "Mk3" };
             d["ussr_SU_76"] =                        { tiers: [ 3, 5 ], name: null, short: "Su76" };
-            d["germany_G20_Marder_II"] =             { tiers: [ 3, 5 ], name: null, short: "Mard" };
+            d["germany_G20_Marder_II"] =             { tiers: [ 3, 5 ], name: null, short: "Mard2" };
             d["usa_T82"] =                           { tiers: [ 3, 5 ], name: null, short: "T82" };
             d["france_FCM_36Pak40"] =                { tiers: [ 3, 5 ], name: null, short: "Fcm36" };
             d["france_RenaultUE57"] =                { tiers: [ 3, 5 ], name: null, short: "UE57" };
@@ -110,6 +112,7 @@ package com.xvm.vehinfo
             d["france_B1"] =                         { tiers: [ 4, 5 ], name: null, short: "B1" };
             d["ussr_GAZ_74b"] =                      { tiers: [ 4, 6 ], name: null, short: "Su85b" };
             d["germany_Hetzer"] =                    { tiers: [ 4, 6 ], name: null, short: "Hetz" };
+            d["germany_Marder_III"] =                { tiers: [ 4, 6 ], name: null, short: "Mard3" };
             d["usa_M8A1"] =                          { tiers: [ 4, 6 ], name: null, short: "M8A1" };
             d["usa_T40"] =                           { tiers: [ 4, 6 ], name: null, short: "T40" };
             d["france_Somua_Sau_40"] =               { tiers: [ 4, 6 ], name: null, short: "Somua" };
@@ -140,6 +143,7 @@ package com.xvm.vehinfo
             d["france_BDR_G1B"] =                    { tiers: [ 5, 7 ], name: null, short: "BDR" };
             d["uk_GB08_Churchill_I"] =               { tiers: [ 5, 7 ], name: null, short: "Chur1" };
             d["ussr_SU_85"] =                        { tiers: [ 5, 7 ], name: null, short: "Su85" };
+            d["germany_Pz_Sfl_IVc"] =                { tiers: [ 5, 7 ], name: null, short: "PzS4c" };
             d["germany_StuGIII"] =                   { tiers: [ 5, 7 ], name: null, short: "StuG" };
             d["usa_M10_Wolverine"] =                 { tiers: [ 5, 7 ], name: null, short: "Wolv" };
             d["usa_T49"] =                           { tiers: [ 5, 7 ], name: null, short: "T49" };
@@ -159,8 +163,8 @@ package com.xvm.vehinfo
             d["china_Ch15_59_16"] =                  { tiers: [ 7, 10 ], name: null, short: "59-16" };
             d["china_Ch24_Type64"] =                 { tiers: [ 7, 10 ], name: null, short: "t-64" };
             d["france_AMX_12t"] =                    { tiers: [ 7, 10 ], name: null, short: "12t" };
-            d["ussr_T_34_85"] =                      { tiers: [ 6, 8 ], name: null, short: "3485" };
             d["ussr_A43"] =                          { tiers: [ 6, 8 ], name: null, short: "A43" };
+            d["ussr_T_34_85"] =                      { tiers: [ 6, 8 ], name: null, short: "3485" };
             d["ussr_T_34_85_training"] =             { tiers: [ 6, 8 ], name: null, short: "3485" };
             d["germany_PzIV_schmalturm"] =           { tiers: [ 6, 8 ], name: null, short: "Pz4S" };
             d["germany_VK3001P"] =                   { tiers: [ 6, 8 ], name: null, short: "3001P" };
@@ -182,6 +186,7 @@ package com.xvm.vehinfo
             d["ussr_SU100Y"] =                       { tiers: [ 6, 8 ], name: null, short: "100Y" };
             d["germany_DickerMax"] =                 { tiers: [ 6, 8 ], name: null, short: "DMax" };
             d["germany_JagdPzIV"] =                  { tiers: [ 6, 8 ], name: null, short: "JPz" };
+            d["germany_Nashorn"] =                   { tiers: [ 6, 8 ], name: null, short: "Nash" };
             d["usa_M18_Hellcat"] =                   { tiers: [ 6, 8 ], name: null, short: "Hellc" };
             d["usa_M36_Slagger"] =                   { tiers: [ 6, 8 ], name: null, short: "Jacks" };
             d["france_ARL_V39"] =                    { tiers: [ 6, 8 ], name: null, short: "V39" };
@@ -221,6 +226,7 @@ package com.xvm.vehinfo
             d["ussr_SU122_44"] =                     { tiers: [ 7, 9 ], name: null, short: "12244" };
             d["ussr_SU_152"] =                       { tiers: [ 7, 9 ], name: null, short: "152" };
             d["germany_JagdPanther"] =               { tiers: [ 7, 9 ], name: null, short: "JagP" };
+            d["germany_Sturer_Emil"] =               { tiers: [ 7, 9 ], name: null, short: "Emil" };
             d["usa_T25_2"] =                         { tiers: [ 7, 9 ], name: null, short: "25/2" };
             d["usa_T25_AT"] =                        { tiers: [ 7, 9 ], name: null, short: "25AT" };
             d["france_AMX_AC_Mle1946"] =             { tiers: [ 7, 9 ], name: null, short: "Mle46" };
@@ -262,6 +268,7 @@ package com.xvm.vehinfo
             d["ussr_SU_101"] =                       { tiers: [ 8, 10 ], name: null, short: "Su101" };
             d["germany_Ferdinand"] =                 { tiers: [ 8, 10 ], name: null, short: "Ferd" };
             d["germany_JagdPantherII"] =             { tiers: [ 8, 10 ], name: null, short: "JagP2" };
+            d["germany_RhB_Waffentrager"] =          { tiers: [ 8, 10 ], name: null, short: "RhBWT" };
             d["usa_T28"] =                           { tiers: [ 8, 10 ], name: null, short: "T28" };
             d["usa_T28_Prototype"] =                 { tiers: [ 8, 10 ], name: null, short: "T28Pr" };
             d["france_AMX_AC_Mle1948"] =             { tiers: [ 8, 10 ], name: null, short: "Mle48" };
@@ -292,6 +299,7 @@ package com.xvm.vehinfo
             d["ussr_Object_704"] =                   { tiers: [ 9, 11 ], name: null, short: "704"  };
             d["ussr_SU122_54"] =                     { tiers: [ 9, 11 ], name: null, short: "12254"  };
             d["germany_JagdTiger"] =                 { tiers: [ 9, 11 ], name: null, short: "JagT"  };
+            d["germany_Waffentrager_IV"] =           { tiers: [ 9, 11 ], name: null, short: "WT4" };
             d["usa_T30"] =                           { tiers: [ 9, 11 ], name: null, short: "T30" };
             d["usa_T95"] =                           { tiers: [ 9, 11 ], name: null, short: "95"  };
             d["france_AMX50_Foch"] =                 { tiers: [ 9, 11 ], name: null, short: "Foch"  };
@@ -326,6 +334,7 @@ package com.xvm.vehinfo
             d["ussr_Object263"] =                    { tiers: [ 10, 12 ], name: null, short: "263"  };
             d["ussr_Object268"] =                    { tiers: [ 10, 12 ], name: null, short: "268"  };
             d["germany_JagdPz_E100"] =               { tiers: [ 10, 12 ], name: null, short: "JPz100"  };
+            d["germany_Waffentrager_E100"] =         { tiers: [ 10, 12 ], name: null, short: "WT100"  };
             d["usa_T110E3"] =                        { tiers: [ 10, 12 ], name: null, short: "E3"  };
             d["usa_T110E4"] =                        { tiers: [ 10, 12 ], name: null, short: "E4"  };
             d["france_AMX_50Fosh_155"] =             { tiers: [ 10, 12 ], name: null, short: "Foch155"  };

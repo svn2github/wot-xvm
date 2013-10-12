@@ -40,6 +40,7 @@ _special = {
     'uk:GB51_Excelsior':		[ 5, 6 ],
     'uk:GB68_Matilda_Black_Prince':	[ 5, 6 ],
     'uk:GB20_Crusader':			[ 5, 7 ],
+    'japan:Chi_Nu_Kai':  [ 5, 6 ],
 
     # level 6
     'germany:PzV_PzIV':			[ 6, 7 ],
