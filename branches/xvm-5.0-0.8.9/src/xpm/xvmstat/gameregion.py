@@ -8,7 +8,9 @@ import ResMgr
 _updateurl = ResMgr.openSection('scripts_config.xml').readString('csisUrl')
 
 if _updateurl is not None:
-    if 'worldoftanks.ru' in _updateurl:
+    if 'csis-ct.worldoftanks.' in _updateurl:
+        region = 'CT'
+    elif 'worldoftanks.ru' in _updateurl:
         region = 'RU'
     elif 'worldoftanks.eu' in _updateurl:
         region = 'EU'
@@ -22,8 +24,6 @@ if _updateurl is not None:
         region = 'VTC'
     elif 'worldoftanks.kr' in _updateurl:
         region = 'KR'
-    elif 'csis-ct.worldoftanks.' in _updateurl:
-        region = 'CT'
     else:
         region = 'null'
 else:

@@ -221,13 +221,18 @@ class _Stat(object):
 
     def _get_user(self):
         (value, isId) = self.req['args']
+        reg = region
         if isId:
             value = str(int(value))
-        cacheKey = "%s;%d" % (value, isId)
+        else:
+            if reg == "CT":
+                reg = value[-2:]
+                value = value[:-3]
+        cacheKey = "%s/%s" % ("ID" if isId else reg, value)
         data = None
         if cacheKey not in self.cacheUser:
             try:
-                req = "INFO/%s/%s" % ("ID" if isId else region, value)
+                req = "INFO/" + cacheKey
                 server = self.servers[randint(0, len(self.servers) - 1)]
                 responseFromServer, duration = self.loadUrl(server, req)
 
@@ -238,8 +243,8 @@ class _Stat(object):
                     if data is not None:
                         self._fix(data)
                         if 'nm' in data and '_id' in data:
-                            self.cacheUser[data['nm'] + ";0"] = data
-                            self.cacheUser[str(data['_id']) + ";1"] = data
+                            self.cacheUser[reg + "/" + data['nm']] = data
+                            self.cacheUser["ID/" + str(data['_id'])] = data
 
             except Exception, ex:
                 err('_get_user() exception: ' + traceback.format_exc(ex))
