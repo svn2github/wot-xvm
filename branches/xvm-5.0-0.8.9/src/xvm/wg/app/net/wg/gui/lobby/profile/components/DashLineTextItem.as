@@ -1,149 +1,126 @@
-package net.wg.gui.lobby.profile.components 
+package net.wg.gui.lobby.profile.components
 {
-    import flash.events.*;
-    import flash.text.*;
-    import net.wg.data.managers.*;
-    import scaleform.clik.constants.*;
-    import scaleform.clik.core.*;
-    
-    public class DashLineTextItem extends scaleform.clik.core.UIComponent
-    {
-        public function DashLineTextItem()
-        {
-            super();
-            return;
-        }
+   import scaleform.clik.core.UIComponent;
+   import flash.text.TextField;
+   import flash.text.TextFieldAutoSize;
+   import flash.events.MouseEvent;
+   import net.wg.data.managers.IToolTipParams;
+   import scaleform.clik.constants.InvalidationType;
 
-        protected override function configUI():void
-        {
-            super.configUI();
-            this.labelTextField.autoSize = flash.text.TextFieldAutoSize.LEFT;
-            this.valueTextField.autoSize = flash.text.TextFieldAutoSize.LEFT;
-            return;
-        }
 
-        protected function mouseRollOutHandler(arg1:flash.events.MouseEvent):void
-        {
-            hideToolTip();
-            return;
-        }
+   public class DashLineTextItem extends UIComponent
+   {
+          
+      public function DashLineTextItem() {
+         super();
+      }
 
-        protected function mouseRollOverHandler(arg1:flash.events.MouseEvent):void
-        {
-            this.showToolTip(null);
-            return;
-        }
+      private static const LABEL_INV:String = "lblInv";
 
-        protected function showToolTip(arg1:net.wg.data.managers.IToolTipParams):void
-        {
-            if (this._tooltip) 
-            {
-                App.toolTipMgr.showComplex(this._tooltip);
-            }
-            return;
-        }
+      private static const HTML_VALUE_INV:String = "htmlValInv";
 
-        protected override function draw():void
-        {
-            super.draw();
-            if (isInvalid(LABEL_INV)) 
-            {
-                this.labelTextField.text = this._label;
-                invalidate(scaleform.clik.constants.InvalidationType.SIZE);
-            }
-            if (isInvalid(VALUE_INV)) 
-            {
-                this.valueTextField.htmlText = this._value;
-                invalidate(scaleform.clik.constants.InvalidationType.SIZE);
-            }
-            if (isInvalid(scaleform.clik.constants.InvalidationType.SIZE)) 
-            {
-                this.dashLine.width = Math.round(_width - this.labelTextField.width - this.valueTextField.width - dashLinePadding * 2);
-                this.dashLine.x = Math.round(this.labelTextField.width + dashLinePadding);
-                this.valueTextField.x = Math.round(_width - this.valueTextField.width);
-            }
-            return;
-        }
+      private static const VALUE_INV:String = "valInv";
 
-        public function get label():String
-        {
-            return this._label;
-        }
+      private static const dashLinePadding:uint = 1;
 
-        public function set label(arg1:String):void
-        {
-            this._label = arg1;
-            invalidate(LABEL_INV);
-            return;
-        }
+      private static function hideToolTip() : void {
+         App.toolTipMgr.hide();
+      }
 
-        public function get value():String
-        {
-            return this._value;
-        }
+      public var labelTextField:TextField;
 
-        public function set value(arg1:String):void
-        {
-            this._value = arg1;
-            invalidate(VALUE_INV);
-            return;
-        }
+      public var valueTextField:TextField;
 
-        public function get tooltip():String
-        {
-            return this._tooltip;
-        }
+      public var dashLine:DashLine;
 
-        public function set tooltip(arg1:String):void
-        {
-            this._tooltip = arg1;
-            this.disposeListeners();
-            if (this._tooltip) 
-            {
-                addEventListener(flash.events.MouseEvent.ROLL_OVER, this.mouseRollOverHandler, false, 0, true);
-                addEventListener(flash.events.MouseEvent.ROLL_OUT, this.mouseRollOutHandler, false, 0, true);
-            }
-            return;
-        }
+      private var _label:String = "";
 
-        internal function disposeListeners():void
-        {
-            removeEventListener(flash.events.MouseEvent.ROLL_OVER, this.mouseRollOverHandler);
-            removeEventListener(flash.events.MouseEvent.ROLL_OUT, this.mouseRollOutHandler);
-            return;
-        }
+      private var _value:String = "0";
 
-        public override function dispose():void
-        {
-            this.disposeListeners();
-            super.dispose();
-            return;
-        }
+      private var _tooltip:String;
 
-        internal static function hideToolTip():void
-        {
-            App.toolTipMgr.hide();
-            return;
-        }
+      override protected function configUI() : void {
+         super.configUI();
+         this.labelTextField.autoSize = TextFieldAutoSize.LEFT;
+         this.valueTextField.autoSize = TextFieldAutoSize.LEFT;
+      }
 
-        internal static const LABEL_INV:String="lblInv";
+      protected function mouseRollOutHandler(param1:MouseEvent) : void {
+         hideToolTip();
+      }
 
-        internal static const HTML_VALUE_INV:String="htmlValInv";
+      protected function mouseRollOverHandler(param1:MouseEvent) : void {
+         this.showToolTip(null);
+      }
 
-        internal static const VALUE_INV:String="valInv";
+      protected function showToolTip(param1:IToolTipParams) : void {
+         if(this._tooltip)
+         {
+            App.toolTipMgr.showComplex(this._tooltip);
+         }
+      }
 
-        internal static const dashLinePadding:uint=1;
+      override protected function draw() : void {
+         super.draw();
+         if(isInvalid(LABEL_INV))
+         {
+            this.labelTextField.text = this._label;
+            invalidate(InvalidationType.SIZE);
+         }
+         if(isInvalid(VALUE_INV))
+         {
+            this.valueTextField.htmlText = this._value;
+            invalidate(InvalidationType.SIZE);
+         }
+         if(isInvalid(InvalidationType.SIZE))
+         {
+            this.dashLine.width = Math.round(_width - this.labelTextField.width - this.valueTextField.width - dashLinePadding * 2);
+            this.dashLine.x = Math.round(this.labelTextField.width + dashLinePadding);
+            this.valueTextField.x = Math.round(_width - this.valueTextField.width);
+         }
+      }
 
-        public var labelTextField:flash.text.TextField;
+      public function get label() : String {
+         return this._label;
+      }
 
-        public var valueTextField:flash.text.TextField;
+      public function set label(param1:String) : void {
+         this._label = param1;
+         invalidate(LABEL_INV);
+      }
 
-        public var dashLine:net.wg.gui.lobby.profile.components.DashLine;
+      public function get value() : String {
+         return this._value;
+      }
 
-        internal var _label:String="";
+      public function set value(param1:String) : void {
+         this._value = param1;
+         invalidate(VALUE_INV);
+      }
 
-        internal var _value:String="0";
+      public function get tooltip() : String {
+         return this._tooltip;
+      }
 
-        internal var _tooltip:String;
-    }
+      public function set tooltip(param1:String) : void {
+         this._tooltip = param1;
+         this.disposeListeners();
+         if(this._tooltip)
+         {
+            addEventListener(MouseEvent.ROLL_OVER,this.mouseRollOverHandler,false,0,true);
+            addEventListener(MouseEvent.ROLL_OUT,this.mouseRollOutHandler,false,0,true);
+         }
+      }
+
+      private function disposeListeners() : void {
+         removeEventListener(MouseEvent.ROLL_OVER,this.mouseRollOverHandler);
+         removeEventListener(MouseEvent.ROLL_OUT,this.mouseRollOutHandler);
+      }
+
+      override public function dispose() : void {
+         this.disposeListeners();
+         super.dispose();
+      }
+   }
+
 }

@@ -1,13 +1,14 @@
-package net.wg.data.gui_items.dossier 
+package net.wg.data.gui_items.dossier
 {
-    import net.wg.data.constants.*;
-    
-    public class VehicleDossier extends net.wg.data.gui_items.dossier.Dossier
-    {
-        public function VehicleDossier(arg1:uint, arg2:String=null)
-        {
-            super(net.wg.data.constants.ItemTypes.VEHICLE_DOSSIER, [arg1, arg2]);
-            return;
-        }
-    }
+   import net.wg.data.constants.ItemTypes;
+
+
+   public class VehicleDossier extends Dossier
+   {
+          
+      public function VehicleDossier(param1:uint, param2:*=null) {
+         super(ItemTypes.VEHICLE_DOSSIER,[param1,param2]);
+      }
+   }
+
 }

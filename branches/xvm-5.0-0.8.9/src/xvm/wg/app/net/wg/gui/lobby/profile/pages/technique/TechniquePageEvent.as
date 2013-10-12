@@ -1,28 +1,27 @@
-package net.wg.gui.lobby.profile.pages.technique 
+package net.wg.gui.lobby.profile.pages.technique
 {
-    import flash.events.*;
-    
-    public class TechniquePageEvent extends flash.events.Event
-    {
-        public function TechniquePageEvent(arg1:String, arg2:Boolean, arg3:Boolean=false, arg4:Boolean=false)
-        {
-            this.dataUnderUpdating = arg2;
-            super(arg1, arg3, arg4);
-            return;
-        }
+   import flash.events.Event;
 
-        public override function clone():flash.events.Event
-        {
-            return new net.wg.gui.lobby.profile.pages.technique.TechniquePageEvent(type, this.dataUnderUpdating, bubbles, cancelable);
-        }
 
-        public override function toString():String
-        {
-            return formatToString("TechniquePageEvent", "type", "bubbles", "cancelable", "eventPhase");
-        }
+   public class TechniquePageEvent extends Event
+   {
+          
+      public function TechniquePageEvent(param1:String, param2:Boolean, param3:Boolean=false, param4:Boolean=false) {
+         this.dataUnderUpdating = param2;
+         super(param1,param3,param4);
+      }
 
-        public static const DATA_STATUS_CHANGED:String="dataStatusChanged";
+      public static const DATA_STATUS_CHANGED:String = "dataStatusChanged";
 
-        public var dataUnderUpdating:Boolean;
-    }
+      public var dataUnderUpdating:Boolean;
+
+      override public function clone() : Event {
+         return new TechniquePageEvent(type,this.dataUnderUpdating,bubbles,cancelable);
+      }
+
+      override public function toString() : String {
+         return formatToString("TechniquePageEvent","type","bubbles","cancelable","eventPhase");
+      }
+   }
+
 }

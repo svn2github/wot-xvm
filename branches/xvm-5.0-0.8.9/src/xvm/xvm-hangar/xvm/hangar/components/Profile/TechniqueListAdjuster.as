@@ -213,9 +213,9 @@ package xvm.hangar.components.Profile
                 "isInHangar": true,
                 "nationID": -1,
                 "inventoryID": -1,
-                "battlesCount": page.currentDossier.getBattlesCount(),
-                "winsEfficiency": Math.round(page.currentDossier.getWinsEfficiency() * 100),
-                "avgExperience": page.currentDossier.getAvgXPStr()
+                "battlesCount": page.currentData.getBattlesCount(),
+                "winsEfficiency": Math.round(page.currentData.getWinsEfficiency() * 100),
+                "avgExperience": page.currentData.getAvgXPStr()
             });
         }
     }

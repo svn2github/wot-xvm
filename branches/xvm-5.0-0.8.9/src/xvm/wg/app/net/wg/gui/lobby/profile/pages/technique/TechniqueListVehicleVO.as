@@ -1,62 +1,59 @@
-package net.wg.gui.lobby.profile.pages.technique 
+package net.wg.gui.lobby.profile.pages.technique
 {
-    import net.wg.data.daapi.base.*;
-    import net.wg.data.gui_items.*;
-    
-    public class TechniqueListVehicleVO extends net.wg.data.daapi.base.DAAPIDataClass
-    {
-        public function TechniqueListVehicleVO(arg1:Object)
-        {
-            super(arg1);
-            return;
-        }
+   import net.wg.data.daapi.base.DAAPIDataClass;
+   import net.wg.data.gui_items.ItemsUtils;
 
-        public function get winsEfficiencyStr():String
-        {
-            return net.wg.data.gui_items.ItemsUtils.formatIntegerStr(this.winsEfficiency) + "%";
-        }
 
-        public function set winsEfficiencyStr(arg1:String):void
-        {
-            this._winsEfficiencyStr = arg1;
-            return;
-        }
+   public class TechniqueListVehicleVO extends DAAPIDataClass
+   {
+          
+      public function TechniqueListVehicleVO(param1:Object) {
+         super(param1);
+      }
 
-        public function get nationIconPath():String
-        {
-            return App.utils.nations.getNationIcon(this.nationID);
-        }
+      public var id:int;
 
-        public var id:int;
+      public var inventoryID:int;
 
-        public var inventoryID:int;
+      public var nationID:int;
 
-        public var nationID:int;
+      public var isInHangar:Boolean;
 
-        public var isInHangar:Boolean;
+      public var shortUserName:String = "";
 
-        public var shortUserName:String="";
+      public var userName:String = "";
 
-        public var userName:String="";
+      public var battlesCount:int;
 
-        public var battlesCount:int;
+      public var winsEfficiency:Number;
 
-        public var winsEfficiency:Number;
+      private var _winsEfficiencyStr:String = "";
 
-        internal var _winsEfficiencyStr:String="";
+      public var avgExperience:Number;
 
-        public var avgExperience:Number;
+      public var nationIndex:int;
 
-        public var nationIndex:int;
+      public var typeIconPath:String = "";
 
-        public var typeIconPath:String="";
+      public var tankIconPath:String = "";
 
-        public var tankIconPath:String="";
+      public var typeIndex:int;
 
-        public var typeIndex:int;
+      public var markOfMastery:int;
 
-        public var markOfMastery:int;
+      public var level:int;
 
-        public var level:int;
-    }
+      public function get winsEfficiencyStr() : String {
+         return ItemsUtils.formatIntegerStr(this.winsEfficiency) + "%";
+      }
+
+      public function set winsEfficiencyStr(param1:String) : void {
+         this._winsEfficiencyStr = param1;
+      }
+
+      public function get nationIconPath() : String {
+         return App.utils.nations.getNationIcon(this.nationID);
+      }
+   }
+
 }

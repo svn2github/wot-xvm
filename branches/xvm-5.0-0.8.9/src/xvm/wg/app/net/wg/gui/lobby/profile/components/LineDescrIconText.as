@@ -1,137 +1,115 @@
-package net.wg.gui.lobby.profile.components 
+package net.wg.gui.lobby.profile.components
 {
-    import flash.events.*;
-    import flash.text.*;
-    import net.wg.data.managers.*;
-    
-    public class LineDescrIconText extends net.wg.gui.lobby.profile.components.LineIconText
-    {
-        public function LineDescrIconText()
-        {
-            super();
-            buttonMode = true;
-            return;
-        }
+   import flash.text.TextField;
+   import flash.events.Event;
+   import flash.text.TextFieldAutoSize;
+   import flash.events.MouseEvent;
+   import net.wg.data.managers.IToolTipParams;
 
-        protected override function configUI():void
-        {
-            super.configUI();
-            this.descriptionTextField.multiline = true;
-            return;
-        }
 
-        public function get description():String
-        {
-            return this._description;
-        }
+   public class LineDescrIconText extends LineIconText
+   {
+          
+      public function LineDescrIconText() {
+         super();
+         buttonMode = true;
+      }
 
-        public function set description(arg1:String):void
-        {
-            this._description = arg1;
-            this.isDescrInvalid = true;
-            invalidate();
-            return;
-        }
+      private static function hideToolTip() : void {
+         App.toolTipMgr.hide();
+      }
 
-        public override function get width():Number
-        {
-            return Math.max(textComponent.x, this.descriptionTextField.width);
-        }
+      private var _description:String = "";
 
-        protected override function draw():void
-        {
-            super.draw();
-            if (this.isDescrInvalid) 
-            {
-                this.isDescrInvalid = false;
-                this.descriptionTextField.text = this._description;
-                dispatchEvent(new flash.events.Event(flash.events.Event.RESIZE, true));
-                this.descriptionTextField.autoSize = flash.text.TextFieldAutoSize.LEFT;
-            }
-            if (this.isFontSizeInv) 
-            {
-                this.isFontSizeInv = false;
-                textComponent.fontSize = this._fontSize;
-            }
-            return;
-        }
+      private var isDescrInvalid:Boolean;
 
-        protected function mouseRollOutHandler(arg1:flash.events.MouseEvent):void
-        {
-            hideToolTip();
-            return;
-        }
+      public var descriptionTextField:TextField;
 
-        protected function mouseRollOverHandler(arg1:flash.events.MouseEvent):void
-        {
-            this.showToolTip(null);
-            return;
-        }
+      private var _tooltip:String = null;
 
-        protected function showToolTip(arg1:net.wg.data.managers.IToolTipParams):void
-        {
-            if (this._tooltip) 
-            {
-                App.toolTipMgr.showComplex(this._tooltip);
-            }
-            return;
-        }
+      private var _fontSize:uint;
 
-        public override function dispose():void
-        {
-            this.disposeHandlers();
-            super.dispose();
-            return;
-        }
+      private var isFontSizeInv:Boolean;
 
-        internal function disposeHandlers():void
-        {
-            removeEventListener(flash.events.MouseEvent.ROLL_OVER, this.mouseRollOverHandler);
-            removeEventListener(flash.events.MouseEvent.ROLL_OUT, this.mouseRollOutHandler);
-            return;
-        }
+      override protected function configUI() : void {
+         super.configUI();
+         this.descriptionTextField.multiline = true;
+      }
 
-        public function get tooltip():String
-        {
-            return this._tooltip;
-        }
+      public function get description() : String {
+         return this._description;
+      }
 
-        public function set tooltip(arg1:String):void
-        {
-            this._tooltip = arg1;
-            this.disposeHandlers();
-            if (this._tooltip) 
-            {
-                addEventListener(flash.events.MouseEvent.ROLL_OVER, this.mouseRollOverHandler, false, 0, true);
-                addEventListener(flash.events.MouseEvent.ROLL_OUT, this.mouseRollOutHandler, false, 0, true);
-            }
-            return;
-        }
+      public function set description(param1:String) : void {
+         this._description = param1;
+         this.isDescrInvalid = true;
+         invalidate();
+      }
 
-        public function set fontSize(arg1:uint):void
-        {
-            this._fontSize = arg1;
-            this.isFontSizeInv = true;
-            invalidate();
-            return;
-        }
+      override public function get width() : Number {
+         return Math.max(textComponent.x,this.descriptionTextField.width);
+      }
 
-        internal static function hideToolTip():void
-        {
-            App.toolTipMgr.hide();
-            return;
-        }
+      override protected function draw() : void {
+         super.draw();
+         if(this.isDescrInvalid)
+         {
+            this.isDescrInvalid = false;
+            this.descriptionTextField.text = this._description;
+            dispatchEvent(new Event(Event.RESIZE,true));
+            this.descriptionTextField.autoSize = TextFieldAutoSize.LEFT;
+         }
+         if(this.isFontSizeInv)
+         {
+            this.isFontSizeInv = false;
+            textComponent.fontSize = this._fontSize;
+         }
+      }
 
-        internal var _description:String="";
+      protected function mouseRollOutHandler(param1:MouseEvent) : void {
+         hideToolTip();
+      }
 
-        internal var isDescrInvalid:Boolean;
+      protected function mouseRollOverHandler(param1:MouseEvent) : void {
+         this.showToolTip(null);
+      }
 
-        public var descriptionTextField:flash.text.TextField;
+      protected function showToolTip(param1:IToolTipParams) : void {
+         if(this._tooltip)
+         {
+            App.toolTipMgr.showComplex(this._tooltip);
+         }
+      }
 
-        internal var _tooltip:String=null;
+      override public function dispose() : void {
+         this.disposeHandlers();
+         super.dispose();
+      }
 
-        internal var _fontSize:uint;
+      private function disposeHandlers() : void {
+         removeEventListener(MouseEvent.ROLL_OVER,this.mouseRollOverHandler);
+         removeEventListener(MouseEvent.ROLL_OUT,this.mouseRollOutHandler);
+      }
 
-        internal var isFontSizeInv:Boolean;
-    }
+      public function get tooltip() : String {
+         return this._tooltip;
+      }
+
+      public function set tooltip(param1:String) : void {
+         this._tooltip = param1;
+         this.disposeHandlers();
+         if(this._tooltip)
+         {
+            addEventListener(MouseEvent.ROLL_OVER,this.mouseRollOverHandler,false,0,true);
+            addEventListener(MouseEvent.ROLL_OUT,this.mouseRollOutHandler,false,0,true);
+         }
+      }
+
+      public function set fontSize(param1:uint) : void {
+         this._fontSize = param1;
+         this.isFontSizeInv = true;
+         invalidate();
+      }
+   }
+
 }

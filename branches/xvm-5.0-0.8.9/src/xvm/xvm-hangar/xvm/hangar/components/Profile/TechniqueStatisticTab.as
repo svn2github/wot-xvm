@@ -264,7 +264,7 @@ package xvm.hangar.components.Profile
 
         private function updateSummaryData():void
         {
-            var data:Data = prepareData(page.currentDossier);
+            var data:Data = prepareData(page.currentData as Dossier);
             updateCommonData(data);
 
             // stat

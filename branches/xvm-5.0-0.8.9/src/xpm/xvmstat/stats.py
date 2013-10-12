@@ -235,10 +235,11 @@ class _Stat(object):
                     err('Empty response or parsing error')
                 else:
                     data = json.loads(responseFromServer)[0]
-                    self._fix(data)
-                    if data is not None and 'nm' in data and '_id' in data:
-                        self.cacheUser[data['nm'] + ";0"] = data
-                        self.cacheUser[str(data['_id']) + ";1"] = data
+                    if data is not None:
+                        self._fix(data)
+                        if 'nm' in data and '_id' in data:
+                            self.cacheUser[data['nm'] + ";0"] = data
+                            self.cacheUser[str(data['_id']) + ";1"] = data
 
             except Exception, ex:
                 err('_get_user() exception: ' + traceback.format_exc(ex))

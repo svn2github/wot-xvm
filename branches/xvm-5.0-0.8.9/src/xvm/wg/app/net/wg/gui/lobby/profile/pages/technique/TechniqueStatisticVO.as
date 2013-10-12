@@ -1,286 +1,224 @@
-package net.wg.gui.lobby.profile.pages.technique 
+package net.wg.gui.lobby.profile.pages.technique
 {
-    import net.wg.data.daapi.base.*;
-    
-    public class TechniqueStatisticVO extends net.wg.data.daapi.base.DAAPIDataClass
-    {
-        public function TechniqueStatisticVO(arg1:Object)
-        {
-            super(arg1);
-            return;
-        }
+   import net.wg.data.daapi.base.DAAPIDataClass;
 
-        public function set totalDead(arg1:String):void
-        {
-            this._totalDead = arg1;
-            return;
-        }
 
-        public function get killRatio():String
-        {
-            return this._killRatio;
-        }
+   public class TechniqueStatisticVO extends DAAPIDataClass
+   {
+          
+      public function TechniqueStatisticVO(param1:Object) {
+         super(param1);
+      }
 
-        public function set killRatio(arg1:String):void
-        {
-            this._killRatio = arg1;
-            return;
-        }
+      private var _type:String = "";
 
-        public function get dealtDmg():String
-        {
-            return this._dealtDmg;
-        }
+      private var _vName:String = "";
 
-        public function set dealtDmg(arg1:String):void
-        {
-            this._dealtDmg = arg1;
-            return;
-        }
+      private var _battles:String = "";
 
-        public function get receivedDmg():String
-        {
-            return this._receivedDmg;
-        }
+      private var _wins:String = "";
 
-        public function set receivedDmg(arg1:String):void
-        {
-            this._receivedDmg = arg1;
-            return;
-        }
+      private var _defeats:String = "";
 
-        public function get survive():String
-        {
-            return this._survive;
-        }
+      private var _survive:String = "";
 
-        public function get dmgRatio():String
-        {
-            return this._dmgRatio;
-        }
+      private var _accuracy:String = "";
 
-        public function set dmgRatio(arg1:String):void
-        {
-            this._dmgRatio = arg1;
-            return;
-        }
+      private var _maxExp:String = "";
 
-        public function get avgExp():String
-        {
-            return this._avgExp;
-        }
+      private var _maxKill:String = "";
 
-        public function set avgExp(arg1:String):void
-        {
-            this._avgExp = arg1;
-            return;
-        }
+      private var _totalKill:String = "";
 
-        public function get avgKills():String
-        {
-            return this._avgKills;
-        }
+      private var _totalDead:String = "";
 
-        public function get avgDetected():String
-        {
-            return this._avgDetected;
-        }
+      private var _killRatio:String = "";
 
-        public function set avgDetected(arg1:String):void
-        {
-            this._avgDetected = arg1;
-            return;
-        }
+      private var _dealtDmg:String = "";
 
-        public function get avgDmgDealt():String
-        {
-            return this._avgDmgDealt;
-        }
+      private var _receivedDmg:String = "";
 
-        public function set avgDmgDealt(arg1:String):void
-        {
-            this._avgDmgDealt = arg1;
-            return;
-        }
+      private var _dmgRatio:String = "";
 
-        public function get avgDmgReceived():String
-        {
-            return this._avgDmgReceived;
-        }
+      private var _avgExp:String = "";
 
-        public function set avgDmgReceived(arg1:String):void
-        {
-            this._avgDmgReceived = arg1;
-            return;
-        }
+      private var _avgKills:String = "";
 
-        public function get avgBonusDmg():String
-        {
-            return this._avgBonusDmg;
-        }
+      private var _avgDetected:String = "";
 
-        public function set avgBonusDmg(arg1:String):void
-        {
-            this._avgBonusDmg = arg1;
-            return;
-        }
+      private var _avgDmgDealt:String = "";
 
-        public function get type():String
-        {
-            return this._type;
-        }
+      private var _avgDmgReceived:String = "";
 
-        public function set type(arg1:String):void
-        {
-            this._type = arg1;
-            return;
-        }
+      private var _avgBonusDmg:String = "";
 
-        public function get vName():String
-        {
-            return this._vName;
-        }
+      public function get type() : String {
+         return this._type;
+      }
 
-        public function set vName(arg1:String):void
-        {
-            this._vName = arg1;
-            return;
-        }
+      public function set type(param1:String) : void {
+         this._type = param1;
+      }
 
-        public function get battles():String
-        {
-            return this._battles;
-        }
+      public function get vName() : String {
+         return this._vName;
+      }
 
-        public function set battles(arg1:String):void
-        {
-            this._battles = arg1;
-            return;
-        }
+      public function set vName(param1:String) : void {
+         this._vName = param1;
+      }
 
-        public function get wins():String
-        {
-            return this._wins;
-        }
+      public function get battles() : String {
+         return this._battles;
+      }
 
-        public function set wins(arg1:String):void
-        {
-            this._wins = arg1;
-            return;
-        }
+      public function set battles(param1:String) : void {
+         this._battles = param1;
+      }
 
-        public function get defeats():String
-        {
-            return this._defeats;
-        }
+      public function get wins() : String {
+         return this._wins;
+      }
 
-        public function set defeats(arg1:String):void
-        {
-            this._defeats = arg1;
-            return;
-        }
+      public function set wins(param1:String) : void {
+         this._wins = param1;
+      }
 
-        public function set avgKills(arg1:String):void
-        {
-            this._avgKills = arg1;
-            return;
-        }
+      public function get defeats() : String {
+         return this._defeats;
+      }
 
-        public function set survive(arg1:String):void
-        {
-            this._survive = arg1;
-            return;
-        }
+      public function set defeats(param1:String) : void {
+         this._defeats = param1;
+      }
 
-        public function get accuracy():String
-        {
-            return this._accuracy;
-        }
+      public function get survive() : String {
+         return this._survive;
+      }
 
-        public function set accuracy(arg1:String):void
-        {
-            this._accuracy = arg1;
-            return;
-        }
+      public function set survive(param1:String) : void {
+         this._survive = param1;
+      }
 
-        public function get maxExp():String
-        {
-            return this._maxExp;
-        }
+      public function get accuracy() : String {
+         return this._accuracy;
+      }
 
-        public function set maxExp(arg1:String):void
-        {
-            this._maxExp = arg1;
-            return;
-        }
+      public function set accuracy(param1:String) : void {
+         this._accuracy = param1;
+      }
 
-        public function get maxKill():String
-        {
-            return this._maxKill;
-        }
+      public function get maxExp() : String {
+         return this._maxExp;
+      }
 
-        public function set maxKill(arg1:String):void
-        {
-            this._maxKill = arg1;
-            return;
-        }
+      public function set maxExp(param1:String) : void {
+         this._maxExp = param1;
+      }
 
-        public function get totalKill():String
-        {
-            return this._totalKill;
-        }
+      public function get maxKill() : String {
+         return this._maxKill;
+      }
 
-        public function set totalKill(arg1:String):void
-        {
-            this._totalKill = arg1;
-            return;
-        }
+      public function set maxKill(param1:String) : void {
+         this._maxKill = param1;
+      }
 
-        public function get totalDead():String
-        {
-            return this._totalDead;
-        }
+      public function get totalKill() : String {
+         return this._totalKill;
+      }
 
-        internal var _type:String="";
+      public function set totalKill(param1:String) : void {
+         this._totalKill = param1;
+      }
 
-        internal var _vName:String="";
+      public function get totalDead() : String {
+         return this._totalDead;
+      }
 
-        internal var _battles:String="";
+      public function set totalDead(param1:String) : void {
+         this._totalDead = param1;
+      }
 
-        internal var _wins:String="";
+      public function get killRatio() : String {
+         return this._killRatio;
+      }
 
-        internal var _defeats:String="";
+      public function set killRatio(param1:String) : void {
+         this._killRatio = param1;
+      }
 
-        internal var _survive:String="";
+      public function get dealtDmg() : String {
+         return this._dealtDmg;
+      }
 
-        internal var _accuracy:String="";
+      public function set dealtDmg(param1:String) : void {
+         this._dealtDmg = param1;
+      }
 
-        internal var _maxKill:String="";
+      public function get receivedDmg() : String {
+         return this._receivedDmg;
+      }
 
-        internal var _totalKill:String="";
+      public function set receivedDmg(param1:String) : void {
+         this._receivedDmg = param1;
+      }
 
-        internal var _totalDead:String="";
+      public function get dmgRatio() : String {
+         return this._dmgRatio;
+      }
 
-        internal var _killRatio:String="";
+      public function set dmgRatio(param1:String) : void {
+         this._dmgRatio = param1;
+      }
 
-        internal var _dealtDmg:String="";
+      public function get avgExp() : String {
+         return this._avgExp;
+      }
 
-        internal var _receivedDmg:String="";
+      public function set avgExp(param1:String) : void {
+         this._avgExp = param1;
+      }
 
-        internal var _dmgRatio:String="";
+      public function get avgKills() : String {
+         return this._avgKills;
+      }
 
-        internal var _avgExp:String="";
+      public function set avgKills(param1:String) : void {
+         this._avgKills = param1;
+      }
 
-        internal var _avgKills:String="";
+      public function get avgDetected() : String {
+         return this._avgDetected;
+      }
 
-        internal var _avgDetected:String="";
+      public function set avgDetected(param1:String) : void {
+         this._avgDetected = param1;
+      }
 
-        internal var _avgDmgDealt:String="";
+      public function get avgDmgDealt() : String {
+         return this._avgDmgDealt;
+      }
 
-        internal var _avgDmgReceived:String="";
+      public function set avgDmgDealt(param1:String) : void {
+         this._avgDmgDealt = param1;
+      }
 
-        internal var _avgBonusDmg:String="";
+      public function get avgDmgReceived() : String {
+         return this._avgDmgReceived;
+      }
 
-        internal var _maxExp:String="";
-    }
+      public function set avgDmgReceived(param1:String) : void {
+         this._avgDmgReceived = param1;
+      }
+
+      public function get avgBonusDmg() : String {
+         return this._avgBonusDmg;
+      }
+
+      public function set avgBonusDmg(param1:String) : void {
+         this._avgBonusDmg = param1;
+      }
+   }
+
 }

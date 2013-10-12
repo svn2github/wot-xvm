@@ -1,79 +1,70 @@
-package net.wg.gui.lobby.profile.components 
+package net.wg.gui.lobby.profile.components
 {
-    import net.wg.gui.components.controls.*;
-    import scaleform.clik.core.*;
-    
-    public class LineIconText extends scaleform.clik.core.UIComponent
-    {
-        public function LineIconText()
-        {
-            super();
-            return;
-        }
+   import scaleform.clik.core.UIComponent;
+   import net.wg.gui.components.controls.UILoaderAlt;
 
-        public function set text(arg1:String):void
-        {
-            this._text = arg1;
-            this.isTextChanged = true;
-            invalidate();
-            return;
-        }
 
-        public function get text():String
-        {
-            return this._text;
-        }
+   public class LineIconText extends UIComponent
+   {
+          
+      public function LineIconText() {
+         super();
+      }
 
-        protected override function draw():void
-        {
-            super.draw();
-            if (this.isTextChanged) 
-            {
-                this.isTextChanged = false;
-                this.applyText();
-            }
-            if (this.isPaddingChanged) 
-            {
-                this.isPaddingChanged = false;
-            }
-            if (this.isIconSourceChanged) 
-            {
-                this.icon.source = this._iconSource;
-            }
-            return;
-        }
+      public var textComponent:UnderlinedText;
 
-        protected function applyText():void
-        {
-            this.textComponent.text = this._text;
-            return;
-        }
+      public var icon:UILoaderAlt;
 
-        public function get iconSource():String
-        {
-            return this._iconSource;
-        }
+      protected var _text:String = "";
 
-        public function set iconSource(arg1:String):void
-        {
-            this._iconSource = arg1;
-            this.isIconSourceChanged = true;
-            invalidate();
-            return;
-        }
+      protected var isTextChanged:Boolean;
 
-        public var textComponent:net.wg.gui.lobby.profile.components.UnderlinedText;
+      private var isPaddingChanged:Boolean;
 
-        public var icon:net.wg.gui.components.controls.UILoaderAlt;
+      private var _iconSource:String;
 
-        protected var _text:String="";
+      private var isIconSourceChanged:Boolean;
 
-        protected var isTextChanged:Boolean;
+      public function set text(param1:String) : void {
+         this._text = param1;
+         this.isTextChanged = true;
+         invalidate();
+      }
 
-        internal var isPaddingChanged:Boolean;
+      public function get text() : String {
+         return this._text;
+      }
 
-        internal var _iconSource:String;
+      override protected function draw() : void {
+         super.draw();
+         if(this.isTextChanged)
+         {
+            this.isTextChanged = false;
+            this.applyText();
+         }
+         if(this.isPaddingChanged)
+         {
+            this.isPaddingChanged = false;
+         }
+         if(this.isIconSourceChanged)
+         {
+            this.icon.source = this._iconSource;
+         }
+      }
 
-        internal var isIconSourceChanged:Boolean;
-    }
+      protected function applyText() : void {
+         this.textComponent.text = this._text;
+      }
+
+      public function get iconSource() : String {
+         return this._iconSource;
+      }
+
+      public function set iconSource(param1:String) : void {
+         this._iconSource = param1;
+         this.isIconSourceChanged = true;
+         invalidate();
+      }
+   }
+
 }
