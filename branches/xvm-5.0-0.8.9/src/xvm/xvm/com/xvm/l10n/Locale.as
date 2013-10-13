@@ -162,6 +162,8 @@ package com.xvm.l10n
             // Squad
             "Vehicle": "Танк",
             "Battle tiers": "Уровень боёв",
+            "Type": "Тип",
+            "Nation": "Нация",
             "ussr": "СССР",
             "germany": "Германия",
             "usa": "США",
