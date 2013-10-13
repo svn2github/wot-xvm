@@ -257,7 +257,7 @@ class com.xvm.VehicleInfoData
         ussr_SU_101:                       { tiers: [ 8, 10 ], name: null, short: "Su101" },
         germany_Ferdinand:                 { tiers: [ 8, 10 ], name: null, short: "Ferd" },
         germany_JagdPantherII:             { tiers: [ 8, 10 ], name: null, short: "JagP2" },
-        germany_RhB_Waffentrager:          { tiers: [ 8, 10 ], name: null, short: "RhBWT" },
+        germany_RhB_Waffentrager:          { tiers: [ 8, 10 ], name: null, short: "WTRhB" },
         usa_T28:                           { tiers: [ 8, 10 ], name: null, short: "T28" },
         usa_T28_Prototype:                 { tiers: [ 8, 10 ], name: null, short: "T28Pr" },
         france_AMX_AC_Mle1948:             { tiers: [ 8, 10 ], name: null, short: "Mle48" },

@@ -268,7 +268,7 @@ package com.xvm.vehinfo
             d["ussr_SU_101"] =                       { tiers: [ 8, 10 ], name: null, short: "Su101" };
             d["germany_Ferdinand"] =                 { tiers: [ 8, 10 ], name: null, short: "Ferd" };
             d["germany_JagdPantherII"] =             { tiers: [ 8, 10 ], name: null, short: "JagP2" };
-            d["germany_RhB_Waffentrager"] =          { tiers: [ 8, 10 ], name: null, short: "RhBWT" };
+            d["germany_RhB_Waffentrager"] =          { tiers: [ 8, 10 ], name: null, short: "WTRhB" };
             d["usa_T28"] =                           { tiers: [ 8, 10 ], name: null, short: "T28" };
             d["usa_T28_Prototype"] =                 { tiers: [ 8, 10 ], name: null, short: "T28Pr" };
             d["france_AMX_AC_Mle1948"] =             { tiers: [ 8, 10 ], name: null, short: "Mle48" };
