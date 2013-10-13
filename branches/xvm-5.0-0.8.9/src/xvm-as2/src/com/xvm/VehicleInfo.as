@@ -98,17 +98,19 @@ class com.xvm.VehicleInfo
         }
     }
 
+    // iconSource = "../maps/icons/vehicle/contour/ussr-IS-3.png"
+    // return: "HeavyTank config text"
     public static function GetVTypeValue(iconSource:String): String
     {
         var vi2 = com.xvm.VehicleInfo.getInfo2(iconSource);
         if (vi2 == null)
             return "";
         var vtype = vi2.type;
-        if (!vtype || !Config.s_config.texts.vtype[vtype])
-            return "";
-        return Config.s_config.texts.vtype[vtype];
+        return GetVTypeText(vtype);
     }
 
+    // iconSource = "../maps/icons/vehicle/contour/ussr-IS-3.png"
+    // return: "HT"
     public static function GetVTypeValue2(iconSource:String): String
     {
         var vi2 = com.xvm.VehicleInfo.getInfo2(iconSource);
@@ -118,6 +120,15 @@ class com.xvm.VehicleInfo
         if (!vtype)
             return "";
         return vtype;
+    }
+
+    // vtype = "HT"
+    // return: "HeavyTank config text"
+    public static function GetVTypeText(vtype:String): String
+    {
+        if (!vtype || !Config.s_config.texts.vtype[vtype])
+            return "";
+        return Config.s_config.texts.vtype[vtype];
     }
 
     // icon = "../maps/icons/vehicle/contour/ussr-IS-3.png"

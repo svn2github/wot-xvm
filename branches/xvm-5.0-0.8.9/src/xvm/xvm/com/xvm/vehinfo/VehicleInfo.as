@@ -151,12 +151,21 @@ package com.xvm.vehinfo
             return res;
         }
 
+        // iconSource = "../maps/icons/vehicle/contour/ussr-IS-3.png"
+        // return: "HeavyTank config text"
         public static function GetVTypeValue(icon:String):String
         {
             var vi2:Object = getInfo2ByIcon(icon);
             if (vi2 == null)
                 return "";
             var vtype:String = vi2.type;
+            return GetVTypeText(vtype);
+        }
+
+        // vtype = "HT"
+        // return: "HeavyTank config text"
+        public static function GetVTypeText(vtype:String):String
+        {
             if (!vtype || !Config.config.texts.vtype[vtype])
                 return "";
             return Config.config.texts.vtype[vtype];
