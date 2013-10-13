@@ -384,7 +384,8 @@ package com.xvm.utils
 
         private static var LEVEL_MACRO:String = "{{level}}";
         private static var ROMAN_LEVEL_MACRO:String = "{{rlevel}}";
-        private static var VEHCLASS_MACRO:String = "{{vtype}}";
+        private static var VEHCLASS_MACRO:String = "{{vtype-l}}";
+        private static var VEHCLASS_CONF_MACRO:String = "{{vtype}}";
         private static var BATTLETIERMIN_MACRO:String = "{{battletier-min}}";
         private static var BATTLETIERMAX_MACRO:String = "{{battletier-max}}";
 
@@ -406,6 +407,10 @@ package com.xvm.utils
             formatArr = format.split(VEHCLASS_MACRO);
             if (formatArr.length > 1)
                 format = formatArr.join(Locale.get(tankInfo.type));
+
+            formatArr = format.split(VEHCLASS_CONF_MACRO);
+            if (formatArr.length > 1)
+                format = formatArr.join(GetVTypeText(tankInfo.type));
                 
                 formatArr = format.split(BATTLETIERMIN_MACRO);
             if (formatArr.length > 1)

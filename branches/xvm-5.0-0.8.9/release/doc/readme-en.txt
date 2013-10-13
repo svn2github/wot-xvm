@@ -202,7 +202,8 @@ Content:
     In Squad:
       {{level}}          - vehicle level (Arabic numerals)
       {{rlevel}}         - vehicle level (Roman numerals)
-      {{vtype}}          - vehicle class
+      {{vtype}}          - vehicle class (text substitution from config)
+      {{vtype-l}}        - vehicle class (text substitution from locale)
       {{battletier-min}} - minimal vehicle battle tier
       {{battletier-max}} - maximal vehicle battle tier
 
