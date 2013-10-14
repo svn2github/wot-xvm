@@ -403,19 +403,19 @@ package com.xvm.utils
             formatArr = format.split(ROMAN_LEVEL_MACRO);
             if (formatArr.length > 1)
                 format = formatArr.join(Defines.ROMAN_LEVEL[tankInfo.level - 1]);
-                
+
             formatArr = format.split(VEHCLASS_MACRO);
             if (formatArr.length > 1)
                 format = formatArr.join(Locale.get(tankInfo.type));
 
             formatArr = format.split(VEHCLASS_CONF_MACRO);
             if (formatArr.length > 1)
-                format = formatArr.join(GetVTypeText(tankInfo.type));
-                
+                format = formatArr.join(VehicleInfo.GetVTypeText(tankInfo.type));
+
                 formatArr = format.split(BATTLETIERMIN_MACRO);
             if (formatArr.length > 1)
                 format = formatArr.join(tankInfo.battleTierMin);
-                
+
                 formatArr = format.split(BATTLETIERMAX_MACRO);
             if (formatArr.length > 1)
                 format = formatArr.join(tankInfo.battleTierMax);
