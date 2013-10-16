@@ -1,40 +1,32 @@
 package xvm.hangar.components.Profile
 {
+    import com.xvm.*;
     import flash.display.*;
     import flash.events.*;
-    import flash.text.*;
-    import flash.utils.*;
-    import scaleform.clik.data.*;
-    import scaleform.clik.events.*;
-    import scaleform.clik.interfaces.*;
-    import net.wg.infrastructure.exceptions.*;
-    import net.wg.gui.events.*;
-    import net.wg.gui.components.controls.*;
-    import net.wg.gui.lobby.profile.pages.summary.*;
+    import net.wg.data.gui_items.dossier.*;
     import net.wg.gui.lobby.profile.pages.technique.*;
     import net.wg.gui.components.advanced.*;
-    import com.xvm.*;
-    import com.xvm.events.*;
-    import com.xvm.io.*;
-    import com.xvm.types.cfg.*;
-    import com.xvm.l10n.Locale;
     import xvm.UI.profileSections.*;
 
     UI_TechniqueStatisticTab;
 
     public class Technique extends Sprite
     {
-        protected var page:ProfileTechnique;
+        protected var _page:ProfileTechnique;
+        protected var _playerName:String;
+        protected var _accountDossier:AccountDossier;
 
         protected var filter:FilterControl;
 
         private var techniqueListAdjuster:TechniqueListAdjuster;
 
-        public function Technique(page:ProfileTechnique):void
+        public function Technique(page:ProfileTechnique, playerName:String):void
         {
             try
             {
-                this.page = page;
+                this._page = page;
+                this._playerName = playerName;
+                this._accountDossier = null;
 
                 // override renderer
                 list.itemRenderer = UI_TechniqueRenderer;
@@ -44,8 +36,8 @@ package xvm.hangar.components.Profile
 
                 page.addEventListener(TechniquePageEvent.DATA_STATUS_CHANGED, viewChanged);
 
-                // remove lower shadow (last item is looks bad with it)
-                page.listComponent.lowerShadow.visible = false;
+                // remove lower shadow (last item looks bad with it)
+                //page.listComponent.lowerShadow.visible = false;
 
                 // create filter controls
                 filter = null;
@@ -61,36 +53,61 @@ package xvm.hangar.components.Profile
             }
         }
 
+        public function get page():ProfileTechnique
+        {
+            return _page;
+        }
+
+        public function get playerName():String
+        {
+            return _playerName;
+        }
+
+        public function get accountDossier():AccountDossier
+        {
+            return _accountDossier;
+        }
+
+        public function setAccountDossier(playerIdStr:String):void
+        {
+            if (_accountDossier == null)
+            {
+                _accountDossier = new AccountDossier(playerIdStr);
+                page.listComponent.techniqueList.dispatchEvent(new Event(TechniqueList.SELECTED_DATA_CHANGED));
+            }
+        }
+
         private function delayedInit():void
         {
             //Logger.add("delayedInit");
-            // userInfo.sortColumn
-            var bb:SortableHeaderButtonBar = page.listComponent.sortableButtonBar;
-            var btnIndex:int = Math.abs(Config.config.userInfo.sortColumn) - 1;
-            bb.selectedIndex = -1;
-            bb.selectedIndex = btnIndex;
-            var b:SortingButton = bb.getButtonAt(btnIndex) as SortingButton;
-            b.sortDirection = Config.config.userInfo.sortColumn < 0 ? SortingButton.DESCENDING_SORT : SortingButton.ASCENDING_SORT;
-            list.selectedIndex = 0;
+            try
+            {
+                // userInfo.sortColumn
+                var bb:SortableHeaderButtonBar = page.listComponent.sortableButtonBar;
+                var btnIndex:int = Math.abs(Config.config.userInfo.sortColumn) - 1;
+                bb.selectedIndex = -1;
+                bb.selectedIndex = btnIndex;
+                var b:SortingButton = bb.getButtonAt(btnIndex) as SortingButton;
+                b.sortDirection = Config.config.userInfo.sortColumn < 0 ? SortingButton.DESCENDING_SORT : SortingButton.ASCENDING_SORT;
+                list.selectedIndex = 0;
 
-            // Focus filter
-            if (filter != null && filter.visible && Config.config.userInfo.filterFocused == true)
-                filter.setFocus();
+                // Focus filter
+                if (filter != null && filter.visible && Config.config.userInfo.filterFocused == true)
+                    filter.setFocus();
 
-            // stat
-            if (Config.config.rating.showPlayersStatistics  && Config.config.rating.enableUserInfoStatistics)
-                Stat.loadUserData(this, onStatLoaded, getPlayerName(), false);
+                // stat
+                if (Config.config.rating.showPlayersStatistics  && Config.config.rating.enableUserInfoStatistics)
+                    Stat.loadUserData(this, onStatLoaded, playerName, false);
+            }
+            catch (ex:Error)
+            {
+                Logger.add(ex.getStackTrace());
+            }
         }
 
         protected function get list():TechniqueList
         {
             return page.listComponent.techniqueList;
-        }
-
-        protected function getPlayerName():String
-        {
-            Logger.add("ERROR: Technique::getUserInfo() is abstract)");
-            return null;
         }
 
         // virtual
@@ -125,7 +142,7 @@ package xvm.hangar.components.Profile
 
         private function onStatLoaded():void
         {
-            //Logger.add("onStatLoaded: " + getPlayerName());
+            //Logger.add("onStatLoaded: " + playerName);
             page.listComponent.dispatchEvent(new Event(TechniqueListComponent.DATA_CHANGED));
         }
     }

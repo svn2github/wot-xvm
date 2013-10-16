@@ -18,7 +18,7 @@ package xvm.hangar.components.Profile
         private static const DL_WIDTH:int = 200;
         private var proxy:net.wg.gui.lobby.profile.pages.technique.TechniqueStatisticTab;
 
-        private var playerName:String;
+        private var playerId:uint;
         private var _data:VehicleDossier;
 
         private var cache:Dictionary;
@@ -104,6 +104,9 @@ package xvm.hangar.components.Profile
                     return;
                 }
 
+                // TODO: dirty hack - find better way to get player id
+                tech.setAccountDossier(data.id[1]);
+
                 var vid:int = page.listComponent.selectedItem.id;
                 if (vid != 0)
                     ratingTF.htmlText = "";
@@ -116,9 +119,7 @@ package xvm.hangar.components.Profile
 
                 if (data.id[0] == 0)
                 {
-                    playerName = data.id[1];
-                    if (playerName == null)
-                        playerName = XvmHangar.Globals[XvmHangar.G_NAME];
+                    playerId = data.id[1];
                     updateSummaryData();
                 }
                 else
@@ -139,6 +140,11 @@ package xvm.hangar.components.Profile
             return proxy.parent.parent.parent.parent as ProfileTechnique;
         }
 
+        private function get tech():Technique
+        {
+            return page.getChildByName("xvm_extension") as Technique;
+        }
+
         private function TF(dl:DashLineTextItem):TextField
         {
             return controlsMap[dl];
@@ -157,7 +163,7 @@ package xvm.hangar.components.Profile
 
         private function createControls():void
         {
-            ratingTF = Utils.cloneTextField(proxy.battlesDL.labelTextField);
+            ratingTF = new TextField();
             ratingTF.antiAliasType = AntiAliasType.ADVANCED;
             ratingTF.multiline = true;
             ratingTF.wordWrap = false;
@@ -264,7 +270,7 @@ package xvm.hangar.components.Profile
 
         private function updateSummaryData():void
         {
-            var data:Data = prepareData(page.currentData as Dossier);
+            var data:Data = prepareData(tech.accountDossier);
             updateCommonData(data);
 
             // stat
@@ -383,7 +389,7 @@ package xvm.hangar.components.Profile
                 if (dossier.getBattlesCount() == 0)
                     return new Data();
 
-                var key:String = dossier.id == null ? "0" : dossier.id.toString(); // "vId,playerName" or "vid," for self
+                var key:String = dossier.id == null ? "0" : dossier.id.toString(); // "vId,accountId" or "vid," for self
                 var data:Data = cache[key];
                 if (data == null)
                 {
@@ -469,7 +475,7 @@ package xvm.hangar.components.Profile
 
         private function setStatData(data:Data):void
         {
-            var stat:StatData = Stat.getUserDataByName(playerName);
+            var stat:StatData = Stat.getUserDataById(playerId);
             if (stat == null)
                 return;
             data.stat = stat;

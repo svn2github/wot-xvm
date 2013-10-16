@@ -226,8 +226,12 @@ class _Stat(object):
             value = str(int(value))
         else:
             if reg == "CT":
-                reg = value[-2:]
-                value = value[:-3]
+                suf = value[-3:]
+                if suf in ('_RU', '_EU', '_NA'):
+                    reg = value[-2:]
+                    value = value[:-3]
+                else:
+                    reg = "RU"
         cacheKey = "%s/%s" % ("ID" if isId else reg, value)
         data = None
         if cacheKey not in self.cacheUser:

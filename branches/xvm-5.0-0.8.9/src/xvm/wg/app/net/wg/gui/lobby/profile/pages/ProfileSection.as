@@ -36,7 +36,7 @@ package net.wg.gui.lobby.profile.pages
 
       public var battlesDropdown:BattlesTypeDropdown;
 
-      public var currentData:Object;
+      protected var currentData:Object;
 
       protected var battlesType:String;
 

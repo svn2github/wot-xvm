@@ -4,19 +4,18 @@
  */
 package xvm.hangar.views
 {
-    import flash.events.*;
-    import flash.utils.*;
-    import scaleform.clik.events.*;
-    import net.wg.gui.lobby.profile.*;
-    import net.wg.gui.lobby.profile.pages.summary.*;
-    import net.wg.gui.lobby.profile.pages.technique.*;
-    import net.wg.infrastructure.interfaces.*;
-    import net.wg.infrastructure.events.*;
+    import com.xvm.*;
+    import com.xvm.utils.*;
+    import net.wg.gui.components.windows.*;
+    import net.wg.data.gui_items.dossier.*;
     import net.wg.gui.events.*;
     import net.wg.gui.lobby.profile.*;
+    import net.wg.gui.lobby.profile.pages.technique.*;
     import net.wg.gui.lobby.window.*;
-    import com.xvm.*;
-    import com.xvm.l10n.Locale;
+    import net.wg.infrastructure.events.*;
+    import net.wg.infrastructure.interfaces.*;
+    import scaleform.clik.events.*;
+    import xvm.*;
     import xvm.hangar.*;
     import xvm.hangar.components.Profile.*;
 
@@ -67,12 +66,14 @@ package xvm.hangar.views
 
         private function onSectionViewShowed(e:ViewStackEvent):void
         {
+            var playerName:String;
             if (e.view is ProfileTechniquePage)
             {
                 var page:ProfileTechniquePage = e.view as ProfileTechniquePage;
                 if (page.getChildByName("xvm_extension") == null)
                 {
-                    var tp:TechniquePage = new TechniquePage(page);
+                    playerName = XvmHangar.Globals[XvmHangar.G_NAME];
+                    var tp:TechniquePage = new TechniquePage(page, playerName);
                     tp.name = "xvm_extension";
                     page.addChild(tp);
                 }
@@ -82,7 +83,8 @@ package xvm.hangar.views
                 var window:ProfileTechniqueWindow = e.view as ProfileTechniqueWindow;
                 if (window.getChildByName("xvm_extension") == null)
                 {
-                    var tw:TechniqueWindow = new TechniqueWindow(window);
+                    playerName = WGUtils.GetPlayerName(((view as ProfileWindow).window as Window).title);
+                    var tw:TechniqueWindow = new TechniqueWindow(window, playerName);
                     tw.name = "xvm_extension";
                     window.addChild(tw);
                 }

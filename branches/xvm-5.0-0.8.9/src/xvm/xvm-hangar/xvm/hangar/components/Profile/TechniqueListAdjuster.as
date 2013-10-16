@@ -1,7 +1,7 @@
 package xvm.hangar.components.Profile
 {
     import flash.events.*;
-    import scaleform.clik.data.DataProvider;
+    import scaleform.clik.data.*;
     import scaleform.clik.events.*;
     import scaleform.clik.interfaces.*;
     import net.wg.gui.components.advanced.*;
@@ -10,6 +10,7 @@ package xvm.hangar.components.Profile
     import com.xvm.*;
     import com.xvm.events.*;
     import com.xvm.l10n.Locale;
+    import net.wg.data.gui_items.dossier.*;
 
     // Add summary item to the first line of technique list
     public final class TechniqueListAdjuster extends EventDispatcher
@@ -58,6 +59,11 @@ package xvm.hangar.components.Profile
             return page.listComponent.techniqueList;
         }
 
+        private function get tech():Technique
+        {
+            return page.getChildByName("xvm_extension") as Technique;
+        }
+
         // EVENT HANDLERS
 
         private function listSelectedDataChanged(e:Event):void
@@ -67,6 +73,8 @@ package xvm.hangar.components.Profile
             if (sortingActive || updatingActive)
                 return;
             if (list.dataProvider == null || list.dataProvider.length <= 0)
+                return;
+            if (tech.accountDossier == null)
                 return;
 
             try
@@ -81,6 +89,11 @@ package xvm.hangar.components.Profile
                     selectedId = 0;
                     dispatchEvent(new Event(Event.INIT));
                 }
+            }
+            catch (ex:Error)
+            {
+                Logger.add(ex.getStackTrace());
+                throw ex;
             }
             finally
             {
@@ -105,9 +118,7 @@ package xvm.hangar.components.Profile
             selectedId = list.selectedItem.id;
             //Logger.add("selectedId: " + selectedId);
 
-            page.stackComponent.buttonBar.getButtonAt(1).visible = selectedId != 0;
-            if (selectedId == 0)
-                page.stackComponent.buttonBar.selectedIndex = 0;
+            updateStackComponentButtonBar();
         }
 
         // PRIVATE
@@ -125,6 +136,13 @@ package xvm.hangar.components.Profile
                 data.unshift(summaryItem);
                 sortList();
             }
+        }
+
+        private function updateStackComponentButtonBar():void
+        {
+            page.stackComponent.buttonBar.getButtonAt(1).visible = selectedId != 0;
+            if (selectedId == 0)
+                page.stackComponent.buttonBar.selectedIndex = 0;
         }
 
         private function setList():void
@@ -176,6 +194,8 @@ package xvm.hangar.components.Profile
                 list.validateNow();
 
                 list.dispatchEvent(new Event(TechniqueList.SELECTED_DATA_CHANGED));
+
+                updateStackComponentButtonBar();
             }
             finally
             {
@@ -199,6 +219,7 @@ package xvm.hangar.components.Profile
 
         private function get summaryItem():TechniqueListVehicleVO
         {
+            var accountDossier:AccountDossier = tech.accountDossier;
             return new TechniqueListVehicleVO(
             {
                 "id": 0,
@@ -213,9 +234,9 @@ package xvm.hangar.components.Profile
                 "isInHangar": true,
                 "nationID": -1,
                 "inventoryID": -1,
-                "battlesCount": page.currentData.getBattlesCount(),
-                "winsEfficiency": Math.round(page.currentData.getWinsEfficiency() * 100),
-                "avgExperience": page.currentData.getAvgXPStr()
+                "battlesCount": (accountDossier == null) ? 0 : accountDossier.getBattlesCount(),
+                "winsEfficiency": (accountDossier == null) ? 0 : Math.round(accountDossier.getWinsEfficiency() * 100),
+                "avgExperience": (accountDossier == null) ? "" : accountDossier.getAvgXPStr()
             });
         }
     }

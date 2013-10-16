@@ -1,21 +1,21 @@
 package xvm.hangar.components.Profile
 {
-    import net.wg.gui.lobby.profile.pages.technique.*;
     import com.xvm.*;
-    import xvm.*;
+    import net.wg.data.gui_items.dossier.*;
+    import net.wg.gui.lobby.profile.pages.technique.*;
 
     public class TechniquePage extends Technique
     {
-        public function TechniquePage(page:ProfileTechniquePage):void
+        public function TechniquePage(page:ProfileTechniquePage, playerName:String):void
         {
-            super(page);
+            super(page, playerName);
 
-            page.checkBoxExistence.selected = Config.config.userInfo.inHangarFilterEnabled;
-        }
+            _accountDossier = new AccountDossier(null);
 
-        override protected function getPlayerName():String
-        {
-            return XvmHangar.Globals[XvmHangar.G_NAME];
+            App.utils.scheduler.envokeInNextFrame(function():void
+            {
+                page.checkBoxExistence.selected = Config.config.userInfo.inHangarFilterEnabled;
+            });
         }
 
         override protected function createFilters():void

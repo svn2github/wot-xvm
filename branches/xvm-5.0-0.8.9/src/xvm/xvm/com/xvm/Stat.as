@@ -66,7 +66,7 @@ package com.xvm
             return instance.user.hasOwnProperty(key) ? instance.user[key] : null;
         }
 
-        public static function getUserDataById(id:String):StatData
+        public static function getUserDataById(id:uint):StatData
         {
             var key:String = id.toString() + ";1";
             return instance.user.hasOwnProperty(key) ? instance.user[key] : null;
