@@ -78,13 +78,12 @@ class _Stat(object):
         self.resp = None
         self.thread = Thread(target=self.req['func'])
         self.thread.start()
-        if self.req['method'] == RESPOND_USERDATA:
-            self.thread.join() # TODO: main thread blocks execution. find alternative
         self._checkResult()
 
     def _checkResult(self):
         with self.lock:
             #debug("checkResult: " + ("no" if self.resp is None else "yes"))
+            self.thread.join(0.01) # 10 ms
             if self.resp is None:
                 BigWorld.callback(0.05, self._checkResult)
                 return
@@ -206,7 +205,7 @@ class _Stat(object):
 
             for stat in data['players']:
                 #debug(json.dumps(stat))
-                self._fix(stat)
+                self._fix(stat, None)
                 #pprint(stat)
                 if 'nm' not in stat or not stat['nm']:
                     continue
@@ -221,6 +220,7 @@ class _Stat(object):
 
     def _get_user(self):
         (value, isId) = self.req['args']
+        orig_value = value
         reg = region
         if isId:
             value = str(int(value))
@@ -245,7 +245,7 @@ class _Stat(object):
                 else:
                     data = json.loads(responseFromServer)[0]
                     if data is not None:
-                        self._fix(data)
+                        self._fix(data, None if isId else orig_value)
                         if 'nm' in data and '_id' in data:
                             self.cacheUser[reg + "/" + data['nm']] = data
                             self.cacheUser["ID/" + str(data['_id'])] = data
@@ -263,7 +263,7 @@ class _Stat(object):
             'nm': pl.name,
             'vn': pl.vn,
         }
-        return self._fix(s)
+        return self._fix(s, None)
 
     def loadUrl(self, url, members, test=False):
         if not test:
@@ -271,7 +271,7 @@ class _Stat(object):
 
         u = urlparse(url.replace('%1', members).replace('%2', _PUBLIC_TOKEN))
         #debug('loadUrl: ' + url )
-        #time.sleep(10)
+        #time.sleep(5)
 
         duration = None
         responseFromServer = ''
@@ -307,7 +307,7 @@ class _Stat(object):
 
         return responseFromServer, duration
 
-    def _fix(self, stat):
+    def _fix(self, stat, orig_name):
         if 'twr' in stat:
             del stat['twr']
         self._r(stat, 'id', '_id')
@@ -339,6 +339,9 @@ class _Stat(object):
                         stat['vtype'] = pl.vType
                         stat['level'] = pl.vLevel
                     break;
+
+        if orig_name is not None:
+            stat['name'] = orig_name
 
         #log(json.dumps(stat))
         return stat

@@ -119,7 +119,7 @@ package xvm.hangar.components.Profile
 
                 if (data.id[0] == 0)
                 {
-                    playerId = data.id[1];
+                    playerId = isNaN(data.id[1]) ? 0 : parseInt(data.id[1]);
                     updateSummaryData();
                 }
                 else
@@ -475,7 +475,7 @@ package xvm.hangar.components.Profile
 
         private function setStatData(data:Data):void
         {
-            var stat:StatData = Stat.getUserDataById(playerId);
+            var stat:StatData = playerId != 0 ? Stat.getUserDataById(playerId) : Stat.getUserDataByName(tech.playerName);
             if (stat == null)
                 return;
             data.stat = stat;

@@ -56,19 +56,19 @@ package com.xvm
 
         public static function isUserDataCachedByName(name:String):Boolean
         {
-            var key:String = name + ";0";
+            var key:String = Config.gameRegion + "/" + name;
             return instance.user.hasOwnProperty(key);
         }
 
         public static function getUserDataByName(name:String):StatData
         {
-            var key:String = name + ";0";
+            var key:String = Config.gameRegion + "/" + name;
             return instance.user.hasOwnProperty(key) ? instance.user[key] : null;
         }
 
         public static function getUserDataById(id:uint):StatData
         {
-            var key:String = id.toString() + ";1";
+            var key:String = "ID/" + id.toString();
             return instance.user.hasOwnProperty(key) ? instance.user[key] : null;
         }
 
@@ -213,7 +213,7 @@ package com.xvm
                 var inProgress:Boolean = false;
                 if (callback != null)
                 {
-                    var key:String = value + (isId ? ";1" : ";0");
+                    var key:String = (isId ? "ID" : Config.gameRegion) + "/" + value;
                     if (user.hasOwnProperty(key))
                     {
                         callback.call(target, user[key]);
@@ -253,11 +253,11 @@ package com.xvm
             {
                 var sd:StatData = ObjectConverter.convertData(JSONx.parse(json_str), StatData);
                 calculateStatValues(sd);
-                name = sd.name || sd.nm; // TODO: Company Window in CT?
-                //Logger.addObject(response, "response", 2);
-                key1 = sd.nm + ";0";
+                name = sd.name || sd.nm;
+                //Logger.addObject(sd, "sd", 2);
+                key1 = Config.gameRegion + "/" + name;
                 user[key1] = sd;
-                key2 = sd._id + ";1";
+                key2 = "ID/" + sd._id;
                 user[key2] = sd;
                 //Logger.add(key1 + ", " + key2);
             }
