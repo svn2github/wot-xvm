@@ -38,6 +38,8 @@ package net.wg.gui.cyberSport.views.unit
 
       public var contextMenuArea:Sprite;
 
+      public var ratingTF:TextField;
+
       protected var _index:int = 0;
 
       protected var _slotData:UnitSlotVO;
@@ -85,7 +87,7 @@ package net.wg.gui.cyberSport.views.unit
             this.initControlsState();
             if(this.slotData)
             {
-               this.slotLabel.htmlText = this.slotData.slotLabel;
+               this.slotLabel.htmlText = App.utils.commons.formatPlayerName(this.slotLabel,this.slotData.slotLabel);
                if(!this.slotData.isClosed)
                {
                   this.vehicleBtn.visible = true;
@@ -131,6 +133,15 @@ package net.wg.gui.cyberSport.views.unit
                {
                   this.contextMenuArea.visible = (this.slotData) && (this.slotData.player) && !this.slotData.player.isSelf;
                }
+               if(this.slotData.player)
+               {
+                  this.ratingTF.text = this.slotData.player.rating.toString();
+                  this.ratingTF.visible = true;
+               }
+               else
+               {
+                  this.ratingTF.visible = false;
+               }
                this.updateTakePlaceButtonView();
             }
          }
@@ -163,7 +174,7 @@ package net.wg.gui.cyberSport.views.unit
                }
                else
                {
-                  if(this.slotData.compatibleVehiclesCount == 0)
+                  if(this.slotData.compatibleVehiclesCount == 0 && !this.slotData.isCommanderState)
                   {
                      App.toolTipMgr.showComplex(TOOLTIPS.CYBERSPORT_UNIT_SLOTLABELUNAVAILABLE);
                   }
@@ -234,6 +245,8 @@ package net.wg.gui.cyberSport.views.unit
 
       protected function initControlsState() : void {
          this.slotLabel.text = "";
+         this.ratingTF.text = "";
+         this.ratingTF.visible = false;
          this.takePlaceBtn.visible = false;
          this.takePlaceFirstTimeBtn.visible = false;
          this.vehicleBtn.visible = true;

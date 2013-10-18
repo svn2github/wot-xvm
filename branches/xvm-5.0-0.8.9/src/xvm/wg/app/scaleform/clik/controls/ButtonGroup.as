@@ -10,7 +10,7 @@ package scaleform.clik.controls
 
    public class ButtonGroup extends EventDispatcher implements IDisposable
    {
-
+          
       public function ButtonGroup(param1:String, param2:DisplayObjectContainer) {
          super();
          this.name = param1;

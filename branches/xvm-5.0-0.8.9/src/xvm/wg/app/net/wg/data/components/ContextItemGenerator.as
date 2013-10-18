@@ -16,7 +16,7 @@ package net.wg.data.components
       }
 
       override protected function createSimpleDataIDs(param1:String, param2:String, param3:String, param4:String) : Map {
-         return App.utils.commons.createMap(["userInfo",{},param1,{"enabled":isEnabledInRoaming},param2,{"enabled":isEnabledInRoaming},param3,{"enabled":isEnabledInRoaming},"copyToClipBoard",{},param4,{"enabled":isEnabledInRoaming}]);
+         return App.utils.commons.createMap(["userInfo",{},param1,{"enabled":isEnabledInRoaming},param2,{"enabled":isEnabledInRoaming},param3,{},"copyToClipBoard",{},param4,{}]);
       }
    }
 

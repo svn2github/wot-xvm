@@ -207,6 +207,10 @@ package net.wg.gui.lobby.training
          this.startButton.enabled = !param1;
       }
 
+      public function as_enabledCloseButton(param1:Boolean) : void {
+         this.closeButton.enabled = param1;
+      }
+
       public function as_setTeam1(param1:Array) : void {
          this.team1.dataProvider = setupDataProvider(param1);
          this.team1Label.htmlText = this.locale.makeString(MENU.TRAINING_INFO_TEAM1LABEL);
@@ -316,10 +320,11 @@ package net.wg.gui.lobby.training
       }
 
       override protected function onPopulate() : void {
+         var _loc1_:* = false;
          super.onPopulate();
          registerComponent(this.minimap,Aliases.LOBBY_MINIMAP);
          this.setTeamsInfo();
-         var _loc1_:Boolean = App.voiceChatMgr.isYYS();
+         _loc1_ = App.voiceChatMgr.isYYS();
          this.arenaVoipSettings.visible = (App.voiceChatMgr.isVOIPEnabledS()) || (_loc1_);
          this.arenaVOIPLabel.text = (App.voiceChatMgr.isVOIPEnabledS()) || (_loc1_)?MENU.TRAINING_INFO_VOICECHAT:"";
       }
@@ -519,7 +524,6 @@ package net.wg.gui.lobby.training
 
       private function onStartButtonClick(param1:ButtonEvent) : void {
          startTrainingS();
-         this.disableControls(true);
       }
 
       private function closeTraining(param1:ButtonEvent) : void {

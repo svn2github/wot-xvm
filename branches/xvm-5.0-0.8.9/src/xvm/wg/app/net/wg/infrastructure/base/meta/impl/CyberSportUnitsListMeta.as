@@ -16,7 +16,9 @@ package net.wg.infrastructure.base.meta.impl
 
       public var filterVehicles:Function = null;
 
-      public var showMore:Function = null;
+      public var loadPrevious:Function = null;
+
+      public var loadNext:Function = null;
 
       public function getTeamDataS(param1:Number) : void {
          App.utils.asserter.assertNotNull(this.getTeamData,"getTeamData" + Errors.CANT_NULL);
@@ -33,9 +35,14 @@ package net.wg.infrastructure.base.meta.impl
          this.filterVehicles();
       }
 
-      public function showMoreS() : void {
-         App.utils.asserter.assertNotNull(this.showMore,"showMore" + Errors.CANT_NULL);
-         this.showMore();
+      public function loadPreviousS() : void {
+         App.utils.asserter.assertNotNull(this.loadPrevious,"loadPrevious" + Errors.CANT_NULL);
+         this.loadPrevious();
+      }
+
+      public function loadNextS() : void {
+         App.utils.asserter.assertNotNull(this.loadNext,"loadNext" + Errors.CANT_NULL);
+         this.loadNext();
       }
    }
 

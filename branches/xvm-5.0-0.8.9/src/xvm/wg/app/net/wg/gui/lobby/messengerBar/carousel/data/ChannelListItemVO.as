@@ -10,7 +10,7 @@ package net.wg.gui.lobby.messengerBar.carousel.data
          super(param1);
       }
 
-      private static const excluded:Array = null;
+      private static var excluded:Array;
 
       private var _clientID:Number = 0;
 

@@ -53,6 +53,10 @@ package net.wg.gui.components.controls.achievements
          }
       }
 
+      override public function get width() : Number {
+         return actualWidth;
+      }
+
       override protected function handleStageChange(param1:Event) : void {
          if(param1.type == Event.ADDED_TO_STAGE)
          {

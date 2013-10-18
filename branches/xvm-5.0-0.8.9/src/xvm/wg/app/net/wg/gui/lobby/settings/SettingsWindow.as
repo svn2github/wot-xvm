@@ -324,6 +324,7 @@ package net.wg.gui.lobby.settings
       private function normalizeInside(param1:Object, param2:Object, param3:String) : void {
          var _loc5_:String = null;
          var _loc6_:SettingsControlProp = null;
+         var _loc7_:String = null;
          var _loc4_:ICommons = App.utils.commons;
          for (_loc5_ in param2)
          {
@@ -359,6 +360,18 @@ package net.wg.gui.lobby.settings
                               {
                                  _loc6_.current = Boolean(param1[param3][_loc5_].current);
                                  _loc6_.lastVal = _loc6_.current;
+                                 if(param1[param3][_loc5_].hasOwnProperty("options"))
+                                 {
+                                    _loc6_.options = _loc4_.cloneObject(param1[param3][_loc5_].options);
+                                    for (_loc7_ in param1[param3][_loc5_].options)
+                                    {
+                                       if((param1[param3][_loc5_].options[_loc7_].hasOwnProperty("advanced")) && param1[param3][_loc5_].options[_loc7_].advanced == true)
+                                       {
+                                          _loc6_.advanced = true;
+                                          break;
+                                       }
+                                    }
+                                 }
                                  if(param3 == SettingsConfig.CONTROLS_SETTINGS)
                                  {
                                     if(param1[param3][_loc5_].hasOwnProperty("default"))

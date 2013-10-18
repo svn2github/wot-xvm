@@ -15,9 +15,13 @@ package net.wg.gui.components.common.waiting
 
       private static var TEXT_INVALID:String = "txtInv";
 
+      private static const BG_ALPHA_INVALID:String = "bgInv";
+
       private var waitingComponent:WaitingComponent;
 
       private var _text:String;
+
+      private var _backgroundAlpha:Number = 1;
 
       override protected function draw() : void {
          super.draw();
@@ -35,6 +39,10 @@ package net.wg.gui.components.common.waiting
                this.waitingComponent.setMessage(this._text);
             }
          }
+         if((isInvalid(BG_ALPHA_INVALID)) && (this.waitingComponent))
+         {
+            this.waitingComponent.backgroundMc.alpha = this._backgroundAlpha;
+         }
       }
 
       public function setMessage(param1:String) : void {
@@ -48,6 +56,7 @@ package net.wg.gui.components.common.waiting
          {
             this.waitingComponent = WaitingComponent(App.utils.classFactory.getObject(Linkages.WAITING_COMPONENT));
             addChild(this.waitingComponent);
+            this.waitingComponent.backgroundMc.alpha = this._backgroundAlpha;
             invalidate(TEXT_INVALID,InvalidationType.SIZE);
          }
       }
@@ -74,6 +83,14 @@ package net.wg.gui.components.common.waiting
                this.waitingComponent.parent.removeChild(this.waitingComponent);
                this.waitingComponent = null;
             }
+         }
+      }
+
+      public function set backgroundAlpha(param1:Number) : void {
+         if(this._backgroundAlpha != param1)
+         {
+            this._backgroundAlpha = param1;
+            invalidate(BG_ALPHA_INVALID);
          }
       }
    }

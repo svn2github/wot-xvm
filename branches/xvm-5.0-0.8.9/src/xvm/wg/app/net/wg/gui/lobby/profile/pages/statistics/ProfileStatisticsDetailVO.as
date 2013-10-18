@@ -11,9 +11,9 @@ package net.wg.gui.lobby.profile.pages.statistics
          super(param1);
       }
 
-      public var fragsCount:uint;
+      public var fragsCount:int;
 
-      public var deathsCount:uint;
+      public var deathsCount:int;
 
       public var fragsEfficiency:Number;
 
@@ -25,7 +25,7 @@ package net.wg.gui.lobby.profile.pages.statistics
 
       public var avgFrags:Number;
 
-      public var maxFrags:uint;
+      public var maxFrags:int;
 
       public var avgDamageDealt:Number;
 

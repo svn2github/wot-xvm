@@ -126,8 +126,16 @@ package net.wg.gui.lobby.sellDialog
       }
 
       private function showErrorState(param1:Boolean) : void {
-         this.userInput.highlight = param1;
-         this.errorMessage.visible = param1;
+         if(this.userInput.text == "")
+         {
+            this.userInput.highlight = false;
+            this.errorMessage.visible = false;
+         }
+         else
+         {
+            this.userInput.highlight = param1;
+            this.errorMessage.visible = param1;
+         }
       }
 
       private function runtimeValidate() : void {

@@ -22,7 +22,7 @@ package net.wg.gui.components.windows
 
    public class Window extends scaleform.clik.controls.Window implements IWindow
    {
-
+          
       public function Window() {
          this.CONTENT_DEF_PADDING = new Padding(35,13,19,12);
          super();
@@ -124,7 +124,7 @@ package net.wg.gui.components.windows
       }
 
       public function onDragging(param1:Number, param2:Number) : void {
-
+          
       }
 
       public function onEndDrag() : void {
@@ -328,6 +328,7 @@ package net.wg.gui.components.windows
                }
                catch(e:Error)
                {
+                  trace(e);
                }
             }
          }

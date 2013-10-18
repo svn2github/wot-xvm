@@ -8,7 +8,7 @@ package net.wg.gui.lobby.profile.data
           
       public function _Importer() {
          super();
-         importClasses(Vector.<Class>([ProfileAchievementVO,LayoutItemInfo,ProfileCommonInfoVO,SectionLayoutManager]));
+         importClasses(Vector.<Class>([ProfileAchievementVO,LayoutItemInfo,ProfileCommonInfoVO,ProfileDossierInfoVO,SectionLayoutManager]));
       }
    }
 

@@ -147,7 +147,7 @@ package net.wg.gui.lobby.questsWindow
       }
 
       private function checkProgressBar() : void {
-         if(this.data.questInfo.progrBarType)
+         if((this.data.questInfo.progrBarType) && !this.data.questInfo.status)
          {
             this.progressIndicator.visible = true;
             this.progressIndicator.setValues(this.data.questInfo.progrBarType,this.data.questInfo.currentProgrVal,this.data.questInfo.maxProgrVal);
@@ -161,7 +161,7 @@ package net.wg.gui.lobby.questsWindow
       }
 
       private function checkCounter() : void {
-         if(this.data.questInfo.tasksCount >= 0)
+         if(this.data.questInfo.tasksCount >= 0 && !this.data.questInfo.status)
          {
             this.counter.visible = true;
             this.counter.textField.text = this.data.questInfo.tasksCount.toString();

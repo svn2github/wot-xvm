@@ -6,6 +6,7 @@ package net.wg.gui.lobby.profile.pages.technique
    import net.wg.gui.lobby.profile.components.TechMasteryIcon;
    import flash.display.MovieClip;
    import flash.display.DisplayObject;
+   import net.wg.gui.lobby.profile.pages.technique.data.TechniqueListVehicleVO;
    import scaleform.clik.constants.InvalidationType;
 
 
@@ -68,6 +69,10 @@ package net.wg.gui.lobby.profile.pages.technique
       }
 
       override public function setData(param1:Object) : void {
+         if(_baseDisposed)
+         {
+            return;
+         }
          this.data = param1;
          invalidateData();
       }
@@ -80,6 +85,10 @@ package net.wg.gui.lobby.profile.pages.technique
          var _loc5_:TechniqueListVehicleVO = null;
          var _loc6_:* = 0;
          var _loc7_:String = null;
+         if(_baseDisposed)
+         {
+            return;
+         }
          super.draw();
          if(isInvalid(InvalidationType.DATA))
          {

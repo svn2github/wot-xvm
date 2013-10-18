@@ -6,10 +6,10 @@ package net.wg.gui.components.tooltips
    import net.wg.gui.components.tooltips.VO.TankmenVO;
    import net.wg.data.managers.ITooltipProps;
    import net.wg.gui.events.UILoaderEvent;
-   import net.wg.gui.components.tooltips.VO.ToolTipBlockResultVO;
    import flash.text.TextFormat;
    import net.wg.gui.components.tooltips.VO.ToolTipBlockVO;
    import net.wg.gui.components.tooltips.VO.ToolTipStatusColorsVO;
+   import net.wg.gui.components.tooltips.VO.ToolTipBlockResultVO;
    import flash.text.TextFieldAutoSize;
    import net.wg.gui.components.tooltips.helpers.Utils;
    import net.wg.utils.ILocale;
@@ -69,7 +69,6 @@ package net.wg.gui.components.tooltips
 
       override protected function redraw() : void {
          var _loc1_:Separator = null;
-         var _loc2_:ToolTipBlockResultVO = null;
          var _loc6_:String = null;
          var _loc7_:TextFormat = null;
          var _loc8_:ToolTipBlockVO = null;
@@ -82,7 +81,7 @@ package net.wg.gui.components.tooltips
          _loc1_ = null;
          separators = new Vector.<Separator>();
          this.dataVO = new TankmenVO(_data);
-         _loc2_ = null;
+         var _loc2_:ToolTipBlockResultVO = null;
          blockResults = new Vector.<ToolTipBlockResultVO>();
          var _loc3_:uint = 0;
          var _loc4_:uint = 0;

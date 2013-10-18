@@ -19,7 +19,7 @@ package xvm.hangar.components.Profile
         private var proxy:net.wg.gui.lobby.profile.pages.technique.TechniqueStatisticTab;
 
         private var playerId:uint;
-        private var _data:VehicleDossier;
+        private var _data:Dossier;
 
         private var cache:Dictionary;
         private var controlsMap:Dictionary;
@@ -89,7 +89,7 @@ package xvm.hangar.components.Profile
             }
         }
 
-        public function update(data:VehicleDossier):void
+        public function update(data:Dossier):void
         {
             //Logger.addObject(data);
 
@@ -425,8 +425,8 @@ package xvm.hangar.components.Profile
             data.shotsCount = getRecord(dossier, 'shots');
             data.hitsCount = getRecord(dossier, 'hits');
 
-            data.maxXP = (dossier is VehicleDossier) ? dossier.getMaxVehicleXP() : dossier.getMaxVehicleXP();
-            data.maxFrags = (dossier is VehicleDossier) ? dossier.getMaxVehicleFrags() : dossier.getMaxVehicleFrags();
+            data.maxXP = (dossier is Dossier) ? dossier.getMaxVehicleXP() : dossier.getMaxVehicleXP();
+            data.maxFrags = (dossier is Dossier) ? dossier.getMaxVehicleFrags() : dossier.getMaxVehicleFrags();
             data.fragsCount = dossier.getFragsCount();
             data.fragsEfficiency = dossier.getFragsEfficiency();
             data.deathsCount = dossier.getDeathsCount();

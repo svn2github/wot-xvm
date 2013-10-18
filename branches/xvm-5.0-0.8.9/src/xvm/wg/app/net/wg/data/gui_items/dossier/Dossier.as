@@ -2,7 +2,7 @@ package net.wg.data.gui_items.dossier
 {
    import net.wg.data.gui_items.GUIItem;
    import net.wg.gui.lobby.profile.data.ProfileAchievementVO;
-   import net.wg.gui.lobby.profile.pages.technique.TechniqueListVehicleVO;
+   import net.wg.gui.lobby.profile.pages.technique.data.TechniqueListVehicleVO;
    import net.wg.data.gui_items.ItemsUtils;
 
 

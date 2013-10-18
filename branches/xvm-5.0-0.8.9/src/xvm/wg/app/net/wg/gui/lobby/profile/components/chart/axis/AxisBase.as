@@ -24,7 +24,7 @@ package net.wg.gui.lobby.profile.components.chart.axis
 
       protected var renderers:Vector.<IChartItem>;
 
-      private var _data:IDataProvider;
+      private var _dataProvider:IDataProvider;
 
       protected var _pointClass:Class;
 
@@ -36,7 +36,7 @@ package net.wg.gui.lobby.profile.components.chart.axis
          super.draw();
          if(isInvalid(InvalidationType.DATA))
          {
-            _loc2_ = this._data?this._data.length:0;
+            _loc2_ = this._dataProvider?this._dataProvider.length:0;
             while(this._points.length > _loc2_)
             {
                this.removePointAt(this._points.length-1);
@@ -44,7 +44,7 @@ package net.wg.gui.lobby.profile.components.chart.axis
             _loc4_ = 0;
             while(_loc4_ < _loc2_)
             {
-               _loc3_ = this._data[_loc4_];
+               _loc3_ = this._dataProvider[_loc4_];
                if(_loc4_ == this._points.length)
                {
                   _loc1_ = this.createPoint(_loc3_);
@@ -66,7 +66,7 @@ package net.wg.gui.lobby.profile.components.chart.axis
       }
 
       public function setData(param1:IDataProvider, param2:Vector.<IChartItem>, param3:IChartLayout) : void {
-         this._data = param1;
+         this._dataProvider = param1;
          this.currentLayout = param3;
          this.renderers = param2;
          invalidateData();
@@ -96,7 +96,7 @@ package net.wg.gui.lobby.profile.components.chart.axis
       override public function dispose() : void {
          var _loc1_:Object = null;
          super.dispose();
-         this._data = null;
+         this._dataProvider = null;
          this.currentLayout = null;
          this.renderers = null;
          while(this._points.length > 0)
@@ -120,6 +120,10 @@ package net.wg.gui.lobby.profile.components.chart.axis
       public function set pointClass(param1:Class) : void {
          this._pointClass = param1;
          invalidateData();
+      }
+
+      public function getData() : Object {
+         return this._dataProvider;
       }
    }
 

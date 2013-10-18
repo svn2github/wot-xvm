@@ -8,7 +8,7 @@ package net.wg.gui.lobby.profile.pages.statistics
           
       public function _Importer() {
          super();
-         importClasses(Vector.<Class>([CommonStatistics,AxisPointLevels,ProfileStatisticsVO,ProfileStatisticsDetailVO,AxisPointNations,AxisPointTypes,LevelsStatisticChart,NationsStatisticsChart,ProfileStatistics,StatisticBarChartAxisPoint,StatisticBarChartItem,NationBarChartItem,LevelBarChartItem,TypeBarChartItem,StatisticBarChartLayout,StatisticChartInfo,StatisticsBarChart,StatisticsBarChartAxis,StatisticsInitVO,TechniqueStatistics,TfContainer,StatisticsChartsUtils,TypesStatisticsChart]));
+         importClasses(Vector.<Class>([CommonStatistics,AxisPointLevels,ProfileStatisticsVO,StatisticBarChartInitializer,ProfileStatisticsDetailVO,AxisPointNations,AxisPointTypes,LevelsStatisticChart,NationsStatisticsChart,ProfileStatistics,StatisticBarChartAxisPoint,StatisticBarChartItem,NationBarChartItem,LevelBarChartItem,TypeBarChartItem,StatisticBarChartLayout,StatisticChartInfo,StatisticsBarChart,StatisticsBarChartAxis,StatisticsInitVO,TechniqueStatistics,TfContainer,StatisticsChartsUtils,TypesStatisticsChart]));
       }
    }
 

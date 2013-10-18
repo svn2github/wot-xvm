@@ -9,7 +9,6 @@ package net.wg.gui.lobby.window
    import net.wg.utils.ILocale;
    import net.wg.data.Aliases;
    import net.wg.gui.lobby.profile.ProfileConstants;
-   import net.wg.gui.lobby.profile.pages.technique.TechniquePageEvent;
    import flash.events.MouseEvent;
    import net.wg.data.gui_items.dossier.AccountDossier;
    import net.wg.infrastructure.interfaces.IWindow;
@@ -64,9 +63,9 @@ package net.wg.gui.lobby.window
          }
          catch(e:Error)
          {
+            trace(e);
          }
          this.tabNavigator.centerOffset = ProfileConstants.WINDOW_CENTER_OFFSET;
-         addEventListener(TechniquePageEvent.DATA_STATUS_CHANGED,this.techniqueVehicleDataChangeHandler,false,0,true);
          var locale:ILocale = App.utils.locale;
          this.btnAddToFriends.label = locale.makeString(MESSENGER.DIALOGS_CONTACTS_CONTACT_ADDTOFRIENDS);
          this.btnAddToIgnore.label = locale.makeString(MESSENGER.DIALOGS_CONTACTS_CONTACT_ADDTOIGNORED);
@@ -86,10 +85,6 @@ package net.wg.gui.lobby.window
 
       private function addToFriendBtnHandler(param1:MouseEvent) : void {
          this.userAddFriendS();
-      }
-
-      private function techniqueVehicleDataChangeHandler(param1:TechniquePageEvent) : void {
-         showWaiting = param1.dataUnderUpdating;
       }
 
       public function as_setInitData(param1:Object) : void {
@@ -147,7 +142,6 @@ package net.wg.gui.lobby.window
          this.btnAddToFriends.removeEventListener(MouseEvent.CLICK,this.addToFriendBtnHandler);
          this.btnAddToIgnore.removeEventListener(MouseEvent.CLICK,this.addToIgnoreBtnHandler);
          this.btnCreatePrivateChannel.removeEventListener(MouseEvent.CLICK,this.createPrivateChannelBtnHandler);
-         removeEventListener(TechniquePageEvent.DATA_STATUS_CHANGED,this.techniqueVehicleDataChangeHandler);
          super.onDispose();
       }
 

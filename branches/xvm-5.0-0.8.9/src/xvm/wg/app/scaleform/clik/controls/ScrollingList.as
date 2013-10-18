@@ -396,7 +396,7 @@ package scaleform.clik.controls
          {
             if(this._scrollBarValue  is  Class)
             {
-               _loc1_ = (new this._scrollBarValue as Class)() as IScrollBar;
+               _loc1_ = new (this._scrollBarValue as Class)() as IScrollBar;
                _loc1_.addEventListener(MouseEvent.MOUSE_WHEEL,this.blockMouseWheel,false,0,true);
                if(_loc1_ != null)
                {

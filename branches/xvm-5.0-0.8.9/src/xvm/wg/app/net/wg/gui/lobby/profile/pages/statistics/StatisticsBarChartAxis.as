@@ -22,9 +22,15 @@ package net.wg.gui.lobby.profile.pages.statistics
 
       private static const LAYOUT_INV:String = "layoutInv";
 
+      public static const INITIALIZED:String = "inited";
+
       public var background:MovieClip;
 
       public var lineText:LineTextComponent;
+
+      override protected function configUI() : void {
+         super.configUI();
+      }
 
       override protected function createPoint(param1:Object) : IListItemRenderer {
          var _loc2_:StatisticBarChartAxisPoint = new _pointClass();
@@ -42,6 +48,29 @@ package net.wg.gui.lobby.profile.pages.statistics
       }
 
       private function iconLoadingCompleteHandler(param1:Event) : void {
+         var _loc6_:StatisticBarChartAxisPoint = null;
+         var _loc2_:uint = getData().length;
+         var _loc3_:* = true;
+         var _loc4_:uint = 0;
+         var _loc5_:* = 0;
+         while(_loc5_ < numChildren)
+         {
+            _loc6_ = getChildAt(_loc5_) as StatisticBarChartAxisPoint;
+            if(_loc6_)
+            {
+               _loc4_++;
+               if(!_loc6_.initialized)
+               {
+                  _loc3_ = false;
+                  break;
+               }
+            }
+            _loc5_++;
+         }
+         if((_loc3_) && _loc2_ == _loc4_)
+         {
+            dispatchEvent(new Event(INITIALIZED));
+         }
          invalidate(LAYOUT_INV);
       }
 

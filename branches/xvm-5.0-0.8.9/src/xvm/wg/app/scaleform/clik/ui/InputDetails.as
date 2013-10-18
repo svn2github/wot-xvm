@@ -4,7 +4,7 @@ package scaleform.clik.ui
 
    public class InputDetails extends Object
    {
-
+          
       public function InputDetails(param1:String, param2:Number, param3:*, param4:String=null, param5:uint=undefined, param6:Boolean=false, param7:Boolean=false, param8:Boolean=false) {
          super();
          this.type = param1;

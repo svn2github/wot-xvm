@@ -64,6 +64,7 @@ package net.wg.gui.cyberSport.helpers
       override public function onEndDrop(param1:InteractiveObject, param2:InteractiveObject, param3:InteractiveObject, param4:InteractiveObject) : void {
          var _loc5_:* = NaN;
          super.onEndDrop(param1,param2,param3,param4);
+         trace(param1,param2,param3,param4.parent);
          App.utils.asserter.assertNotNull(s_lastFreeSlots,"_lastFreeSlots" + Errors.CANT_NULL);
          if(param4  is  SlotDropIndicator)
          {

@@ -3,6 +3,7 @@ package net.wg.gui.cyberSport.controls
    import net.wg.gui.components.controls.ScrollingListEx;
    import net.wg.gui.cyberSport.interfaces.IPerpageScrollList;
    import net.wg.utils.IAssertable;
+   import net.wg.gui.cyberSport.controls.events.NavigationEvent;
    import scaleform.clik.data.DataProvider;
    import net.wg.gui.cyberSport.vo.CSCommandVO;
    import net.wg.infrastructure.exceptions.IndexOutOfBoundsException;
@@ -29,6 +30,10 @@ package net.wg.gui.cyberSport.controls
       private var _asserter:IAssertable = null;
 
       private var _totalCommands:int = 0;
+
+      public function setNavInCoolDown(param1:Boolean) : void {
+         dispatchEvent(new NavigationEvent(NavigationEvent.NAVIGATION_IN_COOL_DOWN,param1));
+      }
 
       override public function dispose() : void {
          this._asserter = null;

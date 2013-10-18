@@ -4,7 +4,7 @@ package net.wg.gui.login.impl
 
    internal class ErrorStates extends Object
    {
-
+          
       function ErrorStates() {
          super();
       }

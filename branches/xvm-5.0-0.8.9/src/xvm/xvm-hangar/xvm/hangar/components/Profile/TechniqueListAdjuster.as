@@ -7,6 +7,7 @@ package xvm.hangar.components.Profile
     import net.wg.gui.components.advanced.*;
     import net.wg.gui.lobby.profile.pages.summary.*;
     import net.wg.gui.lobby.profile.pages.technique.*;
+    import net.wg.gui.lobby.profile.pages.technique.data.*;
     import com.xvm.*;
     import com.xvm.events.*;
     import com.xvm.l10n.Locale;

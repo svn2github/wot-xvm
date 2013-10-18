@@ -76,6 +76,7 @@ package net.wg.gui.lobby.profile.pages.technique
       }
 
       override protected function updateAfterStateChange() : void {
+         TextFieldEx.setVerticalAlign(this.labelField,TextFieldAutoSize.CENTER);
          super.updateAfterStateChange();
          this.labelField.width = _width;
          this.labelField.height = _height;

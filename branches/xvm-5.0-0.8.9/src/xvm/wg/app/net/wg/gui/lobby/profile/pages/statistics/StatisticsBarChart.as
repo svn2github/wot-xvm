@@ -15,11 +15,14 @@ package net.wg.gui.lobby.profile.pages.statistics
          _loc1_.gap = 18;
          currentLayout = _loc1_;
          horizontalAxis = this.mainHorizontalAxis;
+         this.initializer = new StatisticBarChartInitializer(this);
       }
 
       private static const percent100:uint = 100;
 
       public var mainHorizontalAxis:StatisticsBarChartAxis;
+
+      private var initializer:StatisticBarChartInitializer;
 
       override public function set dataProvider(param1:IDataProvider) : void {
          var _loc3_:StatisticChartInfo = null;
@@ -52,6 +55,11 @@ package net.wg.gui.lobby.profile.pages.statistics
 
       protected function adjustProviderItem(param1:StatisticChartInfo, param2:int) : void {
           
+      }
+
+      override public function dispose() : void {
+         this.initializer.dispose();
+         super.dispose();
       }
    }
 

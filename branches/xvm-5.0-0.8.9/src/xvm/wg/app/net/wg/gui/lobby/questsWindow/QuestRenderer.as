@@ -175,10 +175,10 @@ package net.wg.gui.lobby.questsWindow
       private function checkData(param1:QuestRendererVO) : void {
          this.setTexts(param1);
          this.checkStatus(param1);
-         this.checkLock(param1);
-         this.checkIGR(param1);
          this.checkCounter(param1);
          this.checkProgress(param1);
+         this.checkLock(param1);
+         this.checkIGR(param1);
       }
 
       private function checkLock(param1:QuestRendererVO) : void {
@@ -198,7 +198,7 @@ package net.wg.gui.lobby.questsWindow
       }
 
       private function checkProgress(param1:QuestRendererVO) : void {
-         if(param1.progrBarType)
+         if((param1.progrBarType) && !param1.status)
          {
             this.progressIndicator.visible = true;
             this.progressIndicator.setValues(param1.progrBarType,param1.currentProgrVal,param1.maxProgrVal);
@@ -215,7 +215,7 @@ package net.wg.gui.lobby.questsWindow
       }
 
       private function checkCounter(param1:QuestRendererVO) : void {
-         if(param1.tasksCount >= 0)
+         if(param1.tasksCount >= 0 && !param1.status)
          {
             this.counter.visible = true;
             this.counter.textField.text = param1.tasksCount.toString();

@@ -8,7 +8,7 @@ package net.wg.gui.lobby.profile.components
           
       public function _Importer() {
          super();
-         importClasses(Vector.<Class>([CenteredLineIconText,DashLine,BattlesTypeDropdown,TechMasteryIcon,ProfileWindowFooter,ProfilePageFooter,UserDateFooter,ProfileFooter,ProfileMedalsList,ResizableViewStack,DashLineTextItem,ICounter,LineDescrIconText,LineIconText,LineTextComponent,PersonalScoreComponent,ResizableTileList,ScrollPane,ResizableScrollPane,GradientLineButtonBar,SimpleLoader,LineButtonBar,HidableScrollBar,TestTrack,AwardsTileListBlock,LditMarksOfMastery,LditValued,UnderlinedText]));
+         importClasses(Vector.<Class>([CenteredLineIconText,DashLine,ProfileDashLineTextItem,BattlesTypeDropdown,TechMasteryIcon,ProfileWindowFooter,ProfilePageFooter,UserDateFooter,ProfileFooter,ProfileMedalsList,ResizableViewStack,DashLineTextItem,ICounter,LineDescrIconText,LineIconText,LineTextComponent,PersonalScoreComponent,ResizableTileList,ScrollPane,ResizableScrollPane,GradientLineButtonBar,SimpleLoader,LineButtonBar,HidableScrollBar,TestTrack,AwardsTileListBlock,LditMarksOfMastery,LditValued,LditBattles,UnderlinedText]));
       }
    }
 

@@ -4,6 +4,7 @@ package net.wg.gui.lobby.profile.pages.summary
    import net.wg.infrastructure.base.meta.IProfileSummaryMeta;
    import flash.display.DisplayObjectContainer;
    import scaleform.clik.core.UIComponent;
+   import net.wg.gui.lobby.profile.components.LditBattles;
    import net.wg.gui.lobby.profile.components.LineDescrIconText;
    import net.wg.gui.lobby.profile.components.LditMarksOfMastery;
    import net.wg.gui.lobby.profile.components.LditValued;
@@ -45,7 +46,7 @@ package net.wg.gui.lobby.profile.pages.summary
          }
       }
 
-      public var tfTotalBattles:LineDescrIconText;
+      public var tfTotalBattles:LditBattles;
 
       public var tfWins:LineDescrIconText;
 
@@ -106,16 +107,19 @@ package net.wg.gui.lobby.profile.pages.summary
       override protected function applyData(param1:Object) : Object {
          var _loc2_:ProfileSummaryVO = new ProfileSummaryVO(param1);
          this.tfTotalBattles.text = _loc2_.getBattlesCountStr();
-         this.tfWins.text = _loc2_.getWinsEfficiencyStr();
+         this.tfTotalBattles.setValues(_loc2_.getWinsCountStr(),_loc2_.getLossesCountStr(),_loc2_.getDrawsCountStr());
+         this.tfWins.text = _loc2_.getWinsEfficiencyStr() + "%";
          this.tfMarksOfMastery.text = _loc2_.getMarksOfMasteryCountStr();
          this.tfMarksOfMastery.totalCount = _loc2_.totalUserVehiclesCount;
          this.tfMaxDestroyed.text = _loc2_.getMaxDestroyedStr();
-         this.tfMaxDestroyed.value = _loc2_.maxDestroyedByVehicle;
+         var _loc3_:String = _loc2_.maxDestroyed > 0?_loc2_.maxDestroyedByVehicle:null;
+         this.tfMaxDestroyed.value = _loc3_;
          this.tfMaxExperience.text = _loc2_.getMaxExperienceStr();
-         this.tfMaxExperience.value = _loc2_.maxDestroyedByVehicle;
+         _loc3_ = _loc2_.maxXP > 0?_loc2_.maxXPByVehicle:null;
+         this.tfMaxExperience.value = _loc3_;
          this.tfAvgDamage.text = _loc2_.getAvgDamageStr();
          this.tfAvgExperience.text = _loc2_.getAvgExperienceStr();
-         this.tfHits.text = _loc2_.getHitsEfficiencyStr();
+         this.tfHits.text = _loc2_.getHitsEfficiencyStr() + "%";
          this.tfPersonalScore.text = _loc2_.getGlobalRatingStr();
          this.significantAchievementProvider = Dossier.getAchievementVector(_loc2_.significantAchievements);
          return _loc2_;

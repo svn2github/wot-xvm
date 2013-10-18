@@ -75,7 +75,6 @@ package net.wg.gui.components.tooltips
       }
 
       override protected function redraw() : void {
-         var _loc1_:Separator = null;
          var _loc2_:ToolTipBlockResultVO = null;
          var _loc5_:VehicleVO = null;
          var _loc6_:ILocale = null;
@@ -99,7 +98,7 @@ package net.wg.gui.components.tooltips
          var _loc28_:String = null;
          var _loc29_:TextFormat = null;
          var _loc30_:ToolTipStatusColorsVO = null;
-         _loc1_ = null;
+         var _loc1_:Separator = null;
          separators = new Vector.<Separator>();
          _loc2_ = null;
          blockResults = new Vector.<ToolTipBlockResultVO>();

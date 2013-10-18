@@ -171,6 +171,10 @@ package
 
       public static const WINDOW_UNITLISTVIEW_RENDERER_SHOWMORE:String = "#cyberSport:window/unitListView/renderer/showMore";
 
+      public static const WINDOW_UNITLISTVIEW_RENDERER_PREVIOUS:String = "#cyberSport:window/unitListView/renderer/previous";
+
+      public static const WINDOW_UNITLISTVIEW_RENDERER_NEXT:String = "#cyberSport:window/unitListView/renderer/next";
+
       public static const WINDOW_UNITLISTVIEW_NOUNITSELECTED:String = "#cyberSport:window/unitListView/noUnitSelected";
 
       public static const WINDOW_UNIT_SLOT_EMPTYSLOT:String = "#cyberSport:window/unit/slot/emptySlot";

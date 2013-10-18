@@ -34,7 +34,7 @@ package xvm.hangar.components.Profile
                 // Add summary item to the first line of technique list
                 techniqueListAdjuster = new TechniqueListAdjuster(page);
 
-                page.addEventListener(TechniquePageEvent.DATA_STATUS_CHANGED, viewChanged);
+                // TODO: FIXIT: page.addEventListener(TechniquePageEvent.DATA_STATUS_CHANGED, viewChanged);
 
                 // remove lower shadow (last item looks bad with it)
                 //page.listComponent.lowerShadow.visible = false;
@@ -118,9 +118,9 @@ package xvm.hangar.components.Profile
             page.addChild(filter);
         }
 
-        protected function viewChanged(e:TechniquePageEvent):void
+        protected function viewChanged(e:Event):void
         {
-            page.removeEventListener(TechniquePageEvent.DATA_STATUS_CHANGED, viewChanged);
+            //page.removeEventListener(TechniquePageEvent.DATA_STATUS_CHANGED, viewChanged);
 
             try
             {

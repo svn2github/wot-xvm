@@ -59,6 +59,8 @@ package net.wg.infrastructure.base.meta
       function as_setPlayerChatRosterInTeam2(param1:Number, param2:Number) : void;
 
       function as_setPlayerChatRosterInOther(param1:Number, param2:Number) : void;
+
+      function as_enabledCloseButton(param1:Boolean) : void;
    }
 
 }

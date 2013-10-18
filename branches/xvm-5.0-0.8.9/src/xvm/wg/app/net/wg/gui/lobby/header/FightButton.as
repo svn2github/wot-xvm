@@ -56,19 +56,19 @@ package net.wg.gui.lobby.header
          this._actualEnabledVal = this.button.enabled = !param1;
          this.button.validateNow();
          this.toolTip = param2;
-         this.buttondropdown.enabled = true;
          this.buttondropdown.validateNow();
          this.demonstrationButton.enabled = !param1;
          this.demonstrationButton.validateNow();
          App.toolTipMgr.hide();
       }
 
-      public function as_setFightButton(param1:String, param2:String, param3:Array) : void {
+      public function as_setFightButton(param1:String, param2:String, param3:Array, param4:Boolean) : void {
          this.mainButtonLabel = param1;
          this.dropDownButtonLabel = param2?param2:MENU.HEADERBUTTONS_BATTLE;
          this.items = param3;
          this.isDataInvalid = true;
          this.isMainButtonLabelInvalid = true;
+         this.buttondropdown.enabled = !param4;
          invalidate();
       }
 

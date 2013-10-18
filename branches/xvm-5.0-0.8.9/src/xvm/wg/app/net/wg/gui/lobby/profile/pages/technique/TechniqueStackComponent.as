@@ -72,13 +72,28 @@ package net.wg.gui.lobby.profile.pages.technique
          this.viewStack.setAvailableSize(param1 - this.viewStack.x,param2 - this.viewStack.y);
       }
 
-      public function setData(param1:TechniqueListVehicleVO) : void {
-         this.vNameTF.text = param1.userName;
-         this.typeIcon.source = param1.typeIconPath;
+      public function updateLabel(param1:String, param2:String) : void {
+         this.vNameTF.text = param1;
+         if(param2 != null)
+         {
+            this.typeIcon.source = param2;
+         }
+         else
+         {
+            this.typeIcon.unload();
+         }
       }
 
       public function updateTankData(param1:Object) : void {
          this.viewStack.updateData(param1);
+      }
+
+      public function enableAwardsButton(param1:Boolean) : void {
+         if(!param1)
+         {
+            this.buttonBar.selectedIndex = 0;
+         }
+         this.buttonBar.getButtonAt(1).enabled = param1;
       }
    }
 

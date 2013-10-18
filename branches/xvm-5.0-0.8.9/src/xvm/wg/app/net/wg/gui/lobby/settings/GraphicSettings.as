@@ -162,7 +162,7 @@ package net.wg.gui.lobby.settings
       override public function dispose() : void {
          if(this.graphicsQualityDropDown.hasEventListener(ListEvent.INDEX_CHANGE))
          {
-            this.graphicsQualityDropDown.removeEventListener(ListEvent.INDEX_CHANGE,this.onGraphicsQualityChangePresset);
+            this.graphicsQualityDropDown.removeEventListener(ListEvent.INDEX_CHANGE,this.onGraphicsQualityChangePreset);
          }
          if(this.autodetectQuality.hasEventListener(ButtonEvent.CLICK))
          {
@@ -507,13 +507,16 @@ package net.wg.gui.lobby.settings
                            _loc11_.selectedIndex = _loc7_.current;
                         }
                      }
-                     if(!_loc4_)
+                     if(_loc3_ != SettingsConfig.GRAPHIC_QUALITY)
                      {
-                        _loc11_.addEventListener(ListEvent.INDEX_CHANGE,this.onDropDownChange);
-                     }
-                     else
-                     {
-                        _loc11_.addEventListener(ListEvent.INDEX_CHANGE,this.onGraphicsDropDownChange);
+                        if(!_loc4_)
+                        {
+                           _loc11_.addEventListener(ListEvent.INDEX_CHANGE,this.onDropDownChange);
+                        }
+                        else
+                        {
+                           _loc11_.addEventListener(ListEvent.INDEX_CHANGE,this.onGraphicsDropDownChange);
+                        }
                      }
                      _loc11_.enabled = _loc8_;
                      break;
@@ -551,8 +554,8 @@ package net.wg.gui.lobby.settings
             ;
          }
          this.graphicsQualityDropDown.dataProvider = new DataProvider(_loc1_);
-         this.graphicsQualityDropDown.addEventListener(ListEvent.INDEX_CHANGE,this.onGraphicsQualityChangePresset);
          this.graphicsQualityDropDown.selectedIndex = this._presets.current;
+         this.graphicsQualityDropDown.addEventListener(ListEvent.INDEX_CHANGE,this.onGraphicsQualityChangePreset);
          this.graphicsQualityDropDown.enabled = true;
          if(SettingsConfig.settingsData.GraphicSettings.graphicsQuality != undefined)
          {
@@ -737,7 +740,7 @@ package net.wg.gui.lobby.settings
                   case SettingsConfig.TYPE_CHECKBOX:
                      _loc3_ = this[_loc1_ + _loc2_.type];
                      _loc4_ = _loc3_.selected;
-                     if(!this.useAdvancedGraphic)
+                     if(!this.useAdvancedGraphic && (_loc2_.advanced))
                      {
                         _loc3_.selected = Boolean((this.useAdvancedGraphic) || (!_loc2_.advanced));
                      }
@@ -953,7 +956,7 @@ package net.wg.gui.lobby.settings
          dispatchEvent(new SettingViewEvent(SettingViewEvent.ON_CONTROL_CHANGED,_viewId,_loc2_,Slider(param1.target).value));
       }
 
-      private function onGraphicsQualityChangePresset(param1:ListEvent) : void {
+      private function onGraphicsQualityChangePreset(param1:ListEvent) : void {
          var _loc2_:Number = param1.index;
          var _loc3_:Object = param1.itemData;
          this.updateGraphicsQualityControlsForPreset(_loc2_,_loc3_,false);

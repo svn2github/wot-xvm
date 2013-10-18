@@ -11,6 +11,8 @@ package net.wg.gui.lobby.profile.components.chart.axis
    {
           
       function setData(param1:IDataProvider, param2:Vector.<IChartItem>, param3:IChartLayout) : void;
+
+      function getData() : Object;
    }
 
 }

@@ -50,8 +50,6 @@ package net.wg.gui.lobby.profile.pages.statistics
          this.tfContainer.tfSurvival.tooltip = PROFILE.PROFILE_PARAMS_TOOLTIP_SURVIVAL;
          this.tfContainer.tfHits.tooltip = PROFILE.PROFILE_PARAMS_TOOLTIP_HITS;
          this.tfContainer.tfAvgExperience.tooltip = PROFILE.PROFILE_PARAMS_TOOLTIP_AVGEXP;
-         this.tfContainer.tfMaxExperience.tooltip = PROFILE.PROFILE_PARAMS_TOOLTIP_MAXEXP;
-         this.tfContainer.tfMarksOfMastery.tooltip = PROFILE.PROFILE_PARAMS_TOOLTIP_MARKOFMASTERY;
          applyInitDataToTextField("battles",_loc3_,this.tfContainer.tfTotalBattles);
          applyInitDataToTextField("wins",_loc3_,this.tfContainer.tfWins);
          applyInitDataToTextField("survival",_loc3_,this.tfContainer.tfSurvival);

@@ -15,6 +15,10 @@ package net.wg.gui.cyberSport.controls.events
 
       public static const NEW_PAGE_REQUEST:String = "newPageRequest";
 
+      public static const LOAD_PREVIOUS_REQUEST:String = "loadPreviousRequest";
+
+      public static const LOAD_NEXT_REQUEST:String = "loadNextRequest";
+
       public static const ASSIGN_SLOT_REQUEST:String = "takePlaceRequest";
 
       public static const LEAVE_SLOT_REQUEST:String = "leavePlaceRequest";

@@ -1,10 +1,10 @@
 package net.wg.gui.lobby.profile.pages.summary
 {
-   import net.wg.gui.lobby.profile.data.ProfileCommonInfoVO;
+   import net.wg.gui.lobby.profile.data.ProfileDossierInfoVO;
    import net.wg.data.gui_items.ItemsUtils;
 
 
-   public class ProfileSummaryVO extends ProfileCommonInfoVO
+   public class ProfileSummaryVO extends ProfileDossierInfoVO
    {
           
       public function ProfileSummaryVO(param1:Object) {

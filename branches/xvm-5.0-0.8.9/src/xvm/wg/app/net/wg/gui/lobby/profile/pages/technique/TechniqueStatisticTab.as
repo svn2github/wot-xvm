@@ -1,110 +1,98 @@
 package net.wg.gui.lobby.profile.pages.technique
 {
    import net.wg.gui.lobby.profile.components.ResizableContent;
-   import net.wg.utils.ILocale;
    import flash.text.TextField;
-   import net.wg.gui.lobby.profile.components.DashLineTextItem;
+   import net.wg.gui.lobby.profile.components.ProfileDashLineTextItem;
+   import net.wg.gui.lobby.profile.pages.technique.data.ProfileVehicleDossierVO;
+   import net.wg.gui.utils.ExcludeTweenManager;
    import __AS3__.vec.Vector;
-   import net.wg.data.gui_items.dossier.VehicleDossier;
+   import fl.transitions.easing.Strong;
+   import scaleform.clik.motion.Tween;
 
 
    public class TechniqueStatisticTab extends ResizableContent
    {
           
       public function TechniqueStatisticTab() {
+         this.tweenManager = new ExcludeTweenManager();
          super();
-         this.firstAlignedGroup = Vector.<DashLineTextItem>([this.battlesDL,this.maxExpDL,this.maxKillDL,this.totalKillDL,this.totalDeadDL,this.killRatioDL,this.dealtDmgDL,this.receivedDmgDL,this.dmgRatioDL]);
-         this.secontAlignedGroup = Vector.<DashLineTextItem>([this.winsDL,this.defeatsDL,this.surviveDL,this.accuracyDL]);
-         this.thirdAlignedGroup = Vector.<DashLineTextItem>([this.avgExpDL,this.avgKillsDL,this.avgDetectedDL,this.avgDmgDealtDL,this.avgDmgReceivedDL,this.avgScoutingDmgDL]);
+         this.alpha = 0;
       }
 
-      private static function convertPercentValue(param1:Number) : String {
-         var _loc2_:ILocale = App.utils.locale;
-         var _loc3_:String = _loc2_.numberWithoutZeros(param1 * 100);
-         return makeHtmlText(_loc3_) + makeHtmlText(" %",6513507);
-      }
+      public static const DEFAULT_DASHLINETEXT_WIDTH:uint = 350;
 
-      private static function makeHtmlText(param1:String, param2:uint=16643278) : String {
-         return "<font color=\'#" + param2.toString(16) + "\'>" + param1 + "</font>";
-      }
+      public static const DEFAULT_COLOR:int = 16643278;
 
-      public static function roundDecimal(param1:Number, param2:int) : Number {
-         var _loc3_:Number = Math.pow(10,param2);
-         return Math.round(_loc3_ * param1) / _loc3_;
-      }
+      public static const PERCENT_SIGN_GAP:uint = 1;
+
+      private static var ANIM_SPEED:Number = 500;
 
       public var efficiencyTF:TextField;
 
       public var avgResultsTF:TextField;
 
-      public var battlesDL:DashLineTextItem;
+      public var battlesDL:ProfileDashLineTextItem;
 
-      public var winsDL:DashLineTextItem;
+      public var winsDL:ProfileDashLineTextItem;
 
-      public var defeatsDL:DashLineTextItem;
+      public var defeatsDL:ProfileDashLineTextItem;
 
-      public var surviveDL:DashLineTextItem;
+      public var surviveDL:ProfileDashLineTextItem;
 
-      public var accuracyDL:DashLineTextItem;
+      public var accuracyDL:ProfileDashLineTextItem;
 
-      public var maxExpDL:DashLineTextItem;
+      public var maxExpDL:ProfileDashLineTextItem;
 
-      public var maxKillDL:DashLineTextItem;
+      public var maxKillDL:ProfileDashLineTextItem;
 
-      public var totalKillDL:DashLineTextItem;
+      public var totalKillDL:ProfileDashLineTextItem;
 
-      public var totalDeadDL:DashLineTextItem;
+      public var totalDeadDL:ProfileDashLineTextItem;
 
-      public var killRatioDL:DashLineTextItem;
+      public var killRatioDL:ProfileDashLineTextItem;
 
-      public var dealtDmgDL:DashLineTextItem;
+      public var dealtDmgDL:ProfileDashLineTextItem;
 
-      public var receivedDmgDL:DashLineTextItem;
+      public var receivedDmgDL:ProfileDashLineTextItem;
 
-      public var dmgRatioDL:DashLineTextItem;
+      public var dmgRatioDL:ProfileDashLineTextItem;
 
-      public var avgExpDL:DashLineTextItem;
+      public var avgExpDL:ProfileDashLineTextItem;
 
-      public var avgKillsDL:DashLineTextItem;
+      public var avgKillsDL:ProfileDashLineTextItem;
 
-      public var avgDetectedDL:DashLineTextItem;
+      public var avgDetectedDL:ProfileDashLineTextItem;
 
-      public var avgDmgDealtDL:DashLineTextItem;
+      public var avgDmgDealtDL:ProfileDashLineTextItem;
 
-      public var avgDmgReceivedDL:DashLineTextItem;
+      public var avgDmgReceivedDL:ProfileDashLineTextItem;
 
-      public var avgScoutingDmgDL:DashLineTextItem;
+      public var avgScoutingDmgDL:ProfileDashLineTextItem;
 
-      private var firstAlignedGroup:Vector.<DashLineTextItem> = null;
+      public var winsPercentSign:TextField;
 
-      private var secontAlignedGroup:Vector.<DashLineTextItem> = null;
+      public var defeatsPercentSign:TextField;
 
-      private var thirdAlignedGroup:Vector.<DashLineTextItem> = null;
+      public var survivePercentSign:TextField;
 
-      private var _data:VehicleDossier;
+      public var accuracyPercentSign:TextField;
+
+      private var _data:ProfileVehicleDossierVO;
+
+      private var isDataInitialized:Boolean;
+
+      private var tweenManager:ExcludeTweenManager;
 
       override protected function configUI() : void {
-         var _loc1_:DashLineTextItem = null;
-         var _loc2_:DashLineTextItem = null;
-         var _loc3_:DashLineTextItem = null;
+         var _loc2_:ProfileDashLineTextItem = null;
          super.configUI();
-         for each (_loc1_ in this.firstAlignedGroup)
+         var _loc1_:Vector.<ProfileDashLineTextItem> = Vector.<ProfileDashLineTextItem>([this.battlesDL,this.maxExpDL,this.maxKillDL,this.totalKillDL,this.totalDeadDL,this.killRatioDL,this.dealtDmgDL,this.receivedDmgDL,this.dmgRatioDL,this.winsDL,this.defeatsDL,this.surviveDL,this.accuracyDL,this.avgExpDL,this.avgKillsDL,this.avgDetectedDL,this.avgDmgDealtDL,this.avgDmgReceivedDL,this.avgScoutingDmgDL]);
+         for each (_loc2_ in _loc1_)
          {
-            _loc1_.width = 350;
+            _loc2_.width = 350;
          }
-         for each (_loc2_ in this.secontAlignedGroup)
-         {
-            _loc2_.width = 365;
-         }
-         for each (_loc3_ in this.thirdAlignedGroup)
-         {
-            _loc3_.width = 350;
-         }
+         this.winsPercentSign.x = this.defeatsPercentSign.x = this.survivePercentSign.x = this.accuracyPercentSign.x = DEFAULT_DASHLINETEXT_WIDTH + this.battlesDL.x + PERCENT_SIGN_GAP;
          this.setupLabels();
-         this.winsDL.value = convertPercentValue(0);
-         this.defeatsDL.value = convertPercentValue(0);
-         this.surviveDL.value = convertPercentValue(0);
-         this.accuracyDL.value = convertPercentValue(0);
          this.avgScoutingDmgDL.visible = false;
       }
 
@@ -133,52 +121,55 @@ package net.wg.gui.lobby.profile.pages.technique
       }
 
       override public function update(param1:Object) : void {
-         var _loc2_:VehicleDossier = VehicleDossier(param1);
+         var _loc3_:* = NaN;
+         var _loc2_:ProfileVehicleDossierVO = ProfileVehicleDossierVO(param1);
          if(this._data != _loc2_)
          {
             this._data = _loc2_;
             if(_loc2_)
             {
-               this.battlesDL.value = makeHtmlText(_loc2_.getBattlesCountStr());
-               this.winsDL.value = convertPercentValue(_loc2_.getWinsEfficiency());
-               this.defeatsDL.value = convertPercentValue(_loc2_.getLossesEfficiency());
-               this.surviveDL.value = convertPercentValue(_loc2_.getSurvivalEfficiency());
-               this.accuracyDL.value = convertPercentValue(_loc2_.getHitsEfficiency());
-               this.maxExpDL.value = makeHtmlText(_loc2_.getMaxVehicleXPStr());
-               this.maxKillDL.value = makeHtmlText(_loc2_.getMaxVehicleFragsStr());
-               this.totalKillDL.value = makeHtmlText(_loc2_.getFragsCountStr());
-               this.totalDeadDL.value = makeHtmlText(_loc2_.getDeathsCountStr());
-               this.killRatioDL.value = makeHtmlText(_loc2_.getFragsEfficiencyStr(),13348216);
-               this.dealtDmgDL.value = makeHtmlText(_loc2_.getDamageDealtStr());
-               this.receivedDmgDL.value = makeHtmlText(_loc2_.getDamageReceivedStr());
-               this.dmgRatioDL.value = makeHtmlText(_loc2_.getDamageEfficiencyStr(),13348216);
-               this.avgExpDL.value = makeHtmlText(_loc2_.getAvgXPStr());
-               this.avgKillsDL.value = makeHtmlText(_loc2_.getAvgFragsStr());
-               this.avgDetectedDL.value = makeHtmlText(_loc2_.getAvgEnemiesSpottedStr());
-               this.avgDmgDealtDL.value = makeHtmlText(_loc2_.getAvgDamageDealtStr());
-               this.avgDmgReceivedDL.value = makeHtmlText(_loc2_.getAvgDamageReceivedStr());
+               if(!this.isDataInitialized)
+               {
+                  this.isDataInitialized = true;
+                  this.tweenManager.registerAndLaunch(ANIM_SPEED,this,{"alpha":1},
+                     {
+                        "ease":Strong.easeOut,
+                        "onComplete":this.onTweenComplete
+                     }
+                  );
+               }
+               this.battlesDL.receiveAndSetValue(_loc2_.battlesCount,DEFAULT_COLOR,_loc2_.getBattlesCountStr);
+               this.winsDL.receiveAndSetValue(_loc2_.winsCount,DEFAULT_COLOR,_loc2_.getWinsEfficiencyStr);
+               this.defeatsDL.receiveAndSetValue(_loc2_.lossesEfficiency,DEFAULT_COLOR,_loc2_.getLossesEfficiencyStr);
+               this.surviveDL.receiveAndSetValue(_loc2_.survivalEfficiency,DEFAULT_COLOR,_loc2_.getSurvivalEfficiencyStr);
+               this.accuracyDL.receiveAndSetValue(_loc2_.hitsEfficiency,DEFAULT_COLOR,_loc2_.getHitsEfficiencyStr);
+               this.maxExpDL.receiveAndSetValue(_loc2_.maxXP,DEFAULT_COLOR,_loc2_.getMaxExperienceStr);
+               this.maxKillDL.receiveAndSetValue(_loc2_.maxVehicleFrags,DEFAULT_COLOR,_loc2_.getMaxVehicleFragsStr);
+               this.totalKillDL.receiveAndSetValue(_loc2_.fragsCount,DEFAULT_COLOR,_loc2_.getFragsCountStr);
+               this.totalDeadDL.receiveAndSetValue(_loc2_.deathsCount,DEFAULT_COLOR,_loc2_.getDeathsCountStr);
+               _loc3_ = _loc2_.fragsEfficiency > 0?_loc2_.fragsEfficiency:-1;
+               this.killRatioDL.receiveAndSetValue(_loc3_,13348216,_loc2_.getFragsEfficiencyStr);
+               this.dealtDmgDL.receiveAndSetValue(_loc2_.damageDealt,DEFAULT_COLOR,_loc2_.getDamageDealtStr);
+               this.receivedDmgDL.receiveAndSetValue(_loc2_.damageReceived,DEFAULT_COLOR,_loc2_.getDamageReceivedStr);
+               this.dmgRatioDL.receiveAndSetValue(_loc2_.damageEfficiency > 0?_loc2_.damageEfficiency:-1,13348216,_loc2_.getDamageEfficiencyStr);
+               this.avgExpDL.receiveAndSetValue(_loc2_.avgXP,DEFAULT_COLOR,_loc2_.getAvgExperienceStr);
+               this.avgKillsDL.receiveAndSetValue(_loc2_.avgFrags,DEFAULT_COLOR,_loc2_.getAvgFragsStr);
+               this.avgDetectedDL.receiveAndSetValue(_loc2_.avgEnemiesSpotted,DEFAULT_COLOR,_loc2_.getAvgEnemiesSpottedStr);
+               this.avgDmgDealtDL.receiveAndSetValue(_loc2_.avgDamageDealt,DEFAULT_COLOR,_loc2_.getAvgDamageDealtStr);
+               this.avgDmgReceivedDL.receiveAndSetValue(_loc2_.avgDamageReceived,DEFAULT_COLOR,_loc2_.getAvgDamageReceivedStr);
                this.avgScoutingDmgDL.value = "Will be implemented...";
             }
          }
       }
 
+      private function onTweenComplete(param1:Tween) : void {
+         this.tweenManager.unregister(param1);
+      }
+
       override public function dispose() : void {
+         this.tweenManager.dispose();
+         this.tweenManager = null;
          this._data = null;
-         if(this.firstAlignedGroup)
-         {
-            this.firstAlignedGroup.splice(0,this.firstAlignedGroup.length);
-            this.firstAlignedGroup = null;
-         }
-         if(this.secontAlignedGroup)
-         {
-            this.secontAlignedGroup.splice(0,this.secontAlignedGroup.length);
-            this.secontAlignedGroup = null;
-         }
-         if(this.thirdAlignedGroup)
-         {
-            this.thirdAlignedGroup.splice(0,this.thirdAlignedGroup.length);
-            this.thirdAlignedGroup = null;
-         }
          this.efficiencyTF = null;
          this.avgResultsTF = null;
          this.battlesDL.dispose();

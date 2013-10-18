@@ -313,6 +313,7 @@ package scaleform.clik.controls
       protected function updateTextField() : void {
          if(this.textField == null)
          {
+            trace(">>> Error :: " + this + ", textField is NULL.");
             return;
          }
          this.updateText();

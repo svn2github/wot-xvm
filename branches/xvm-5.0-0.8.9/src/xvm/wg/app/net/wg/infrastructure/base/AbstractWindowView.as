@@ -23,7 +23,7 @@ package net.wg.infrastructure.base
          this._geometry = new DefaultWindowGeometry();
       }
 
-      protected var waiting:Waiting;
+      private var _waiting:Waiting;
 
       private var waitingMessage:String;
 
@@ -233,14 +233,14 @@ package net.wg.infrastructure.base
       }
 
       override protected function onDispose() : void {
-         if(this.waiting)
+         if(this._waiting)
          {
-            this.waiting.dispose();
-            if(this.waiting.parent)
+            this._waiting.dispose();
+            if(this._waiting.parent)
             {
-               this.waiting.parent.removeChild(this.waiting);
+               this._waiting.parent.removeChild(this._waiting);
             }
-            this.waiting = null;
+            this._waiting = null;
          }
          if(this._window)
          {
@@ -268,24 +268,24 @@ package net.wg.infrastructure.base
       protected function applyWaitingChanges() : void {
          if(this._showWaiting)
          {
-            if(!this.waiting)
+            if(!this._waiting)
             {
-               this.waiting = new Waiting();
-               addChild(this.waiting);
-               this.waiting.setSize(width,height);
-               this.waiting.validateNow();
+               this._waiting = new Waiting();
+               addChild(this._waiting);
+               this._waiting.setSize(width,height);
+               this._waiting.validateNow();
             }
-            this.waiting.setMessage(this.waitingMessage);
+            this._waiting.setMessage(this.waitingMessage);
          }
-         if(this.waiting)
+         if(this._waiting)
          {
             if(this._showWaiting)
             {
-               this.waiting.show();
+               this._waiting.show();
             }
             else
             {
-               this.waiting.hide();
+               this._waiting.hide();
             }
          }
       }
@@ -342,6 +342,10 @@ package net.wg.infrastructure.base
             param1.handled = true;
             onWindowCloseS();
          }
+      }
+
+      public function get waiting() : Waiting {
+         return this._waiting;
       }
    }
 

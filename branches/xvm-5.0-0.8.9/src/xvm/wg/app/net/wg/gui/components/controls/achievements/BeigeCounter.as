@@ -19,7 +19,6 @@ package net.wg.gui.components.controls.achievements
       override protected function configUI() : void {
          super.configUI();
          this._labels = this.currentLabels;
-         tooltip = TOOLTIPS.ACHIEVEMENT_ATTR_DEGREE;
       }
 
       override public function receiveBottomPadding() : Number {

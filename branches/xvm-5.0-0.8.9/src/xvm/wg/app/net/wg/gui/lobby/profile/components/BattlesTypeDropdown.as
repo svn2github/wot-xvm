@@ -3,6 +3,7 @@ package net.wg.gui.lobby.profile.components
    import scaleform.clik.core.UIComponent;
    import flash.text.TextField;
    import net.wg.gui.components.controls.DropdownMenu;
+   import flash.text.TextFieldAutoSize;
    import scaleform.clik.events.ListEvent;
    import scaleform.clik.data.DataProvider;
    import scaleform.clik.interfaces.IDataProvider;
@@ -30,6 +31,7 @@ package net.wg.gui.lobby.profile.components
          super.configUI();
          if(App.utils)
          {
+            this.txtLabel.autoSize = TextFieldAutoSize.RIGHT;
             this.txtLabel.text = App.utils.locale.makeString(PROFILE.PROFILE_DROPDOWN_BATTLESTYPE);
          }
          this.dropdownMenu.addEventListener(ListEvent.INDEX_CHANGE,this.menuIndexChangeHandler,false,0,true);

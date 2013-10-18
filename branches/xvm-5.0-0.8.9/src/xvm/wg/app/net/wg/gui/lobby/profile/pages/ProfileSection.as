@@ -13,7 +13,7 @@ package net.wg.gui.lobby.profile.pages
 
    public class ProfileSection extends ProfileSectionMeta implements IProfileSectionMeta, IResizableContent
    {
-
+          
       public function ProfileSection() {
          super();
       }
@@ -56,7 +56,6 @@ package net.wg.gui.lobby.profile.pages
          super.configUI();
          if(this.battlesDropdown)
          {
-            this.battlesDropdown.visible = false;
             this.battlesDropdown.addEventListener(Event.CHANGE,this.dropDownChangeHandler,false,0,true);
          }
       }
@@ -84,7 +83,7 @@ package net.wg.gui.lobby.profile.pages
       }
 
       public function as_update(param1:Object) : void {
-
+          
       }
 
       protected function applyData(param1:Object) : Object {
@@ -92,7 +91,7 @@ package net.wg.gui.lobby.profile.pages
       }
 
       public function as_setInitData(param1:Object) : void {
-
+          
       }
 
       protected function disposeLayoutManager() : void {
@@ -113,7 +112,7 @@ package net.wg.gui.lobby.profile.pages
       }
 
       public function update(param1:Object) : void {
-
+          
       }
 
       public function set active(param1:Boolean) : void {

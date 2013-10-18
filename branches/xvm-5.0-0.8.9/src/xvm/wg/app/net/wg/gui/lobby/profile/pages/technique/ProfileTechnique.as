@@ -3,9 +3,10 @@ package net.wg.gui.lobby.profile.pages.technique
    import net.wg.infrastructure.base.meta.impl.ProfileTechniqueMeta;
    import net.wg.infrastructure.base.meta.IProfileTechniqueMeta;
    import net.wg.gui.lobby.profile.data.SectionLayoutManager;
+   import net.wg.gui.lobby.profile.pages.technique.data.TechniqueListVehicleVO;
    import flash.events.Event;
    import net.wg.gui.lobby.profile.ProfileConstants;
-   import net.wg.data.gui_items.dossier.VehicleDossier;
+   import net.wg.gui.lobby.profile.pages.technique.data.ProfileVehicleDossierVO;
 
 
    public class ProfileTechnique extends ProfileTechniqueMeta implements IProfileTechniqueMeta
@@ -22,7 +23,7 @@ package net.wg.gui.lobby.profile.pages.technique
 
       public var stackComponent:TechniqueStackComponent;
 
-      private var lastVehicleID:Number = NaN;
+      public var emptyScreen:ProfileTechniqueEmptyScreen;
 
       override protected function initialize() : void {
          super.initialize();
@@ -30,13 +31,11 @@ package net.wg.gui.lobby.profile.pages.technique
          layoutManager.registerComponents(this.listComponent,this.stackComponent);
       }
 
-      override protected function configUI() : void {
-         super.configUI();
-      }
-
       override protected function applyData(param1:Object) : Object {
          var _loc4_:TechniqueListVehicleVO = null;
          var _loc5_:Object = null;
+         var _loc6_:* = false;
+         var _loc7_:* = false;
          var _loc2_:Array = param1 as Array;
          var _loc3_:Array = [];
          for each (_loc5_ in _loc2_)
@@ -44,7 +43,13 @@ package net.wg.gui.lobby.profile.pages.technique
             _loc4_ = new TechniqueListVehicleVO(_loc5_);
             _loc3_.push(_loc4_);
          }
+         _loc6_ = !(battlesType == PROFILE.PROFILE_DROPDOWN_LABELS_TEAM);
+         this.stackComponent.enableAwardsButton(_loc6_);
+         this.listComponent.enableMarkOfMasteryBtn(_loc6_);
          this.listComponent.dataProvider = _loc3_;
+         _loc7_ = _loc3_.length > 0;
+         this.emptyScreen.visible = !_loc7_;
+         this.listComponent.visible = this.stackComponent.visible = _loc7_;
          return param1;
       }
 
@@ -52,8 +57,12 @@ package net.wg.gui.lobby.profile.pages.technique
          var _loc2_:TechniqueListVehicleVO = this.listComponent.selectedItem;
          if(_loc2_)
          {
-            this.stackComponent.setData(_loc2_);
+            this.stackComponent.updateLabel(_loc2_.userName,_loc2_.typeIconPath);
             requestDataS({"vehicleId":_loc2_.id});
+         }
+         else
+         {
+            this.stackComponent.updateLabel("",null);
          }
       }
 
@@ -78,8 +87,10 @@ package net.wg.gui.lobby.profile.pages.technique
             layoutManager.setDimension(currentDimension.x,currentDimension.y);
          }
          this.x = Math.round(currentDimension.x / 2 - centerOffset);
+         var _loc1_:Number = Math.min(currentDimension.x,ProfileConstants.MIN_APP_WIDTH);
+         this.emptyScreen.x = _loc1_ - this.emptyScreen.width >> 1;
          this.listComponent.setViewSize(currentDimension.x,currentDimension.y - this.listComponent.y);
-         this.stackComponent.setViewSize(Math.min(currentDimension.x,ProfileConstants.MIN_APP_WIDTH) - this.stackComponent.x,currentDimension.y - this.stackComponent.y);
+         this.stackComponent.setViewSize(_loc1_ - this.stackComponent.x,currentDimension.y - this.stackComponent.y);
       }
 
       override protected function draw() : void {
@@ -90,9 +101,15 @@ package net.wg.gui.lobby.profile.pages.technique
          }
       }
 
-      override public function as_update(param1:Object) : void {
-         this.stackComponent.updateTankData(new VehicleDossier(param1.vehicleId,param1.databaseID));
-         dispatchEvent(new TechniquePageEvent(TechniquePageEvent.DATA_STATUS_CHANGED,false,true));
+      public function as_responseVehicleDossier(param1:Object) : void {
+         if(param1 != null)
+         {
+            this.stackComponent.updateTankData(new ProfileVehicleDossierVO(param1));
+         }
+         else
+         {
+            this.stackComponent.updateTankData(new ProfileVehicleDossierVO({}));
+         }
       }
    }
 

@@ -3,7 +3,9 @@ package net.wg.gui.cyberSport.controls
    import net.wg.gui.components.controls.SoundListItemRenderer;
    import flash.text.TextField;
    import flash.display.MovieClip;
+   import flash.geom.Point;
    import flash.events.MouseEvent;
+   import net.wg.gui.cyberSport.controls.events.NavigationEvent;
    import net.wg.gui.cyberSport.controls.events.CSComponentEvent;
    import net.wg.gui.cyberSport.vo.CSCommandVO;
    import scaleform.clik.constants.InvalidationType;
@@ -17,7 +19,7 @@ package net.wg.gui.cyberSport.controls
          preventAutosizing = true;
       }
 
-      public var requestButton:GrayButtonText;
+      public var navigationBlock:NavigationBlock;
 
       public var commander:TextField = null;
 
@@ -35,9 +37,31 @@ package net.wg.gui.cyberSport.controls
 
       public var inBattleMC:MovieClip;
 
+      private var _dataChanged:Boolean = false;
+
+      protected function checkTooltip() : void {
+         if(!this._dataChanged)
+         {
+            return;
+         }
+         var _loc1_:Point = new Point(mouseX,mouseY);
+         _loc1_ = localToGlobal(_loc1_);
+         if(hitTestPoint(_loc1_.x,_loc1_.y))
+         {
+            if(data)
+            {
+               dispatchEvent(new MouseEvent(MouseEvent.ROLL_OVER));
+            }
+            else
+            {
+               App.toolTipMgr.hide();
+            }
+         }
+      }
+
       override public function setData(param1:Object) : void {
+         this._dataChanged = (this.data && param1) && !(param1.unitMgrID == this.data.unitMgrID) || (this.data) && !param1;
          this.data = param1;
-         App.toolTipMgr.hide();
          invalidateData();
       }
 
@@ -51,21 +75,27 @@ package net.wg.gui.cyberSport.controls
          this.serverTF.mouseEnabled = false;
          this.freezeIcon.useHandCursor = this.freezeIcon.buttonMode = true;
          this.restrictionIcon.useHandCursor = this.restrictionIcon.buttonMode = true;
-         this.requestButton.addEventListener(MouseEvent.CLICK,this.onRequestButtonClickHandler);
          this.freezeIcon.addEventListener(MouseEvent.ROLL_OVER,this.onControlRollOver);
          this.freezeIcon.addEventListener(MouseEvent.ROLL_OUT,this.onControlRollOut);
          this.restrictionIcon.addEventListener(MouseEvent.ROLL_OVER,this.onControlRollOver);
          this.restrictionIcon.addEventListener(MouseEvent.ROLL_OUT,this.onControlRollOut);
+         if(owner != null)
+         {
+            owner.addEventListener(NavigationEvent.NAVIGATION_IN_COOL_DOWN,this.onNavigationInCoolDown);
+         }
       }
 
       override public function dispose() : void {
-         this.requestButton.removeEventListener(MouseEvent.CLICK,this.onRequestButtonClickHandler);
+         if(owner != null)
+         {
+            owner.removeEventListener(NavigationEvent.NAVIGATION_IN_COOL_DOWN,this.onNavigationInCoolDown);
+         }
          this.freezeIcon.removeEventListener(MouseEvent.ROLL_OVER,this.onControlRollOver);
          this.freezeIcon.removeEventListener(MouseEvent.ROLL_OUT,this.onControlRollOut);
          this.restrictionIcon.removeEventListener(MouseEvent.ROLL_OVER,this.onControlRollOver);
          this.restrictionIcon.removeEventListener(MouseEvent.ROLL_OUT,this.onControlRollOut);
-         this.requestButton.dispose();
-         this.requestButton = null;
+         this.navigationBlock.dispose();
+         this.navigationBlock = null;
          this.commander = null;
          this.commandSize = null;
          this.commandMaxSize = null;
@@ -85,6 +115,18 @@ package net.wg.gui.cyberSport.controls
       private function onRequestButtonClickHandler(param1:MouseEvent) : void {
          param1.stopImmediatePropagation();
          dispatchEvent(new CSComponentEvent(CSComponentEvent.NEW_PAGE_REQUEST,data));
+      }
+
+      private function onNavigationInCoolDown(param1:NavigationEvent) : void {
+         var _loc3_:* = false;
+         var _loc2_:CSCommandVO = CSCommandVO(data);
+         if((_loc2_) && (_loc2_.isLoadMoreState) && (this.navigationBlock))
+         {
+            _loc3_ = param1.isInCoolDown;
+            _loc2_.navigationConfig.previousEnabled = !_loc3_;
+            _loc2_.navigationConfig.nextEnabled = !_loc3_;
+            this.navigationBlock.setInCoolDown(param1.isInCoolDown);
+         }
       }
 
       override public function set enabled(param1:Boolean) : void {
@@ -107,14 +149,15 @@ package net.wg.gui.cyberSport.controls
                if(_loc1_.isLoadMoreState)
                {
                   gotoAndStop("last");
-                  this.requestButton.visible = true;
+                  this.navigationBlock.setup(_loc1_.navigationConfig);
+                  this.navigationBlock.visible = true;
                   this.setControlsVisible(false);
                }
                else
                {
                   this.setControlsVisible(true);
-                  this.requestButton.visible = false;
-                  this.commander.text = _loc1_.creator;
+                  this.navigationBlock.visible = false;
+                  this.commander.htmlText = App.utils.commons.formatPlayerName(this.commander,_loc1_.creator);
                   this.effency.text = App.utils.locale.integer(_loc1_.rating);
                   this.commandSize.text = String(_loc1_.playersCount);
                   this.commandMaxSize.text = "/" + String(_loc1_.commandSize);
@@ -136,6 +179,7 @@ package net.wg.gui.cyberSport.controls
             {
                this.visible = false;
             }
+            this.checkTooltip();
          }
       }
 

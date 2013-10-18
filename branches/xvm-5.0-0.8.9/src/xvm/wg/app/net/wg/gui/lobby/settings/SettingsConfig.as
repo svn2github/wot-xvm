@@ -248,9 +248,9 @@ package net.wg.gui.lobby.settings
                                                        "OBJECT_LOD":new SettingsControlProp(null,null,TYPE_DROPDOWN,true),
                                                        "SNIPER_MODE_EFFECTS_QUALITY":new SettingsControlProp(null,null,TYPE_DROPDOWN,true),
                                                        "fpsPerfomancer":new SettingsControlProp(null,null,TYPE_CHECKBOX),
-                                                       "SNIPER_MODE_GRASS_ENABLED":new SettingsControlProp(null,null,TYPE_CHECKBOX,false,false,null,false,true),
+                                                       "SNIPER_MODE_GRASS_ENABLED":new SettingsControlProp(null,null,TYPE_CHECKBOX),
                                                        "VEHICLE_DUST_ENABLED":new SettingsControlProp(null,null,TYPE_CHECKBOX),
-                                                       "VEHICLE_TRACES_ENABLED":new SettingsControlProp(null,null,TYPE_CHECKBOX,false,false,null,false,true),
+                                                       "VEHICLE_TRACES_ENABLED":new SettingsControlProp(null,null,TYPE_CHECKBOX),
                                                        "qualityOrder":null,
                                                        "presets":{}
                                                     }

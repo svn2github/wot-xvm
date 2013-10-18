@@ -4,6 +4,7 @@ package net.wg.infrastructure.managers.impl
    import net.wg.utils.IGameInputManager;
    import flash.events.IEventDispatcher;
    import scaleform.clik.events.InputEvent;
+   import flash.events.FocusEvent;
    import flash.utils.Dictionary;
    import scaleform.clik.ui.InputDetails;
    import scaleform.clik.constants.InputValue;
@@ -26,10 +27,11 @@ package net.wg.infrastructure.managers.impl
       public function initStage(param1:IEventDispatcher) : void {
          this._dispatcher = param1;
          this._dispatcher.addEventListener(InputEvent.INPUT,this.onInputHandler,false,0,true);
+         this._dispatcher.addEventListener(FocusEvent.FOCUS_IN,this.onFocusInHandler,true,0,true);
       }
 
-      public function as_addKeyHandler(param1:Number, param2:String, param3:Boolean) : void {
-         this.setKeyHandler(param1,param2,this.pyInputHandler,param3);
+      public function as_addKeyHandler(param1:Number, param2:String, param3:Boolean, param4:String=null) : void {
+         this.setKeyHandler(param1,param2,this.pyInputHandler,param3,param4);
       }
 
       public function as_clearKeyHandler(param1:Number, param2:String) : void {
@@ -42,7 +44,11 @@ package net.wg.infrastructure.managers.impl
 
       private var _ignoredKeyCode:Number = -1;
 
-      public function setKeyHandler(param1:Number, param2:String, param3:Function, param4:Boolean) : void {
+      private var _exclusiveHandlers:Dictionary = null;
+
+      private var _changedTextFields:Array = null;
+
+      public function setKeyHandler(param1:Number, param2:String, param3:Function, param4:Boolean, param5:String=null) : void {
          this.assertEventType(param2);
          if(this._inputHandlers[param1] == undefined)
          {
@@ -52,7 +58,7 @@ package net.wg.infrastructure.managers.impl
          {
             DebugUtils.LOG_WARNING("GameInputHandler.setKeyHandler. Existing handler for keyCode = " + param1 + " and event = " + param2 + " is to be reset!");
          }
-         this._inputHandlers[param1][param2] = new GameInputCallback(param3,param4);
+         this._inputHandlers[param1][param2] = new GameInputCallback(param3,param4,param5);
       }
 
       public function clearKeyHandler(param1:Number, param2:String) : void {
@@ -88,12 +94,24 @@ package net.wg.infrastructure.managers.impl
             }
             delete this._inputHandlers[[_loc1_]];
          }
+         this._inputHandlers = null;
+         for (_loc1_ in this._exclusiveHandlers)
+         {
+            delete this._exclusiveHandlers[[_loc1_]];
+         }
+         this._exclusiveHandlers = null;
       }
 
       public function dispose() : void {
          this.clearKeyHandlers();
          this._inputHandlers = null;
+         if(this._changedTextFields)
+         {
+            this._changedTextFields.splice();
+            this._changedTextFields = null;
+         }
          this._dispatcher.removeEventListener(InputEvent.INPUT,this.onInputHandler);
+         this._dispatcher.removeEventListener(FocusEvent.FOCUS_IN,this.onFocusInHandler,true);
          this._dispatcher = null;
       }
 
@@ -117,69 +135,12 @@ package net.wg.infrastructure.managers.impl
       }
 
       private function onInputHandler(param1:InputEvent) : void {
-         var details:InputDetails = null;
-         var callback:GameInputCallback = null;
-         var focused:TextField = null;
-         var focusedParent:TextInput = null;
-         var event:InputEvent = param1;
-         try
-         {
-            details = event.details;
-            if((event.handled) || this._ignoredKeyCode == details.code)
-            {
-               return;
-            }
-            callback = null;
-            if(this._inputHandlers[details.code] == undefined)
-            {
-               return;
-            }
-            callback = this._inputHandlers[details.code][details.value] as GameInputCallback;
-            if(!callback)
-            {
-               return;
-            }
-            focused = this.getSystemFocus(0) as TextField;
-            if((callback.isIgnoreText) && !(focused == null))
-            {
-               focusedParent = focused.parent as TextInput;
-               if(focused.type == TextFieldType.INPUT || ((focusedParent) && (focusedParent.enabled)) && (focusedParent.editable))
-               {
-                  return;
-               }
-            }
-            callback.envoke(event);
-         }
-         catch(e:Error)
-         {
-            DebugUtils.LOG_DEBUG(e.message);
-            DebugUtils.LOG_DEBUG(e.getStackTrace());
-         }
-         return;
-         if((event.handled) || this._ignoredKeyCode == details.code)
-         {
-            return;
-         }
-         callback = null;
-         if(this._inputHandlers[details.code] == undefined)
-         {
-            return;
-         }
-         callback = this._inputHandlers[details.code][details.value] as GameInputCallback;
-         if(!callback)
-         {
-            return;
-         }
-         focused = this.getSystemFocus(0) as TextField;
-         if((callback.isIgnoreText) && !(focused == null))
-         {
-            focusedParent = focused.parent as TextInput;
-            if(focused.type == TextFieldType.INPUT || ((focusedParent) && (focusedParent.enabled)) && (focusedParent.editable))
-            {
-               return;
-            }
-         }
-         callback.envoke(event);
+         /*
+          * Decompilation error
+          * Code may be obfuscated
+          * Error type: StackOverflowError
+          */
+         throw new IllegalOperationError("Not decompiled due to error");
       }
 
       private function getSystemFocus(param1:uint) : InteractiveObject {
@@ -188,6 +149,37 @@ package net.wg.infrastructure.managers.impl
             return FocusManager.getFocus(param1);
          }
          return App.stage.focus;
+      }
+
+      private function onFocusInHandler(param1:FocusEvent) : void {
+         var _loc3_:TextInput = null;
+         var _loc2_:TextField = param1.target as TextField;
+         if(_loc2_)
+         {
+            _loc3_ = _loc2_.parent as TextInput;
+            if(_loc2_.type == TextFieldType.INPUT && ((_loc3_) && (_loc3_.enabled)) && (_loc3_.editable))
+            {
+               if(this.hasExclusiveHandlers())
+               {
+                  if(!this._changedTextFields)
+                  {
+                     this._changedTextFields = [];
+                  }
+                  this._changedTextFields.push(_loc3_);
+                  _loc3_.editable = false;
+               }
+            }
+         }
+      }
+
+      private function hasExclusiveHandlers() : Boolean {
+         var _loc2_:Object = null;
+         var _loc1_:* = false;
+         for (_loc2_ in this._exclusiveHandlers)
+         {
+            _loc1_ = true;
+            return _loc1_;
+         }
       }
    }
 
@@ -199,16 +191,19 @@ package net.wg.infrastructure.managers.impl
    class GameInputCallback extends Object implements IDisposable
    {
           
-      function GameInputCallback(param1:Function, param2:Boolean) {
+      function GameInputCallback(param1:Function, param2:Boolean, param3:String=null) {
          super();
          App.utils.asserter.assertNotNull(param1,"handler" + Errors.CANT_NULL);
          this._handler = param1;
          this._ignoreText = param2;
+         this._cancelEvent = param3;
       }
 
       private var _handler:Function = null;
 
       private var _ignoreText:Boolean = false;
+
+      private var _cancelEvent:String = null;
 
       public function envoke(param1:InputEvent) : void {
          this._handler(param1);
@@ -218,7 +213,12 @@ package net.wg.infrastructure.managers.impl
          return this._ignoreText;
       }
 
+      public function get cancelEvent() : String {
+         return this._cancelEvent;
+      }
+
       public function dispose() : void {
          this._handler = null;
+         this._cancelEvent = null;
       }
    }

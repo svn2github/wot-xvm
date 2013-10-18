@@ -1,4 +1,4 @@
-package
+package 
 {
    import net.wg.gui.prebattle.company.CompanyListItemRenderer;
    import adobe.utils.*;
@@ -29,7 +29,7 @@ package
 
    public dynamic class CompanyListItemRendererUI extends CompanyListItemRenderer
    {
-
+          
       public function CompanyListItemRendererUI() {
          super();
       }

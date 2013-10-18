@@ -51,6 +51,7 @@ package net.wg.gui.lobby.techtree.sub
          }
          catch(error:*)
          {
+            trace("error",error.message);
             throw new Error("The class " + name + " cannot be found in your library. Please ensure it exists.");
          }
          return classRef;
@@ -483,10 +484,19 @@ package net.wg.gui.lobby.techtree.sub
          var _loc5_:MatrixPosition = null;
          var _loc6_:* = false;
          var _loc1_:* = false;
-         if(this._levelsBuilder.nodesByLevel[0][1] == null)
+         if(this._levelsBuilder.nodesByLevel[0][1] != null)
          {
-            if(this.rootRenderer)
+            trace("ERROR: In zero level must has one node only.");
+         }
+         else
+         {
+            if(!this.rootRenderer)
             {
+               trace("ERROR: Root renderer must be on display list.");
+            }
+            else
+            {
+               trace("Sets root data.");
                _loc1_ = true;
                _loc2_ = this._dataProvider.getRootItem();
                _loc3_ = this._dataProvider.getGlobalStats();
@@ -926,6 +936,7 @@ package net.wg.gui.lobby.techtree.sub
          this._levelsBuilder.process();
          if(this._levelsBuilder.hasCyclicReference())
          {
+            trace("ERROR: Has cyclic reference.");
             this.titleBar.setTitle("");
             if(this.view != null)
             {

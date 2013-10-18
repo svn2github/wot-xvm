@@ -10,7 +10,7 @@ package net.wg.utils
           
       function initStage(param1:IEventDispatcher) : void;
 
-      function setKeyHandler(param1:Number, param2:String, param3:Function, param4:Boolean) : void;
+      function setKeyHandler(param1:Number, param2:String, param3:Function, param4:Boolean, param5:String=null) : void;
 
       function clearKeyHandlers() : void;
 

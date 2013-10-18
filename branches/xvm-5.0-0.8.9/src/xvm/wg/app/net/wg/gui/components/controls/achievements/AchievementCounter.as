@@ -48,7 +48,6 @@ package net.wg.gui.components.controls.achievements
 
       override protected function configUI() : void {
          super.configUI();
-         mouseChildren = true;
          loader.mouseChildren = false;
          loader.buttonMode = true;
          this.buttonMode = true;

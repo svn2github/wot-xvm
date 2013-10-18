@@ -7,6 +7,7 @@ package net.wg.gui.lobby.profile.pages.technique
    import scaleform.clik.interfaces.IDataProvider;
    import __AS3__.vec.Vector;
    import flash.utils.getQualifiedClassName;
+   import net.wg.gui.lobby.profile.pages.technique.data.TechniqueListVehicleVO;
    import scaleform.clik.interfaces.IListItemRenderer;
    import scaleform.clik.constants.InvalidationType;
 

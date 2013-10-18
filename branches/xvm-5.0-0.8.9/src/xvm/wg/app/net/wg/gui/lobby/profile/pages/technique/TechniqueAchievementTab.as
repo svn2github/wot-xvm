@@ -3,7 +3,7 @@ package net.wg.gui.lobby.profile.pages.technique
    import net.wg.gui.lobby.profile.components.ResizableContent;
    import net.wg.gui.lobby.profile.components.ResizableScrollPane;
    import flash.text.TextField;
-   import net.wg.data.gui_items.dossier.VehicleDossier;
+   import net.wg.gui.lobby.profile.pages.technique.data.ProfileVehicleDossierVO;
    import flash.display.MovieClip;
    import flash.text.TextFieldAutoSize;
    import net.wg.gui.lobby.profile.pages.awards.AwardsMainContainer;
@@ -32,7 +32,7 @@ package net.wg.gui.lobby.profile.pages.technique
 
       public var warningTextField:TextField;
 
-      private var _data:VehicleDossier;
+      private var _data:ProfileVehicleDossierVO;
 
       public var listBg:MovieClip;
 
@@ -53,21 +53,27 @@ package net.wg.gui.lobby.profile.pages.technique
 
       override public function update(param1:Object) : void {
          var _loc3_:Array = null;
-         var _loc4_:* = false;
-         var _loc2_:VehicleDossier = VehicleDossier(param1);
+         var _loc2_:ProfileVehicleDossierVO = ProfileVehicleDossierVO(param1);
          if(this._data != _loc2_)
          {
             this._data = _loc2_;
-            _loc3_ = _loc2_.getAchievements(true);
-            _loc4_ = isHasAchievements(_loc3_);
-            if(_loc4_)
+            _loc3_ = _loc2_.achievementsVOs;
+            if(_loc3_)
             {
-               this.warningTextField.visible = false;
-               this.scrollPane.visible = true;
+               if(isHasAchievements(_loc3_))
+               {
+                  this.warningTextField.visible = false;
+                  this.scrollPane.visible = true;
+               }
+               else
+               {
+                  this.warningTextField.visible = true;
+                  this.scrollPane.visible = false;
+               }
             }
             else
             {
-               this.warningTextField.visible = true;
+               this.warningTextField.visible = false;
                this.scrollPane.visible = false;
             }
             this.getPaneContent().data = _loc3_;

@@ -20,6 +20,7 @@ package net.wg.gui.lobby.profile.pages.technique
          this.checkBoxExistence.addEventListener(Event.SELECT,this.checkBoxSelectHandler,false,0,true);
          this.checkBoxExistence.addEventListener(MouseEvent.MOUSE_OVER,this.checkBoxMouseOverHandler,false,0,true);
          this.checkBoxExistence.addEventListener(MouseEvent.MOUSE_OUT,this.checkBoxMouseOutHandler,false,0,true);
+         emptyScreen.text = App.utils.locale.makeString(PROFILE.SECTION_TECHNIQUE_PAGE_EMPTYSCREENLABEL);
       }
 
       private function checkBoxMouseOverHandler(param1:MouseEvent) : void {

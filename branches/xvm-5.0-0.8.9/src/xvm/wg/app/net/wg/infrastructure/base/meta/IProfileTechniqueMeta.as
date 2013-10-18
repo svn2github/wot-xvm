@@ -6,7 +6,7 @@ package net.wg.infrastructure.base.meta
    public interface IProfileTechniqueMeta extends IEventDispatcher
    {
           
-
+      function as_responseVehicleDossier(param1:Object) : void;
    }
 
 }

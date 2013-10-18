@@ -52,9 +52,13 @@ package net.wg.gui.cyberSport.controls
             if(data)
             {
                this.inviteIndicator.visible = UnitCandidateVO(data).isInvite;
-               this.candidateName.htmlText = UnitCandidateVO(data).name;
+               this.candidateName.htmlText = App.utils.commons.formatPlayerName(this.candidateName,UnitCandidateVO(data).name);
                this.candidateRating.text = UnitCandidateVO(data).rating.toString();
                this.setSpeakers(data.isPlayerSpeaking,true);
+            }
+            else
+            {
+               this.setSpeakers(false,true);
             }
             this.updateVoiceWave();
          }
@@ -82,6 +86,10 @@ package net.wg.gui.cyberSport.controls
          if(this.voiceWave  is  VoiceWave)
          {
             this.voiceWave.setSpeaking(param1,param2);
+         }
+         if(data)
+         {
+            data.isPlayerSpeaking = param1;
          }
       }
 

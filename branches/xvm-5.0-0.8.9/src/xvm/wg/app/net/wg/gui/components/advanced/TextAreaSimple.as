@@ -181,6 +181,7 @@ package net.wg.gui.components.advanced
          _resetScrollPosition = true;
          if(textField == null)
          {
+            trace(">>> Error :: " + this + ", textField is NULL.");
             return;
          }
          this.updateText();

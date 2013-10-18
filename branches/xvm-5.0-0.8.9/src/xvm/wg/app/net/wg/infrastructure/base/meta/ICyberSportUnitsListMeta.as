@@ -12,7 +12,9 @@ package net.wg.infrastructure.base.meta
 
       function filterVehiclesS() : void;
 
-      function showMoreS() : void;
+      function loadPreviousS() : void;
+
+      function loadNextS() : void;
 
       function as_appendTeamsData(param1:Array) : void;
 

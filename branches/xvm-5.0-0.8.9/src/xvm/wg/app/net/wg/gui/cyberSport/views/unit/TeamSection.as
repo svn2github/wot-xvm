@@ -246,6 +246,7 @@ package net.wg.gui.cyberSport.views.unit
                _loc4_.playerStatus = _loc2_?_loc2_[_loc4_.index].playerStatus:0;
             }
             this.btnConfigure.visible = this.btnFreeze.visible = _loc1_;
+            this.btnFreeze.selected = this._unitData?this._unitData.isFreezed:false;
             if(!_loc1_)
             {
                this.settingsIcons.visible = true;

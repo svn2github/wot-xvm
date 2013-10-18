@@ -128,7 +128,6 @@ package net.wg.gui.components.tooltips
                }
                this.i++;
             }
-            contentMargin.bottom = 0;
          }
          if((!_loc2_.isCreator) && (_loc2_.vehiclesList) && _loc2_.vehiclesList.length > 0)
          {
@@ -177,7 +176,7 @@ package net.wg.gui.components.tooltips
                this.whiteBg.visible = false;
             }
          }
-         if(_loc2_.leftCount > 0)
+         if(!_loc2_.isCreator && _loc2_.leftCount > 0)
          {
             this.notEnoughTF.htmlText = Utils.instance.htmlWrapper(_loc1_.makeString(TOOLTIPS.SUITABLEVEHICLE_MORE),Utils.instance.COLOR_ADD_INFO,13,"$TitleFont") + " " + Utils.instance.htmlWrapper(_loc2_.leftCount.toString(),Utils.instance.COLOR_NUMBER,13,"$TitleFont");
             this.notEnoughTF.width = this.notEnoughTF.textWidth + 5;
@@ -185,7 +184,6 @@ package net.wg.gui.components.tooltips
             this.notEnoughTF.y = topPosition;
             this.notEnoughTF.x = bgShadowMargin.left + contentMargin.left;
             this.notEnoughTF.visible = true;
-            topPosition = topPosition + (this.notEnoughTF.textHeight + Utils.instance.MARGIN_AFTER_BLOCK);
          }
          else
          {
@@ -194,7 +192,6 @@ package net.wg.gui.components.tooltips
             this.notEnoughTF.width = 10;
             this.notEnoughTF.visible = false;
          }
-         topPosition = topPosition + this.MARGIN_AFTER_SUBHEADER;
          _loc2_.dispose();
          _loc2_ = null;
          updatePositions();

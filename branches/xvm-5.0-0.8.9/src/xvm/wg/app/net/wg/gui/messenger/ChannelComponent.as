@@ -116,6 +116,7 @@ package net.wg.gui.messenger
 
       private function onSendBtnClick(param1:ButtonEvent) : void {
          this.doMessage();
+         this.setFocusToInput();
       }
 
       private function doMessage() : void {

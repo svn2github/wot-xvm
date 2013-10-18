@@ -4,15 +4,15 @@ package net.wg.gui.components.tooltips
    import flash.display.Sprite;
    import net.wg.data.managers.ITooltipProps;
    import net.wg.gui.components.tooltips.VO.EquipmentVO;
+   import net.wg.gui.components.tooltips.VO.ToolTipBlockResultVO;
    import net.wg.utils.ILocale;
-   import net.wg.gui.components.tooltips.VO.ToolTipBlockVO;
    import flash.text.TextFormat;
    import flash.text.StyleSheet;
    import net.wg.gui.components.tooltips.VO.ToolTipStatusColorsVO;
-   import net.wg.gui.components.tooltips.VO.ToolTipBlockResultVO;
    import net.wg.gui.components.tooltips.helpers.Utils;
    import flash.text.TextFormatAlign;
    import flash.text.TextFieldAutoSize;
+   import net.wg.gui.components.tooltips.VO.ToolTipBlockVO;
    import net.wg.gui.components.tooltips.VO.ToolTipBlockRightListItemVO;
 
 
@@ -72,9 +72,9 @@ package net.wg.gui.components.tooltips
 
       override protected function redraw() : void {
          var _loc3_:EquipmentVO = null;
+         var _loc5_:ToolTipBlockResultVO = null;
          var _loc7_:ILocale = null;
          var _loc10_:* = NaN;
-         var _loc12_:ToolTipBlockVO = null;
          var _loc17_:String = null;
          var _loc18_:TextFormat = null;
          var _loc19_:StyleSheet = null;
@@ -101,7 +101,7 @@ package net.wg.gui.components.tooltips
          _loc3_ = new EquipmentVO(_data);
          var _loc4_:Separator = null;
          separators = new Vector.<Separator>();
-         var _loc5_:ToolTipBlockResultVO = null;
+         _loc5_ = null;
          blockResults = new Vector.<ToolTipBlockResultVO>();
          this._defContentMarginBottom = contentMargin.bottom;
          this._defBGShadowMarginBottom = bgShadowMargin.bottom;
@@ -174,7 +174,7 @@ package net.wg.gui.components.tooltips
          separators.push(_loc4_);
          topPosition = topPosition + Utils.instance.MARGIN_AFTER_SEPARATE;
          var _loc11_:String = " " + _loc7_.makeString(TOOLTIPS.MODULE_COUNT);
-         _loc12_ = new ToolTipBlockVO();
+         var _loc12_:ToolTipBlockVO = new ToolTipBlockVO();
          _loc12_.contener = content;
          _loc12_.childrenNamePrefix = "stats";
          _loc12_.leftText = "";

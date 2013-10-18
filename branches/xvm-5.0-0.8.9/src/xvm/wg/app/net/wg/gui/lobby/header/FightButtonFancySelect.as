@@ -17,9 +17,15 @@ package net.wg.gui.lobby.header
 
       private static const LIST_VS_BG:int = 138;
 
+      private static const HIT_AREA_PADDING_TOP:int = 4;
+
+      private static const HIT_AREA_PADDING_BOTTOM:int = 11;
+
       public var list:ScrollingListEx;
 
       public var bg:MovieClip;
+
+      public var additionalhitArea:MovieClip;
 
       private var _itemRenderer:Class;
 
@@ -65,6 +71,9 @@ package net.wg.gui.lobby.header
             this.list.labelFunction = this.labelFunction;
             this.list.focusTarget = focusTarget;
             this.bg.height = this.list.height + LIST_VS_BG;
+            this.additionalhitArea.y = this.list.y - HIT_AREA_PADDING_TOP;
+            this.additionalhitArea.height = this.list.height + HIT_AREA_PADDING_BOTTOM;
+            this.hitArea = this.additionalhitArea;
          }
       }
 

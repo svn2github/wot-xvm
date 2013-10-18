@@ -33,7 +33,7 @@ package net.wg.gui.login.impl
 
       private static const FREE_SPACE_BORDER_FACTOR:Number = 0.18;
 
-      private static const SPARK_ZONE:Rectangle = null;
+      private static var SPARK_ZONE:Rectangle;
 
       private static const SPARK_QUANTITY:uint = 150;
 

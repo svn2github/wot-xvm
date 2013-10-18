@@ -216,8 +216,7 @@ package net.wg.gui.lobby.hangar.ammunitionPanel
       }
 
       private function onExtraIconLoaded(param1:Event) : void {
-         var _loc2_:uint = 0;
-         _loc2_ = 2;
+         var _loc2_:uint = 2;
          this.extraIcon.x = width - this.extraIcon.width - _loc2_;
          this.extraIcon.y = height - this.extraIcon.height - _loc2_;
       }

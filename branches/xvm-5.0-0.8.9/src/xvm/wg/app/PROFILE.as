@@ -29,15 +29,21 @@ package
 
       public static const SECTION_STATISTICS_CHART_LEVEL_TOOLTIP:String = "#profile:section/statistics/chart/level/tooltip";
 
+      public static const SECTION_STATISTICS_CHART_LEVELDISABLED_TOOLTIP:String = "#profile:section/statistics/chart/levelDisabled/tooltip";
+
       public static const PROFILE_PARAMS_TOOLTIP_BATTLESCOUNT:String = "#profile:profile/params/tooltip/battlesCount";
 
       public static const PROFILE_PARAMS_TOOLTIP_WINS:String = "#profile:profile/params/tooltip/wins";
 
       public static const PROFILE_PARAMS_TOOLTIP_MARKOFMASTERY:String = "#profile:profile/params/tooltip/markOfMastery";
 
+      public static const PROFILE_PARAMS_TOOLTIP_MARKOFMASTERYDISABLED:String = PROFILE_PARAMS_TOOLTIP_MARKOFMASTERY + "Disabled";
+
       public static const PROFILE_PARAMS_TOOLTIP_MAXDESTROYED:String = "#profile:profile/params/tooltip/maxDestroyed";
 
       public static const PROFILE_PARAMS_TOOLTIP_MAXEXP:String = "#profile:profile/params/tooltip/maxExp";
+
+      public static const PROFILE_PARAMS_TOOLTIP_MAXEXPDISABLED:String = PROFILE_PARAMS_TOOLTIP_MAXEXP + "Disabled";
 
       public static const PROFILE_PARAMS_TOOLTIP_AVGEXP:String = "#profile:profile/params/tooltip/avgExp";
 
@@ -207,6 +213,14 @@ package
 
       public static const SECTION_STATISTICS_CHART_LEVEL_TOOLTIP_BODY:String = SECTION_STATISTICS_CHART_LEVEL_TOOLTIP + "/body";
 
+      public static const SECTION_STATISTICS_CHART_LEVELDISABLED_TOOLTIP_HEADER:String = SECTION_STATISTICS_CHART_LEVELDISABLED_TOOLTIP + "/header";
+
+      public static const SECTION_STATISTICS_CHART_LEVELDISABLED_TOOLTIP_BODY:String = SECTION_STATISTICS_CHART_LEVELDISABLED_TOOLTIP + "/body";
+
+      public static const SECTION_TECHNIQUE_WINDOW_EMPTYSCREENLABEL:String = "#profile:section/technique/window/emptyScreenLabel";
+
+      public static const SECTION_TECHNIQUE_PAGE_EMPTYSCREENLABEL:String = "#profile:section/technique/page/emptyScreenLabel";
+
       public static const SECTION_TECHNIQUE_TITLE:String = "#profile:section/technique/title";
 
       public static const SECTION_TECHNIQUE_BUTTONBAR_VEHICLENAME:String = "#profile:section/technique/buttonBar/vehicleName";
@@ -339,6 +353,10 @@ package
 
       public static const PROFILE_PARAMS_TOOLTIP_MARKOFMASTERY_BODY:String = PROFILE_PARAMS_TOOLTIP_MARKOFMASTERY + "/body";
 
+      public static const PROFILE_PARAMS_TOOLTIP_MARKOFMASTERYDISABLED_HEADER:String = PROFILE_PARAMS_TOOLTIP_MARKOFMASTERY + "Disabled/header";
+
+      public static const PROFILE_PARAMS_TOOLTIP_MARKOFMASTERYDISABLED_BODY:String = PROFILE_PARAMS_TOOLTIP_MARKOFMASTERY + "Disabled/body";
+
       public static const PROFILE_PARAMS_TOOLTIP_MAXDESTROYED_HEADER:String = PROFILE_PARAMS_TOOLTIP_MAXDESTROYED + "/header";
 
       public static const PROFILE_PARAMS_TOOLTIP_MAXDESTROYED_BODY:String = PROFILE_PARAMS_TOOLTIP_MAXDESTROYED + "/body";
@@ -346,6 +364,10 @@ package
       public static const PROFILE_PARAMS_TOOLTIP_MAXEXP_HEADER:String = PROFILE_PARAMS_TOOLTIP_MAXEXP + "/header";
 
       public static const PROFILE_PARAMS_TOOLTIP_MAXEXP_BODY:String = PROFILE_PARAMS_TOOLTIP_MAXEXP + "/body";
+
+      public static const PROFILE_PARAMS_TOOLTIP_MAXEXPDISABLED_HEADER:String = PROFILE_PARAMS_TOOLTIP_MAXEXP + "Disabled/header";
+
+      public static const PROFILE_PARAMS_TOOLTIP_MAXEXPDISABLED_BODY:String = PROFILE_PARAMS_TOOLTIP_MAXEXP + "Disabled/body";
 
       public static const PROFILE_PARAMS_TOOLTIP_AVGEXP_HEADER:String = PROFILE_PARAMS_TOOLTIP_AVGEXP + "/header";
 

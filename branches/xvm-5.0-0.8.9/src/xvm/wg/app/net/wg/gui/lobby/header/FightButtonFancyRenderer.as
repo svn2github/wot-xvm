@@ -14,6 +14,7 @@ package net.wg.gui.lobby.header
          scaleX = scaleY = 1;
          this.newIndicator.visible = false;
          this.newIndicator.mouseChildren = false;
+         this.hitArea = this.hitAreaA;
          this._originalTitleY = textField.y;
          this._originalDescrY = this.descr.y;
          if(this.descr.text)

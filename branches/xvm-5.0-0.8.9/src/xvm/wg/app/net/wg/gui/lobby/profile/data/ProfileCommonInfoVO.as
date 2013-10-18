@@ -11,21 +11,17 @@ package net.wg.gui.lobby.profile.data
          super(param1);
       }
 
-      public var battlesCount:uint;
+      public var battlesCount:int = -1;
 
-      public var winsCount:uint;
+      public var winsCount:int = -1;
 
-      public var hitsEfficiency:Number;
+      public var lossesCount:int = -1;
 
-      public var maxXP:Number;
+      public var hitsEfficiency:Number = -1;
 
-      public var maxXPByVehicle:String = "";
+      public var maxXP:int = -1;
 
-      public var avgXP:Number;
-
-      public var marksOfMastery:uint;
-
-      public var totalUserVehiclesCount:uint;
+      public var avgXP:int = -1;
 
       public function getBattlesCountStr() : String {
          return ItemsUtils.formatIntegerStr(this.battlesCount);
@@ -37,16 +33,24 @@ package net.wg.gui.lobby.profile.data
          return ItemsUtils.floatToPercent(_loc1_);
       }
 
-      public function getMarksOfMasteryCountStr() : String {
-         return ItemsUtils.formatIntegerStr(this.marksOfMastery);
-      }
-
       public function getHitsEfficiencyStr() : String {
          return ItemsUtils.floatToPercent(this.hitsEfficiency);
       }
 
       public function getMaxExperienceStr() : String {
          return ItemsUtils.formatIntegerStr(this.maxXP);
+      }
+
+      public function getWinsCountStr() : String {
+         return ItemsUtils.formatIntegerStr(this.winsCount);
+      }
+
+      public function getLossesCountStr() : String {
+         return ItemsUtils.formatIntegerStr(this.lossesCount);
+      }
+
+      public function getDrawsCountStr() : String {
+         return ItemsUtils.formatIntegerStr(this.battlesCount - this.winsCount - this.lossesCount);
       }
 
       public function getAvgExperienceStr() : String {

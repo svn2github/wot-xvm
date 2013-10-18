@@ -15,8 +15,6 @@ package net.wg.gui.lobby.profile.pages.technique
 
       private static var defaultIR_smallWidth:int = -1;
 
-      private static var defaultIR_bigWidth:int = -1;
-
       public static function getBigRendererWidth() : Number {
          if(defaultIR_smallWidth == -1)
          {

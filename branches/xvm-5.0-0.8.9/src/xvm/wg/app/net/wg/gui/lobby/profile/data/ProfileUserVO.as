@@ -5,7 +5,7 @@ package net.wg.gui.lobby.profile.data
 
    public class ProfileUserVO extends DAAPIDataClass
    {
-
+          
       public function ProfileUserVO(param1:Object) {
          super(param1);
       }

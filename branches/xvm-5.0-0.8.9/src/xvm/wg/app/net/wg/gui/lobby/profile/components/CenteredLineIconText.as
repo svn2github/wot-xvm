@@ -14,7 +14,7 @@ package net.wg.gui.lobby.profile.components
 
       override protected function configUI() : void {
          super.configUI();
-         descriptionTextField.autoSize = TextFieldAutoSize.CENTER;
+         textField.autoSize = TextFieldAutoSize.CENTER;
       }
 
       override protected function draw() : void {
@@ -26,9 +26,9 @@ package net.wg.gui.lobby.profile.components
             _loc1_ = Math.max(textComponent.textField.width,textComponent.background.width);
             textComponent.textField.x = _loc1_ - textComponent.textField.width >> 1;
             textComponent.background.x = _loc1_ - textComponent.background.width >> 1;
-            _loc1_ = Math.max(textComponent.width,descriptionTextField.width);
+            _loc1_ = Math.max(textComponent.width,textField.width);
             textComponent.x = _loc1_ - textComponent.width >> 1;
-            descriptionTextField.x = _loc1_ - descriptionTextField.width >> 1;
+            textField.x = _loc1_ - textField.width >> 1;
          }
       }
 

@@ -11,24 +11,21 @@ package net.wg.gui.lobby.profile.components
          super();
       }
 
+      public static const TEXT_INVALID:String = "txtInv";
+
+      public static const ICON_INVALID:String = "iconInv";
+
       public var textComponent:UnderlinedText;
 
       public var icon:UILoaderAlt;
 
       protected var _text:String = "";
 
-      protected var isTextChanged:Boolean;
-
-      private var isPaddingChanged:Boolean;
-
       private var _iconSource:String;
-
-      private var isIconSourceChanged:Boolean;
 
       public function set text(param1:String) : void {
          this._text = param1;
-         this.isTextChanged = true;
-         invalidate();
+         invalidate(TEXT_INVALID);
       }
 
       public function get text() : String {
@@ -37,16 +34,11 @@ package net.wg.gui.lobby.profile.components
 
       override protected function draw() : void {
          super.draw();
-         if(this.isTextChanged)
+         if(isInvalid(TEXT_INVALID))
          {
-            this.isTextChanged = false;
             this.applyText();
          }
-         if(this.isPaddingChanged)
-         {
-            this.isPaddingChanged = false;
-         }
-         if(this.isIconSourceChanged)
+         if((isInvalid(ICON_INVALID)) && (this.icon))
          {
             this.icon.source = this._iconSource;
          }
@@ -62,8 +54,7 @@ package net.wg.gui.lobby.profile.components
 
       public function set iconSource(param1:String) : void {
          this._iconSource = param1;
-         this.isIconSourceChanged = true;
-         invalidate();
+         invalidate(ICON_INVALID);
       }
    }
 

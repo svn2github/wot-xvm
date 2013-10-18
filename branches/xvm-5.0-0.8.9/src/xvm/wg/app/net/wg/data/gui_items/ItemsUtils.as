@@ -29,7 +29,7 @@ package net.wg.data.gui_items
          var param1:Number = param1 * 100;
          if(App.utils)
          {
-            return App.utils.locale.numberWithoutZeros(param1) + "%";
+            return App.utils.locale.numberWithoutZeros(param1);
          }
          return param1.toString();
       }

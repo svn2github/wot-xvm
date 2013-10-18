@@ -50,6 +50,8 @@ package net.wg.gui.cyberSport
 
       private var currentView:ICyberSportBaseViewMeta;
 
+      private var chatFocusNeeded:Boolean = true;
+
       public function as_enableWndCloseBtn(param1:Boolean) : void {
          Button(window.getCloseBtn()).enabled = param1;
       }
@@ -144,9 +146,10 @@ package net.wg.gui.cyberSport
       override public function setFocus() : void {
          super.setFocus();
          var _loc1_:IChannelComponentHolder = this.currentView as IChannelComponentHolder;
-         if(_loc1_)
+         if((_loc1_) && (this.chatFocusNeeded))
          {
             _loc1_.getChannelComponent().setFocusToInput();
+            this.chatFocusNeeded = false;
          }
          else
          {
@@ -224,6 +227,7 @@ package net.wg.gui.cyberSport
             registerComponent(_loc3_.getChannelComponent(),Aliases.CHANNEL_COMPONENT);
          }
          registerComponent(this.currentView as IDAAPIModule,this.currentView.as_getPyAlias());
+         this.chatFocusNeeded = true;
          this.setFocus();
       }
 

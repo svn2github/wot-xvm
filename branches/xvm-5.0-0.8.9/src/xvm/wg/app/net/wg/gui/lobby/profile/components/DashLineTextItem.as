@@ -2,9 +2,9 @@ package net.wg.gui.lobby.profile.components
 {
    import scaleform.clik.core.UIComponent;
    import flash.text.TextField;
-   import flash.text.TextFieldAutoSize;
    import flash.events.MouseEvent;
    import net.wg.data.managers.IToolTipParams;
+   import flash.text.TextFieldAutoSize;
    import scaleform.clik.constants.InvalidationType;
 
 
@@ -39,11 +39,7 @@ package net.wg.gui.lobby.profile.components
 
       private var _tooltip:String;
 
-      override protected function configUI() : void {
-         super.configUI();
-         this.labelTextField.autoSize = TextFieldAutoSize.LEFT;
-         this.valueTextField.autoSize = TextFieldAutoSize.LEFT;
-      }
+      private var _myEnabled:Boolean = true;
 
       protected function mouseRollOutHandler(param1:MouseEvent) : void {
          hideToolTip();
@@ -62,14 +58,26 @@ package net.wg.gui.lobby.profile.components
 
       override protected function draw() : void {
          super.draw();
-         if(isInvalid(LABEL_INV))
-         {
-            this.labelTextField.text = this._label;
-            invalidate(InvalidationType.SIZE);
-         }
          if(isInvalid(VALUE_INV))
          {
-            this.valueTextField.htmlText = this._value;
+            if(this._myEnabled)
+            {
+               gotoAndPlay("up");
+               this.valueTextField.autoSize = TextFieldAutoSize.LEFT;
+               this.valueTextField.htmlText = this._value;
+            }
+            else
+            {
+               gotoAndPlay("disabled");
+               this.valueTextField.autoSize = TextFieldAutoSize.LEFT;
+               this.valueTextField.htmlText = "--";
+            }
+            if(isInvalid(LABEL_INV))
+            {
+               this.labelTextField.autoSize = TextFieldAutoSize.LEFT;
+               this.labelTextField.text = this._label;
+               invalidate(InvalidationType.SIZE);
+            }
             invalidate(InvalidationType.SIZE);
          }
          if(isInvalid(InvalidationType.SIZE))
@@ -120,6 +128,19 @@ package net.wg.gui.lobby.profile.components
       override public function dispose() : void {
          this.disposeListeners();
          super.dispose();
+      }
+
+      override public function set enabled(param1:Boolean) : void {
+         if(param1 != this._myEnabled)
+         {
+            this._myEnabled = param1;
+            invalidate(VALUE_INV);
+            invalidate(LABEL_INV);
+         }
+      }
+
+      override public function get enabled() : Boolean {
+         return this._myEnabled;
       }
    }
 

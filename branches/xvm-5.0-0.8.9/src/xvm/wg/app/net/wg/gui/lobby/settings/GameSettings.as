@@ -121,6 +121,8 @@ package net.wg.gui.lobby.settings
 
       private var vibroControlsList:Array = null;
 
+      private var missChangeEvent:Boolean = false;
+
       override protected function configUI() : void {
          super.configUI();
          this.fieldSetChat.label = SETTINGS.GAME_FIELDSET_HEADERCHAT;
@@ -253,7 +255,10 @@ package net.wg.gui.lobby.settings
             _loc5_ = LabelControl(this[_loc3_ + SettingsConfig.TYPE_VALUE]);
             _loc5_.text = _loc2_.value.toString();
          }
-         dispatchEvent(new SettingViewEvent(SettingViewEvent.ON_CONTROL_CHANGED,_viewId,_loc3_,_loc2_.value));
+         if(!this.missChangeEvent)
+         {
+            dispatchEvent(new SettingViewEvent(SettingViewEvent.ON_CONTROL_CHANGED,_viewId,_loc3_,_loc2_.value));
+         }
       }
 
       private function onCheckBoxSelected(param1:Event) : void {
@@ -263,7 +268,10 @@ package net.wg.gui.lobby.settings
          {
             this.enableHorStabilizationSnp(_loc3_);
          }
-         dispatchEvent(new SettingViewEvent(SettingViewEvent.ON_CONTROL_CHANGED,_viewId,_loc2_,_loc3_));
+         if(!this.missChangeEvent)
+         {
+            dispatchEvent(new SettingViewEvent(SettingViewEvent.ON_CONTROL_CHANGED,_viewId,_loc2_,_loc3_));
+         }
       }
 
       private function enableHorStabilizationSnp(param1:Boolean) : void {
@@ -273,6 +281,7 @@ package net.wg.gui.lobby.settings
          {
             _loc2_ = SettingsConfig.HOR_STABILIZATION_SNP;
             _loc3_ = SettingsControlProp(SettingsConfig.settingsData[SettingsConfig.GAME_SETTINGS][_loc2_]);
+            this.missChangeEvent = true;
             if(param1)
             {
                this.horStabilizationSnpCheckbox.selected = _loc3_.lastVal;
@@ -282,7 +291,7 @@ package net.wg.gui.lobby.settings
                _loc3_.lastVal = this.horStabilizationSnpCheckbox.selected;
                this.horStabilizationSnpCheckbox.selected = false;
             }
-            dispatchEvent(new SettingViewEvent(SettingViewEvent.ON_CONTROL_CHANGED,_viewId,_loc2_,this.horStabilizationSnpCheckbox.selected));
+            this.missChangeEvent = false;
             this.horStabilizationSnpCheckbox.enabled = param1;
          }
       }

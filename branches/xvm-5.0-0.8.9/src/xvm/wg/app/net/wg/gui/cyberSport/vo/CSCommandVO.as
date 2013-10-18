@@ -11,8 +11,6 @@ package net.wg.gui.cyberSport.vo
          super(param1);
       }
 
-      private static const STATE_LOAD_MORE:String = "loadMore";
-
       private var _creator:String = "";
 
       private var _vehicles:Array;
@@ -37,8 +35,19 @@ package net.wg.gui.cyberSport.vo
 
       private var _server:String = "";
 
+      public var navigationConfig:NavigationBlockVO = null;
+
+      override protected function onDataWrite(param1:String, param2:Object) : Boolean {
+         if(param1 == "navigationBlock")
+         {
+            this.navigationConfig = new NavigationBlockVO(param2);
+            return false;
+         }
+         return this.hasOwnProperty(param1);
+      }
+
       public function get isLoadMoreState() : Boolean {
-         return this._specialState == STATE_LOAD_MORE;
+         return !(this.navigationConfig == null);
       }
 
       public function get creator() : String {

@@ -153,6 +153,8 @@ package net.wg.gui.prebattle.company
 
       private var buttonsUpdated:Boolean = false;
 
+      private var chatFocusCounter:int = 0;
+
       override protected function onPopulate() : void {
          super.onPopulate();
          registerComponent(this.channelComponent,Aliases.CHANNEL_COMPONENT);
@@ -208,9 +210,10 @@ package net.wg.gui.prebattle.company
 
       override public function setFocus() : void {
          super.setFocus();
-         if(this.channelComponent)
+         if((this.channelComponent) && this.chatFocusCounter < 2)
          {
             this.channelComponent.setFocusToInput();
+            this.chatFocusCounter++;
          }
       }
 

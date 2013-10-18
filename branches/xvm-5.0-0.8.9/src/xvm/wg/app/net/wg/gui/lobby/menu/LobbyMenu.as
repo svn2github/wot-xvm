@@ -2,6 +2,7 @@ package net.wg.gui.lobby.menu
 {
    import net.wg.infrastructure.base.meta.impl.LobbyMenuMeta;
    import net.wg.infrastructure.base.meta.ILobbyMenuMeta;
+   import flash.display.MovieClip;
    import scaleform.clik.events.ButtonEvent;
    import flash.text.TextFieldAutoSize;
 
@@ -21,6 +22,8 @@ package net.wg.gui.lobby.menu
       public var content:LobbyMenuForm = null;
 
       override protected function onPopulate() : void {
+         MovieClip(window.getBackground()).tabEnabled = false;
+         MovieClip(window.getBackground()).tabChildren = false;
          this.content.logoffBtn.addEventListener(ButtonEvent.PRESS,this.onLogoffClick);
          this.content.settingsBtn.addEventListener(ButtonEvent.PRESS,this.onSettingsClick);
          this.content.quitBtn.addEventListener(ButtonEvent.PRESS,this.onQuitClick);

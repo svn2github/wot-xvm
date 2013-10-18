@@ -97,6 +97,10 @@ package net.wg.gui.cyberSport.views.unit
                {
                   this.setSpeakers(slotData.player.isPlayerSpeaking,true);
                }
+               else
+               {
+                  this.setSpeakers(false,true);
+               }
             }
             this.updateVoiceWave();
          }
@@ -167,6 +171,10 @@ package net.wg.gui.cyberSport.views.unit
          if(this.voiceWave  is  VoiceWave)
          {
             this.voiceWave.setSpeaking(param1,param2);
+         }
+         if((slotData) && (slotData.player))
+         {
+            slotData.player.isPlayerSpeaking = param1;
          }
       }
    }

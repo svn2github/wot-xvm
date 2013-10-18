@@ -24,8 +24,15 @@ package net.wg.gui.lobby.profile.pages.statistics
 
       private var _tooltip:String = null;
 
+      private var _initialized:Boolean;
+
       public function get tooltip() : String {
          return this._tooltip;
+      }
+
+      override protected function onLoadingComplete() : void {
+         this._initialized = true;
+         super.onLoadingComplete();
       }
 
       public function set tooltip(param1:String) : void {
@@ -127,6 +134,10 @@ package net.wg.gui.lobby.profile.pages.statistics
       override public function dispose() : void {
          this.disposeHandlers();
          super.dispose();
+      }
+
+      public function get initialized() : Boolean {
+         return this._initialized;
       }
    }
 

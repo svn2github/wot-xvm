@@ -8,7 +8,7 @@ package net.wg.infrastructure.base.meta
           
       function handleGlobalKeyEventS(param1:Number, param2:String) : void;
 
-      function as_addKeyHandler(param1:Number, param2:String, param3:Boolean) : void;
+      function as_addKeyHandler(param1:Number, param2:String, param3:Boolean, param4:String=null) : void;
 
       function as_clearKeyHandler(param1:Number, param2:String) : void;
    }

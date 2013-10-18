@@ -1,7 +1,7 @@
 package net.wg.gui.lobby.profile.pages.statistics
 {
    import scaleform.clik.core.UIComponent;
-   import net.wg.gui.lobby.profile.components.DashLineTextItem;
+   import net.wg.gui.lobby.profile.components.ProfileDashLineTextItem;
 
 
    public class CommonStatistics extends UIComponent
@@ -15,35 +15,37 @@ package net.wg.gui.lobby.profile.pages.statistics
 
       private static const TF_BLOCK1_WIDTH:int = 338;
 
+      private static const DEFAULT_COLOR:uint = 16777215;
+
       private static const SIDES_PADDING:int = 30;
 
       private static const CENTER_PADDING:int = 50;
 
-      private static function applyLabelsText(param1:String, param2:Object, param3:DashLineTextItem) : void {
+      private static function applyLabelsText(param1:String, param2:Object, param3:ProfileDashLineTextItem) : void {
          param3.label = param2[param1];
       }
 
-      public var ltKilled:DashLineTextItem;
+      public var ltKilled:ProfileDashLineTextItem;
 
-      public var ltDestroyed:DashLineTextItem;
+      public var ltDestroyed:ProfileDashLineTextItem;
 
-      public var ltDestructionCoefficient:DashLineTextItem;
+      public var ltDestructionCoefficient:ProfileDashLineTextItem;
 
-      public var ltDealOutDamage:DashLineTextItem;
+      public var ltDealOutDamage:ProfileDashLineTextItem;
 
-      public var ltReceivedDamage:DashLineTextItem;
+      public var ltReceivedDamage:ProfileDashLineTextItem;
 
-      public var ltDamageCoefficient:DashLineTextItem;
+      public var ltDamageCoefficient:ProfileDashLineTextItem;
 
-      public var ltAvgDestroyedVehicles:DashLineTextItem;
+      public var ltAvgDestroyedVehicles:ProfileDashLineTextItem;
 
-      public var ltMaxDestroyedVehicles:DashLineTextItem;
+      public var ltMaxDestroyedVehicles:ProfileDashLineTextItem;
 
-      public var ltAvgDamage:DashLineTextItem;
+      public var ltAvgDamage:ProfileDashLineTextItem;
 
-      public var ltAvgReceivedDamage:DashLineTextItem;
+      public var ltAvgReceivedDamage:ProfileDashLineTextItem;
 
-      public var ltAvgDetectedEnemies:DashLineTextItem;
+      public var ltAvgDetectedEnemies:ProfileDashLineTextItem;
 
       override protected function configUI() : void {
          super.configUI();
@@ -69,17 +71,19 @@ package net.wg.gui.lobby.profile.pages.statistics
 
       public function setDossierData(param1:Object) : void {
          var _loc2_:ProfileStatisticsDetailVO = new ProfileStatisticsDetailVO(param1);
-         this.ltKilled.value = _loc2_.getFragsCountStr();
-         this.ltDestroyed.value = _loc2_.getDeathsCountStr();
-         this.ltDestructionCoefficient.value = "<font color=\'#cbad78\'>" + _loc2_.getFragsEfficiencyStr() + "</font>";
-         this.ltDealOutDamage.value = _loc2_.getDamageDealtStr();
-         this.ltReceivedDamage.value = _loc2_.getDamageReceivedStr();
-         this.ltDamageCoefficient.value = "<font color=\'#cbad78\'>" + _loc2_.getDamageEfficiencyStr() + "</font>";
-         this.ltAvgDestroyedVehicles.value = _loc2_.getAvgFragsStr();
-         this.ltMaxDestroyedVehicles.value = _loc2_.getMaxFragsStr();
-         this.ltAvgDamage.value = _loc2_.getAvgDamageDealtStr();
-         this.ltAvgReceivedDamage.value = _loc2_.getAvgDamageReceivedStr();
-         this.ltAvgDetectedEnemies.value = _loc2_.getAvgEnemiesSpottedStr();
+         this.ltKilled.receiveAndSetValue(_loc2_.fragsCount,DEFAULT_COLOR,_loc2_.getFragsCountStr);
+         this.ltDestroyed.receiveAndSetValue(_loc2_.deathsCount,DEFAULT_COLOR,_loc2_.getDeathsCountStr);
+         var _loc3_:Number = _loc2_.fragsEfficiency > 0?_loc2_.fragsEfficiency:-1;
+         this.ltDestructionCoefficient.receiveAndSetValue(_loc3_,13348216,_loc2_.getFragsEfficiencyStr);
+         this.ltDealOutDamage.receiveAndSetValue(_loc2_.damageDealt,DEFAULT_COLOR,_loc2_.getDamageDealtStr);
+         this.ltReceivedDamage.receiveAndSetValue(_loc2_.damageReceived,DEFAULT_COLOR,_loc2_.getDamageReceivedStr);
+         _loc3_ = _loc2_.damageEfficiency > 0?_loc2_.damageEfficiency:-1;
+         this.ltDamageCoefficient.receiveAndSetValue(_loc3_,13348216,_loc2_.getDamageEfficiencyStr);
+         this.ltAvgDestroyedVehicles.receiveAndSetValue(_loc2_.avgFrags,DEFAULT_COLOR,_loc2_.getAvgFragsStr);
+         this.ltMaxDestroyedVehicles.receiveAndSetValue(_loc2_.maxFrags,DEFAULT_COLOR,_loc2_.getMaxFragsStr);
+         this.ltAvgDamage.receiveAndSetValue(_loc2_.avgDamageDealt,DEFAULT_COLOR,_loc2_.getAvgDamageDealtStr);
+         this.ltAvgReceivedDamage.receiveAndSetValue(_loc2_.avgDamageReceived,DEFAULT_COLOR,_loc2_.getAvgDamageReceivedStr);
+         this.ltAvgDetectedEnemies.receiveAndSetValue(_loc2_.avgEnemiesSpotted,DEFAULT_COLOR,_loc2_.getAvgEnemiesSpottedStr);
       }
 
       public function setViewSize(param1:Number, param2:Number) : void {

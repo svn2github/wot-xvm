@@ -12,7 +12,6 @@ package net.wg.gui.components.controls.achievements
       override protected function configUI() : void {
          super.configUI();
          minBgWindowWidth = 13;
-         tooltip = TOOLTIPS.ACHIEVEMENT_ATTR_RECORD;
       }
 
       override public function receiveBottomPadding() : Number {

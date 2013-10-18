@@ -44,13 +44,15 @@ package net.wg.gui.lobby.questsWindow
 
       public var counter:MovieClip;
 
+      public var bg:MovieClip;
+
+      public var maskMC:MovieClip;
+
       public var progressIndicator:ProgressQuestIndicator;
 
       private var headerData:HeaderDataVO = null;
 
-      public var bg:MovieClip;
-
-      public var maskMC:MovieClip;
+      private var _noProgress:Boolean = true;
 
       private var _statusTooltip:String = "";
 
@@ -150,7 +152,7 @@ package net.wg.gui.lobby.questsWindow
       }
 
       private function checkProgress() : void {
-         this.progressIndicator.visible = Boolean(this.headerData.progrBarType);
+         this.progressIndicator.visible = (Boolean(this.headerData.progrBarType)) && !this._noProgress;
          if(this.headerData.progrBarType)
          {
             this.progressIndicator.setValues(this.headerData.progrBarType,this.headerData.currentProgrVal,this.headerData.maxProgrVal);
@@ -160,7 +162,7 @@ package net.wg.gui.lobby.questsWindow
 
       private function checkCounter() : void {
          this.counter.textField.text = this.headerData.tasksCount.toString();
-         if(this.headerData.tasksCount > COUNTER_NO_DATA)
+         if(this.headerData.tasksCount > COUNTER_NO_DATA && !this._noProgress)
          {
             this.counter.visible = true;
             this.progressIndicator.y = this.counter.y + this.counter.height - 5;
@@ -173,18 +175,33 @@ package net.wg.gui.lobby.questsWindow
       }
 
       private function checkStatus() : void {
-         this.statusMC.visible = Boolean(this.headerData.status);
-         this.lableTF.textColor = this.headerData.status?6644049:12104084;
-         if(this.headerData.status)
+         this._noProgress = false;
+         if(this.headerData.status == QuestsStates.NOT_AVAILABLE)
          {
-            this.statusMC.gotoAndStop(this.headerData.status);
-            this.counter.x = COUNTER_X;
-            this._statusTooltip = this.headerData.status == "done"?TOOLTIPS.QUESTS_STATUS_DONE:TOOLTIPS.QUESTS_STATUS_NOTREADY;
+            this._noProgress = this.headerData.tasksCount <= 0 && this.headerData.currentProgrVal <= 0;
+            this.statusMC.visible = this._noProgress;
+            this.statusMC.gotoAndStop(QuestsStates.NOT_AVAILABLE);
+            this._statusTooltip = TOOLTIPS.QUESTS_STATUS_NOTREADY;
+            this.counter.x = this._noProgress?COUNTER_X:COUNTER_X + STATUS_MARGIN;
+            this.lableTF.textColor = 6644049;
          }
          else
          {
-            this._statusTooltip = "";
-            this.counter.x = COUNTER_X + STATUS_MARGIN;
+            if(this.headerData.status == QuestsStates.DONE)
+            {
+               this.statusMC.visible = true;
+               this.statusMC.gotoAndStop(QuestsStates.DONE);
+               this._statusTooltip = TOOLTIPS.QUESTS_STATUS_DONE;
+               this.counter.x = COUNTER_X;
+               this.lableTF.textColor = 6644049;
+            }
+            else
+            {
+               this.statusMC.visible = false;
+               this.lableTF.textColor = 12104084;
+               this._statusTooltip = "";
+               this.counter.x = COUNTER_X + STATUS_MARGIN;
+            }
          }
       }
 

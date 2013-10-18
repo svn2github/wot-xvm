@@ -48,6 +48,8 @@ package net.wg.gui.prebattle.squad
 
       private var _canSendInvites:Boolean = false;
 
+      private var chatFocusCounter:int = 0;
+
       override public function as_enableLeaveBtn(param1:Boolean) : void {
          this.leaveButton.enabled = param1;
       }
@@ -62,9 +64,10 @@ package net.wg.gui.prebattle.squad
 
       override public function setFocus() : void {
          super.setFocus();
-         if(this.squadChannelComponent)
+         if((this.squadChannelComponent) && this.chatFocusCounter < 2)
          {
             this.squadChannelComponent.setFocusToInput();
+            this.chatFocusCounter++;
          }
       }
 

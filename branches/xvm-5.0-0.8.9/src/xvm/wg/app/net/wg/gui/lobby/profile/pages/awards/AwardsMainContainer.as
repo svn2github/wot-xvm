@@ -109,13 +109,20 @@ package net.wg.gui.lobby.profile.pages.awards
          var _loc5_:uint = 0;
          var _loc6_:* = 0;
          super.draw();
-         if((isInvalid(InvalidationType.DATA)) && (this._allMedalsData))
+         if(isInvalid(InvalidationType.DATA))
          {
             _loc1_ = this.blocks.length;
             _loc2_ = 0;
             while(_loc2_ < _loc1_)
             {
-               applyBlockData(this.blocks[_loc2_],this._allMedalsData[_loc2_]);
+               if(this._allMedalsData)
+               {
+                  applyBlockData(this.blocks[_loc2_],this._allMedalsData[_loc2_]);
+               }
+               else
+               {
+                  applyBlockData(this.blocks[_loc2_],[]);
+               }
                _loc2_++;
             }
          }

@@ -2,6 +2,7 @@ package net.wg.gui.lobby.profile.pages.statistics
 {
    import scaleform.clik.core.UIComponent;
    import net.wg.infrastructure.interfaces.entity.IDisposable;
+   import net.wg.gui.lobby.profile.components.LditBattles;
    import net.wg.gui.lobby.profile.components.LineDescrIconText;
    import net.wg.gui.lobby.profile.components.LditValued;
    import net.wg.gui.lobby.profile.components.LditMarksOfMastery;
@@ -20,7 +21,7 @@ package net.wg.gui.lobby.profile.pages.statistics
 
       public static const LAYOUT_INVALID:String = "layoutInv";
 
-      public var tfTotalBattles:LineDescrIconText;
+      public var tfTotalBattles:LditBattles;
 
       public var tfWins:LineDescrIconText;
 
@@ -89,14 +90,36 @@ package net.wg.gui.lobby.profile.pages.statistics
       public function setDossierData(param1:Object) : void {
          var _loc2_:ProfileStatisticsVO = new ProfileStatisticsVO(param1);
          this.tfTotalBattles.text = _loc2_.getBattlesCountStr();
-         this.tfWins.text = _loc2_.getWinsEfficiencyStr();
-         this.tfSurvival.text = _loc2_.getSurvivalEfficiencyStr();
-         this.tfHits.text = _loc2_.getHitsEfficiencyStr();
-         this.tfMaxExperience.text = _loc2_.getMaxExperienceStr();
-         this.tfMaxExperience.value = _loc2_.maxXPByVehicle;
+         this.tfTotalBattles.setValues(_loc2_.getWinsCountStr(),_loc2_.getLossesCountStr(),_loc2_.getDrawsCountStr());
+         this.tfWins.text = _loc2_.getWinsEfficiencyStr() + "%";
+         this.tfSurvival.text = _loc2_.getSurvivalEfficiencyStr() + "%";
+         this.tfHits.text = _loc2_.getHitsEfficiencyStr() + "%";
+         if(_loc2_.maxXP != -1)
+         {
+            this.tfMaxExperience.tooltip = PROFILE.PROFILE_PARAMS_TOOLTIP_MAXEXP;
+            this.tfMaxExperience.enabled = true;
+            this.tfMaxExperience.text = _loc2_.getMaxExperienceStr();
+            this.tfMaxExperience.value = _loc2_.maxXP > 0?_loc2_.maxXPByVehicle:null;
+         }
+         else
+         {
+            this.tfMaxExperience.tooltip = PROFILE.PROFILE_PARAMS_TOOLTIP_MAXEXPDISABLED;
+            this.tfMaxExperience.value = null;
+            this.tfMaxExperience.enabled = false;
+         }
          this.tfAvgExperience.text = _loc2_.getAvgExperienceStr();
-         this.tfMarksOfMastery.text = _loc2_.getMarksOfMasteryCountStr();
-         this.tfMarksOfMastery.totalCount = _loc2_.totalUserVehiclesCount;
+         if(_loc2_.marksOfMastery != -1)
+         {
+            this.tfMarksOfMastery.tooltip = PROFILE.PROFILE_PARAMS_TOOLTIP_MARKOFMASTERY;
+            this.tfMarksOfMastery.enabled = true;
+            this.tfMarksOfMastery.text = _loc2_.getMarksOfMasteryCountStr();
+            this.tfMarksOfMastery.totalCount = _loc2_.totalUserVehiclesCount;
+         }
+         else
+         {
+            this.tfMarksOfMastery.tooltip = PROFILE.PROFILE_PARAMS_TOOLTIP_MARKOFMASTERYDISABLED;
+            this.tfMarksOfMastery.enabled = false;
+         }
       }
 
       override public function dispose() : void {

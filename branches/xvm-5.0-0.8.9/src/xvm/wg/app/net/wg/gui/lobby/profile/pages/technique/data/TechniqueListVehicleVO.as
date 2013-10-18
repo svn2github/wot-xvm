@@ -1,4 +1,4 @@
-package net.wg.gui.lobby.profile.pages.technique
+package net.wg.gui.lobby.profile.pages.technique.data
 {
    import net.wg.data.daapi.base.DAAPIDataClass;
    import net.wg.data.gui_items.ItemsUtils;
