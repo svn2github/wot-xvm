@@ -42,7 +42,7 @@
 
     // BattleResults
     "Hit percent": "Tasa de impactos",
-    "Damage (assisted / own)": "Daño (asistido / propio)",
+    "Damage (assisted / own)": "Da¤o (asistido / propio)",
 
     // TeamRenderers
     "Friend": "Amigo",
@@ -63,7 +63,7 @@
     "avg": "pro",
     "top": "sup",
     "draws": "empates",
-    "Specific damage (Avg dmg / HP)": "Daño especifico (Promedio / Im)",
+    "Specific damage (Avg dmg / HP)": "Da¤o especifico (Promedio / Im)",
     "Capture points": "Captura", 
     "Defence points": "Defensa", 
     "Filter": "Filtro",
@@ -76,6 +76,8 @@
     // Squad
     "Vehicle": "Vehiculo",
     "Battle tiers": "Tiers de batalla",
+    "Type": "Tipo",
+    "Nation": "Nacion",
     "ussr": "U.S.S.R.",
     "germany": "Alemania",
     "usa": "EE.UU",
