@@ -20,7 +20,7 @@ package scaleform.clik.controls
 
    public class TextArea extends TextInput
    {
-
+          
       public function TextArea() {
          this._thumbOffset =
             {

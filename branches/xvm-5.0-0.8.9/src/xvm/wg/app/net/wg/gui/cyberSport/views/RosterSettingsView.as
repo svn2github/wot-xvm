@@ -3,6 +3,7 @@ package net.wg.gui.cyberSport.views
    import scaleform.clik.core.UIComponent;
    import flash.text.TextField;
    import net.wg.gui.components.controls.SoundButtonEx;
+   import net.wg.gui.cyberSport.controls.RosterSettingsNumerationBlock;
    import __AS3__.vec.Vector;
    import net.wg.gui.cyberSport.vo.UnitSlotVO;
    import scaleform.clik.motion.Tween;
@@ -57,6 +58,8 @@ package net.wg.gui.cyberSport.views
       public var submitBtn:SoundButtonEx;
 
       public var cancelBtn:SoundButtonEx;
+
+      public var numerationBlock:RosterSettingsNumerationBlock;
 
       private var slots:Vector.<AnimatedRosterSettingsView>;
 

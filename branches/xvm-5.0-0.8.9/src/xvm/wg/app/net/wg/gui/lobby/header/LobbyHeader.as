@@ -80,6 +80,10 @@ package net.wg.gui.lobby.header
          this.account.setProfileType(param1);
       }
 
+      public function as_disableRoamingDD(param1:Boolean) : void {
+         this.regionDD.enabled = !param1;
+      }
+
       public function as_setPremiumParams(param1:String, param2:String, param3:Boolean) : void {
          this.account.setPremiumParams(param1,param2,param3);
       }

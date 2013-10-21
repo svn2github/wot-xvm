@@ -18,7 +18,7 @@ package scaleform.clik.controls
 
    public class ScrollingList extends CoreList
    {
-
+          
       public function ScrollingList() {
          super();
       }

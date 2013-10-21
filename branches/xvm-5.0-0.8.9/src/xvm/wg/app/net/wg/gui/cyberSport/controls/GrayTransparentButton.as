@@ -11,9 +11,11 @@ package net.wg.gui.cyberSport.controls
          super();
       }
 
-      private static const ICON_NO_ICON:String = "noIcon";
+      public static const ICON_NO_ICON:String = "noIcon";
 
-      private static const ICON_CROSS:String = "cross";
+      public static const ICON_CROSS:String = "cross";
+
+      public static const ICON_LOCK:String = "lock";
 
       public var iconContainer:MovieClip;
 

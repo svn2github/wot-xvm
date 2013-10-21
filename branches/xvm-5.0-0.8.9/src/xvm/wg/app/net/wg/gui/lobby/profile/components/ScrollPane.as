@@ -16,7 +16,7 @@ package net.wg.gui.lobby.profile.components
 
    public class ScrollPane extends UIComponent
    {
-
+          
       public function ScrollPane() {
          super();
       }

@@ -42,7 +42,6 @@ package net.wg.gui.components.common.crosshair
          {
             this._time = param1;
             this.contentContainer.gotoAndStop(param2?"progress":"complete");
-            this.contentContainer.blendMode = param2?"normal":"add";
             _loc3_ = App.utils.locale.float(String(this._time));
             _loc4_ = App.utils.locale.parseFormattedInteger(_loc3_);
             _loc5_ = _loc4_.delimiter;

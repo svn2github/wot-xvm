@@ -6,9 +6,6 @@ package net.wg.gui.cyberSport.controls
    import net.wg.gui.cyberSport.vo.UnitCandidateVO;
    import flash.events.MouseEvent;
    import net.wg.gui.cyberSport.helpers.CSPlayerCIGenerator;
-   import net.wg.gui.cyberSport.views.unit.SlotRenderer;
-   import net.wg.infrastructure.interfaces.IContextItem;
-   import net.wg.data.components.UserContextItem;
    import net.wg.gui.events.ContextMenuEvent;
    import net.wg.gui.cyberSport.controls.events.CSComponentEvent;
 
@@ -82,25 +79,14 @@ package net.wg.gui.cyberSport.controls
 
       private function onClickHandler(param1:MouseEvent) : void {
          var _loc2_:UnitCandidateVO = null;
-         var _loc3_:* = false;
-         var _loc4_:* = false;
-         var _loc5_:CSPlayerCIGenerator = null;
+         var _loc3_:CSPlayerCIGenerator = null;
          if(App.utils.commons.isRightButton(param1))
          {
             _loc2_ = this._data?this._data.isSelf?null:this._data:null;
-            _loc3_ = (this._isCurrentUserCommander) && this._index >= 5;
-            _loc4_ = this._playerStatus == SlotRenderer.STATUSES.indexOf(SlotRenderer.STATUS_LOCKED);
-            _loc5_ = new CSPlayerCIGenerator(this._isCurrentUserCommander);
+            _loc3_ = new CSPlayerCIGenerator(this._isCurrentUserCommander);
             if(_loc2_)
             {
-               App.contextMenuMgr.showUserContextMenu(this,this._data,_loc5_,this.onContextMenuAction);
-            }
-            else
-            {
-               if(_loc3_)
-               {
-                  App.contextMenuMgr.show(Vector.<IContextItem>([new UserContextItem(_loc4_?"unlockSlot":"lockSlot")]),this,this.onContextMenuAction);
-               }
+               App.contextMenuMgr.showUserContextMenu(this,this._data,_loc3_,this.onContextMenuAction);
             }
          }
       }
@@ -108,10 +94,6 @@ package net.wg.gui.cyberSport.controls
       private function onContextMenuAction(param1:ContextMenuEvent) : void {
          switch(param1.id)
          {
-            case "lockSlot":
-            case "unlockSlot":
-               dispatchEvent(new CSComponentEvent(CSComponentEvent.LOCK_SLOT_REQUEST,this._index));
-               break;
             case "addToIgnored":
                dispatchEvent(new CSComponentEvent(CSComponentEvent.IGNORE_USER_REQUEST,this._data.databaseID));
                break;

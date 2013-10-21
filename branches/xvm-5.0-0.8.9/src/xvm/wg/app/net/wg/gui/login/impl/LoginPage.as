@@ -24,7 +24,7 @@ package net.wg.gui.login.impl
 
    public class LoginPage extends LoginPageMeta implements ILoginPageMeta
    {
-
+          
       public function LoginPage() {
          super();
       }

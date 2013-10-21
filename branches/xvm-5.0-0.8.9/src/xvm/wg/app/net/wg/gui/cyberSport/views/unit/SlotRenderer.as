@@ -6,10 +6,12 @@ package net.wg.gui.cyberSport.views.unit
    import flash.text.TextField;
    import net.wg.gui.components.controls.VoiceWave;
    import scaleform.clik.events.ButtonEvent;
+   import flash.events.MouseEvent;
    import net.wg.gui.cyberSport.controls.events.CSComponentEvent;
    import net.wg.infrastructure.events.VoiceChatEvent;
    import scaleform.clik.constants.InvalidationType;
    import net.wg.gui.prebattle.squad.MessengerUtils;
+   import net.wg.gui.utils.ComplexTooltipHelper;
 
 
    public class SlotRenderer extends SimpleSlotRenderer
@@ -45,6 +47,8 @@ package net.wg.gui.cyberSport.views.unit
 
       override public function dispose() : void {
          this.removeBtn.removeEventListener(ButtonEvent.CLICK,this.onRemoveClick);
+         this.removeBtn.removeEventListener(MouseEvent.ROLL_OVER,this.onRemoveRollOver);
+         this.removeBtn.removeEventListener(MouseEvent.ROLL_OUT,this.onRemoveRollOut);
          this.removeBtn.dispose();
          vehicleBtn.removeEventListener(CSComponentEvent.CHOOSE_VEHICLE,this.onChooseVehicleClick);
          App.voiceChatMgr.removeEventListener(VoiceChatEvent.START_SPEAKING,this.speakHandler);
@@ -64,6 +68,8 @@ package net.wg.gui.cyberSport.views.unit
          App.voiceChatMgr.addEventListener(VoiceChatEvent.START_SPEAKING,this.speakHandler);
          App.voiceChatMgr.addEventListener(VoiceChatEvent.STOP_SPEAKING,this.speakHandler);
          this.removeBtn.addEventListener(ButtonEvent.CLICK,this.onRemoveClick);
+         this.removeBtn.addEventListener(MouseEvent.ROLL_OVER,this.onRemoveRollOver);
+         this.removeBtn.addEventListener(MouseEvent.ROLL_OUT,this.onRemoveRollOut);
          vehicleBtn.addEventListener(CSComponentEvent.CHOOSE_VEHICLE,this.onChooseVehicleClick);
       }
 
@@ -80,7 +86,16 @@ package net.wg.gui.cyberSport.views.unit
                {
                   if(slotData.isCommanderState)
                   {
-                     this.removeBtn.visible = index > 0 && (slotData.player);
+                     if(slotData.player)
+                     {
+                        this.removeBtn.visible = index > 0;
+                        this.removeBtn.icon = GrayTransparentButton.ICON_CROSS;
+                     }
+                     else
+                     {
+                        this.removeBtn.visible = index > 4;
+                        this.removeBtn.icon = GrayTransparentButton.ICON_LOCK;
+                     }
                   }
                   else
                   {
@@ -90,7 +105,8 @@ package net.wg.gui.cyberSport.views.unit
                }
                else
                {
-                  this.removeBtn.visible = false;
+                  this.removeBtn.visible = slotData.isCommanderState;
+                  this.removeBtn.icon = GrayTransparentButton.ICON_LOCK;
                   this.statusIndicator.visible = false;
                }
                if(slotData.player)
@@ -134,8 +150,20 @@ package net.wg.gui.cyberSport.views.unit
       }
 
       private function onRemoveClick(param1:ButtonEvent) : void {
-         var _loc2_:Number = (slotData) && (slotData.player)?slotData.player.databaseID:-1;
-         dispatchEvent(new CSComponentEvent(CSComponentEvent.LEAVE_SLOT_REQUEST,_loc2_));
+         if(slotData)
+         {
+            if(slotData.player)
+            {
+               dispatchEvent(new CSComponentEvent(CSComponentEvent.LEAVE_SLOT_REQUEST,slotData.player.databaseID));
+            }
+            else
+            {
+               if(index > 4)
+               {
+                  dispatchEvent(new CSComponentEvent(CSComponentEvent.LOCK_SLOT_REQUEST,index));
+               }
+            }
+         }
       }
 
       private function onChooseVehicleClick(param1:CSComponentEvent) : void {
@@ -176,6 +204,22 @@ package net.wg.gui.cyberSport.views.unit
          {
             slotData.player.isPlayerSpeaking = param1;
          }
+      }
+
+      private function onRemoveRollOver(param1:MouseEvent) : void {
+         var _loc2_:String = null;
+         if(this.removeBtn.icon == GrayTransparentButton.ICON_LOCK)
+         {
+            _loc2_ = new ComplexTooltipHelper().addHeader(MENU.contextmenu(slotData.isClosed?"unlockSlot":"lockSlot"),true).addBody("",true).make();
+            if(_loc2_.length > 0)
+            {
+               App.toolTipMgr.showComplex(_loc2_);
+            }
+         }
+      }
+
+      private function onRemoveRollOut(param1:MouseEvent) : void {
+         App.toolTipMgr.hide();
       }
    }
 

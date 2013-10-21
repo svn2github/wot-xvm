@@ -28,6 +28,8 @@ package net.wg.gui.cyberSport.views.unit
       public function TeamSection() {
          super();
          this.btnFreeze.externalSource = true;
+         this.errorLblTeamPoints.visible = false;
+         this.errorLblTeamPointsValue.visible = false;
       }
 
       public var lblTeamHeader:TextField;
@@ -42,7 +44,11 @@ package net.wg.gui.cyberSport.views.unit
 
       public var lblTeamPoints:TextField;
 
+      public var errorLblTeamPoints:TextField;
+
       public var lblTeamPointsValue:TextField;
+
+      public var errorLblTeamPointsValue:TextField;
 
       public var lblStatus:ReadyMsg;
 
@@ -93,7 +99,7 @@ package net.wg.gui.cyberSport.views.unit
          var _loc2_:SlotDropIndicator = null;
          this.settingsIcons.dispose();
          this.btnFreeze.removeEventListener(ButtonEvent.CLICK,this.onStatusToggle);
-         this.tooltipSubscribe([this.btnFreeze,this.btnConfigure,this.lblTeamPoints,this.lblTeamPointsValue],false);
+         this.tooltipSubscribe([this.btnFreeze,this.btnConfigure,this.lblTeamPoints,this.lblTeamPointsValue,this.errorLblTeamPoints,this.errorLblTeamPointsValue],false);
          this.btnFight.removeEventListener(ButtonEvent.CLICK,this.onReadyToggle);
          for each (_loc1_ in this._slotsUi)
          {
@@ -198,11 +204,12 @@ package net.wg.gui.cyberSport.views.unit
          this.lblTeamMembers.text = CYBERSPORT.WINDOW_UNIT_TEAMMEMBERS;
          this.lblTeamVehicles.text = CYBERSPORT.WINDOW_UNIT_TEAMVEHICLES;
          this.lblTeamPoints.text = CYBERSPORT.WINDOW_UNIT_TEAMPOINTS;
+         this.errorLblTeamPoints.text = CYBERSPORT.WINDOW_UNIT_TEAMPOINTS;
          this.settingsIcons.x = this.lblTeamHeader.x + this.lblTeamHeader.textWidth + 15;
          this._slotsUi = [this.slot0,this.slot1,this.slot2,this.slot3,this.slot4,this.slot5,this.slot6];
          this._indicatorsUI = [this.dropTargerIndicator0,this.dropTargerIndicator1,this.dropTargerIndicator2,this.dropTargerIndicator3,this.dropTargerIndicator4,this.dropTargerIndicator5,this.dropTargerIndicator6];
          this.btnFreeze.addEventListener(ButtonEvent.CLICK,this.onStatusToggle);
-         this.tooltipSubscribe([this.btnFreeze,this.btnConfigure,this.lblTeamPoints,this.lblTeamPointsValue]);
+         this.tooltipSubscribe([this.btnFreeze,this.btnConfigure,this.lblTeamPoints,this.lblTeamPointsValue,this.errorLblTeamPoints,this.errorLblTeamPointsValue]);
          this.btnFight.addEventListener(ButtonEvent.CLICK,this.onReadyToggle);
       }
 
@@ -258,6 +265,11 @@ package net.wg.gui.cyberSport.views.unit
                this.settingsIcons.visible = false;
             }
             this.lblTeamPointsValue.htmlText = this._unitData?this._unitData.sumLevels:"0";
+            this.errorLblTeamPointsValue.htmlText = this._unitData?this._unitData.sumLevels:"0";
+            if(this._unitData)
+            {
+               this.sumLevelErrorState(this._unitData.sumLevelsError);
+            }
          }
          if(isInvalid(CSInvalidationType.ACTION_BUTTON_DATA))
          {
@@ -274,6 +286,13 @@ package net.wg.gui.cyberSport.views.unit
                this.btnFight.label = Values.EMPTY_STR;
             }
          }
+      }
+
+      private function sumLevelErrorState(param1:Boolean) : void {
+         this.lblTeamPoints.visible = !param1;
+         this.errorLblTeamPoints.visible = param1;
+         this.lblTeamPointsValue.visible = !param1;
+         this.errorLblTeamPointsValue.visible = param1;
       }
 
       private function onStatusToggle(param1:ButtonEvent) : void {
@@ -309,6 +328,8 @@ package net.wg.gui.cyberSport.views.unit
             case this.btnConfigure:
                App.toolTipMgr.showComplex(TOOLTIPS.CYBERSPORT_UNIT_CONFIGURE);
                break;
+            case this.errorLblTeamPoints:
+            case this.errorLblTeamPointsValue:
             case this.lblTeamPoints:
             case this.lblTeamPointsValue:
                _loc2_ = TOOLTIPS.CYBERSPORT_UNIT_SUMLEVEL_HEADER;

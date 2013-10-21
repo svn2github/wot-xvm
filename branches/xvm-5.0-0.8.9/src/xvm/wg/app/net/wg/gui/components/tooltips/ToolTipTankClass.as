@@ -33,6 +33,7 @@ package net.wg.gui.components.tooltips
       }
 
       override protected function redraw() : void {
+         var _loc1_:String = null;
          var _loc10_:String = null;
          var _loc11_:String = null;
          var _loc12_:String = null;
@@ -40,7 +41,7 @@ package net.wg.gui.components.tooltips
          topPosition = bgShadowMargin.top + contentMargin.top;
          blockResults = new Vector.<ToolTipBlockResultVO>();
          separators = new Vector.<Separator>();
-         var _loc1_:String = _data.value;
+         _loc1_ = _data.value;
          var _loc2_:TextFormat = new TextFormat();
          _loc2_.leading = -2;
          _loc2_.align = TextFormatAlign.LEFT;

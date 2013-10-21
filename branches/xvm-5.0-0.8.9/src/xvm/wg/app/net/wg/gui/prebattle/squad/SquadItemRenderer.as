@@ -13,7 +13,7 @@ package net.wg.gui.prebattle.squad
 
    public class SquadItemRenderer extends SoundListItemRenderer
    {
-
+          
       public function SquadItemRenderer() {
          super();
          soundType = "squad";

@@ -4,7 +4,7 @@ package net.wg.data.gui_items
 
    public class GUIItem extends Object
    {
-
+          
       public function GUIItem(param1:uint, param2:*) {
          super();
          this._itemTypeIdx = param1;

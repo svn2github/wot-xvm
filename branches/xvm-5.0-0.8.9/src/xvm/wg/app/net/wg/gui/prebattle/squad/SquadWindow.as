@@ -25,7 +25,7 @@ package net.wg.gui.prebattle.squad
 
    public class SquadWindow extends PrebattleWindowAbstract implements IPrebattleWindowMeta
    {
-
+          
       public function SquadWindow() {
          super();
       }

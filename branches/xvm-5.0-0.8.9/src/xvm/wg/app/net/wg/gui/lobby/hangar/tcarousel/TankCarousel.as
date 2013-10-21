@@ -29,7 +29,7 @@ package net.wg.gui.lobby.hangar.tcarousel
 
    public class TankCarousel extends TankCarouselMeta implements ITankCarouselMeta, IDAAPIModule, IHelpLayoutComponent
    {
-
+          
       public function TankCarousel() {
          this.filterData = {};
          super();
@@ -159,11 +159,11 @@ package net.wg.gui.lobby.hangar.tcarousel
       }
 
       public function as_changeVehicleByCompDescr(param1:Number) : void {
-
+          
       }
 
       public function as_populate() : void {
-
+          
       }
 
       public function as_dispose() : void {

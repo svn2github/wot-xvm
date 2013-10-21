@@ -1,4 +1,4 @@
-package
+package 
 {
     $AppLinks;
 
@@ -24,7 +24,7 @@ package
 
    public class App extends Object
    {
-
+          
       public function App() {
          super();
       }

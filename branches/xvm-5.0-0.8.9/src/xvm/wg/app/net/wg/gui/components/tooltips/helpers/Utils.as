@@ -3,9 +3,9 @@ package net.wg.gui.components.tooltips.helpers
    import net.wg.gui.components.controls.IconText;
    import net.wg.gui.components.tooltips.VO.ToolTipBlockResultVO;
    import net.wg.gui.components.tooltips.VO.ToolTipBlockVO;
+   import flash.text.TextFormat;
    import flash.text.TextField;
    import net.wg.gui.components.tooltips.VO.ToolTipBlockRightListItemVO;
-   import flash.text.TextFormat;
    import __AS3__.vec.Vector;
    import flash.text.TextFormatAlign;
    import net.wg.gui.components.tooltips.VO.ToolTipStatusColorsVO;
@@ -124,14 +124,16 @@ package net.wg.gui.components.tooltips.helpers
       }
 
       public function createBlock(param1:ToolTipBlockVO, param2:Number) : ToolTipBlockResultVO {
+         var _loc4_:TextFormat = null;
+         var _loc6_:String = null;
          var _loc11_:TextField = null;
          var _loc16_:IconText = null;
          var _loc17_:ToolTipBlockRightListItemVO = null;
          var _loc18_:IconText = null;
          var _loc3_:Number = 0;
-         var _loc4_:TextFormat = new TextFormat();
+         _loc4_ = new TextFormat();
          var _loc5_:uint = 0;
-         var _loc6_:* = "$TextFont";
+         _loc6_ = "$TextFont";
          var _loc7_:* = false;
          var _loc8_:Number = 0;
          var _loc9_:Vector.<IconText> = new Vector.<IconText>();

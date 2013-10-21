@@ -11,7 +11,7 @@ package net.wg.gui.components.advanced
 
    public class TankIcon extends UIComponent
    {
-
+          
       public function TankIcon() {
          this.DIRTY_FLAGS = [this._showMultyXpDirty,this._showXpDirty,this._showNameDirty,this._nationDirty,this._imageDirty,this._tankTypeDirty,this._levelDirty,this._multyXpValDirty,this._xpValDirty,this._tankNameDirty,this._isEliteDirty,this._isPremiumDirty];
          super();

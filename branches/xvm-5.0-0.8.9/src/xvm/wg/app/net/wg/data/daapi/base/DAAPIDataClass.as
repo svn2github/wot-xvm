@@ -10,7 +10,7 @@ package net.wg.data.daapi.base
 
    public class DAAPIDataClass extends EventDispatcher implements IDAAPIDataClass
    {
-
+          
       public function DAAPIDataClass(param1:Object) {
          super();
          this.fromHash(param1);

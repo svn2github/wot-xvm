@@ -121,6 +121,8 @@ package
 
       public static const WINDOW_UNIT_SLOTHEADERTEXT:String = "#cyberSport:window/unit/slotHeaderText";
 
+      public static const WINDOW_UNIT_ROSTERSETTINGSVIEW_OR:String = "#cyberSport:window/unit/rosterSettingsView/or";
+
       public static const WINDOW_UNIT_SLOTSECONDTEXT:String = "#cyberSport:window/unit/slotSecondText";
 
       public static const WINDOW_UNIT_APPLYSLOTSSETTINGS:String = "#cyberSport:window/unit/applySlotsSettings";

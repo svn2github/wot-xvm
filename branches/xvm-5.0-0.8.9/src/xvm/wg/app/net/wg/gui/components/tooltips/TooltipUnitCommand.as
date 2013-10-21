@@ -5,8 +5,8 @@ package net.wg.gui.components.tooltips
    import net.wg.gui.components.controls.UnitCommanderStats;
    import flash.text.TextFieldAutoSize;
    import net.wg.gui.components.tooltips.helpers.Utils;
-   import net.wg.utils.ILocale;
    import net.wg.gui.components.tooltips.VO.UnitCommandVO;
+   import net.wg.utils.ILocale;
    import flash.display.MovieClip;
    import net.wg.data.gui_items.Vehicle;
 
@@ -57,12 +57,11 @@ package net.wg.gui.components.tooltips
       }
 
       override protected function redraw() : void {
-         var _loc1_:ILocale = null;
          var _loc2_:UnitCommandVO = null;
          var _loc4_:Separator = null;
          var _loc6_:TextField = null;
          var _loc7_:* = 0;
-         _loc1_ = App.utils.locale;
+         var _loc1_:ILocale = App.utils.locale;
          _loc2_ = new UnitCommandVO(_data);
          var _loc3_:Number = 300;
          _loc4_ = null;

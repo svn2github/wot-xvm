@@ -7,7 +7,7 @@ package net.wg.gui.lobby.hangar.tcarousel
 
    public class TankCarouselFilters extends UIComponent
    {
-
+          
       public function TankCarouselFilters() {
          super();
       }
