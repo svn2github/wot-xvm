@@ -42,7 +42,7 @@
 
     // BattleResults
     "Hit percent": "Tasa de impactos",
-    "Damage (assisted / own)": "Da¤o (asistido / propio)",
+    "Damage (assisted / own)": "Daño (asistido / propio)",
 
     // TeamRenderers
     "Friend": "Amigo",
@@ -63,7 +63,7 @@
     "avg": "pro",
     "top": "sup",
     "draws": "empates",
-    "Specific damage (Avg dmg / HP)": "Da¤o especifico (Promedio / Im)",
+    "Specific damage (Avg dmg / HP)": "Daño especifico (Promedio / Im)",
     "Capture points": "Captura", 
     "Defence points": "Defensa", 
     "Filter": "Filtro",
