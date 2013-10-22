@@ -1,11 +1,7 @@
-package com.xvm.types.stat
-{
-    import flash.utils.*;
+import com.xvm.DataTypes.*;
 
-    public dynamic class StatData
-    //public class StatData
-    {
-        // received
+class com.xvm.DataTypes.StatData
+{
         public var _id:Number = NaN;           // player account id (long int)
         public var st:String = null;           // status ("ok")
         public var dt:String = null;           // XVM update date ("2013-09-02T01:21:20.080Z")
@@ -28,7 +24,7 @@ package com.xvm.types.stat
         public var emblem:String = null;       // url for clan icon
 
         public var v:VData = null;             // current vehicle stat data
-        public var vehicles:Dictionary = null; // vehicles stat data, key - vId
+        public var vehicles:Object = null;     // vehicles stat data, key - vId
 
         public var clan:String = null;         // clan name ("CLAN")
         public var name:String = null;         // player name in current game ("sirmax2_RU" for Common Test)
@@ -42,5 +38,4 @@ package com.xvm.types.stat
         public var r:Number = NaN;             // global win rate (int)
         public var xeff:Number = NaN;          // Eff in XVM Scale (int)
         public var xwn:Number = NaN;           // WN6 in XVM Scale (int)
-    }
 }

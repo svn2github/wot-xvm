@@ -1,10 +1,10 @@
 package xvm.hangar.components.Profile
 {
     import com.xvm.*;
-    import com.xvm.events.ObjectEvent;
+    import com.xvm.events.*;
+    import com.xvm.types.veh.*;
     import com.xvm.utils.*;
     import com.xvm.types.stat.*;
-    import com.xvm.vehinfo.*;
     import flash.events.*;
     import flash.text.*;
     import flash.utils.*;
@@ -37,8 +37,8 @@ package xvm.hangar.components.Profile
             proxy.vehicleTF.textColor = Defines.UICOLOR_DEFAULT;
             if (!isSummary)
             {
-                var vi:Object = VehicleInfo.getInfo2ByVid(proxy.data.id);
-                if (vi != null && vi.premium == 1)
+                var vdata:VehicleData = VehicleInfo.get(proxy.data.id);
+                if (vdata != null && vdata.premium == 1)
                     proxy.vehicleTF.textColor = Defines.UICOLOR_GOLD;
             }
 

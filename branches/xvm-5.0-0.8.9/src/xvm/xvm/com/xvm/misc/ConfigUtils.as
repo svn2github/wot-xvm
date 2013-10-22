@@ -28,6 +28,10 @@ package com.xvm.misc
                         // warning: arrays are not checked now
                         return (config is Array) ? config : def;
                     }
+                    if (prefix == "def.vehicleNames")
+                    {
+                        return config == null ? def : config;
+                    }
                     if (def == null)
                         return (typeof config == 'string' || typeof config == 'number') ? config : null;
 

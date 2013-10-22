@@ -3,34 +3,10 @@
  */
 import com.greensock.OverwriteManager;
 import com.greensock.plugins.*;
-import com.xvm.Config;
-import com.xvm.Defines;
-import com.xvm.GlobalEventDispatcher;
-import com.xvm.Macros;
-import com.xvm.StatData;
-import com.xvm.StatLoader;
-import com.xvm.Utils;
-import wot.VehicleMarkersManager.components.ActionMarkerComponent;
-import wot.VehicleMarkersManager.components.ActionMarkerProxy;
-import wot.VehicleMarkersManager.components.ClanIconComponent;
-import wot.VehicleMarkersManager.components.ClanIconProxy;
-import wot.VehicleMarkersManager.components.ContourIconComponent;
-import wot.VehicleMarkersManager.components.ContourIconProxy;
-import wot.VehicleMarkersManager.components.damage.DamageTextComponent;
-import wot.VehicleMarkersManager.components.damage.DamageTextProxy;
-import wot.VehicleMarkersManager.components.HealthBarComponent;
-import wot.VehicleMarkersManager.components.HealthBarProxy;
-import wot.VehicleMarkersManager.components.LevelIconComponent;
-import wot.VehicleMarkersManager.components.LevelIconProxy;
-import wot.VehicleMarkersManager.components.TurretStatusComponent;
-import wot.VehicleMarkersManager.components.TurretStatusProxy;
-import wot.VehicleMarkersManager.components.VehicleTypeComponent;
-import wot.VehicleMarkersManager.components.VehicleTypeProxy;
-import wot.VehicleMarkersManager.ErrorHandler;
-import wot.VehicleMarkersManager.VehicleMarkerProxy;
-import wot.VehicleMarkersManager.VehicleState;
-import wot.VehicleMarkersManager.VehicleStateProxy;
-import wot.VehicleMarkersManager.XvmBase;
+import com.xvm.*;
+import wot.VehicleMarkersManager.components.*;
+import wot.VehicleMarkersManager.components.damage.*;
+import wot.VehicleMarkersManager.*;
 
 /*
  * XVM() instance creates corresponding marker
@@ -148,9 +124,9 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
         XVMUpdateStyle();
 
         // Load stat
-        if (Config.s_config.rating.showPlayersStatistics && !StatData.s_loaded)
+        if (Config.s_config.rating.showPlayersStatistics && !Stat.s_loaded)
         {
-            GlobalEventDispatcher.addEventListener(StatData.E_STAT_LOADED, this, onStatLoaded);
+            GlobalEventDispatcher.addEventListener(Stat.E_STAT_LOADED, this, onStatLoaded);
             StatLoader.LoadData();
         }
     }
@@ -351,7 +327,7 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
     {
         //trace("Xvm::onStatLoaded()");
         if (event)
-            GlobalEventDispatcher.removeEventListener(StatData.E_STAT_LOADED, this, onStatLoaded);
+            GlobalEventDispatcher.removeEventListener(Stat.E_STAT_LOADED, this, onStatLoaded);
 
         initializeTextFields();
         XVMUpdateStyle();

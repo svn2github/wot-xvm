@@ -6,20 +6,20 @@ package xvm.hangar.components.Squad
 {
     import com.xvm.*;
     import com.xvm.l10n.Locale;
-    import com.xvm.utils.Macros;
-    import com.xvm.utils.Utils;
-    import com.xvm.vehinfo.*;
-    import flash.text.TextField;
-    import flash.text.TextFieldAutoSize;
+    import com.xvm.types.veh.*;
+    import com.xvm.utils.*;
+    import flash.text.*;
     import net.wg.gui.prebattle.squad.SquadItemRenderer;
 
     public class SquadItemRenderer
     {
         private var proxy:net.wg.gui.prebattle.squad.SquadItemRenderer;
+        private var vehicleTierField:TextField;
 
         public function SquadItemRenderer(proxy:net.wg.gui.prebattle.squad.SquadItemRenderer):void
         {
             this.proxy = proxy;
+            this.vehicleTierField = null;
         }
 
         private var configUI:Boolean = false;
@@ -38,10 +38,12 @@ package xvm.hangar.components.Squad
             if (!proxy.data || proxy.data.dummy)
                 return null;
 
-            var ti:Object = getTankInfo(proxy.model.vShortName);
-            return (ti == null) ? null : Locale.get("Type") + ": " + Locale.get(ti.type) + "\n" +
-                Locale.get("Battle tiers") + ": " + ti.battleTierMin + "-" + ti.battleTierMax + "\n" +
-                Locale.get("Nation") + ": " + Locale.get(ti.nation);
+            var vdata:VehicleData = VehicleInfo.getByLocalizedShortName(proxy.model.vShortName);
+            if (vdata == null)
+                return null;
+            return Locale.get("Type") + ": " + Locale.get(vdata.vclass) + "\n" +
+                Locale.get("Battle tiers") + ": " + vdata.tierLo + "-" + vdata.tierHi + "\n" +
+                Locale.get("Nation") + ": " + Locale.get(vdata.nation);
         }
 
         public function displayVehicleTier():void
@@ -66,42 +68,17 @@ package xvm.hangar.components.Squad
                 proxy.data.fullName = proxy.data.userName;
 
             // Display vehicle info
-            var ti:Object = getTankInfo(proxy.data.vShortName);
-            if (ti != null)
+            var vdata:VehicleData = VehicleInfo.getByLocalizedShortName(proxy.data.vShortName);
+            if (vdata != null)
             {
                 if (vehicleTierField == null)
                     createVehicleTierField();
-
                 vehicleTierField.htmlText = "<p class='xvm_vehicleTier' align='right'>" +
-                    Macros.FormatSquad(Config.config.squad.formatInfoField, ti) + "</p>";
+                    Macros.FormatSquad(Config.config.squad.formatInfoField, vdata) + "</p>";
             }
         }
 
         // -- Private
-
-        private var vehicleTierField:TextField = null;
-
-        private function getTankInfo(localizedShortName:String):Object
-        {
-            if (localizedShortName == null || localizedShortName == "")
-                return null;
-
-            if (!VehicleInfoDataL10n.data.hasOwnProperty(localizedShortName))
-                return null;
-
-            var vname:String = VehicleInfoDataL10n.data[localizedShortName];
-            var vi2:Object = VehicleInfoData2.data[vname];
-            var vi1Key:String = VehicleInfo.getVehicleKey1(vi2.nation + "-" + vi2.name);
-            var vi1:Object = VehicleInfoData.data[vi1Key];
-
-            return (vi1 == null || vi2 == null) ? null : {
-                level: vi2.level,
-                nation: vi2.nation,
-                type: vi2.type,
-                battleTierMin: vi1.tiers[0],
-                battleTierMax: vi1.tiers[1]
-            };
-        }
 
         private function createVehicleTierField():void
         {

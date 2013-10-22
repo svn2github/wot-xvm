@@ -1,19 +1,15 @@
 package xvm.hangar.components.BattleLoading
 {
-    import flash.events.Event;
-    import flash.text.*;
-    import flash.utils.*;
-    import flash.geom.Transform;
-    import scaleform.gfx.TextFieldEx;
-    import net.wg.gui.components.controls.UILoaderAlt;
-    import net.wg.gui.events.UILoaderEvent;
-    import net.wg.gui.lobby.battleloading.PlayerItemRenderer;
-    import org.idmedia.as3commons.util.StringUtils;
     import com.xvm.*;
     import com.xvm.utils.*;
-    import com.xvm.misc.IconLoader;
-    import com.xvm.types.cfg.CClanIcon;
-    import xvm.hangar.components.ClanIcon.ClanIcon;
+    import com.xvm.types.cfg.*;
+    import com.xvm.types.veh.*;
+    import flash.events.*;
+    import flash.text.*;
+    import scaleform.gfx.*;
+    import net.wg.gui.events.*;
+    import net.wg.gui.lobby.battleloading.*;
+    import xvm.hangar.components.ClanIcon.*;
     import xvm.UI.battleLoading.*;
 
     public class BattleLoadingItemRenderer
@@ -54,30 +50,40 @@ package xvm.hangar.components.BattleLoading
         public function setData(data:Object):void
         {
             //Logger.add("setData: " + (data == null ? "(null)" : data.label));
-            if (data == null)
-                return;
+            //Logger.addObject(data, "data", 2);
 
-            if (playerName == null)
-                playerName = data.label + (data.clanAbbrev == null || data.clanAbbrev == "" ? "" : "[" + data.clanAbbrev + "]");
-
-            Macros.RegisterMinimalMacrosData(playerName, Utils.clearIcon(data.icon), data.vehicle);
-            data.label = Macros.Format(playerName, "{{nick}}");
-
-            // ClanIcon
-            attachClanIconToPlayer(data);
-
-            // Alternative icon set
-            if (proxy.iconLoader.sourceAlt == Defines.WG_CONTOUR_ICON_NOIMAGE)
+            try
             {
-                proxy.iconLoader.sourceAlt = data.icon;
-                data.icon = data.icon.replace(Defines.WG_CONTOUR_ICON_PATH,
-                    Defines.XVMRES_ROOT + ((team == Defines.TEAM_ALLY) 
-                    ? Config.config.iconset.battleLoadingAlly
-                    : Config.config.iconset.battleLoadingEnemy));
+                if (data == null)
+                    return;
+
+                if (playerName == null)
+                    playerName = data.label + (data.clanAbbrev == null || data.clanAbbrev == "" ? "" : "[" + data.clanAbbrev + "]");
+
+                var vdata:VehicleData = VehicleInfo.getByIcon(data.icon);
+                Macros.RegisterMinimalMacrosData(playerName, vdata.vid);
+                data.label = Macros.Format(playerName, "{{nick}}");
+
+                // ClanIcon
+                attachClanIconToPlayer(data);
+
+                // Alternative icon set
+                if (proxy.iconLoader.sourceAlt == Defines.WG_CONTOUR_ICON_NOIMAGE)
+                {
+                    proxy.iconLoader.sourceAlt = data.icon;
+                    data.icon = data.icon.replace(Defines.WG_CONTOUR_ICON_PATH,
+                        Defines.XVMRES_ROOT + ((team == Defines.TEAM_ALLY)
+                        ? Config.config.iconset.battleLoadingAlly
+                        : Config.config.iconset.battleLoadingEnemy));
+                }
+                else
+                {
+                    data.icon = proxy.iconLoader.source;
+                }
             }
-            else
+            catch (ex:Error)
             {
-                data.icon = proxy.iconLoader.source;
+                Logger.add(ex.getStackTrace());
             }
         }
 
@@ -168,9 +174,11 @@ package xvm.hangar.components.BattleLoading
 
         private function onStatLoaded():void
         {
-            //Logger.add("onStatLoaded: " + proxy.data.label);
+            //Logger.add("onStatLoaded: " + playerName);
             proxy.vehicleField.condenseWhite = false; // TODO StatData.s_empty;
             draw();
+
+            //Macros.TestMacros(playerName);
         }
     }
 

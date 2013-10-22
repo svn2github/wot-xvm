@@ -25,7 +25,7 @@ package com.xvm
             }
         }
 
-        public static function addObject(obj:Object, name:String = "obj", depth:Number = 1):void
+        public static function addObject(obj:Object, depth:Number = 1, name:String = "obj"):void
         {
             if (name == "")
                 name = "obj";

@@ -12,7 +12,6 @@ internal class XvmLinks
  */
 import com.xvm.*; Stat;
 import com.xvm.misc.*; IconLoader; Chance;
-import com.xvm.vehinfo.*; VehicleInfoDataL10n;
 import com.xvm.controls.*;
 NationMultiSelectionDropDown;
 ClassMultiSelectionDropDown;

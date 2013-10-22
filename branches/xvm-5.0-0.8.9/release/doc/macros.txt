@@ -11,8 +11,13 @@ Legend:
   MM - minimap
   SQ - squad
 
+  'X' - available
+  ' ' - not available (can return wrong value - '', 'NaN', 'undefined', ...)
+  '.' - TODO
+  '-' - Obsoleted (will be raplaced with other macro)
+
 ┌────────────────────────────┬───┬───┬───┬───┬───┬───┬───┬───┬───┬─────────────────────────────────
-│ macro                      │BL │PP │SF │VM │HI │HL │CB │MM │SQ │ Description
+│ macro                      │ BL│ PP│ SF│ VM│ HI│ HL│ CB│ MM│ SQ│ Description
 ├────────────────────────────┼───┼───┼───┼───┼───┼───┼───┼───┼───┼─────────────────────────────────
 │ {{nick}}                   │ X │ X │ X │ X │ X │ X │   │   │   │ player nickname with clan name
 │ {{name}}                   │ X │ X │ X │ X │ X │ X │   │   │   │ player nickname without clan name
@@ -22,9 +27,9 @@ Legend:
 │ {{vehiclename}}            │ X │ X │ X │ X │ X │ X │   │ X │   │ internal vehicle name (usa-M24_Chaffee)
 │ {{vtype}}                  │ X │ X │ X │ X │ X │ X │   │   │ X │ vehicle type (text substitution from config)
 │ {{c:vtype}}                │ X │ X │ X │ X │ X │ X │   │   │   │ color depending on vehicle type
+│ {{level}}                  │ X │   │   │ X │ X │ X │   │ X │ X │ vehicle level (Arabic numerals)
+│ {{rlevel}}                 │ X │   │   │ X │ X │ X │   │   │ X │ vehicle level (Roman numerals)
 │ {{squad}}                  │   │   │   │ X │   │   │   │   │   │ value '1' for own squad, empty for others
-│ {{level}}                  │   │   │   │ X │ X │ X │   │ X │ X │ vehicle level (Arabic numerals)
-│ {{rlevel}}                 │   │   │   │ X │ X │ X │   │   │ X │ vehicle level (Roman numerals)
 │ {{turret}}                 │   │   │   │ X │   │   │   │   │   │ stock turret marker:
 │ {{hp}}                     │   │   │   │ X │   │ X │   │   │   │ current health points
 │ {{hp-ratio}}               │   │   │   │ X │   │ X │   │   │   │ current health ratio (without '%' sign)
@@ -39,29 +44,18 @@ Legend:
 │ {{c:system}}               │   │   │   │ X │   │   │   │   │   │ system color (disable override color)
 │ {{a:hp}}                   │   │   │   │ X │   │   │   │   │   │ transparency depending on current health points (only in vehicle markers)
 │ {{a:hp-ratio}}             │   │   │   │ X │   │   │   │   │   │ transparency depending on current health ratio (only in vehicle markers)
-│ {{l10n:blownUp}}           │   │   │   │ X │   │   │   │   │   │ localizated text "Blown-up!", only in "blowupMessage"
 │ {{n}}                      │   │   │   │   │ X │   │   │   │   │ total number of hits
 │ {{n-player}}               │   │   │   │   │ X │   │   │   │   │ number of hits for each player
 │ {{dmg-total}}              │   │   │   │   │ X │   │   │   │   │ total sum of hits
 │ {{dmg-avg}}                │   │   │   │   │ X │   │   │   │   │ average damage during the battle
 │ {{dmg-player}}             │   │   │   │   │ X │   │   │   │   │ sum of hits for each player
 │ {{dead}}                   │   │   │   │   │ X │   │   │   │   │ tank's death marker
-│ {{l10n:Hits}}              │   │   │   │   │ X │   │   │   │   │ localizated text "Hits"
-│ {{l10n:Total}}             │   │   │   │   │ X │   │   │   │   │ localizated text "Total"
-│ {{l10n:Last}}              │   │   │   │   │ X │   │   │   │   │ localizated text "Last"
-│ {{l10n:hpLeftTitle}}       │   │   │   │   │   │ X │   │   │   │ localizated text "Hitpoints left:", only in "header"
 │ {{points}}                 │   │   │   │   │   │   │ X │   │   │ points already captured
 │ {{extra}}                  │   │   │   │   │   │   │ X │   │   │ extra text section;
 │ {{tanks}}                  │   │   │   │   │   │   │ X │   │   │ number of capturers;
 │ {{time}}                   │   │   │   │   │   │   │ X │   │   │ time left to full capture; minutes and seconds;
 │ {{time-sec}}               │   │   │   │   │   │   │ X │   │   │ time left to full capture; seconds only;
 │ {{speed}}                  │   │   │   │   │   │   │ X │   │   │ capture speed in points per second;
-│ {{l10n:enemyBaseCapture}}  │   │   │   │   │   │   │ X │   │   │ localizated text "Base capture by allies!"
-│ {{l10n:enemyBaseCaptured}} │   │   │   │   │   │   │ X │   │   │ localizated text "Base captured by allies!"
-│ {{l10n:allyBaseCapture}}   │   │   │   │   │   │   │ X │   │   │ localizated text "Base capture by enemies!"
-│ {{l10n:allyBaseCaptured}}  │   │   │   │   │   │   │ X │   │   │ localizated text "Base captured by enemies!"
-│ {{l10n:Timeleft}}          │   │   │   │   │   │   │ X │   │   │ localizated text "Timeleft"
-│ {{l10n:Capturers}}         │   │   │   │   │   │   │ X │   │   │ localizated text "Capturers"
 │ {{short-nick}}             │   │   │   │   │   │   │   │ X │   │ subject shortened nickname
 │ {{vehicle-type}}           │   │   │   │   │   │   │   │ X │   │ subject full vehicle type
 │ {{vehicle-class}}          │   │   │   │   │   │   │   │ X │   │ places special symbol depending on subject vehicle class
@@ -71,11 +65,22 @@ Legend:
 │ {{vtype-l}}                │   │   │   │   │   │   │   │   │ X │ vehicle class (text substitution from locale)
 │ {{battletier-min}}         │   │   │   │   │   │   │   │   │ X │ minimal vehicle battle tier
 │ {{battletier-max}}         │   │   │   │   │   │   │   │   │ X │ maximal vehicle battle tier
+│ {{l10n:blownUp}}           │   │   │   │ X │   │   │   │   │   │ localizated text "Blown-up!", only in "blowupMessage"
+│ {{l10n:Hits}}              │   │   │   │   │ X │   │   │   │   │ localizated text "Hits"
+│ {{l10n:Total}}             │   │   │   │   │ X │   │   │   │   │ localizated text "Total"
+│ {{l10n:Last}}              │   │   │   │   │ X │   │   │   │   │ localizated text "Last"
+│ {{l10n:hpLeftTitle}}       │   │   │   │   │   │ X │   │   │   │ localizated text "Hitpoints left:", only in "header"
+│ {{l10n:enemyBaseCapture}}  │   │   │   │   │   │   │ X │   │   │ localizated text "Base capture by allies!"
+│ {{l10n:enemyBaseCaptured}} │   │   │   │   │   │   │ X │   │   │ localizated text "Base captured by allies!"
+│ {{l10n:allyBaseCapture}}   │   │   │   │   │   │   │ X │   │   │ localizated text "Base capture by enemies!"
+│ {{l10n:allyBaseCaptured}}  │   │   │   │   │   │   │ X │   │   │ localizated text "Base captured by enemies!"
+│ {{l10n:Timeleft}}          │   │   │   │   │   │   │ X │   │   │ localizated text "Timeleft"
+│ {{l10n:Capturers}}         │   │   │   │   │   │   │ X │   │   │ localizated text "Capturers"
 └────────────────────────────┴───┴───┴───┴───┴───┴───┴───┴───┴───┴─────────────────────────────────
 
   Statistic macros
 ┌─────────────────┬───┬───┬───┬───┬────────────────────────────────────────────────────────────────
-│ macro           │BL │PP │SF │VM │ Description
+│ macro           │ BL│ PP│ SF│ VM│ Description
 ├─────────────────┼───┼───┼───┼───┼────────────────────────────────────────────────────────────────
 │ {{avglvl}}      │ X │ X │ X │ X │ average level (tier) of tanks
 │ {{eff}}         │ X │ X │ X │ X │  player efficiency: http://wot-news.com/index.php/stat/calc/en/

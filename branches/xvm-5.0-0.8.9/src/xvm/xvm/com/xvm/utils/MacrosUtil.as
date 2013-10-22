@@ -5,8 +5,8 @@
 package com.xvm.utils
 {
     import com.xvm.*;
-    import com.xvm.vehinfo.VehicleInfo;
-    import org.idmedia.as3commons.util.StringUtils;
+    import com.xvm.types.veh.*;
+    import org.idmedia.as3commons.util.*;
 
     public class MacrosUtil
     {
@@ -94,18 +94,15 @@ package com.xvm.utils
             return 100;
         }
 
-        public static function GetVTypeColorValue(icon:String, vtype:String, prefix:String = '#', darker:Boolean = false):String
+        public static function GetVClassColorValue(vdata:VehicleData, prefix:String = '#', darker:Boolean = false):String
         {
             try
             {
-                var premium:Boolean = Config.config.colors.vtype.usePremiumColor == true;
-                if (!vtype || premium)
-                {
-                    var vi2:Object = VehicleInfo.getInfo2ByIcon(icon);
-                    if (vi2 != null)
-                        vtype = (premium && vi2.premium == 1) ? "premium" : vi2.type;
-                }
-                if (!vtype || !Config.config.colors.vtype[vtype])
+                if (vdata == null)
+                    return null;
+                var usePremium:Boolean = Config.config.colors.vtype.usePremiumColor == true;
+                var vtype:String = (usePremium && vdata.premium == 1) ? "premium" : vdata.vtype;
+                if (!vtype || !Config.config.colors.vtype.hasOwnProperty(vtype))
                     return null;
                 var value:int = Utils.toInt(Config.config.colors.vtype[vtype], -1);
                 if (value < 0)

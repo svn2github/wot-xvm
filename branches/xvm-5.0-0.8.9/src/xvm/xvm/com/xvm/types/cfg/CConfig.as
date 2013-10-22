@@ -31,7 +31,7 @@ package com.xvm.types.cfg
         public var colors:CColors;
         public var alpha:CAlpha;
         public var texts:CTexts;
-        public var vehicleNames:CVehicleNames;
+        public var vehicleNames:Object;
         public var consts:Object; // internal
     }
 }

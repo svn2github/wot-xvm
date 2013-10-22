@@ -4,13 +4,13 @@
  */
 package com.xvm.misc
 {
-    import flash.text.*;
-    import org.idmedia.as3commons.util.StringUtils;
     import com.xvm.*;
     import com.xvm.l10n.*;
     import com.xvm.utils.*;
-    import com.xvm.vehinfo.*;
-    import com.xvm.types.stat.StatData;
+    import com.xvm.types.stat.*;
+    import com.xvm.types.veh.*;
+    import flash.text.*;
+    import org.idmedia.as3commons.util.*;
 
     public class Chance
     {
@@ -71,18 +71,13 @@ package com.xvm.misc
             for (var name:String in Stat.stat)
             {
                 var stat:StatData = Stat.getData(name);
-                var vi1:Object = VehicleInfo.getInfo1(stat.icon);
-                if (!vi1) {
-                    if (stat.icon == "ussr-Observer" || stat.icon == "noImage")
-                        continue;
-                    return { error: "[1] No data for: " + stat.icon };
+                if (stat.v.data == null) {
+                    //if (stat.icon == "ussr-Observer" || stat.icon == "noImage")
+                    //    continue;
+                    return { error: "[1] No data for: " + stat.v.id };
                 }
 
-                var vi2:Object = VehicleInfo.getInfo2ByIcon(stat.icon);
-                if (!vi2)
-                    return { error: "[2] No data for: " + stat.icon };
-
-                var K:Number = chanceFunc(vi1, vi2, stat);
+                var K:Number = chanceFunc(stat.v.data, stat);
 
                 Ka += (stat.team == Defines.TEAM_ALLY) ? K : 0;
                 Ke += (stat.team == Defines.TEAM_ENEMY) ? K : 0;
@@ -94,12 +89,12 @@ package com.xvm.misc
         }
 
         // http://www.koreanrandom.com/forum/topic/2598-/#entry31429
-        private static function ChanceFuncG(vi1:Object, vi2:Object, stat:StatData):Number
+        private static function ChanceFuncG(vdata:VehicleData, stat:StatData):Number
         {
-            var Td:Number = (vi1.tiers[0] + vi1.tiers[1]) / 2.0 - battleTier;
+            var Td:Number = (vdata.tierLo + vdata.tierHi) / 2.0 - battleTier;
 
-            var Tmin:Number = vi1.tiers[0];
-            var Tmax:Number = vi1.tiers[1];
+            var Tmin:Number = vdata.tierLo;
+            var Tmax:Number = vdata.tierHi;
             var T:Number = battleTier;
             //Logger.addObject(stat);
             var Ea:Number = isNaN(stat.xwn) ? Config.config.consts.AVG_XVMSCALE : stat.xwn;
@@ -127,17 +122,17 @@ package com.xvm.misc
             return Math.max(0, Math.min(Config.config.consts.MAX_EBN, Eb));
         }
 
-        private static function ChanceFuncT(vi1:Object, vi2:Object, stat:StatData):Number
+        private static function ChanceFuncT(vdata:VehicleData, stat:StatData):Number
         {
-            var Td:Number = (vi1.tiers[0] + vi1.tiers[1]) / 2.0 - battleTier;
+            var Td:Number = (vdata.tierLo + vdata.tierHi) / 2.0 - battleTier;
 
-            var Tmin:Number = vi1.tiers[0];
-            var Tmax:Number = vi1.tiers[1];
+            var Tmin:Number = vdata.tierLo;
+            var Tmax:Number = vdata.tierHi;
             var T:Number = battleTier;
             var Bt:Number = stat.v.b || 0;
-            var Et:Number = stat.v.eff || 0;
+            var Et:Number = stat.v.teff || 0;
             var Rt:Number = stat.v.r || 0;
-            var AvgW:Number = vi2.avg.R ? vi2.avg.R * 100 : 49.5;
+            var AvgW:Number = vdata.avg.R ? vdata.avg.R * 100 : 49.5;
             var Ea:Number = isNaN(stat.xwn) ? Config.config.consts.AVG_XVMSCALE : stat.xwn;
             var Ean:Number = Ea + (Ea * (((stat.lvl || T) - T) * 0.05));
             var Ra:Number = stat.r || Config.config.consts.AVG_GWR;
@@ -172,15 +167,15 @@ package com.xvm.misc
             return Math.max(0, Math.min(Config.config.consts.MAX_EBN, Eb));
         }
 
-        private static function ChanceFuncX1(vi1:Object, vi2:Object, stat:StatData):Number
+        private static function ChanceFuncX1(vdata:VehicleData, stat:StatData):Number
         {
             if (!stat.alive)
                 return 0;
 
-            var Td:Number = (vi1.tiers[0] + vi1.tiers[1]) / 2.0 - battleTier;
+            var Td:Number = (vdata.tierLo + vdata.tierHi) / 2.0 - battleTier;
 
-            var Tmin:Number = vi1.tiers[0];
-            var Tmax:Number = vi1.tiers[1];
+            var Tmin:Number = vdata.tierLo;
+            var Tmax:Number = vdata.tierHi;
             var T:Number = battleTier;
             var Ea:Number = isNaN(stat.xwn) ? Config.config.consts.AVG_XVMSCALE : stat.xwn;
             var Ean:Number = Ea + (Ea * (((stat.lvl || T) - T) * 0.05));
@@ -207,20 +202,20 @@ package com.xvm.misc
             return Math.max(0, Math.min(Config.config.consts.MAX_EBN, Eb));
         }
 
-        private static function ChanceFuncX2(vi1:Object, vi2:Object, stat:StatData):Number
+        private static function ChanceFuncX2(vdata:VehicleData, stat:StatData):Number
         {
             if (!stat.alive)
                 return 0;
 
-            var Td:Number = (vi1.tiers[0] + vi1.tiers[1]) / 2.0 - battleTier;
+            var Td:Number = (vdata.tierLo + vdata.tierHi) / 2.0 - battleTier;
 
-            var Tmin:Number = vi1.tiers[0];
-            var Tmax:Number = vi1.tiers[1];
+            var Tmin:Number = vdata.tierLo;
+            var Tmax:Number = vdata.tierHi;
             var T:Number = battleTier;
             var Bt:Number = stat.v.b || 0;
-            var Et:Number = stat.v.eff || 0;
+            var Et:Number = stat.v.teff || 0;
             var Rt:Number = stat.v.r || 0;
-            var AvgW:Number = vi2.avg.R ? vi2.avg.R * 100 : 49.5;
+            var AvgW:Number = vdata.avg.R ? vdata.avg.R * 100 : 49.5;
             var Ea:Number = isNaN(stat.xwn) ? Config.config.consts.AVG_XVMSCALE : stat.xwn;
             var Ean:Number = Ea + (Ea * (((stat.lvl || T) - T) * 0.05));
             var Ra:Number = stat.r || Config.config.consts.AVG_GWR;
@@ -263,7 +258,9 @@ package com.xvm.misc
             for (var pname:String in Stat.stat)
             {
                 var stat:StatData = Stat.getData(pname);
-                if (stat.icon == "Unknown" || stat.icon == "ussr-Observer") // skip unknown tanks in Fog of War mode and observer
+                var vdata:VehicleData = stat.v.data;
+                // skip unknown tanks (Fog of War mode) and observer
+                if (vdata == null || vdata.key == "ussr:Observer")
                     continue;
                 if (stat.team == Defines.TEAM_ALLY) ++nally else ++nenemy;
             }
@@ -294,19 +291,13 @@ package com.xvm.misc
             for (var pname:String in Stat.stat)
             {
                 var stat:StatData = Stat.getData(pname);
-                var vi1:Object = VehicleInfo.getInfo1(stat.icon);
-                if (!vi1) {
-                    if (stat.icon == "ussr-Observer")
-                        continue;
-                    return 0;
-                }
-                var vi2:Object = VehicleInfo.getInfo2ByIcon(stat.icon);
-                if (!vi2)
-                    return 0;
+                var vdata:VehicleData = stat.v.data;
+                if (vdata == null || vdata.key == "ussr:Observer")
+                    continue;
                 vis.push( {
-                    level: vi2.level,
-                    Tmin: vi1.tiers[0],
-                    Tmax: vi1.tiers[1]
+                    level: vdata.level,
+                    Tmin: vdata.tierLo,
+                    Tmax: vdata.tierHi
                 });
             }
 

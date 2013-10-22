@@ -4,16 +4,15 @@
  */
 package com.xvm
 {
-    import com.xvm.events.ObjectEvent;
-    import flash.accessibility.AccessibilityProperties;
-    import flash.events.Event;
-    import flash.events.EventDispatcher;
-    import flash.external.ExternalInterface;
-    import flash.utils.Dictionary;
+    import com.xvm.*;
+    import com.xvm.events.*;
     import com.xvm.io.*;
     import com.xvm.utils.*;
     import com.xvm.types.stat.*;
-    import com.xvm.vehinfo.VehicleInfo;
+    import com.xvm.types.veh.*;
+    import flash.events.*;
+    import flash.external.*;
+    import flash.utils.*;
 
     public class Stat extends EventDispatcher
     {
@@ -189,7 +188,7 @@ package com.xvm
                     }
                     catch (e:*)
                     {
-                        Logger.addObject(e, "exception");
+                        Logger.addObject(e, 1, "exception");
                     }
                 }
                 listenersBattle = new Vector.<Object>();
@@ -326,8 +325,14 @@ package com.xvm
                 return;
             }
 
+            stat.v.data = VehicleInfo.get(stat.v.id);
+            if (stat.v.data == null)
+                return;
+
+            var vdata:VehicleData = stat.v.data;
+
             // tank rating
-            if (isNaN(stat.v.b) || isNaN(stat.v.w) || isNaN(stat.v.l) || stat.v.b <= 0 || stat.v.l <= 0)
+            if (isNaN(stat.v.b) || isNaN(stat.v.w) || stat.v.b <= 0)
                 stat.v.r = stat.r;
             else
             {
@@ -338,21 +343,18 @@ package com.xvm
                 {
                     var Or:Number = stat.r;
                     var Tb:Number = stat.v.b / 100.0;
-                    var Tl:Number = Math.min(stat.v.l, 4) / 4.0;
+                    var Tl:Number = Math.min(vdata.level, 4) / 4.0;
                     stat.v.r = Math.round(Or - (Or - Tr) * Tb * Tl);
                 }
             }
 
-            if (isNaN(stat.v.b) || isNaN(stat.v.l))
-                return;
-
-            if (stat.v.b <= 0)
+            if (isNaN(stat.v.b) || stat.v.b <= 0)
                 return;
 
             // skip v.b less then 10, because of WG bug:
             // http://www.koreanrandom.com/forum/topic/1643-/page-19#entry26189
             // forceTeff used in UserInfo, there is not this bug there.
-            if (!forceTeff && stat.v.b < 10 + stat.v.l * 2)
+            if (!forceTeff && stat.v.b < 10 + vdata.level * 2)
                 return;
 
             if (!isNaN(stat.v.d) && stat.v.d > 0)
@@ -363,14 +365,8 @@ package com.xvm
                 stat.v.sb = Math.round(stat.v.s / stat.v.b * 10) / 10.0;
             //Logger.addObject(stat);
 
-            if (stat.vn == null)
-                return;
-            var vi2:Object = VehicleInfo.getInfo2ByVn(stat.vn);
-            if (vi2 == null || !vi2.type || !vi2.level)
-                return;
-
             if (!isNaN(stat.v.d) && stat.v.d > 0)
-                stat.v.dv = Math.round(stat.v.d / stat.v.b / vi2.hptop * 10) / 10.0;
+                stat.v.dv = Math.round(stat.v.d / stat.v.b / vdata.hpTop * 10) / 10.0;
 
             if (isNaN(stat.v.db) || isNaN(stat.v.fb) || isNaN(stat.v.sb))
                 return;
@@ -381,19 +377,19 @@ package com.xvm
             if (EC.CF != null && EC.CF > 0 && (stat.v.fb <= 0))
                 return;
 
-            if (vi2.top.D == vi2.avg.D || vi2.top.F == vi2.avg.F)
+            if (vdata.top.D == vdata.avg.D || vdata.top.F == vdata.avg.F)
                 return;
 
-            var dD:Number = stat.v.db - vi2.avg.D;
-            var dF:Number = stat.v.fb - vi2.avg.F;
-            var minD:Number = vi2.avg.D * 0.4;
-            var minF:Number = vi2.avg.F * 0.4;
-            var d:Number = 1 + dD / (vi2.top.D - vi2.avg.D);
-            var f:Number = 1 + dF / (vi2.top.F - vi2.avg.F);
-            var d2:Number = (stat.v.db < vi2.avg.D) ? stat.v.db / vi2.avg.D : d;
-            var f2:Number = (stat.v.fb < vi2.avg.F) ? stat.v.fb / vi2.avg.F : f;
-            d = (stat.v.db < vi2.avg.D) ? 1 + dD / (vi2.avg.D - minD) : d;
-            f = (stat.v.fb < vi2.avg.F) ? 1 + dF / (vi2.avg.F - minF) : f;
+            var dD:Number = stat.v.db - vdata.avg.D;
+            var dF:Number = stat.v.fb - vdata.avg.F;
+            var minD:Number = vdata.avg.D * 0.4;
+            var minF:Number = vdata.avg.F * 0.4;
+            var d:Number = 1 + dD / (vdata.top.D - vdata.avg.D);
+            var f:Number = 1 + dF / (vdata.top.F - vdata.avg.F);
+            var d2:Number = (stat.v.db < vdata.avg.D) ? stat.v.db / vdata.avg.D : d;
+            var f2:Number = (stat.v.fb < vdata.avg.F) ? stat.v.fb / vdata.avg.F : f;
+            d = (stat.v.db < vdata.avg.D) ? 1 + dD / (vdata.avg.D - minD) : d;
+            f = (stat.v.fb < vdata.avg.F) ? 1 + dF / (vdata.avg.F - minF) : f;
 
             d = Math.max(0, d);
             f = Math.max(0, f);

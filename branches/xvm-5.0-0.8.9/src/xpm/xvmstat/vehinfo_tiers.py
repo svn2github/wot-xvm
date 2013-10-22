@@ -66,6 +66,9 @@ _special = {
 }
 
 def _getTiers(level, cls, key):
+    if key in _special:
+      return _special[key]
+    
     # T4 HT max+1
     if level == 4 and cls == 'heavyTank':
         return (4, 5)

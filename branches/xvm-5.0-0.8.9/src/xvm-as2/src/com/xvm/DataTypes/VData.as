@@ -1,12 +1,9 @@
-package com.xvm.types.stat
-{
-    import com.xvm.types.veh.VehicleData;
+import com.xvm.DataTypes.*;
 
-    public dynamic class VData
-    //public class VData
-    {
+class com.xvm.DataTypes.VData
+{
         // received
-        public var id:int = 0;           // vehicle id
+        public var id:Number = 0;        // vehicle id
         public var b:Number = NaN;       // battles (int)
         public var w:Number = NaN;       // wins (int)
         public var d:Number = NaN;       // damageDealt (int)
@@ -24,5 +21,4 @@ package com.xvm.types.stat
         public var teff:Number = NaN;    // tank eff (int, 1-99999)
 
         public var data:VehicleData = null;
-    }
 }

@@ -226,7 +226,7 @@ package com.xvm
                 }
                 catch (e:*)
                 {
-                    Logger.addObject(e, "exception");
+                    Logger.addObject(e, 1, "exception");
                 }
             }
             listeners = new Vector.<Object>();

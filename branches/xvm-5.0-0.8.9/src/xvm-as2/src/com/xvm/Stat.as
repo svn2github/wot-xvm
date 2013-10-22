@@ -1,4 +1,4 @@
-class com.xvm.StatData
+class com.xvm.Stat
 {
     public static var E_STAT_LOADED = "stat_loaded";
     public static var E_USERDATA_LOADED = "userdata_loaded";

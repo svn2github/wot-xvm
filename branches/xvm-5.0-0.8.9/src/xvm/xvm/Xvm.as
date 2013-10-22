@@ -13,7 +13,6 @@ package
     import flash.system.*;
     import com.xvm.*;
     import com.xvm.io.*;
-    import com.xvm.vehinfo.*;
 
     [SWF(width="1", height="1", backgroundColor="#000000")]
 

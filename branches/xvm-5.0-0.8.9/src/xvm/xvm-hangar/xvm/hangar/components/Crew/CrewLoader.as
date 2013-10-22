@@ -8,17 +8,15 @@ package xvm.hangar.components.Crew
 	import com.xvm.*;
 	import com.xvm.l10n.Locale;
 	import com.xvm.utils.*;
-	import com.xvm.vehinfo.*;
 	import flash.display.*;
-	import flash.events.MouseEvent;
-	import flash.utils.Dictionary;
-	import net.wg.data.components.*;
-	import net.wg.data.VO.SeparateItem;
-	import net.wg.gui.events.ContextMenuEvent;
-	import net.wg.gui.lobby.hangar.*;
-	import net.wg.gui.lobby.hangar.crew.*;
-	import net.wg.infrastructure.interfaces.*;
-	import net.wg.utils.*;
+        import flash.events.MouseEvent;
+	import flash.utils.*;
+        import net.wg.data.components.*;
+        import net.wg.data.VO.*;
+        import net.wg.gui.events.*;
+        import net.wg.gui.lobby.hangar.*;
+        import net.wg.gui.lobby.hangar.crew.*;
+        import net.wg.infrastructure.interfaces.*;
 	
 	public class CrewLoader extends Sprite
 	{

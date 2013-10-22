@@ -23,6 +23,8 @@ package com.xvm.utils
 
         public static function GetPlayerName(fullplayername:String):String
         {
+            if (fullplayername == null)
+                return null;
             var pos:int = fullplayername.indexOf("[");
             return (pos < 0) ? fullplayername : StringUtils.trim(fullplayername.slice(0, pos));
         }

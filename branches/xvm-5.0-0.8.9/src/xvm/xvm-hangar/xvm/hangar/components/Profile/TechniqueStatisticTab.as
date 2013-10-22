@@ -2,8 +2,8 @@ package xvm.hangar.components.Profile
 {
     import com.xvm.*;
     import com.xvm.l10n.Locale;
-    import com.xvm.types.stat.StatData;
-    import com.xvm.vehinfo.*;
+    import com.xvm.types.stat.*;
+    import com.xvm.types.veh.*;
     import com.xvm.utils.*;
     import flash.events.*;
     import flash.text.*;
@@ -309,71 +309,71 @@ package xvm.hangar.components.Profile
 
             ratingTF.htmlText = "";
 
-            var vi:Object = VehicleInfo.getInfo2ByVid(_data.id[0]);
-            if (vi == null)
+            var vdata:VehicleData = VehicleInfo.get(_data.id[0]);
+            if (vdata == null)
                 return;
-            //Logger.addObject(vi, "", 2);
+            //Logger.addObject(vdata, "", 2);
 
             var colorAvg:int;
             var colorTop:int;
 
             // wins
-            if (vi.avg.R)
+            if (vdata.avg.R)
             {
-                colorAvg = MacrosUtil.GetDynamicColorValueInt(Defines.DYNAMIC_COLOR_RATING, vi.avg.R * 100);
-                colorTop = MacrosUtil.GetDynamicColorValueInt(Defines.DYNAMIC_COLOR_RATING, vi.top.R * 100);
+                colorAvg = MacrosUtil.GetDynamicColorValueInt(Defines.DYNAMIC_COLOR_RATING, vdata.avg.R * 100);
+                colorTop = MacrosUtil.GetDynamicColorValueInt(Defines.DYNAMIC_COLOR_RATING, vdata.top.R * 100);
                 TF(proxy.winsDL).htmlText += formatHtmlText(
-                    " " + Locale.get("avg") + ": " + color(App.utils.locale.numberWithoutZeros(vi.avg.R * 100), colorAvg) +
-                    " " + Locale.get("top") + ": " + color(App.utils.locale.numberWithoutZeros(vi.top.R * 100), colorTop),
+                    " " + Locale.get("avg") + ": " + color(App.utils.locale.numberWithoutZeros(vdata.avg.R * 100), colorAvg) +
+                    " " + Locale.get("top") + ": " + color(App.utils.locale.numberWithoutZeros(vdata.top.R * 100), colorTop),
                     Defines.UICOLOR_DEFAULT2);
             }
 
             // survival
-            if (vi.avg.U)
+            if (vdata.avg.U)
             {
                 TF(proxy.surviveDL).htmlText += formatHtmlText(
-                    " " + Locale.get("avg") + ": " + color(App.utils.locale.numberWithoutZeros(vi.avg.U * 100), Defines.UICOLOR_GOLD) +
-                    " " + Locale.get("top") + ": " + color(App.utils.locale.numberWithoutZeros(vi.top.U * 100), Defines.UICOLOR_GOLD),
+                    " " + Locale.get("avg") + ": " + color(App.utils.locale.numberWithoutZeros(vdata.avg.U * 100), Defines.UICOLOR_GOLD) +
+                    " " + Locale.get("top") + ": " + color(App.utils.locale.numberWithoutZeros(vdata.top.U * 100), Defines.UICOLOR_GOLD),
                     Defines.UICOLOR_DEFAULT2);
             }
 
             // dmg
-            if (vi.avg.D)
+            if (vdata.avg.D)
             {
                 TF(proxy.avgDmgDealtDL).htmlText = formatHtmlText(
-                    Locale.get("avg") + ": " + color(App.utils.locale.numberWithoutZeros(vi.avg.D), Defines.UICOLOR_GOLD) +
-                    " " + Locale.get("top") + ": " + color(App.utils.locale.numberWithoutZeros(vi.top.D), Defines.UICOLOR_GOLD),
+                    Locale.get("avg") + ": " + color(App.utils.locale.numberWithoutZeros(vdata.avg.D), Defines.UICOLOR_GOLD) +
+                    " " + Locale.get("top") + ": " + color(App.utils.locale.numberWithoutZeros(vdata.top.D), Defines.UICOLOR_GOLD),
                     Defines.UICOLOR_DEFAULT2);
             }
 
             // frags
-            if (vi.avg.F)
+            if (vdata.avg.F)
             {
                 TF(proxy.avgKillsDL).htmlText = formatHtmlText(
-                    Locale.get("avg") + ": " + color(App.utils.locale.numberWithoutZeros(vi.avg.F), Defines.UICOLOR_GOLD) +
-                    " " + Locale.get("top") + ": " + color(App.utils.locale.numberWithoutZeros(vi.top.F), Defines.UICOLOR_GOLD),
+                    Locale.get("avg") + ": " + color(App.utils.locale.numberWithoutZeros(vdata.avg.F), Defines.UICOLOR_GOLD) +
+                    " " + Locale.get("top") + ": " + color(App.utils.locale.numberWithoutZeros(vdata.top.F), Defines.UICOLOR_GOLD),
                     Defines.UICOLOR_DEFAULT2);
             }
 
             // spotted
-            if (vi.avg.S)
+            if (vdata.avg.S)
             {
                 TF(proxy.avgDetectedDL).htmlText = formatHtmlText(
-                    Locale.get("avg") + ": " + color(App.utils.locale.numberWithoutZeros(vi.avg.S), Defines.UICOLOR_GOLD) +
-                    " " + Locale.get("top") + ": " + color(App.utils.locale.numberWithoutZeros(vi.top.S), Defines.UICOLOR_GOLD),
+                    Locale.get("avg") + ": " + color(App.utils.locale.numberWithoutZeros(vdata.avg.S), Defines.UICOLOR_GOLD) +
+                    " " + Locale.get("top") + ": " + color(App.utils.locale.numberWithoutZeros(vdata.top.S), Defines.UICOLOR_GOLD),
                     Defines.UICOLOR_DEFAULT2);
             }
 
             // specific damage
-            var specDmg:Number = data.avgDamageDealt / vi.hptop;
+            var specDmg:Number = data.avgDamageDealt / vdata.hpTop;
             specificDamage.visible = true;
             specificDamage.value = color(size(App.utils.locale.numberWithoutZeros(specDmg), 12));
 
-            if (vi.avg.E)
+            if (vdata.avg.E)
             {
                 TF(specificDamage).htmlText = formatHtmlText(size(
-                    Locale.get("avg") + ": " + color(App.utils.locale.numberWithoutZeros(vi.avg.E), Defines.UICOLOR_GOLD) +
-                    " " + Locale.get("top") + ": " + color(App.utils.locale.numberWithoutZeros(vi.top.E), Defines.UICOLOR_GOLD),
+                    Locale.get("avg") + ": " + color(App.utils.locale.numberWithoutZeros(vdata.avg.E), Defines.UICOLOR_GOLD) +
+                    " " + Locale.get("top") + ": " + color(App.utils.locale.numberWithoutZeros(vdata.top.E), Defines.UICOLOR_GOLD),
                     12), Defines.UICOLOR_DEFAULT2);
             }
 

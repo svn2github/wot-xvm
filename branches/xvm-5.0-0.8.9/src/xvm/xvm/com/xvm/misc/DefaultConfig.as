@@ -4,10 +4,9 @@
  */
 package com.xvm.misc
 {
-    import com.xvm.utils.ObjectConverter;
+    import com.xvm.*;
+    import com.xvm.utils.*;
     import com.xvm.types.cfg.*;
-    import com.xvm.Defines;
-    import com.xvm.vehinfo.VehicleInfo;
 
     public class DefaultConfig
     {
@@ -41,7 +40,7 @@ package com.xvm.misc
             c.alpha = getAlphaSection();
             c.texts = getTextsSection();
             c.iconset = getIconsetSection();
-            c.vehicleNames = VehicleInfo.getVehicleNamesData();
+            c.vehicleNames = new Object();
             c.consts = getConstsSection();
             return c;
         }

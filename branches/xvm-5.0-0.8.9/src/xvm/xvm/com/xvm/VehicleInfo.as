@@ -2,23 +2,25 @@
  * XVM Config
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
-import com.xvm.Cmd;
-import com.xvm.Config;
-import com.xvm.Strings;
-import com.xvm.JSONx;
-import com.xvm.DataTypes.VehicleData;
-import com.xvm.Logger;
-
-class com.xvm.VehicleInfo
+package com.xvm
 {
-    // PUBLIC
+    import com.xvm.*;
+    import com.xvm.io.*;
+    import com.xvm.types.cfg.*;
+    import com.xvm.types.veh.*;
+    import flash.utils.*;
+    import org.idmedia.as3commons.util.StringUtils;
 
-        public static function populateData()
+    public class VehicleInfo
+    {
+        // PUBLIC
+
+        public static function populateData():void
         {
             Cmd.getVehicleInfoData(instance, instance.onVehicleInfoData);
         }
 
-        public static function get(vId:Number):VehicleData
+        public static function get(vId:int):VehicleData
         {
             return instance._get(vId);
         }
@@ -56,18 +58,17 @@ class com.xvm.VehicleInfo
             this.vehiclesMapName = {};
         }
 
-        private function onVehicleInfoData(json_str:String)
+        private function onVehicleInfoData(json_str:String):void
         {
             //Logger.add("onVehicleInfoData(): " + json_str);
             try
             {
                 var data_array:Object = JSONx.parse(json_str);
-                for (var n in data_array)
+                for each (var obj:Object in data_array)
                 {
-                    var obj:Object = data_array[n];
                     var data:VehicleData = new VehicleData(obj);
 
-                    var preferredNames:Object = Config.s_config.vehicleNames[data.key];
+                    var preferredNames:Object = Config.config.vehicleNames[data.key];
                     if (preferredNames != null)
                     {
                         if (preferredNames['name'] != null && preferredNames['name'] != '')
@@ -79,17 +80,17 @@ class com.xvm.VehicleInfo
                     //Logger.addObject(data);
 
                     vehicles[data.vid] = data;
-                    vehiclesMapKey[data.key] = data.vid; // for getByIcon
-                    vehiclesMapName[data.localizedShortName] = data.vid; // for getByLocalizedShortName
+                    vehiclesMapKey[data.key] = data.vid; // for getByIcon()
+                    vehiclesMapName[data.localizedShortName] = data.vid; // for getByLocalizedShortName()
                 }
             }
             catch (e:Error)
             {
-                Logger.add(e.message);
+                Logger.add(e.getStackTrace());
             }
         }
 
-        private function _get(vId:Number):VehicleData
+        private function _get(vId:int):VehicleData
         {
             return vehicles[vId];
         }
@@ -99,15 +100,13 @@ class com.xvm.VehicleInfo
             // icon: "ussr-IS-3"
             //   or  "../maps/icons/vehicle/contour/ussr-IS-3.png"
             // key: "ussr:IS-3"
-            var n:Number = icon.lastIndexOf("/");
+            var n:int = icon.lastIndexOf("/");
             if (n > 0)
                 icon = icon.substring(n + 1);
             n = icon.indexOf(".");
             if (n > 0)
                 icon = icon.substring(0, n);
-            n = icon.indexOf("-");
-            if (n > 0)
-                icon = icon.substring(0, n) + ":" + icon.substring(n + 1);
+            icon = icon.replace("-", ":");
             return vehicles[vehiclesMapKey[icon]];
         }
 
@@ -116,5 +115,5 @@ class com.xvm.VehicleInfo
             // localizedShortName: "ИС-3"
             return vehicles[vehiclesMapName[localizedShortName]];
         }
-
+    }
 }
