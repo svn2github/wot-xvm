@@ -42,6 +42,10 @@ class wot.VehicleMarkersManager.Xvm extends XvmBase implements wot.VehicleMarker
         turretStatusComponent = new TurretStatusComponent(new TurretStatusProxy(this));
         vehicleTypeComponent = new VehicleTypeComponent(new VehicleTypeProxy(this));
         damageTextComponent = new DamageTextComponent(new DamageTextProxy(this));
+
+        // since 0.8.9.CT1 WG implemented some kind of "optimization", and marker will not be shown when all elements are not in the mc bounds.
+        // add empty text field to always be in the bounds
+        proxy.wrapper.createTextField("__bounds_stub__", 0, 0, 0, 10, 10);
     }
 
     /**
