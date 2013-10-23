@@ -1,4 +1,4 @@
-package xvm.hangar.components.Profile
+package xvm.profile.components
 {
     import com.xvm.*;
     import com.xvm.events.*;

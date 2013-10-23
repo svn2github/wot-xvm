@@ -1,7 +1,6 @@
-package xvm.hangar.components.Profile
+package xvm.profile.components
 {
     import com.xvm.*;
-    import net.wg.data.gui_items.dossier.*;
     import net.wg.gui.lobby.profile.pages.technique.*;
 
     public class TechniqueWindow extends Technique

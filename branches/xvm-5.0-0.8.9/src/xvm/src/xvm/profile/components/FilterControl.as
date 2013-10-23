@@ -1,17 +1,12 @@
-package xvm.hangar.components.Profile
+package xvm.profile.components
 {
     import com.xvm.*;
-    import com.xvm.components.*;
-    import com.xvm.controls.*;
     import com.xvm.l10n.Locale;
     import flash.display.*;
     import flash.events.*;
     import flash.text.*;
     import net.wg.gui.components.controls.*;
-    import scaleform.clik.controls.Button;
-    import scaleform.clik.data.*;
     import scaleform.clik.events.*;
-    import xvm.hangar.components.Profile.*;
 
     // Filter
     // [           ] [nation|v] [class|v] [level|v] [master|v] [prefs|v] [SAVE]

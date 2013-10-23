@@ -6,15 +6,9 @@ package xvm.hangar.views
 {
     import com.xvm.*;
     import com.xvm.infrastructure.*;
-    import com.xvm.utils.*;
-    import com.xvm.types.cfg.*;
-    import flash.display.*;
-    import flash.utils.*;
-    import net.wg.gui.lobby.LobbyPage;
-    import net.wg.infrastructure.events.LifeCycleEvent;
-    import net.wg.infrastructure.interfaces.IView;
-    import xvm.*;
-    import xvm.hangar.*;
+    import net.wg.gui.lobby.*;
+    import net.wg.infrastructure.events.*;
+    import net.wg.infrastructure.interfaces.*;
 
     public class Lobby extends XvmViewBase
     {
@@ -32,8 +26,15 @@ package xvm.hangar.views
         {
             //Logger.add("onAfterPopulate: " + view.as_alias);
             hideTutorial();
-            XvmHangar.Globals[XvmHangar.G_NAME] = WGUtils.GetPlayerName(page.header.tankPanel.account_name.text);
         }
+
+
+        public override function onBeforeDispose(e:LifeCycleEvent):void
+        {
+            //Logger.add("onBeforeDispose: " + view.as_alias);
+        }
+
+        // PRIVATE
 
         private function hideTutorial():void
         {

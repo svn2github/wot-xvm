@@ -1,7 +1,7 @@
-package xvm.hangar.UI.profileSections
+package xvm.profile.UI
 {
     import net.wg.data.gui_items.dossier.*;
-    import xvm.hangar.components.Profile.TechniqueStatisticTab;
+    import xvm.profile.components.TechniqueStatisticTab;
 
     public dynamic class UI_TechniqueStatisticTab extends TechniqueStatisticTab_UI
     {

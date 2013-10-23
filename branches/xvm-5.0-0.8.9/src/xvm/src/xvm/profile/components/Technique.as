@@ -1,4 +1,4 @@
-package xvm.hangar.components.Profile
+package xvm.profile.components
 {
     import com.xvm.*;
     import flash.display.*;
@@ -6,7 +6,7 @@ package xvm.hangar.components.Profile
     import net.wg.data.gui_items.dossier.*;
     import net.wg.gui.lobby.profile.pages.technique.*;
     import net.wg.gui.components.advanced.*;
-    import xvm.hangar.UI.profileSections.*;
+    import xvm.profile.UI.*;
 
     UI_TechniqueStatisticTab;
 

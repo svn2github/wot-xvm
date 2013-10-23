@@ -8,11 +8,8 @@ package xvm.hangar
     import com.xvm.infrastructure.*;
     import xvm.hangar.views.*;
 
-    public class XvmHangar extends XvmModBase
+    public class HangarXvmMod extends XvmModBase
     {
-        public static const G_NAME:String = "name";
-        public static var Globals:Object = { };
-
         public override function get logPrefix():String
         {
             return "[XVM:HANGAR]";
@@ -23,9 +20,7 @@ package xvm.hangar
             "login": Login,
             "lobby": Lobby,
             "battleLoading": BattleLoading,
-            "battleResults": BattleResults,
-            "profile": Profile,
-            "profileWindow": Profile
+            "battleResults": BattleResults
         }
 
         public override function get views():Object

@@ -1,7 +1,7 @@
-package xvm.hangar.components.Profile
+package xvm.profile.components
 {
-    import net.wg.gui.components.advanced.*;
     import com.xvm.*;
+    import net.wg.gui.components.advanced.*;
 
     // Add summary item to the first line of technique list
     public final class TechniqueListSorting

@@ -1,17 +1,15 @@
-package xvm.hangar.components.Profile
+package xvm.profile.components
 {
     import com.xvm.*;
     import com.xvm.l10n.Locale;
     import com.xvm.types.stat.*;
     import com.xvm.types.veh.*;
     import com.xvm.utils.*;
-    import flash.events.*;
     import flash.text.*;
     import flash.utils.*;
     import net.wg.data.gui_items.dossier.*;
     import net.wg.gui.lobby.profile.components.*;
     import net.wg.gui.lobby.profile.pages.technique.*;
-    import xvm.*;
 
     public class TechniqueStatisticTab
     {

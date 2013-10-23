@@ -1,17 +1,15 @@
-package xvm.hangar.components.Profile
+package xvm.profile.components
 {
-    import flash.events.*;
-    import scaleform.clik.data.*;
-    import scaleform.clik.events.*;
-    import scaleform.clik.interfaces.*;
-    import net.wg.gui.components.advanced.*;
-    import net.wg.gui.lobby.profile.pages.summary.*;
-    import net.wg.gui.lobby.profile.pages.technique.*;
-    import net.wg.gui.lobby.profile.pages.technique.data.*;
     import com.xvm.*;
     import com.xvm.events.*;
     import com.xvm.l10n.Locale;
+    import flash.events.*;
     import net.wg.data.gui_items.dossier.*;
+    import net.wg.gui.components.advanced.*;
+    import net.wg.gui.lobby.profile.pages.technique.*;
+    import net.wg.gui.lobby.profile.pages.technique.data.*;
+    import scaleform.clik.events.*;
+    import scaleform.clik.interfaces.*;
 
     // Add summary item to the first line of technique list
     public final class TechniqueListAdjuster extends EventDispatcher

@@ -2,13 +2,13 @@
  * XVM - user info
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
-package xvm.hangar.views
+package xvm.profile
 {
     import com.xvm.*;
     import com.xvm.infrastructure.*;
+    import com.xvm.misc.*;
     import com.xvm.utils.*;
     import net.wg.gui.components.windows.*;
-    import net.wg.data.gui_items.dossier.*;
     import net.wg.gui.events.*;
     import net.wg.gui.lobby.profile.*;
     import net.wg.gui.lobby.profile.pages.technique.*;
@@ -16,23 +16,21 @@ package xvm.hangar.views
     import net.wg.infrastructure.events.*;
     import net.wg.infrastructure.interfaces.*;
     import scaleform.clik.events.*;
-    import xvm.*;
-    import xvm.hangar.*;
-    import xvm.hangar.components.Profile.*;
+    import xvm.profile.components.*;
 
-    public class Profile extends XvmViewBase
+    public class ProfileXvmView extends XvmViewBase
     {
-        public function Profile(view:IView)
+        public function ProfileXvmView(view:IView)
         {
             super(view);
         }
 
         public function get tabNavigator():ProfileTabNavigator
         {
-            var profile:net.wg.gui.lobby.profile.Profile = view as net.wg.gui.lobby.profile.Profile;
+            var profile:Profile = view as Profile;
             if (profile != null)
                 return profile.tabNavigator;
-            var profileWindow:net.wg.gui.lobby.window.ProfileWindow = view as net.wg.gui.lobby.window.ProfileWindow;
+            var profileWindow:ProfileWindow = view as ProfileWindow;
             if (profileWindow != null)
                 return profileWindow.tabNavigator;
             return null;
@@ -66,7 +64,7 @@ package xvm.hangar.views
                 var page:ProfileTechniquePage = e.view as ProfileTechniquePage;
                 if (page.getChildByName("xvm_extension") == null)
                 {
-                    playerName = XvmHangar.Globals[XvmHangar.G_NAME];
+                    playerName = Globals[Globals.NAME];
                     var tp:TechniquePage = new TechniquePage(page, playerName);
                     tp.name = "xvm_extension";
                     page.addChild(tp);

@@ -1,6 +1,6 @@
-package xvm.hangar.UI.profileSections
+package xvm.profile.UI
 {
-    import xvm.hangar.components.Profile.ProfileTechniqueRenderer;
+    import xvm.profile.components.ProfileTechniqueRenderer;
 
     public dynamic class UI_TechniqueRenderer extends TechniqueRenderer_UI
     {
