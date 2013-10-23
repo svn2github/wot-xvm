@@ -15,7 +15,6 @@ package xvm.hangar.views
     import net.wg.infrastructure.interfaces.IView;
     import xvm.*;
     import xvm.hangar.*;
-    import xvm.hangar.components.PingServers.*;
 
     public class Lobby extends XvmViewBase
     {
@@ -32,17 +31,8 @@ package xvm.hangar.views
         public override function onAfterPopulate(e:LifeCycleEvent):void
         {
             //Logger.add("onAfterPopulate: " + view.as_alias);
-            initPing();
             hideTutorial();
             XvmHangar.Globals[XvmHangar.G_NAME] = WGUtils.GetPlayerName(page.header.tankPanel.account_name.text);
-        }
-
-        private function initPing():void
-        {
-            var cfg:CPingServers = Config.config.hangar.pingServers;
-            PingServers.initFeature(cfg.enabled, cfg.updateInterval);
-            if (cfg.enabled)
-                page.addChild(new PingServersView(cfg));
         }
 
         private function hideTutorial():void

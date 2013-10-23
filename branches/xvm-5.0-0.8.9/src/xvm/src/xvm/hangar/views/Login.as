@@ -13,7 +13,6 @@ package xvm.hangar.views
     import net.wg.infrastructure.interfaces.IView;
     import net.wg.infrastructure.events.LifeCycleEvent;
     import xvm.hangar.*;
-    import xvm.hangar.components.PingServers.*;
 
     public class Login extends XvmViewBase
     {
@@ -31,7 +30,6 @@ package xvm.hangar.views
         {
             //Logger.addObject("onAfterPopulate: " + view.as_alias);
             setTimeout(setVersion, 1);
-            initPing();
 
             // ------------------ DEBUG ------------------
             //var mc = main.createEmptyMovieClip("widgetsHolder", main.getNextHighestDepth());
@@ -51,14 +49,6 @@ package xvm.hangar.views
         private function setVersion():void
         {
             page.version.appendText("   XVM " + Defines.XVM_VERSION + " (WoT " + Defines.WOT_VERSION + ")");
-        }
-
-        private function initPing():void
-        {
-            var cfg:CPingServers = Config.config.login.pingServers;
-            PingServers.initFeature(cfg.enabled, cfg.updateInterval);
-            if (cfg.enabled)
-                page.addChild(new PingServersView(cfg));
         }
     }
 
