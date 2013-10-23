@@ -15,7 +15,6 @@
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
-    <class path="xvm-autologin" />
     <class path="src" />
   </classpaths>
   <!-- Build options -->
@@ -78,11 +77,9 @@
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
     <hidden path="swf" />
-    <hidden path="build-swc.sh" />
     <hidden path="wg" />
+    <hidden path="build-swc.sh" />
     <hidden path="build-swc-wg.sh" />
-    <hidden path="xvm-testmod" />
-    <hidden path="xvm-testmod.as3proj" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />

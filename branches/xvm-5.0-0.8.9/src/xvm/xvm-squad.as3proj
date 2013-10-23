@@ -15,7 +15,6 @@
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
-    <class path="xvm-squad" />
     <class path="src" />
   </classpaths>
   <!-- Build options -->
