@@ -8,8 +8,10 @@ projects=(
           'wg'
           'xvm'
           'xvm-autologin'
+          'xvm-company'
           'xvm-crew'
           'xvm-hangar'
+          'xvm-ping'
           'xvm-squad'
          )
 
