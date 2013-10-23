@@ -11,7 +11,7 @@ package xvm.profile
     {
         public override function get logPrefix():String
         {
-            return "[XVM:HANGAR]";
+            return "[XVM:PROFILE]";
         }
 
         private static const _views:Object =
