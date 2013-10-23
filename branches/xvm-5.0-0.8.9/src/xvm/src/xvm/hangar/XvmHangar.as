@@ -23,8 +23,6 @@ package xvm.hangar
             "login": Login,
             "lobby": Lobby,
             "battleLoading": BattleLoading,
-            "prb_windows/companiesWindow": CompaniesListWindow,
-            "prb_windows/companyWindow": CompanyWindow,
             "battleResults": BattleResults,
             "profile": Profile,
             "profileWindow": Profile

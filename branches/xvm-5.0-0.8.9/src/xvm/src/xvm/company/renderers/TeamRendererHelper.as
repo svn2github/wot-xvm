@@ -1,14 +1,13 @@
 /**
  * Helper class for shared functions used in the players lists renderers in the hangar
  */
-package xvm.hangar.components.Company
+package xvm.company.renderers
 {
-    import net.wg.data.daapi.PlayerInfo;
-    import net.wg.gui.prebattle.squad.*;
     import com.xvm.*;
     import com.xvm.types.stat.*;
     import com.xvm.utils.*;
     import com.xvm.l10n.Locale;
+    import net.wg.gui.prebattle.squad.MessengerUtils;
 
     public class TeamRendererHelper
     {

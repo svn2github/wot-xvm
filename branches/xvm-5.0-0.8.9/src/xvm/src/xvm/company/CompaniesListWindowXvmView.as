@@ -2,7 +2,7 @@
  * XVM - companies list window
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
-package xvm.hangar.views
+package xvm.company
 {
     import com.xvm.*;
     import com.xvm.infrastructure.*;
@@ -13,23 +13,21 @@ package xvm.hangar.views
     import net.wg.infrastructure.interfaces.*;
     import net.wg.infrastructure.events.*;
     import net.wg.gui.prebattle.company.*;
-    import scaleform.clik.controls.Button;
-    import xvm.hangar.*;
-    import xvm.hangar.components.Company.*;
-    import xvm.hangar.UI.companiesWindow.*;
+    //import scaleform.clik.controls.CheckBox; // conflict with .*
+    import xvm.company.UI.*;
 
-    public class CompaniesListWindow extends XvmViewBase
+    public class CompaniesListWindowXvmView extends XvmViewBase
     {
         private var updateCheckBox:CheckBox;
 
-        public function CompaniesListWindow(view:IView)
+        public function CompaniesListWindowXvmView(view:IView)
         {
             super(view);
         }
 
-        public function get page():net.wg.gui.prebattle.company.CompaniesListWindow
+        public function get page():CompaniesListWindow
         {
-            return super.view as net.wg.gui.prebattle.company.CompaniesListWindow;
+            return super.view as CompaniesListWindow;
         }
 
         public override function onAfterPopulate(e:LifeCycleEvent):void
@@ -72,12 +70,5 @@ package xvm.hangar.views
                 }
             }, 100);
         }
-
-        public override function onBeforeDispose(e:LifeCycleEvent):void
-        {
-            //Logger.add("onBeforeDispose: " + view.as_alias);
-        }
-
-        // PRIVATE
     }
 }

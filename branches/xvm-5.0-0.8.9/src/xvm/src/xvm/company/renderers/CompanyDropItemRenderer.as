@@ -1,17 +1,11 @@
-package xvm.hangar.components.Company
+package xvm.company.renderers
 {
     import com.xvm.*;
     import com.xvm.utils.*;
     import com.xvm.types.stat.*;
     import flash.events.*;
     import flash.text.*;
-    import flash.utils.*;
-    import net.wg.data.daapi.PlayerInfo;
-    import net.wg.gui.components.controls.CheckBox;
-    import net.wg.gui.prebattle.company.CompaniesListWindow;
-    import net.wg.gui.prebattle.company.CompanyDropItemRenderer;
-    import xvm.hangar.components.Company.*;
-    import xvm.hangar.UI.companiesWindow.UI_CompanyListItemRenderer;
+    import net.wg.gui.prebattle.company.*;
 
     public class CompanyDropItemRenderer
     {

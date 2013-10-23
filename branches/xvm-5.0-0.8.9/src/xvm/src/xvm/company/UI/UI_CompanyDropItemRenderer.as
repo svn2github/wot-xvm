@@ -1,7 +1,7 @@
-package xvm.hangar.UI.companiesWindow
+package xvm.company.UI
 {
     import flash.events.*;
-    import xvm.hangar.components.Company.CompanyDropItemRenderer;
+    import xvm.company.renderers.*;
 
     public dynamic class UI_CompanyDropItemRenderer extends CompanyDropItemRendererUI
     {
