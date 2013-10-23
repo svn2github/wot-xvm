@@ -16,6 +16,7 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="xvm-crew" />
+    <class path="src" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -72,7 +73,7 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="xvm-crew\xvm\crew\CrewXvmMod.as" />
+    <compile path="src\xvm\crew\CrewXvmMod.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
