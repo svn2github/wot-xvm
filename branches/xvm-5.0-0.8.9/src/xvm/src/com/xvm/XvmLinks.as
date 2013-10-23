@@ -1,4 +1,4 @@
-package
+package com.xvm
 {
 
 internal class XvmLinks

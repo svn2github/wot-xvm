@@ -18,11 +18,11 @@ else
 fi
 
 frswc="$FLEXSDK/frameworks/libs/framework.swc"
-class="Xvm"
+class="com.xvm.Xvm"
 
 "$compc" \
     -framework="$FLEXSDK/frameworks" \
-    -source-path xvm \
+    -source-path src \
     -library-path=lib/wg.swc \
     -library-path="$frswc" \
     -output lib/xvm.swc \

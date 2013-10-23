@@ -2,7 +2,7 @@
  * XVM Entry Point
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
-package
+package com.xvm
 {
     XvmLinks;
 
