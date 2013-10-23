@@ -12,6 +12,7 @@ projects=(
           'xvm-crew'
           'xvm-hangar'
           'xvm-ping'
+          'xvm-profile'
           'xvm-squad'
          )
 
