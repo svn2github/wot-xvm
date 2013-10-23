@@ -2,7 +2,7 @@
  * @author Mr.A
  * @author Pavel Máca
  */
-package xvm.hangar.components.Squad
+package xvm.squad
 {
     import com.xvm.*;
     import com.xvm.l10n.Locale;
@@ -73,8 +73,9 @@ package xvm.hangar.components.Squad
             {
                 if (vehicleTierField == null)
                     createVehicleTierField();
+                Macros.RegisterMinimalMacrosData(proxy.data.userName, vdata.vid);
                 vehicleTierField.htmlText = "<p class='xvm_vehicleTier' align='right'>" +
-                    Macros.FormatSquad(Config.config.squad.formatInfoField, vdata) + "</p>";
+                    Macros.Format(proxy.data.userName, Config.config.squad.formatInfoField) + "</p>";
             }
         }
 

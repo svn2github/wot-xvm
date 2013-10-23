@@ -4,19 +4,20 @@
  */
 package xvm.hangar.views
 {
+    import com.xvm.*;
+    import com.xvm.infrastructure.*;
+    import com.xvm.utils.*;
+    import com.xvm.types.cfg.*;
     import flash.display.*;
     import flash.utils.*;
     import net.wg.gui.lobby.LobbyPage;
     import net.wg.infrastructure.events.LifeCycleEvent;
     import net.wg.infrastructure.interfaces.IView;
-    import com.xvm.*;
-    import com.xvm.utils.*;
-    import com.xvm.types.cfg.*;
     import xvm.*;
     import xvm.hangar.*;
     import xvm.hangar.components.PingServers.*;
 
-    public class Lobby extends XvmModBase
+    public class Lobby extends XvmViewBase
     {
         public function Lobby(view:IView)
         {

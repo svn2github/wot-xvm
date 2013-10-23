@@ -2,16 +2,15 @@
  * XVM - squad window
  * @author Pavel Máca
  */
-package xvm.hangar.views
+package xvm.squad
 {
     import com.xvm.*;
+    import com.xvm.infrastructure.*;
     import net.wg.gui.prebattle.squad.SquadWindow;
     import net.wg.infrastructure.events.*;
     import net.wg.infrastructure.interfaces.*;
-    import xvm.hangar.*;
-    import xvm.UI.squadWindow.UI_SquadItemRenderer;
 
-    public class SquadWindow extends XvmModBase
+    public class SquadWindow extends XvmViewBase
     {
         public function SquadWindow(view:IView)
         {

@@ -62,9 +62,9 @@ Legend:
 │ {{cellsize}}               │   │   │   │   │   │   │   │ X │   │ minimap cell side size
 │ {{vehicle-name}}           │   │   │   │   │   │   │   │ X │   │ returns vehicle system name - usa-M24_Chaffee
 │ {{vehicle-short}}          │   │   │   │   │   │   │   │ X │   │ shortened vehicle name
-│ {{vtype-l}}                │   │   │   │   │   │   │   │   │ X │ vehicle class (text substitution from locale)
-│ {{battletier-min}}         │   │   │   │   │   │   │   │   │ X │ minimal vehicle battle tier
-│ {{battletier-max}}         │   │   │   │   │   │   │   │   │ X │ maximal vehicle battle tier
+│ {{vtype-l}}                │ X │   │   │   │   │   │   │   │ X │ vehicle class (text substitution from locale)
+│ {{battletier-min}}         │ X │   │   │   │   │   │   │   │ X │ minimal vehicle battle tier
+│ {{battletier-max}}         │ X │   │   │   │   │   │   │   │ X │ maximal vehicle battle tier
 │ {{l10n:blownUp}}           │   │   │   │ X │   │   │   │   │   │ localizated text "Blown-up!", only in "blowupMessage"
 │ {{l10n:Hits}}              │   │   │   │   │ X │   │   │   │   │ localizated text "Hits"
 │ {{l10n:Total}}             │   │   │   │   │ X │   │   │   │   │ localizated text "Total"

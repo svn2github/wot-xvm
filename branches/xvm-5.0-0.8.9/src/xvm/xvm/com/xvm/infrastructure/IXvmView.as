@@ -1,12 +1,12 @@
 /**
- * XVM - login page
+ * XVM mod interface
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
-package xvm.hangar
+package com.xvm.infrastructure
 {
     import net.wg.infrastructure.events.LifeCycleEvent;
 
-    public interface IXvmMod
+    public interface IXvmView
     {
         function onBeforePopulate(e:LifeCycleEvent):void;
         function onAfterPopulate(e:LifeCycleEvent):void;

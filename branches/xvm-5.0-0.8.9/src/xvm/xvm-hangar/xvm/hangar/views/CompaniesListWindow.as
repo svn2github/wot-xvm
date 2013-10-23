@@ -4,20 +4,21 @@
  */
 package xvm.hangar.views
 {
+    import com.xvm.*;
+    import com.xvm.infrastructure.*;
+    import com.xvm.l10n.Locale;
     import flash.events.*;
     import flash.utils.*;
     import net.wg.gui.components.controls.*;
     import net.wg.infrastructure.interfaces.*;
     import net.wg.infrastructure.events.*;
     import net.wg.gui.prebattle.company.*;
-    import com.xvm.*;
-    import com.xvm.l10n.Locale;
     import scaleform.clik.controls.Button;
     import xvm.UI.companiesWindow.*;
     import xvm.hangar.*;
     import xvm.hangar.components.Company.*;
 
-    public class CompaniesListWindow extends XvmModBase
+    public class CompaniesListWindow extends XvmViewBase
     {
         private var updateCheckBox:CheckBox;
 

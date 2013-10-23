@@ -310,7 +310,8 @@ class _Stat(object):
             stat['v'] = {}
 
         player = BigWorld.player()
-        team = 0 if player is None else player.team
+        from avatar import PlayerAvatar
+        team = 0 if player is not PlayerAvatar else player.team
 
         if self.players is not None:
             # TODO: optimize

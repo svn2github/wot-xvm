@@ -97,14 +97,20 @@ package com.xvm.utils
             pdata["vehicle"] = vdata.localizedName;
             // {{vehiclename}} - ussr:T-34-85
             pdata["vehiclename"] = vdata.key;
-            // {{vtype}} - MT
-            pdata["vtype"] = Config.config.texts.vtype[vdata.vtype];
             // {{level}}
             pdata["level"] = vdata ? String(vdata.level) : "";
             // {{rlevel}}
             pdata["rlevel"] = vdata ? Defines.ROMAN_LEVEL[vdata.level - 1] : "";
+            // {{vtype}} - MT
+            pdata["vtype"] = Config.config.texts.vtype[vdata.vtype];
+            // {{vtype-l}} - Medium Tank
+            pdata["vtype-l"] = Locale.get(vdata.vclass);
             // {{c:vtype}}
             pdata["c:vtype"] = MacrosUtil.GetVClassColorValue(vdata);
+            // {{battletier-min}}
+            pdata["battletier-min"] = vdata.tierLo;
+            // {{battletier-max}}
+            pdata["battletier-max"] = vdata.tierHi;
         }
 
         public static function RegisterMacrosData(fullPlayerName:String):void
@@ -364,47 +370,6 @@ package com.xvm.utils
             pdata["a:tsb"] = isNaN(stat.v.sb) ? "" : function(o:MacrosFormatOptions):Number {
                 return MacrosUtil.GetDynamicAlphaValue(Defines.DYNAMIC_ALPHA_TSB, stat.v.sb);
             }
-        }
-
-        private static var LEVEL_MACRO:String = "{{level}}";
-        private static var ROMAN_LEVEL_MACRO:String = "{{rlevel}}";
-        private static var VEHCLASS_MACRO:String = "{{vtype-l}}";
-        private static var VEHCLASS_CONF_MACRO:String = "{{vtype}}";
-        private static var BATTLETIERMIN_MACRO:String = "{{battletier-min}}";
-        private static var BATTLETIERMAX_MACRO:String = "{{battletier-max}}";
-
-        public static function FormatSquad(format:String, vdata:VehicleData):String
-        {
-            if (format.indexOf("{{") == -1)
-                return Utils.fixImgTag(format);
-
-            var formatArr:Array;
-
-            formatArr = format.split(LEVEL_MACRO);
-            if (formatArr.length > 1)
-                format = formatArr.join(vdata.level);
-
-            formatArr = format.split(ROMAN_LEVEL_MACRO);
-            if (formatArr.length > 1)
-                format = formatArr.join(Defines.ROMAN_LEVEL[vdata.level - 1]);
-
-            formatArr = format.split(VEHCLASS_MACRO);
-            if (formatArr.length > 1)
-                format = formatArr.join(Locale.get(vdata.vclass));
-
-            formatArr = format.split(VEHCLASS_CONF_MACRO);
-            if (formatArr.length > 1)
-                format = formatArr.join(Config.config.texts.vtype[vdata.vtype]);
-
-                formatArr = format.split(BATTLETIERMIN_MACRO);
-            if (formatArr.length > 1)
-                format = formatArr.join(vdata.tierLo);
-
-                formatArr = format.split(BATTLETIERMAX_MACRO);
-            if (formatArr.length > 1)
-                format = formatArr.join(vdata.tierHi);
-
-            return Utils.fixImgTag(format);
         }
 
         // PRIVATE

@@ -1,14 +1,14 @@
 /**
- * XVM
+ * XVM mod base class
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
-package xvm.hangar
+package com.xvm.infrastructure
 {
     import net.wg.infrastructure.interfaces.IView;
     import net.wg.infrastructure.events.LifeCycleEvent;
     import com.xvm.Logger;
 
-    public class XvmModBase implements IXvmMod
+    public class XvmViewBase implements IXvmView
     {
         private var _view:IView;
         public function get view():IView
@@ -18,7 +18,7 @@ package xvm.hangar
 
         private var _viewAlias:String;
 
-        public function XvmModBase(view:IView)
+        public function XvmViewBase(view:IView)
         {
             _view = view;
             _viewAlias = view.as_alias;
@@ -48,5 +48,4 @@ package xvm.hangar
             //Logger.add("onAfterDispose: " + _viewAlias);
         }
     }
-
 }

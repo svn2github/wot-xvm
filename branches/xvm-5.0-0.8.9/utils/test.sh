@@ -16,7 +16,7 @@ done
 CURRENT_DIRECTORY=`pwd`
 
 #SAMPLE_REPLAY=test.wotreplay
-SAMPLE_REPLAY=test2.wotreplay
+#SAMPLE_REPLAY=test2.wotreplay
 #SAMPLE_REPLAY=6th.wotreplay
 #SAMPLE_REPLAY=sunk.wotreplay
 #SAMPLE_REPLAY=tk.wotreplay

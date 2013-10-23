@@ -36,8 +36,9 @@ package xvm.hangar.components.Profile
 
                 // TODO: FIXIT: page.addEventListener(TechniquePageEvent.DATA_STATUS_CHANGED, viewChanged);
 
-                // remove lower shadow (last item looks bad with it)
-                //page.listComponent.lowerShadow.visible = false;
+                // remove upper/lower shadow
+                page.listComponent.upperShadow.visible = false;
+                page.listComponent.lowerShadow.visible = false;
 
                 // create filter controls
                 filter = null;

@@ -5,6 +5,7 @@
 package xvm.hangar.views
 {
     import com.xvm.*;
+    import com.xvm.infrastructure.*;
     import com.xvm.utils.*;
     import net.wg.gui.components.windows.*;
     import net.wg.data.gui_items.dossier.*;
@@ -19,7 +20,7 @@ package xvm.hangar.views
     import xvm.hangar.*;
     import xvm.hangar.components.Profile.*;
 
-    public class Profile extends XvmModBase
+    public class Profile extends XvmViewBase
     {
         public function Profile(view:IView)
         {
@@ -53,7 +54,7 @@ package xvm.hangar.views
 
         private function init():void
         {
-            tabNavigator.bar.addEventListener(IndexEvent.INDEX_CHANGE, onTabBarIndexChanged, false, 0, true);
+            //tabNavigator.bar.addEventListener(IndexEvent.INDEX_CHANGE, onTabBarIndexChanged, false, 0, true);
             tabNavigator.viewStack.addEventListener(ViewStackEvent.VIEW_CHANGED, onSectionViewShowed, false, 0, true);
         }
 

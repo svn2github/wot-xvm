@@ -1,6 +1,6 @@
-package xvm.UI.squadWindow
+package xvm.squad
 {
-    import xvm.hangar.components.Squad.SquadItemRenderer;
+    import xvm.squad.SquadItemRenderer;
 
     public dynamic class UI_SquadItemRenderer extends squadItemRendererUI
     {

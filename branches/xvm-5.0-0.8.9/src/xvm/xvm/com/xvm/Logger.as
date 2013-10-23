@@ -4,8 +4,7 @@
  */
 package com.xvm
 {
-    import com.xvm.io.Cmd;
-    import com.xvm.io.JSONx;
+    import com.xvm.io.*;
     import com.xvm.utils.Sandbox;
     import org.idmedia.as3commons.util.StringUtils;
 
@@ -30,6 +29,11 @@ package com.xvm
             if (name == "")
                 name = "obj";
             add(name + ": " + JSONx.stringifyDepth(obj, depth));
+        }
+
+        public static function err(error:Error):void
+        {
+            add(error.getStackTrace());
         }
     }
 }

@@ -11,6 +11,7 @@ internal class XvmLinks
  *  from the classes specified in manifest.xml.
  */
 import com.xvm.*; Stat;
+import com.xvm.infrastructure.*; XvmModBase; XvmViewBase;
 import com.xvm.misc.*; IconLoader; Chance;
 import com.xvm.controls.*;
 NationMultiSelectionDropDown;

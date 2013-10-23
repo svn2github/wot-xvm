@@ -4,16 +4,17 @@
  */
 package xvm.hangar.views
 {
+    import com.xvm.*;
+    import com.xvm.infrastructure.*;
     import flash.events.*;
     import flash.utils.*;
     import net.wg.infrastructure.interfaces.*;
     import net.wg.infrastructure.events.*;
     import net.wg.gui.prebattle.company.*;
-    import com.xvm.*;
     import xvm.hangar.*;
     import xvm.hangar.components.Company.*;
 
-    public class CompanyWindow extends XvmModBase
+    public class CompanyWindow extends XvmViewBase
     {
         public function CompanyWindow(view:IView)
         {

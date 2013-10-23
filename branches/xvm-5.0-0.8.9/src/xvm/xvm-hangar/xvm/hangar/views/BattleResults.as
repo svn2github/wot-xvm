@@ -5,19 +5,17 @@
 package xvm.hangar.views
 {
     import com.xvm.*;
+    import com.xvm.infrastructure.*;
     import flash.events.*;
-    import flash.text.TextField;
-    import flash.text.TextFieldAutoSize;
+    import flash.text.*;
     import net.wg.gui.events.ViewStackEvent;
-    import net.wg.gui.lobby.battleResults.BattleResults;
-    import net.wg.gui.lobby.battleResults.CommonStats;
+    import net.wg.gui.lobby.battleResults.*;
     import net.wg.infrastructure.events.*;
     import net.wg.infrastructure.interfaces.*;
     import scaleform.clik.events.IndexEvent;
     import xvm.hangar.components.BattleResultes.CommonView;
-    import xvm.hangar.XvmModBase;
 
-    public class BattleResults extends XvmModBase
+    public class BattleResults extends XvmViewBase
     {
         public function BattleResults(view:IView)
         {

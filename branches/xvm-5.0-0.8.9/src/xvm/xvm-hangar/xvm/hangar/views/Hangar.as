@@ -4,14 +4,15 @@
  */
 package xvm.hangar.views
 {
+    import com.xvm.*;
+    import com.xvm.infrastructure.*;
     import net.wg.gui.lobby.hangar.Hangar;
     import net.wg.infrastructure.interfaces.*;
     import net.wg.infrastructure.events.*;
-    import com.xvm.*;
     import xvm.hangar.*;
     import xvm.hangar.components.Crew.*;
 
-    public class Hangar extends XvmModBase
+    public class Hangar extends XvmViewBase
     {
         public function Hangar(view:IView)
         {

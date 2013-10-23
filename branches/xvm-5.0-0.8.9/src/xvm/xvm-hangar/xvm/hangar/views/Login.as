@@ -4,17 +4,18 @@
  */
 package xvm.hangar.views
 {
+    import com.xvm.*;
+    import com.xvm.infrastructure.*;
+    import com.xvm.types.cfg.*;
     import flash.events.*;
     import flash.utils.*;
     import net.wg.gui.login.impl.LoginPage;
     import net.wg.infrastructure.interfaces.IView;
     import net.wg.infrastructure.events.LifeCycleEvent;
-    import com.xvm.*;
-    import com.xvm.types.cfg.*;
     import xvm.hangar.*;
     import xvm.hangar.components.PingServers.*;
 
-    public class Login extends XvmModBase
+    public class Login extends XvmViewBase
     {
         public function Login(view:IView)
         {
