@@ -4,9 +4,10 @@
  */
 package com.xvm.infrastructure
 {
+    import com.xvm.*;
+    import com.xvm.utils.*;
     import net.wg.infrastructure.interfaces.IView;
     import net.wg.infrastructure.events.LifeCycleEvent;
-    import com.xvm.Logger;
 
     public class XvmViewBase implements IXvmView
     {
@@ -22,10 +23,10 @@ package com.xvm.infrastructure
         {
             _view = view;
             _viewAlias = view.as_alias;
-            view.addEventListener(LifeCycleEvent.ON_BEFORE_POPULATE, onBeforePopulate);
-            view.addEventListener(LifeCycleEvent.ON_AFTER_POPULATE, onAfterPopulate);
-            view.addEventListener(LifeCycleEvent.ON_BEFORE_DISPOSE, onBeforeDispose);
-            view.addEventListener(LifeCycleEvent.ON_AFTER_DISPOSE, onAfterDispose);
+            view.addEventListener(LifeCycleEvent.ON_BEFORE_POPULATE, _onBeforePopulate);
+            view.addEventListener(LifeCycleEvent.ON_AFTER_POPULATE, _onAfterPopulate);
+            view.addEventListener(LifeCycleEvent.ON_BEFORE_DISPOSE, _onBeforeDispose);
+            view.addEventListener(LifeCycleEvent.ON_AFTER_DISPOSE, _onAfterDispose);
         }
 
         public virtual function onBeforePopulate(e:LifeCycleEvent):void
@@ -46,6 +47,28 @@ package com.xvm.infrastructure
         public virtual function onAfterDispose(e:LifeCycleEvent):void
         {
             //Logger.add("onAfterDispose: " + _viewAlias);
+        }
+
+        // PRIVATE
+
+        private function _onBeforePopulate(e:LifeCycleEvent):void
+        {
+            Utils.safeCall(this, onBeforePopulate, [e]);
+        }
+
+        private function _onAfterPopulate(e:LifeCycleEvent):void
+        {
+            Utils.safeCall(this, onAfterPopulate, [e]);
+        }
+
+        private function _onBeforeDispose(e:LifeCycleEvent):void
+        {
+            Utils.safeCall(this, onBeforeDispose, [e]);
+        }
+
+        private function _onAfterDispose(e:LifeCycleEvent):void
+        {
+            Utils.safeCall(this, onAfterDispose, [e]);
         }
     }
 }

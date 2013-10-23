@@ -31,17 +31,10 @@ package xvm.hangar.views
 
         public override function onAfterPopulate(e:LifeCycleEvent):void
         {
-            try
-            {
-                //Logger.add("onAfterPopulate: " + view.as_alias);
-                initPing();
-                hideTutorial();
-                XvmHangar.Globals[XvmHangar.G_NAME] = WGUtils.GetPlayerName(page.header.tankPanel.account_name.text);
-            }
-            catch (ex:Error)
-            {
-                Logger.add(ex.getStackTrace());
-            }
+            //Logger.add("onAfterPopulate: " + view.as_alias);
+            initPing();
+            hideTutorial();
+            XvmHangar.Globals[XvmHangar.G_NAME] = WGUtils.GetPlayerName(page.header.tankPanel.account_name.text);
         }
 
         private function initPing():void

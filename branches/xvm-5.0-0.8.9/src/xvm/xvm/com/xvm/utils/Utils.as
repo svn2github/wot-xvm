@@ -114,6 +114,17 @@ package com.xvm.utils
             return 0;
         }
 
+        public static function safeCall(target:Object, func:Function, args:Array):*
+        {
+            try
+            {
+                return func.apply(target, args);
+            }
+            catch (ex:Error)
+            {
+                Logger.add(ex.getStackTrace());
+            }
+        }
 
         /**
          * Array subtraction

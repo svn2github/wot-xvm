@@ -23,7 +23,6 @@ package xvm
         {
             "login": Login,
             "lobby": Lobby,
-            "hangar": Hangar,
             "battleLoading": BattleLoading,
             "prb_windows/companiesWindow": CompaniesListWindow,
             "prb_windows/companyWindow": CompanyWindow,
@@ -39,9 +38,6 @@ package xvm
 
         public override function entryPoint():void
         {
-            Logger.add("[XVM] [hangar] current view: " +
-                (App.containerMgr.lastFocusedView ? App.containerMgr.lastFocusedView.as_alias : "None"));
-
             // init pinger as earlier as possible
             PingServers.initFeature(Config.config.login.pingServers.enabled || Config.config.hangar.pingServers.enabled);
         }

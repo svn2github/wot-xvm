@@ -2,21 +2,21 @@
  * XVM
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
-package xvm.squad
+package xvm.crew
 {
     import com.xvm.*;
     import com.xvm.infrastructure.*;
 
-    public class XvmSquad extends XvmModBase
+    public class CrewXvmMod extends XvmModBase
     {
         public override function get logPrefix():String
         {
-            return "[XvmSquad]";
+            return "[XvmCrew]";
         }
 
         private static const _views:Object =
         {
-            "prb_windows/squadWindow": SquadWindow
+            "hangar": CrewXvmView
         }
 
         public override function get views():Object

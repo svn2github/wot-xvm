@@ -29,23 +29,16 @@ package xvm.hangar.views
 
         public override function onAfterPopulate(e:LifeCycleEvent):void
         {
-            try
-            {
-                //Logger.addObject("onAfterPopulate: " + view.as_alias);
-                setTimeout(setVersion, 1);
-                initPing();
+            //Logger.addObject("onAfterPopulate: " + view.as_alias);
+            setTimeout(setVersion, 1);
+            initPing();
 
-                // ------------------ DEBUG ------------------
-                //var mc = main.createEmptyMovieClip("widgetsHolder", main.getNextHighestDepth());
-                //WidgetsFactory.initialize(mc, "sirmax2",
-                //    [ com.xvm.Components.Widgets.Settings.WidgetsSettingsDialog.DEFAULT_WIDGET_SETTINGS ]);
-                //var wsd = new com.xvm.Components.Widgets.Settings.WidgetsSettingsDialog(main, "sirmax2");
-                // ------------------ DEBUG ------------------
-            }
-            catch (ex:Error)
-            {
-                Logger.add(ex.getStackTrace());
-            }
+            // ------------------ DEBUG ------------------
+            //var mc = main.createEmptyMovieClip("widgetsHolder", main.getNextHighestDepth());
+            //WidgetsFactory.initialize(mc, "sirmax2",
+            //    [ com.xvm.Components.Widgets.Settings.WidgetsSettingsDialog.DEFAULT_WIDGET_SETTINGS ]);
+            //var wsd = new com.xvm.Components.Widgets.Settings.WidgetsSettingsDialog(main, "sirmax2");
+            // ------------------ DEBUG ------------------
         }
 
         public override function onBeforeDispose(e:LifeCycleEvent):void

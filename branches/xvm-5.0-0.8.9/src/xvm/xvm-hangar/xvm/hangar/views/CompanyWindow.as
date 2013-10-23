@@ -28,30 +28,23 @@ package xvm.hangar.views
 
         public override function onAfterPopulate(e:LifeCycleEvent):void
         {
-            try
+            //Logger.add("onAfterPopulate: " + view.as_alias);
+
+            if (Config.config.rating.showPlayersStatistics != true)
+                return;
+            if (Config.config.rating.enableCompanyStatistics != true)
+                return;
+
+            //page.form.team1List.itemRenderer = LeftItemRendererWrapper;
+
+            if (page.initialized)
             {
-                //Logger.add("onAfterPopulate: " + view.as_alias);
-
-                if (Config.config.rating.showPlayersStatistics != true)
-                    return;
-                if (Config.config.rating.enableCompanyStatistics != true)
-                    return;
-
-                //page.form.team1List.itemRenderer = LeftItemRendererWrapper;
-
-                if (page.initialized)
-                {
-                    initComponents();
-                }
-                else
-                {
-                    // TODO: find event
-                    setTimeout(initComponents, 1);
-                }
+                initComponents();
             }
-            catch (ex:Error)
+            else
             {
-                Logger.add(ex.getStackTrace());
+                // TODO: find event
+                setTimeout(initComponents, 1);
             }
         }
 

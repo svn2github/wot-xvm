@@ -40,14 +40,7 @@ package xvm.hangar.views
 
         public override function onAfterPopulate(e:LifeCycleEvent):void
         {
-            try
-            {
-                init();
-            }
-            catch (ex:Error)
-            {
-                Logger.add(ex.getStackTrace());
-            }
+            init();
         }
 
         // PRIVATE

@@ -13,7 +13,7 @@ package xvm.hangar.views
     import net.wg.infrastructure.events.*;
     import net.wg.infrastructure.interfaces.*;
     import scaleform.clik.events.IndexEvent;
-    import xvm.hangar.components.BattleResultes.CommonView;
+    import xvm.hangar.components.BattleResults.CommonView;
 
     public class BattleResults extends XvmViewBase
     {
@@ -30,15 +30,8 @@ package xvm.hangar.views
 
         override public function onAfterPopulate(e:LifeCycleEvent):void
         {
-            try
-            {
-                page.view_mc.addEventListener(ViewStackEvent.VIEW_CHANGED, this.onViewChanged);
-                page.tabs_mc.addEventListener(IndexEvent.INDEX_CHANGE, this.onTabIndexChange);
-            }
-            catch (ex:Error)
-            {
-                Logger.add(ex.getStackTrace());
-            }
+            page.view_mc.addEventListener(ViewStackEvent.VIEW_CHANGED, this.onViewChanged);
+            page.tabs_mc.addEventListener(IndexEvent.INDEX_CHANGE, this.onTabIndexChange);
         }
 
         override public function onBeforeDispose(e:LifeCycleEvent):void

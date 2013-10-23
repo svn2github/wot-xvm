@@ -31,21 +31,14 @@ package xvm.hangar.views
 
         public override function onAfterPopulate(e:LifeCycleEvent):void
         {
-            try
-            {
-                //Logger.add("onAfterPopulate: " + view.as_alias);
+            //Logger.add("onAfterPopulate: " + view.as_alias);
 
-                logBriefConfigurationInfo();
+            logBriefConfigurationInfo();
 
-                page.form.team1List.itemRenderer = UI_LeftItemRenderer;
-                page.form.team2List.itemRenderer = UI_RightItemRenderer;
+            page.form.team1List.itemRenderer = UI_LeftItemRenderer;
+            page.form.team2List.itemRenderer = UI_RightItemRenderer;
 
-                waitInit();
-            }
-            catch (ex:Error)
-            {
-                Logger.add(ex.getStackTrace());
-            }
+            waitInit();
         }
 
         private function waitInit():void

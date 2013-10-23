@@ -72,13 +72,13 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="xvm-squad\xvm\squad\XvmSquad.as" />
+    <compile path="xvm-squad\xvm\squad\SquadXvmMod.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
     <hidden path="swf" />
-    <hidden path="build-swc.sh" />
     <hidden path="wg" />
+    <hidden path="build-swc.sh" />
     <hidden path="build-swc-wg.sh" />
   </hiddenPaths>
   <!-- Executed before build -->

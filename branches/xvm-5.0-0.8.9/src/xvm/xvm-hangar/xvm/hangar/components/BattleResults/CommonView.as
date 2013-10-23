@@ -1,4 +1,4 @@
-package xvm.hangar.components.BattleResultes
+package xvm.hangar.components.BattleResults
 {
     import com.xvm.*;
     import com.xvm.l10n.Locale;
