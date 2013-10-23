@@ -15,7 +15,7 @@ package xvm.hangar
 
         public override function get logPrefix():String
         {
-            return "[XvmHangar]";
+            return "[XVM:HANGAR]";
         }
 
         private static const _views:Object =

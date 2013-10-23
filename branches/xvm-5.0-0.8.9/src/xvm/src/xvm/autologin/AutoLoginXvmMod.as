@@ -1,22 +1,24 @@
 /**
- * XVM
+ * AutoLogin XVM mod
  * @author Maxim Schedriviy <m.schedriviy@gmail.com>
  */
-package xvm.crew
+package xvm.autologin
 {
     import com.xvm.*;
     import com.xvm.infrastructure.*;
 
-    public class CrewXvmMod extends XvmModBase
+    public class AutoLoginXvmMod extends XvmModBase
     {
         public override function get logPrefix():String
         {
-            return "[XVM:HANGAR]";
+            return "[XVM:AUTOLOGIN]";
         }
 
         private static const _views:Object =
         {
-            "hangar": CrewXvmView
+            "introVideo": AutoLoginXvmView,
+            "login": AutoLoginXvmView,
+            "lobby": AutoLoginXvmView
         }
 
         public override function get views():Object

@@ -11,7 +11,7 @@ package xvm.squad
     {
         public override function get logPrefix():String
         {
-            return "[XvmSquad]";
+            return "[XVM:SQUAD]";
         }
 
         private static const _views:Object =

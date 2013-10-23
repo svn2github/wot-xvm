@@ -12,7 +12,7 @@ package xvm.ping
     {
         public override function get logPrefix():String
         {
-            return "[XvmPing]";
+            return "[XVM:PING]";
         }
 
         private static const _views:Object =
