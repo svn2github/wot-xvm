@@ -15,11 +15,11 @@ if _updateurl is not None:
     elif 'worldoftanks.eu' in _updateurl:
         region = 'EU'
     elif 'worldoftanks.com' in _updateurl:
-        region = 'US'
+        region = 'NA'
     elif 'worldoftanks.cn' in _updateurl:
         region = 'CN'
     elif 'worldoftanks.asia' in _updateurl:
-        region = 'SEA'
+        region = 'SG'
     elif 'worldoftanks.vn' in _updateurl:
         region = 'VTC'
     elif 'worldoftanks.kr' in _updateurl:

@@ -224,7 +224,7 @@ class _Stat(object):
         else:
             if reg == "CT":
                 suf = value[-3:]
-                if suf in ('_RU', '_EU', '_NA'):
+                if suf in ('_RU', '_EU', '_NA', '_SG'):
                     reg = value[-2:]
                     value = value[:-3]
                 else:
