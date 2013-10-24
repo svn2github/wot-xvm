@@ -293,7 +293,7 @@ Content:
   Full archive with all clans can be downloaded separately:
     http://code.google.com/p/wot-xvm/downloads/list
     Files: clanicons-full-ru-XXX.zip (RU), clanicons-full-eu-XXX.zip (EU), clanicons-full-na-XXX.zip (NA),
-    clanicons-full-sea-XXX.zip (SEA), clanicons-full-kr-XXX.zip (KR), clanicons-full-vn-XXX.zip (VN)
+    clanicons-full-sg-XXX.zip (SG), clanicons-full-kr-XXX.zip (KR), clanicons-full-vn-XXX.zip (VN)
 
   6-th sense image.
   To change sixth sense indicator place alternative PNG image to
