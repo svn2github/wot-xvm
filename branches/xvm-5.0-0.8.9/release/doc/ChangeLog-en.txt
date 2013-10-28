@@ -1,4 +1,7 @@
 ﻿XVM-dev:
+  * adaptation to WoT 0.8.9
+  [NEW FUNCTIONS]
+  * localization: added Brazilian Portuguese language
   [MACROS]
   * squad: added macros {{vtype-l}}
 
@@ -24,7 +27,7 @@ XVM-5.0.0-test5:
       iconset/vehicleMarkerAlly, iconset/vehicleMarkerEnemy - for vehicle markers
   * pinger: add wine support. For activation execute
     ln -s `which ping` ~/.wine/drive_c/ping.exe
-  * localization: added Romanian, Bulgarian, Danish, Italian, Serbian and Turkish languages
+  * localization: added Romanian, Bulgarian, Danish, Italian, Norwegian, Serbian, Slovak and Turkish languages
   * localization: added Polish, French readme
 
   [MACROS]
