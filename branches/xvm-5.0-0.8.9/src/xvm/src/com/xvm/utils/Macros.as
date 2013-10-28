@@ -104,7 +104,7 @@ package com.xvm.utils
             // {{vtype}} - MT
             pdata["vtype"] = Config.config.texts.vtype[vdata.vtype];
             // {{vtype-l}} - Medium Tank
-            pdata["vtype-l"] = Locale.get(vdata.vclass);
+            pdata["vtype-l"] = Locale.get(vdata.vtype);
             // {{c:vtype}}
             pdata["c:vtype"] = MacrosUtil.GetVClassColorValue(vdata);
             // {{battletier-min}}

@@ -70,7 +70,7 @@ class com.xvm.Macros
             // {{vehiclename}} - usa-M24_Chaffee
             pdata["vehiclename"] = vdata.key;
             // {{vtype}}
-            pdata["vtype"] = vdata.vtype;
+            pdata["vtype"] = Config.s_config.texts.vtype[vdata.vtype];
             // {{c:vtype}}
             pdata["c:vtype"] = GraphicsUtil.GetVTypeColorValue(data.icon, data.vtype);
 
