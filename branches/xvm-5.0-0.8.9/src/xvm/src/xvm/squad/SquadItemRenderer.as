@@ -41,7 +41,7 @@ package xvm.squad
             var vdata:VehicleData = VehicleInfo.getByLocalizedShortName(proxy.model.vShortName);
             if (vdata == null)
                 return null;
-            return Locale.get("Type") + ": " + Locale.get(vdata.vclass) + "\n" +
+            return Locale.get("Type") + ": " + Locale.get(vdata.vtype) + "\n" +
                 Locale.get("Battle tiers") + ": " + vdata.tierLo + "-" + vdata.tierHi + "\n" +
                 Locale.get("Nation") + ": " + Locale.get(vdata.nation);
         }
