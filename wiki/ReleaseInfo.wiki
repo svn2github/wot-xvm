@@ -8,8 +8,8 @@
         "message": "    www.modxvm.com\n  * for WoT 0.8.9\n  * new features, improvements and bugfixes"
     },
     "US": {
-        "ver": "5.0.0-test5",
-        "message": "    www.modxvm.com\n  * for WoT 0.8.8\n  * new features, improvements and bugfixes"
+        "ver": "5.0.1-test2",
+        "message": "    www.modxvm.com\n  * for WoT 0.8.9\n  * new features, improvements and bugfixes"
     },
     "SEA": {
         "ver": "5.0.1-test2",
