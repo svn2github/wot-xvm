@@ -37,6 +37,7 @@ To translate XVM you need:
   * Dutch (nl)
   * English (en)
   * Estonian (et)
+  * French (fr)
   * German (de)
   * Hungarian (hu)
   * Latvian (lv)
@@ -44,13 +45,12 @@ To translate XVM you need:
   * Norwegian (no)
   * Polish (pl)
   * Russian (ru)
-  * Slovak (sk) (unofficial)
+  * Slovak (sk)(unofficial)
   * Spanish (es)
   * Swedish (sv)
 
 ===Not fully translated===
   * Finnish (fi)
-  * French (fr)
   * Japanese (ja)
   * Korean (ko)
   * Lithuanian (lt)
