@@ -31,45 +31,43 @@ To translate XVM you need:
 
 == Languages ==
 ===Updated===
-  * Belarusian (be)(unofficial)
   * Bulgarian (bg)
+  * Chinese (Taiwan)(zh_TW)
   * Czech (cs)
-  * Dutch (nl)
   * English (en)
   * Estonian (et)
   * French (fr)
   * German (de)
   * Hungarian (hu)
   * Latvian (lv)
-  * Malay (ms)
   * Norwegian (no)
   * Polish (pl)
+  * Portuguese (pt)
   * Russian (ru)
   * Slovak (sk)(unofficial)
   * Spanish (es)
-  * Swedish (sv)
 
-===Not fully translated===
+===Update needed===
+  * Belarusian (be)(unofficial)
+  * Danish (da)
+  * Dutch (nl)
   * Finnish (fi)
+  * Italian (it)
   * Japanese (ja)
   * Korean (ko)
   * Lithuanian (lt)
+  * Malay (ms)
   * Portuguese (Brazil)(pt_BR)
-  * Serbian (sr)
-  * Ukrainian (uk)(unofficial)
-
-===Update needed===
-  * Danish (da)
-  * Italian (it)
   * Romanian (ro)
+  * Serbian (sr)
+  * Swedish (sv)
   * Turkish (tr)
+  * Ukrainian (uk)(unofficial)
   * Vietnamese (vi)
 
 ===To do===
   * Chinese (China)(Simplified?)(zh_CN)
-  * Chinese (Taiwan)(Traditional?)(zh_TW)
   * Croatian (hr)
   * Filipino (fil)
   * Indonesian (id)
-  * Portuguese (pt)
   * Thai (th)
