@@ -1,0 +1,362 @@
+diff -Naur app.orig/App.as app/App.as
+--- app.orig/App.as	2013-12-20 11:27:49.207626800 +0200
++++ app/App.as	2013-12-20 11:33:58.735626800 +0200
+@@ -1,5 +1,6 @@
+ package 
+ {
++   $AppLinks;
+    import net.wg.app.IApplication;
+    import net.wg.infrastructure.base.meta.IGlobalVarsMgrMeta;
+    import net.wg.infrastructure.managers.ISoundManager;
+diff -Naur app.orig/net/wg/data/daapi/base/DAAPIDataClass.as app/net/wg/data/daapi/base/DAAPIDataClass.as
+--- app.orig/net/wg/data/daapi/base/DAAPIDataClass.as	2013-12-20 11:28:03.881626800 +0200
++++ app/net/wg/data/daapi/base/DAAPIDataClass.as	2013-12-20 11:33:58.741626800 +0200
+@@ -155,7 +155,7 @@
+          return true;
+       }
+ 
+-      function getHash() : Object {
++      public function getHash() : Object {
+          return this._hash;
+       }
+ 
+diff -Naur app.orig/net/wg/gui/components/advanced/TankIcon.as app/net/wg/gui/components/advanced/TankIcon.as
+--- app.orig/net/wg/gui/components/advanced/TankIcon.as	2013-12-20 11:28:31.692626800 +0200
++++ app/net/wg/gui/components/advanced/TankIcon.as	2013-12-20 11:33:58.745626800 +0200
+@@ -91,7 +91,7 @@
+ 
+       private var _isPremiumDirty:Boolean = true;
+ 
+-      private const DIRTY_FLAGS:Array;
++      private var DIRTY_FLAGS:Array;
+ 
+       override public function dispose() : void {
+          this.flag = null;
+diff -Naur app.orig/net/wg/gui/components/controls/ScrollingListEx.as app/net/wg/gui/components/controls/ScrollingListEx.as
+--- app.orig/net/wg/gui/components/controls/ScrollingListEx.as	2013-12-20 11:28:36.008626800 +0200
++++ app/net/wg/gui/components/controls/ScrollingListEx.as	2013-12-20 11:33:58.755626800 +0200
+@@ -404,7 +404,7 @@
+          {
+             if(this._scrollBarValue  is  Class)
+             {
+-               _loc1_ = new this._scrollBarValue as Class() as IScrollBar;
++               _loc1_ = new (this._scrollBarValue as Class)() as IScrollBar;
+                _loc1_.addEventListener(MouseEvent.MOUSE_WHEEL,this.blockMouseWheel,false,0,true);
+                if(_loc1_ != null)
+                {
+diff -Naur app.orig/net/wg/gui/components/windows/Window.as app/net/wg/gui/components/windows/Window.as
+--- app.orig/net/wg/gui/components/windows/Window.as	2013-12-20 11:29:06.871626800 +0200
++++ app/net/wg/gui/components/windows/Window.as	2013-12-20 11:33:58.766626800 +0200
+@@ -71,7 +71,7 @@
+ 
+       private const TAB_PADDING_Y:Number = 30;
+ 
+-      private const CONTENT_DEF_PADDING:Padding;
++      private var CONTENT_DEF_PADDING:Padding;
+ 
+       override public function set scaleX(param1:Number) : void {
+          var _loc2_:Number = width;
+diff -Naur app.orig/net/wg/gui/lobby/dialogs/SimpleDialog.as app/net/wg/gui/lobby/dialogs/SimpleDialog.as
+--- app.orig/net/wg/gui/lobby/dialogs/SimpleDialog.as	2013-12-20 11:31:04.257626800 +0200
++++ app/net/wg/gui/lobby/dialogs/SimpleDialog.as	2013-12-20 12:34:57.769604700 +0200
+@@ -35,7 +35,7 @@
+ 
+       private static const TEXT_HEIGHT_PADDING:uint = 3;
+ 
+-      private static const WINDOW_PADDING:Object;
++      private static var WINDOW_PADDING:Object;
+ 
+       private static const LAYOUT_INVALID:String = "layoutInv";
+ 
+diff -Naur app.orig/net/wg/gui/lobby/hangar/tcarousel/TankCarousel.as app/net/wg/gui/lobby/hangar/tcarousel/TankCarousel.as
+--- app.orig/net/wg/gui/lobby/hangar/tcarousel/TankCarousel.as	2013-12-20 11:30:47.443626800 +0200
++++ app/net/wg/gui/lobby/hangar/tcarousel/TankCarousel.as	2013-12-20 11:33:58.787626800 +0200
+@@ -73,9 +73,9 @@
+ 
+       private var filterDataInvalid:Boolean = false;
+ 
+-      private var nationFilter:DropDownImageText;
++      private var nationFilter:net.wg.gui.components.controls.DropDownImageText;
+ 
+-      private var tankFilter:DropDownImageText;
++      private var tankFilter:net.wg.gui.components.controls.DropDownImageText;
+ 
+       private var checkBoxToMain:CheckBox;
+ 
+diff -Naur app.orig/net/wg/gui/lobby/hangar/tcarousel/TankCarouselFilters.as app/net/wg/gui/lobby/hangar/tcarousel/TankCarouselFilters.as
+--- app.orig/net/wg/gui/lobby/hangar/tcarousel/TankCarouselFilters.as	2013-12-20 11:30:48.663626800 +0200
++++ app/net/wg/gui/lobby/hangar/tcarousel/TankCarouselFilters.as	2013-12-20 11:33:58.792626800 +0200
+@@ -22,9 +22,9 @@
+ 
+       public static const FILTER_READY:String = "ready";
+ 
+-      public var nationFilter:DropDownImageText;
++      public var nationFilter:net.wg.gui.components.controls.DropDownImageText;
+ 
+-      public var tankFilter:DropDownImageText;
++      public var tankFilter:net.wg.gui.components.controls.DropDownImageText;
+ 
+       public var checkBoxToMain:CheckBox;
+ 
+diff -Naur app.orig/net/wg/gui/lobby/messengerBar/carousel/data/ChannelListItemVO.as app/net/wg/gui/lobby/messengerBar/carousel/data/ChannelListItemVO.as
+--- app.orig/net/wg/gui/lobby/messengerBar/carousel/data/ChannelListItemVO.as	2013-12-20 11:31:33.933626800 +0200
++++ app/net/wg/gui/lobby/messengerBar/carousel/data/ChannelListItemVO.as	2013-12-20 11:33:58.797626800 +0200
+@@ -5,12 +5,12 @@
+ 
+    public class ChannelListItemVO extends DAAPIDataClass
+    {
+-          
++
+       public function ChannelListItemVO(param1:Object) {
+          super(param1);
+       }
+ 
+-      private static const excluded:Array;
++      private static const excluded:Array = null;
+ 
+       private var _clientID:Number = 0;
+ 
+diff -Naur app.orig/net/wg/gui/lobby/profile/components/ScrollPane.as app/net/wg/gui/lobby/profile/components/ScrollPane.as
+--- app.orig/net/wg/gui/lobby/profile/components/ScrollPane.as	2013-12-20 11:28:48.512626800 +0200
++++ app/net/wg/gui/lobby/profile/components/ScrollPane.as	2013-12-20 11:33:58.803626800 +0200
+@@ -246,7 +246,7 @@
+          {
+             if(this._scrollBarValue  is  Class)
+             {
+-               _loc1_ = new this._scrollBarValue as Class() as IScrollBar;
++               _loc1_ = new (this._scrollBarValue as Class)() as IScrollBar;
+                _loc1_.addEventListener(MouseEvent.MOUSE_WHEEL,this.blockMouseWheel,false,0,true);
+                if(_loc1_ != null)
+                {
+diff -Naur app.orig/net/wg/gui/lobby/profile/data/ProfileUserVO.as app/net/wg/gui/lobby/profile/data/ProfileUserVO.as
+--- app.orig/net/wg/gui/lobby/profile/data/ProfileUserVO.as	2013-12-20 11:31:18.353626800 +0200
++++ app/net/wg/gui/lobby/profile/data/ProfileUserVO.as	2013-12-20 11:33:58.807626800 +0200
+@@ -26,7 +26,7 @@
+ 
+       public var clanPosition:String = "";
+ 
+-      public var clanEmblem;
++      public var clanEmblem:* = null;
+    }
+ 
+-}
+\ No newline at end of file
++}
+diff -Naur app.orig/net/wg/gui/lobby/techtree/constants/IconTextResolver.as app/net/wg/gui/lobby/techtree/constants/IconTextResolver.as
+--- app.orig/net/wg/gui/lobby/techtree/constants/IconTextResolver.as	2013-12-20 11:31:47.265626800 +0200
++++ app/net/wg/gui/lobby/techtree/constants/IconTextResolver.as	2013-12-20 11:33:58.813626800 +0200
+@@ -7,14 +7,14 @@
+ 
+    public class IconTextResolver extends Object
+    {
+-          
++
+       public function IconTextResolver() {
+          super();
+       }
+ 
+-      private static const namedLabels:Vector.<String>;
++      private static var namedLabels:Vector.<String>;
+ 
+-      private static const iconTexts:Vector.<String>;
++      private static var iconTexts:Vector.<String>;
+ 
+       public static function getFromNamedLabel(param1:String) : String {
+          var _loc2_:String = Values.EMPTY_STR;
+diff -Naur app.orig/net/wg/gui/lobby/techtree/controls/NameAndXpField.as app/net/wg/gui/lobby/techtree/controls/NameAndXpField.as
+--- app.orig/net/wg/gui/lobby/techtree/controls/NameAndXpField.as	2013-12-20 11:31:56.369626800 +0200
++++ app/net/wg/gui/lobby/techtree/controls/NameAndXpField.as	2013-12-20 11:33:58.820626800 +0200
+@@ -7,12 +7,12 @@
+ 
+    public class NameAndXpField extends NodeComponent
+    {
+-          
++
+       public function NameAndXpField() {
+          super();
+       }
+ 
+-      private static const statesMap:Object;
++      private static const statesMap:Object = null;
+ 
+       public var xpLabel:String = "earnedXPLabel";
+ 
+diff -Naur app.orig/net/wg/gui/lobby/techtree/data/state/NodeStateCollection.as app/net/wg/gui/lobby/techtree/data/state/NodeStateCollection.as
+--- app.orig/net/wg/gui/lobby/techtree/data/state/NodeStateCollection.as	2013-12-20 11:32:12.192626800 +0200
++++ app/net/wg/gui/lobby/techtree/data/state/NodeStateCollection.as	2013-12-20 11:33:58.828626800 +0200
+@@ -8,18 +8,18 @@
+ 
+    public class NodeStateCollection extends Object
+    {
+-          
++
+       public function NodeStateCollection() {
+          super();
+       }
+ 
+-      private static const statePrefixes:Array;
++      private static const statePrefixes:Array = null;
+ 
+-      private static const animation:AnimationProperties;
++      private static const animation:AnimationProperties = null;
+ 
+-      private static const nationNodeStates:Vector.<NodeStateItem>;
++      private static const nationNodeStates:Vector.<NodeStateItem> = null;
+ 
+-      private static const itemStates:Vector.<ResearchStateItem>;
++      private static const itemStates:Vector.<ResearchStateItem> = null;
+ 
+       public static function getStateProps(param1:uint, param2:Number, param3:Object) : StateProperties {
+          var _loc4_:StateProperties = null;
+diff -Naur app.orig/net/wg/gui/login/impl/ErrorStates.as app/net/wg/gui/login/impl/ErrorStates.as
+--- app.orig/net/wg/gui/login/impl/ErrorStates.as	2013-12-20 11:32:06.859626800 +0200
++++ app/net/wg/gui/login/impl/ErrorStates.as	2013-12-20 11:33:58.835626800 +0200
+@@ -2,20 +2,20 @@
+ {
+ 
+ 
+-   class ErrorStates extends Object
++   public class ErrorStates extends Object
+    {
+-          
++
+       function ErrorStates() {
+          super();
+       }
+ 
+-      static const NONE:int = 0;
++      public static const NONE:int = 0;
+ 
+-      static const LOGIN_INVALID:int = 1;
++      public static const LOGIN_INVALID:int = 1;
+ 
+-      static const PASSWORD_INVALID:int = 2;
++      public static const PASSWORD_INVALID:int = 2;
+ 
+-      static const LOGIN_PASSWORD_INVALID:int = LOGIN_INVALID | PASSWORD_INVALID;
++      public static const LOGIN_PASSWORD_INVALID:int = LOGIN_INVALID | PASSWORD_INVALID;
+    }
+ 
+-}
+\ No newline at end of file
++}
+diff -Naur app.orig/net/wg/gui/login/impl/LoginPage.as app/net/wg/gui/login/impl/LoginPage.as
+--- app.orig/net/wg/gui/login/impl/LoginPage.as	2013-12-20 11:31:01.087626800 +0200
++++ app/net/wg/gui/login/impl/LoginPage.as	2013-12-20 11:33:58.839626800 +0200
+@@ -33,7 +33,7 @@
+ 
+       private static const FREE_SPACE_BORDER_FACTOR:Number = 0.18;
+ 
+-      private static const SPARK_ZONE:Rectangle;
++      private static const SPARK_ZONE:Rectangle = null;
+ 
+       private static const SPARK_QUANTITY:uint = 150;
+ 
+diff -Naur app.orig/net/wg/gui/prebattle/squad/SquadItemRenderer.as app/net/wg/gui/prebattle/squad/SquadItemRenderer.as
+--- app.orig/net/wg/gui/prebattle/squad/SquadItemRenderer.as	2013-12-20 11:30:49.853626800 +0200
++++ app/net/wg/gui/prebattle/squad/SquadItemRenderer.as	2013-12-20 11:33:58.843626800 +0200
+@@ -105,7 +105,7 @@
+                return;
+             }
+             textField.alpha = this.vehicleNameField.alpha = 1;
+-            _loc1_ = this.model.getStateString();
++            var _loc1_:* = this.model.getStateString();
+             if(_loc1_ != PrebattleStateString.UNKNOWN)
+             {
+                this.statusString = _loc1_;
+@@ -120,8 +120,8 @@
+                   this.showToolTips();
+                }
+             }
+-            _loc2_ = 4.290295975E9;
+-            _loc3_ = _loc2_;
++            var _loc2_:* = 4.290295975E9;
++            var _loc3_:* = _loc2_;
+             this.updateVoiceWave();
+             this.label = this.model.fullName;
+             _loc3_ = this.model.getCurrentColor();
+diff -Naur app.orig/net/wg/gui/prebattle/squad/SquadWindow.as app/net/wg/gui/prebattle/squad/SquadWindow.as
+--- app.orig/net/wg/gui/prebattle/squad/SquadWindow.as	2013-12-20 11:30:51.043626800 +0200
++++ app/net/wg/gui/prebattle/squad/SquadWindow.as	2013-12-20 11:33:58.848626800 +0200
+@@ -78,7 +78,7 @@
+          if(param3)
+          {
+             _loc4_ = new PlayerPrbInfoVO(param3);
+-            _loc5_ = 0;
++            var _loc5_:* = 0;
+             while(_loc5_ < this.memberList.dataProvider.length)
+             {
+                _loc6_ = this.memberList.dataProvider.requestItemAt(_loc5_) as PlayerPrbInfoVO;
+diff -Naur app.orig/net/wg/infrastructure/managers/IContainerManager.as app/net/wg/infrastructure/managers/IContainerManager.as
+--- app.orig/net/wg/infrastructure/managers/IContainerManager.as	2013-12-20 11:27:49.127626800 +0200
++++ app/net/wg/infrastructure/managers/IContainerManager.as	2013-12-20 11:33:58.854626800 +0200
+@@ -16,6 +16,8 @@
+ 
+       function isModalViewsExisting() : Boolean;
+ 
++      function get loader():ILoaderManager;
++
+       function set loader(param1:ILoaderManager) : void;
+ 
+       function get lastFocusedView() : IView;
+diff -Naur app.orig/scaleform/clik/controls/ButtonGroup.as app/scaleform/clik/controls/ButtonGroup.as
+--- app.orig/scaleform/clik/controls/ButtonGroup.as	2013-12-20 11:30:05.887626800 +0200
++++ app/scaleform/clik/controls/ButtonGroup.as	2013-12-20 11:33:58.864626800 +0200
+@@ -61,8 +61,8 @@
+          for (_loc2_ in this.scope)
+          {
+             _loc1_ = _loc2_ as DisplayObjectContainer;
+-            return _loc1_;
+          }
++         return _loc1_;
+       }
+ 
+       public function addButton(param1:Button) : void {
+diff -Naur app.orig/scaleform/clik/controls/ScrollingList.as app/scaleform/clik/controls/ScrollingList.as
+--- app.orig/scaleform/clik/controls/ScrollingList.as	2013-12-20 11:28:39.891626800 +0200
++++ app/scaleform/clik/controls/ScrollingList.as	2013-12-20 11:33:58.868626800 +0200
+@@ -396,7 +396,7 @@
+          {
+             if(this._scrollBarValue  is  Class)
+             {
+-               _loc1_ = new this._scrollBarValue as Class() as IScrollBar;
++               _loc1_ = new (this._scrollBarValue as Class)() as IScrollBar;
+                _loc1_.addEventListener(MouseEvent.MOUSE_WHEEL,this.blockMouseWheel,false,0,true);
+                if(_loc1_ != null)
+                {
+diff -Naur app.orig/scaleform/clik/controls/TextArea.as app/scaleform/clik/controls/TextArea.as
+--- app.orig/scaleform/clik/controls/TextArea.as	2013-12-20 11:28:32.150626800 +0200
++++ app/scaleform/clik/controls/TextArea.as	2013-12-20 11:33:58.873626800 +0200
+@@ -295,7 +295,7 @@
+          {
+             if(this._scrollBarValue  is  Class)
+             {
+-               _loc1_ = new this._scrollBarValue as Class() as IScrollBar;
++               _loc1_ = new (this._scrollBarValue as Class)() as IScrollBar;
+                _loc1_.addEventListener(MouseEvent.MOUSE_WHEEL,this.blockMouseWheel,false,0,true);
+                if(_loc1_ != null)
+                {
+diff -Naur app.orig/scaleform/clik/controls/TileList.as app/scaleform/clik/controls/TileList.as
+--- app.orig/scaleform/clik/controls/TileList.as	2013-12-20 11:28:46.514626800 +0200
++++ app/scaleform/clik/controls/TileList.as	2013-12-20 11:33:58.879626800 +0200
+@@ -442,7 +442,7 @@
+          {
+             if(this._scrollBarValue  is  Class)
+             {
+-               _loc1_ = new this._scrollBarValue as Class() as IScrollBar;
++               _loc1_ = new (this._scrollBarValue as Class)() as IScrollBar;
+                _loc1_.addEventListener(MouseEvent.MOUSE_WHEEL,this.blockMouseWheel,false,0,true);
+                if(_loc1_ != null)
+                {
+diff -Naur app.orig/scaleform/clik/ui/InputDetails.as app/scaleform/clik/ui/InputDetails.as
+--- app.orig/scaleform/clik/ui/InputDetails.as	2013-12-20 11:27:59.118626800 +0200
++++ app/scaleform/clik/ui/InputDetails.as	2013-12-20 11:33:58.902626800 +0200
+@@ -21,7 +21,7 @@
+ 
+       public var code:Number;
+ 
+-      public var value;
++      public var value:*;
+ 
+       public var navEquivalent:String;
+ 
