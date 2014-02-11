@@ -1,11 +1,11 @@
 {
     "RU": {
-        "ver": "5.0.2",
-        "message": "    www.modxvm.com\n  * для WoT 0.8.10\n  * новые возможности, улучшения и исправления"
+        "ver": "5.1.0",
+        "message": "    www.modxvm.com\n  * для WoT 0.8.11\n  * новые возможности, улучшения и исправления"
     },
     "EU": {
-        "ver": "5.0.2",
-        "message": "    www.modxvm.com\n  * for WoT 0.8.10\n  * new features, improvements and bugfixes"
+        "ver": "5.1.0",
+        "message": "    www.modxvm.com\n  * for WoT 0.8.11\n  * new features, improvements and bugfixes"
     },
     "US": {
         "ver": "5.0.2",
@@ -19,5 +19,5 @@
         "ver": "5.0.2",
         "message": "    www.modxvm.com\n  * for WoT 0.8.10\n  * new features, improvements and bugfixes"
     },
-    "CT":  { "ver": "5.0.2", "message": "    www.modxvm.com" }
+    "CT":  { "ver": "5.1.0", "message": "    www.modxvm.com" }
 }
