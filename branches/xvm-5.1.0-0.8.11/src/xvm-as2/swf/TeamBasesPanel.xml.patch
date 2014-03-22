@@ -1,0 +1,24 @@
+--- orig\TeamBasesPanel.xml	2014-02-01 12:30:35.394196400 +0200
++++ TeamBasesPanel.xml	2014-02-01 12:30:35.494196500 +0200
+@@ -15,4 +15,7 @@
+         </color>
+       </SetBackgroundColor>
++      <ImportAssets2 url="xvm.swf" reserved1="1" reserved2="0">
++        <symbols/>
++      </ImportAssets2>
+       <DefineBitsLossless2 objectID="1" format="5" width="320" height="11">
+         <data>
+@@ -19625,5 +19628,5 @@
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.ingame.TeamBasesPanel"/>
++              <StackString value="wot.wrapper.TeamBasesPanel.TeamBasesPanel"/>
+             </items>
+           </PushData>
+@@ -19651,5 +19654,5 @@
+           <PushData>
+             <items>
+-              <StackString value="net.wargaming.ingame.CaptureBar"/>
++              <StackString value="wot.wrapper.TeamBasesPanel.CaptureBar"/>
+             </items>
+           </PushData>
