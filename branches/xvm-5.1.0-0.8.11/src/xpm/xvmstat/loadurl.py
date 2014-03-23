@@ -7,6 +7,7 @@ import tlslite
 import traceback
 import gzip
 import StringIO
+import re
 
 from constants import *
 from logger import *
@@ -18,7 +19,10 @@ def loadUrl(url, req=None):
         url = url.replace("{REQ}", req)
     u = urlparse(url)
     ssl = url.lower().startswith('https://')
-    log('  HTTP%s: %s' % ('S' if ssl else '', u.path), '[INFO]  ')
+    # hide some chars of token in the log
+    path_log = re.sub('([0-9A-Fa-f]{8}-)[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}(-[0-9A-Fa-f]{12})', \
+        '\\1****-****-****\\2', u.path)
+    log('  HTTP%s: %s' % ('S' if ssl else '', path_log), '[INFO]  ')
     #time.sleep(5)
 
     startTime = datetime.datetime.now()

@@ -48,6 +48,7 @@ from constants import *
 from logger import *
 from gameregion import region
 from loadurl import loadUrl
+from token import getXvmStatActiveTokenData
 
 #############################
 
@@ -247,7 +248,8 @@ class _Stat(object):
                 (response, duration) = loadUrl(server, req)
 
                 if not response:
-                    err('Empty response or parsing error')
+                    #err('Empty response or parsing error')
+                    pass
                 else:
                     try:
                         data = None if response in ('', '[]') else json.loads(response)[0]
@@ -281,6 +283,11 @@ class _Stat(object):
     def _load_stat(self, playerVehicleID, allowNetwork=True):
         requestList = []
 
+        token = getXvmStatActiveTokenData()
+        if token is None or not 'token' in token:
+            err('No valid token for XVM statistics')
+            return
+
         for vehId in self.players:
             pl = self.players[vehId]
             cacheKey = "%d=%d" % (pl.playerId, pl.vId)
@@ -294,7 +301,7 @@ class _Stat(object):
             #    requestList.append(str(pl.playerId))
             #else:
             requestList.append("%d=%d%s" % (pl.playerId, pl.vId,
-                '=1' if pl.vehId == playerVehicleID else ''))
+                '=%s' % token['token'].encode('ascii') if pl.vehId == playerVehicleID else ''))
 
         if not requestList:
             return
@@ -310,7 +317,7 @@ class _Stat(object):
                 (response, duration) = loadUrl(server, updateRequest)
 
                 if not response:
-                    err('Empty response or parsing error')
+                    #err('Empty response or parsing error')
                     return
 
                 data = json.loads(response)

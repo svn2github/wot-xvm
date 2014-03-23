@@ -14,7 +14,7 @@ class com.xvm.DefaultConfig
             definition: {
                 author: "XVM team",
                 description: "Default settings for XVM",
-                url: "http://code.google.com/p/wot-xvm/",
+                url: "http://www.modxvm.com/",
                 date: (d.getDate() < 10 ? "0" : "") + d.getDate() + "." +
                     (d.getMonth() < 9 ? "0" : "") + (d.getMonth() + 1) + "." + d.getFullYear(),
                 gameVersion: Defines.WOT_VERSION,

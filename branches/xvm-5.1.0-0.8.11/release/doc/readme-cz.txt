@@ -309,7 +309,7 @@
       Ikony nejlepších 150 klanů jsou součástí balíčku.
 
       Archivy se všemi ikonami klanů je možné stáhnout zvlášť:
-        http://code.google.com/p/wot-xvm/downloads/list
+        http://www.modxvm.com/en/download-xvm/
         Soubory: clanicons-full-ru-XXX.zip (RU), clanicons-full-eu-XXX.zip (EU), clanicons-full-na-XXX.zip (NA),
         clanicons-full-sea-XXX.zip (SEA), clanicons-full-kr-XXX.zip (KR), clanicons-full-vn-XXX.zip (VN)
 

@@ -18,7 +18,7 @@ package net.wg.gui.components.controls
 
    public class ScrollingListPx extends CoreListEx
    {
-          
+
       public function ScrollingListPx() {
          super();
       }
@@ -269,7 +269,7 @@ package net.wg.gui.components.controls
          {
             if(this._scrollBarValue  is  Class)
             {
-               _loc1_ = new this._scrollBarValue as Class() as IScrollBar;
+               _loc1_ = new (this._scrollBarValue as Class)() as IScrollBar;
                _loc1_.addEventListener(MouseEvent.MOUSE_WHEEL,this.blockMouseWheel,false,0,true);
                if(_loc1_ != null)
                {
@@ -328,11 +328,11 @@ package net.wg.gui.components.controls
       }
 
       protected function populateData(param1:Array) : void {
-          
+
       }
 
       override protected function drawLayout() : void {
-          
+
       }
 
       override protected function createRenderer(param1:uint) : IListItemRenderer {

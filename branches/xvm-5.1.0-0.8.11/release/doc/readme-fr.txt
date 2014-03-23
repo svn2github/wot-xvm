@@ -303,7 +303,7 @@ Contenu :
     nick/<player>.png -> clan/<clan>.png -> clan/default.png -> nick/default.png
   Les 150 meilleurs clans sont inclus dans l'archive du mod par défaut.
   Une archive avec TOUS les clans peut être téléchargée séparément :
-    http://code.google.com/p/wot-xvm/downloads/list
+    http://www.modxvm.com/fr/telecharger-xvm/
     Fichiers : clanicons-full-ru-XXX.zip (RU), clanicons-full-eu-XXX.zip (EU), clanicons-full-na-XXX.zip (NA),
     clanicons-full-sea-XXX.zip (SEA), clanicons-full-kr-XXX.zip (KR), clanicons-full-vn-XXX.zip (VN)
 

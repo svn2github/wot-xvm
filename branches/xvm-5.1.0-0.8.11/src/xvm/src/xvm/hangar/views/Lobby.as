@@ -7,7 +7,9 @@ package xvm.hangar.views
     import com.xvm.*;
     import com.xvm.io.*;
     import com.xvm.infrastructure.*;
+    import net.wg.data.*;
     import net.wg.gui.lobby.*;
+    import net.wg.gui.notification.*;
     import net.wg.infrastructure.events.*;
     import net.wg.infrastructure.interfaces.*;
 
@@ -26,6 +28,7 @@ package xvm.hangar.views
         public override function onAfterPopulate(e:LifeCycleEvent):void
         {
             //Logger.add("onAfterPopulate: " + view.as_alias);
+            initStatToken();
             hideTutorial();
 
             //Cmd.runTest("battleResults", "276059857563541063");
@@ -39,6 +42,21 @@ package xvm.hangar.views
         }
 
         // PRIVATE
+
+        // xvm stat token
+
+        private function initStatToken():void
+        {
+            if (Config.config.rating.showPlayersStatistics == true)
+                Cmd.getXvmStatTokenData(this, getXvmStatTokenDataCallback);
+        }
+
+        private function getXvmStatTokenDataCallback(json_str:String):void
+        {
+            //Logger.add(json_str);
+        }
+
+        // hide tutorial
 
         private function hideTutorial():void
         {

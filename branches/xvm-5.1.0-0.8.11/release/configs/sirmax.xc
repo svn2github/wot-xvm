@@ -38,14 +38,14 @@
   "definition": {
     "author": "sirmax2",
     "description": "Sirmax's settings for XVM",
-    "url": "http://code.google.com/p/wot-xvm/",
+    "url": "http://www.modxvm.com/",
     "date": "10.10.2012",
     "gameVersion": "0.8.0",
     "modMinVersion": "3.0.4"
   },
   "login": {
     "skipIntro": true,
-    "autologin": false,
+    "autologin": true,
     "confirmOldReplays": true,
     "pingServers": ${"def.pingServers"}
   },

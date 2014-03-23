@@ -58,7 +58,7 @@
 
     // Address to config updates.
     // Адрес, где выкладываются обновления конфига.
-    "url": "http://code.google.com/p/wot-xvm/",
+    "url": "http://www.modxvm.com/",
 
     // Config last modified.
     // Дата последней модификации конфига.

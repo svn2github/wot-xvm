@@ -48,7 +48,7 @@ package com.xvm.misc
             var c:Object = new Object();
             c.author = "XVM";
             c.description = "Default settings for XVM";
-            c.url = "http://code.google.com/p/wot-xvm/";
+            c.url = "http://www.modxvm.com/";
             var d:Date = new Date();
             c.date = (d.getDate() < 10 ? "0" : "") + d.getDate() + "." +
                 (d.getMonth() < 9 ? "0" : "") + (d.getMonth() + 1) + "." + d.getFullYear();

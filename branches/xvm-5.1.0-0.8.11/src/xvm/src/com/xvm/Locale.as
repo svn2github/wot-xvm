@@ -37,7 +37,7 @@ package com.xvm
 
         public static function get(format:String):String
         {
-            //Logger.add("Locale[get]: string: " + text + " | string: " + s_lang.locale[text] + " | fallback string: " + s_lang_fallback[text] + " | language: " + _language );
+            //Logger.add("Locale[get]: string: " + format + " | string: " + s_lang.locale[format] + " | fallback string: " + s_lang_fallback[format]);
             if (s_lang.locale && s_lang.locale.hasOwnProperty(format))
                 format = s_lang.locale[format];
             else if (s_lang_fallback.hasOwnProperty(format))
@@ -188,7 +188,19 @@ package com.xvm
             "SPG": "САУ",
 
             // VehicleMarkersManager
-            "blownUp": "Взрыв БК!"
+            "blownUp": "Взрыв БК!",
+
+            // token
+            "token/network_error": "Ошибка сети.\nСтатистика XVM недоступна, попробуйте позже.",
+            "token/bad_token": "Неверный токен.\n{{l10n:token/notify_xvm_site}}",
+            "token/blocked": "Статус: <font color='#FF0000'>Заблокирован</font>\n{{l10n:token/notify_xvm_site}}",
+            "token/inactive": "Статус: <font color='#FFFF00'>Неактивен</font>\n{{l10n:token/notify_xvm_site}}",
+            "token/active": "Статус:<tab><font color='#00FF00'>Активен</font>",
+            "token/days_left": "Осталось дней",
+            "token/hours_left": "Осталось часов",
+            "token/cnt": "Количество запросов",
+            "token/unknown_status": "Неизвестный статус",
+            "token/notify_xvm_site": "Пожалуйста, перейдите на <a href='event:http://www.modxvm.com/'>сайт XVM</a> и активируйте статистику в персональном кабинете."
         };
 
         /** Hardcoded EN language */
@@ -228,7 +240,19 @@ package com.xvm
             "japan": "Japan",
 
             // VehicleMarkersManager
-            "blownUp": "Blown-up!"
+            "blownUp": "Blown-up!",
+
+            // token
+            "token/network_error": "Network error. XVM statistics is unavailable, try again later.",
+            "token/bad_token": "Bad token.\n{{l10n:token/notify_xvm_site}}",
+            "token/blocked": "Status: <font color='#FF0000'>Blocked</font><br>{{l10n:token/notify_xvm_site}}",
+            "token/inactive": "Status: <font color='#FFFF00'>Inactive</font><br>{{l10n:token/notify_xvm_site}}",
+            "token/active": "Status: <font color='#00FF00'>Active</font>",
+            "token/days_left": "Days left",
+            "token/hours_left": "Hours left",
+            "token/cnt": "Requests count",
+            "token/unknown_status": "Unknown status",
+            "token/notify_xvm_site": "Please go to the <a href='event:http://www.modxvm.com/'>XVM site</a> and activate statistics in the personal cabinet."
         };
 
         private static var s_lang:Object = { };

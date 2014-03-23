@@ -1,10 +1,13 @@
-XVM-dev:
-   [NEW FUNCTIONS]
-   * localization: added Chinese(Simplified)
-   * stat: use an encrypted connection.
+XVM-5.2.0-test1:
+  [MAYOR UPDATE]
+  * Statistics must be enabled in the personal cabinet on the http://www.modxvm.com/ site
 
-   [OTHER]
-   * stat: changed address of the stats server (now https://stat.modxvm.com/ )
+  [NEW FUNCTIONS]
+  * localization: added Chinese(Simplified)
+  * stat: use an encrypted connection.
+
+  [OTHER]
+  * stat: changed address of the stats server (now https://stat.modxvm.com/)
 
 XVM-5.1.0:
   * adaptation to WoT 0.8.11
