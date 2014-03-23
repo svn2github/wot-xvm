@@ -27,10 +27,14 @@ from loadurl import loadUrl
 
 _tokens = db.get('tokens', 'tokens') or dict()
 _tdata2 = None
+_token_checked = False
 
 def _getXvmStatTokenData():
     global _tokens
     global _tdata2
+    global _token_checked
+
+    _token_checked = True
 
     playerId = _getPlayerId()
     if playerId is None:
@@ -86,6 +90,10 @@ def _getXvmStatTokenData():
 
 def _getXvmStatActiveTokenData():
     global _tokens
+    global _token_checked
+
+    if not _token_checked:
+        _getXvmStatTokenData()
 
     playerId = _getPlayerId()
     #log(playerId)
