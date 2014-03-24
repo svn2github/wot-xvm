@@ -18,7 +18,7 @@ package net.wg.gui.components.controls
 
    public class ScrollingListPx extends CoreListEx
    {
-
+          
       public function ScrollingListPx() {
          super();
       }
@@ -32,6 +32,8 @@ package net.wg.gui.components.controls
       protected var _scrollBarValue:Object;
 
       protected var totalHeight:uint;
+
+      public var padding:int = 0;
 
       private var _scrollStepFactor:Number = 1.0;
 
@@ -203,7 +205,7 @@ package net.wg.gui.components.controls
          _loc2_.owner = this;
          _loc2_.validateNow();
          _loc2_.y = this.totalHeight;
-         this.totalHeight = this.totalHeight + Math.round(_loc2_.height);
+         this.totalHeight = this.totalHeight + (Math.round(_loc2_.height) + this.padding);
       }
 
       public function get maxScroll() : Number {
@@ -328,11 +330,11 @@ package net.wg.gui.components.controls
       }
 
       protected function populateData(param1:Array) : void {
-
+          
       }
 
       override protected function drawLayout() : void {
-
+          
       }
 
       override protected function createRenderer(param1:uint) : IListItemRenderer {
