@@ -200,7 +200,7 @@ package com.xvm
             "token/hours_left": "Осталось часов",
             "token/cnt": "Количество запросов",
             "token/unknown_status": "Неизвестный статус",
-            "token/notify_xvm_site": "Пожалуйста, перейдите на <a href='#XVM_SITE#'>сайт XVM</a> и активируйте статистику в персональном кабинете."
+            "token/notify_xvm_site": "Пожалуйста, перейдите на <a href='#XVM_SITE#'>сайт XVM</a> и активируйте статистику в личном кабинете."
         };
 
         /** Hardcoded EN language */
