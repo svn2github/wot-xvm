@@ -124,10 +124,6 @@ package net.wg.gui.login.impl
          this.form.setCapsLockState(param1);
       }
 
-      public function as_setKeyboardLang(param1:String) : void {
-         this.form.setKeyboardLang(param1);
-      }
-
       public function as_cancelLoginQueue() : void {
          DebugUtils.LOG_DEBUG("as_cancelLoginQueue");
       }
@@ -439,7 +435,7 @@ package net.wg.gui.login.impl
       override public function handleInput(param1:InputEvent) : void {
          var _loc2_:Function = null;
          super.handleInput(param1);
-         if((param1.handled) || (App.waiting.isOnStage))
+         if((param1.handled) || (App.waiting.visible))
          {
             return;
          }

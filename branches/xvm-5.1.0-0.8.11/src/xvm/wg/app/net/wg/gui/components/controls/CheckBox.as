@@ -195,16 +195,9 @@ package net.wg.gui.components.controls
          return this._toolTip;
       }
 
-      override public function set enabled(param1:Boolean) : void {
-         super.enabled = param1;
-         buttonMode = enabled;
-         mouseEnabled = true;
-      }
-
       override protected function configUI() : void {
          super.configUI();
-         buttonMode = enabled;
-         mouseEnabled = true;
+         buttonMode = true;
          if(App.soundMgr != null)
          {
             App.soundMgr.addSoundsHdlrs(this);

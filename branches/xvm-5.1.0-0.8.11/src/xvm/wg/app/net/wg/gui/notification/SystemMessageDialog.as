@@ -6,14 +6,10 @@ package net.wg.gui.notification
    import flash.text.TextField;
    import flash.display.Sprite;
    import net.wg.gui.components.controls.SoundButtonEx;
-   import net.wg.gui.notification.vo.NotificationInfoVO;
-   import net.wg.gui.notification.vo.NotificationDialogInitInfoVO;
    import net.wg.infrastructure.interfaces.IWindow;
    import flash.text.TextFieldAutoSize;
    import net.wg.gui.events.UILoaderEvent;
    import scaleform.clik.events.ButtonEvent;
-   import net.wg.gui.notification.vo.MessageInfoVO;
-   import net.wg.gui.notification.constants.MessageMetrics;
    import scaleform.clik.core.UIComponent;
    import net.wg.gui.components.windows.Window;
 
@@ -86,25 +82,31 @@ package net.wg.gui.notification
       }
 
       override protected function draw() : void {
-         var _loc1_:MessageInfoVO = null;
+         var _loc1_:Array = null;
+         var _loc2_:MessageInfoVO = null;
          super.draw();
          if(isInvalid(DATA_INVALID))
          {
             if(this.messageData)
             {
-               _loc1_ = this.messageData.messageVO;
-               if(_loc1_.icon)
+               _loc1_ = this.messageData.auxData;
+               if((_loc1_) && _loc1_.length > 1)
                {
-                  this.icon.source = _loc1_.icon;
+                  App.utils.scheduler.scheduleTask(onWindowCloseS,_loc1_[1]);
                }
-               this.textField.htmlText = _loc1_.message;
+               _loc2_ = this.messageData.messageVO;
+               if(_loc2_.icon)
+               {
+                  this.icon.source = _loc2_.icon;
+               }
+               this.textField.htmlText = _loc2_.message;
                invalidate(DIMENSIONS_INVALID);
                invalidate(ICON_POSITION_INV);
             }
          }
          if((isInvalid(DIMENSIONS_INVALID)) && (window))
          {
-            this.bgMc.height = Math.round(this.textField.height + MessageMetrics.WINDOW_BOTTOM_PADDING);
+            this.bgMc.height = Math.round(this.textField.height + this.textField.y * 2);
             this.closeBtn.y = this.bgMc.height + 3;
             this.height = this.closeBtn.y + this.closeBtn.height;
             App.utils.scheduler.envokeInNextFrame(this.refreshWindowSize);
@@ -113,17 +115,13 @@ package net.wg.gui.notification
          {
             if(this.textField.textHeight < this.icon.height)
             {
-               this.icon.y = Math.round(this.textField.y + (-this.icon.height + this.textField.height) / 2) + MessageMetrics.ICON_DEFAULT_PADDING_Y;
+               this.icon.y = Math.round(this.textField.y + (-this.icon.height + this.textField.height) / 2) + 2;
             }
          }
          if((isInvalid(INIT_DATA_INVALID)) && (window))
          {
             window.title = this.initInfo.title;
             this.closeBtn.label = this.initInfo.closeBtnTitle;
-            if(this.initInfo.settings.timeout > 0)
-            {
-               App.utils.scheduler.scheduleTask(onWindowCloseS,this.initInfo.settings.timeout);
-            }
          }
       }
 
@@ -151,8 +149,8 @@ package net.wg.gui.notification
       }
 
       private function iconLoadingCompleteHandler(param1:UILoaderEvent) : void {
-         var _loc2_:int = MessageMetrics.ICON_DEFAULT_PADDING_X;
-         this.icon.x = _loc2_ + Math.max(0,Math.round((this.textField.x - _loc2_ - this.icon.width) / 2));
+         var _loc2_:* = 3;
+         this.icon.x = _loc2_ + Math.round((this.textField.x - _loc2_ - this.icon.width) / 2);
          invalidate(ICON_POSITION_INV);
       }
    }

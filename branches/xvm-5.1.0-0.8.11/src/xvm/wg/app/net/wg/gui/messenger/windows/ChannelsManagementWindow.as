@@ -148,16 +148,8 @@ package net.wg.gui.messenger.windows
             case this.CREATE_CHANNEL_FORM_ID:
                break;
          }
-         this.updateView(_loc2_);
+         _loc2_.update({});
          this.updateViewSize();
-      }
-
-      private function updateView(param1:IViewStackContent, param2:Object=null) : void {
-         param1.update(param2);
-         if(param1.getComponentForFocus())
-         {
-            this.setFocus(param1.getComponentForFocus());
-         }
       }
 
       private function onViewChangeHandler(param1:ViewStackEvent=null) : void {
@@ -165,14 +157,14 @@ package net.wg.gui.messenger.windows
          if((this.view) && (this.view.currentView) && param1 == null)
          {
             _loc2_ = this.view.currentView as IViewStackContent;
-            this.updateView(_loc2_);
+            _loc2_.update({});
          }
          else
          {
             if(param1 != null)
             {
                _loc2_ = param1.view;
-               this.updateView(_loc2_);
+               _loc2_.update({});
             }
          }
       }

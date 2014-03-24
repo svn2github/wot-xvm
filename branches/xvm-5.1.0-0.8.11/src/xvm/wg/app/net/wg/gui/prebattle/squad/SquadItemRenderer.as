@@ -33,8 +33,6 @@ package net.wg.gui.prebattle.squad
 
       protected var statusString:String = null;
 
-      private var currentDbID:Number = -1;
-
       public function get model() : PlayerPrbInfoVO {
          return data as PlayerPrbInfoVO;
       }
@@ -44,13 +42,8 @@ package net.wg.gui.prebattle.squad
          {
             this.setSpeakers(false,true);
             visible = false;
-            return;
+            this.data = null;
          }
-         if((this.data) && (param1) && this.currentDbID == param1.dbID)
-         {
-            param1.isPlayerSpeaking = this.data.isPlayerSpeaking;
-         }
-         this.currentDbID = param1.dbID;
          if(!visible)
          {
             visible = true;
@@ -62,7 +55,7 @@ package net.wg.gui.prebattle.squad
       protected var playerNameStr:String = "";
 
       protected function updatePlayerName() : void {
-         if((this.model) && !(this.model.dbID == -1))
+         if((this.model) && !(this.model.uid == -1))
          {
             App.utils.commons.formatPlayerName(textField,App.utils.commons.getUserProps(this.model.userName,this.model.clanAbbrev,this.model.region,this.model.igrType));
          }
@@ -221,12 +214,8 @@ package net.wg.gui.prebattle.squad
       }
 
       public function onPlayerSpeak(param1:Number, param2:Boolean) : void {
-         if((this.model) && param1 == this.model.dbID)
+         if((this.model) && param1 == this.model.uid)
          {
-            if((data) && (this.model) && this.currentDbID == data.dbID)
-            {
-               this.model.isPlayerSpeaking = param2;
-            }
             this.setSpeakers(param2);
          }
       }

@@ -21,10 +21,6 @@ package net.wg.infrastructure.base.meta
       function as_setAmmo(param1:Object) : void;
 
       function as_setVehicleHasTurret(param1:Boolean) : void;
-
-      function as_setHistoricalBattle(param1:Number) : void;
-
-      function as_setModulesEnabled(param1:Boolean) : void;
    }
 
 }

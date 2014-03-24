@@ -45,8 +45,6 @@ package net.wg.gui.login.impl
 
       public var igrWarning:MovieClip = null;
 
-      public var keyboardLang:TextField = null;
-
       private var _rememberPwdCheckbox:CheckBox = null;
 
       private var _registerLink:HyperLink = null;
@@ -182,10 +180,7 @@ package net.wg.gui.login.impl
 
       public function setCapsLockState(param1:Boolean) : void {
          this.capsLockIndicator.visible = param1;
-      }
-
-      public function setKeyboardLang(param1:String) : void {
-         this.keyboardLang.text = param1;
+         this.capsLockIndicator.x = this.passwordField.x + this.passwordField.getLineMetrics(0).x - this.capsLockIndicator.width;
       }
 
       public function getSelectedServerName() : String {

@@ -31,8 +31,6 @@ package net.wg.data.constants
 
       public static const DRAG_CLOSE:String = "dragclose";
 
-      public static const NUT:String = "nut";
-
       public static const CUSTOMIZED_CURSORS:Vector.<String> = Vector.<String>([ROTATE,RESIZE,MOVE,DRAG_OPEN,DRAG_CLOSE]);
    }
 

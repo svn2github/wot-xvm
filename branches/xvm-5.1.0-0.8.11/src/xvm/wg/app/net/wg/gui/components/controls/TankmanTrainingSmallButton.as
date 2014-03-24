@@ -5,6 +5,7 @@ package net.wg.gui.components.controls
    import net.wg.gui.components.controls.VO.ActionPriceVO;
    import net.wg.utils.ILocale;
    import flash.events.Event;
+   import __AS3__.vec.Vector;
    import net.wg.data.constants.SoundTypes;
 
 
@@ -20,7 +21,6 @@ package net.wg.gui.components.controls
             }
          ;
          super();
-         useFocusedAsSelect = true;
          _stateMap =
             {
                "up":["up"],
@@ -198,14 +198,14 @@ package net.wg.gui.components.controls
          {
             if(this._buy)
             {
-               setState("buy");
+               this.setState("buy");
             }
          }
          else
          {
             if(currentLabel == "buy")
             {
-               setState(this.hasMoney?"up":"disabled");
+               this.setState(this.hasMoney?"up":"disabled");
             }
          }
       }
@@ -399,23 +399,23 @@ package net.wg.gui.components.controls
          {
             if(!_focused)
             {
-               setState("toggle");
+               this.setState("toggle");
             }
             else
             {
                if((_pressedByKeyboard) && !(_focusIndicator == null))
                {
-                  setState("kb_selecting");
+                  this.setState("kb_selecting");
                }
                else
                {
-                  setState("over");
+                  this.setState("selecting");
                }
             }
             if(owner)
             {
                _loc2_ = (_selected) && !(owner == null) && (checkOwnerFocused());
-               setState((_loc2_) && _focusIndicator == null?"selecting":"toggle");
+               this.setState((_loc2_) && _focusIndicator == null?"selecting":"toggle");
                displayFocus = _loc2_;
             }
          }
@@ -424,15 +424,49 @@ package net.wg.gui.components.controls
             _loc3_ = this._specializationLevel >= this.level;
             if((this.isNativeVehicle) && (_loc3_) || !this.isNativeVehicle && (_loc3_) && (this.hasMoney))
             {
-               setState("buy");
+               this.setState("buy");
             }
             else
             {
-               setState("disabled");
+               this.setState("disabled");
             }
          }
          validateNow();
          dispatchEvent(new Event(Event.SELECT));
+      }
+
+      override protected function setState(param1:String) : void {
+         var _loc6_:String = null;
+         var _loc7_:uint = 0;
+         var _loc8_:uint = 0;
+         var _loc9_:String = null;
+         _state = param1;
+         var _loc2_:Vector.<String> = getStatePrefixes();
+         var _loc3_:Array = _stateMap[param1];
+         if(_loc3_ == null || _loc3_.length == 0)
+         {
+            return;
+         }
+         var _loc4_:uint = _loc2_.length;
+         var _loc5_:uint = 0;
+         while(_loc5_ < _loc4_)
+         {
+            _loc6_ = _loc2_[_loc5_];
+            _loc7_ = _loc3_.length;
+            _loc8_ = 0;
+            while(_loc8_ < _loc7_)
+            {
+               _loc9_ = _loc6_ + _loc3_[_loc8_];
+               if(_labelHash[_loc9_])
+               {
+                  _newFrame = _loc9_;
+                  invalidateState();
+                  return;
+               }
+               _loc8_++;
+            }
+            _loc5_++;
+         }
       }
 
       private function disposeComponent() : void {

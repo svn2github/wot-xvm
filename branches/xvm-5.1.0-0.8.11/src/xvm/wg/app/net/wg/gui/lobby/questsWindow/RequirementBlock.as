@@ -3,7 +3,6 @@ package net.wg.gui.lobby.questsWindow
    import net.wg.gui.lobby.questsWindow.components.AbstractResizableContent;
    import net.wg.gui.lobby.questsWindow.components.MovableBlocksContainer;
    import flash.events.Event;
-   import net.wg.gui.events.ResizableBlockEvent;
    import __AS3__.vec.Vector;
    import net.wg.gui.lobby.questsWindow.data.RequirementBlockVO;
    import scaleform.clik.constants.InvalidationType;
@@ -34,7 +33,6 @@ package net.wg.gui.lobby.questsWindow
          this.blocksContainer.bottomPadding = CONTAINER_PADDING;
          this.description.visible = false;
          this.blocksContainer.addEventListener(Event.RESIZE,this.layoutBlocks);
-         this.blocksContainer.addEventListener(ResizableBlockEvent.VALIDATE_SCROLL_BAR,this.layoutBlocks);
          this.description.addEventListener(Event.RESIZE,this.layoutBlocks);
       }
 
@@ -85,7 +83,6 @@ package net.wg.gui.lobby.questsWindow
 
       override protected function onDispose() : void {
          this.blocksContainer.removeEventListener(Event.RESIZE,this.layoutBlocks);
-         this.blocksContainer.removeEventListener(ResizableBlockEvent.VALIDATE_SCROLL_BAR,this.layoutBlocks);
          this.description.removeEventListener(Event.RESIZE,this.layoutBlocks);
          this.blocksContainer.dispose();
          this.description.dispose();

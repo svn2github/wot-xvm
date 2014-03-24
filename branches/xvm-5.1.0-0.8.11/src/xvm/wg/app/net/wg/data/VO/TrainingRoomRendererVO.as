@@ -1,15 +1,26 @@
 package net.wg.data.VO
 {
+   import net.wg.data.daapi.base.DAAPIDataClass;
 
 
-   public class TrainingRoomRendererVO extends UserVO
+   public class TrainingRoomRendererVO extends DAAPIDataClass
    {
           
       public function TrainingRoomRendererVO(param1:Object) {
          super(param1);
       }
 
+      public var accID:Number;
+
+      public var uid:Number;
+
       public var himself:Boolean;
+
+      public var userName:String = "";
+
+      public var clanAbbrev:String = "";
+
+      public var fullName:String = "";
 
       public var icon:String = "";
 
@@ -22,6 +33,10 @@ package net.wg.data.VO
       public var stateString:String = "";
 
       public var isPlayerSpeaking:Boolean;
+
+      public var region:String = "";
+
+      public var igrType:int = 0;
    }
 
 }

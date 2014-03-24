@@ -19,7 +19,7 @@ package net.wg.infrastructure.base
          this.stageResizeHandler(null);
       }
 
-      protected function stageResizeHandler(param1:Event) : void {
+      private function stageResizeHandler(param1:Event) : void {
          SmartPopOver(wrapper).setStageDimensions(stage.stageWidth,stage.stageHeight);
       }
 

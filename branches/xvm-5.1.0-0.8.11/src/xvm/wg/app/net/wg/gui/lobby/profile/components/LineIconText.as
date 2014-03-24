@@ -24,11 +24,8 @@ package net.wg.gui.lobby.profile.components
       private var _iconSource:String;
 
       public function set text(param1:String) : void {
-         if(this._text != param1)
-         {
-            this._text = param1;
-            invalidate(TEXT_INVALID);
-         }
+         this._text = param1;
+         invalidate(TEXT_INVALID);
       }
 
       public function get text() : String {
@@ -39,7 +36,7 @@ package net.wg.gui.lobby.profile.components
          super.draw();
          if(isInvalid(TEXT_INVALID))
          {
-            this.applyText(this._text);
+            this.applyText();
          }
          if((isInvalid(ICON_INVALID)) && (this.icon))
          {
@@ -47,8 +44,8 @@ package net.wg.gui.lobby.profile.components
          }
       }
 
-      protected function applyText(param1:String) : void {
-         this.textComponent.text = param1;
+      protected function applyText() : void {
+         this.textComponent.text = this._text;
       }
 
       public function get iconSource() : String {
@@ -56,15 +53,11 @@ package net.wg.gui.lobby.profile.components
       }
 
       public function set iconSource(param1:String) : void {
-         if(this._iconSource != param1)
-         {
-            this._iconSource = param1;
-            invalidate(ICON_INVALID);
-         }
+         this._iconSource = param1;
+         invalidate(ICON_INVALID);
       }
 
       override protected function onDispose() : void {
-         this.textComponent = null;
          super.onDispose();
          if(this.icon)
          {

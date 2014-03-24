@@ -1,5 +1,6 @@
 package net.wg.gui.cyberSport.views.autoSearch
 {
+   import net.wg.gui.components.advanced.FieldSet;
    import flash.display.MovieClip;
    import scaleform.clik.events.ButtonEvent;
    import net.wg.data.constants.generated.CYBER_SPORT_ALIASES;
@@ -13,10 +14,13 @@ package net.wg.gui.cyberSport.views.autoSearch
          currentState = CYBER_SPORT_ALIASES.AUTO_SEARCH_WAITING_PLAYERS_STATE;
          mainField.text = CYBERSPORT.WINDOW_AUTOSEARCH_WAITINGPLAYERS_MAINTEXT;
          cancelButton.label = CYBERSPORT.WINDOW_AUTOSEARCH_SEARCHCOMMAND_CANCELLBL;
+         this.fieldSet.mouseEnabled = false;
          this.players = [this.player1,this.player2,this.player3,this.player4,this.player5,this.player6,this.player7];
          this.buttonsBG.visible = false;
          cancelButton.visible = false;
       }
+
+      public var fieldSet:FieldSet;
 
       public var buttonsBG:MovieClip;
 
@@ -70,6 +74,7 @@ package net.wg.gui.cyberSport.views.autoSearch
       }
 
       override protected function onDispose() : void {
+         this.fieldSet.dispose();
          if(this.players)
          {
             this.players.splice(0,this.players.length);

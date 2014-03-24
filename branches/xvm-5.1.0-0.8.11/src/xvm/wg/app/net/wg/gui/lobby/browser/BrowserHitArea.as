@@ -18,8 +18,6 @@ package net.wg.gui.lobby.browser
 
       private var bgImg:Bitmap;
 
-      private var isMouseDown:Boolean = false;
-
       override protected function onDispose() : void {
          super.onDispose();
          removeEventListener(MouseEvent.MOUSE_MOVE,this.onMouseMoveHandler);
@@ -50,12 +48,9 @@ package net.wg.gui.lobby.browser
       }
 
       private function onMouseRollOutHandler(param1:MouseEvent) : void {
-         if(!this.isMouseDown)
-         {
-            removeEventListener(MouseEvent.MOUSE_MOVE,this.onMouseMoveHandler);
-            removeEventListener(MouseEvent.MOUSE_WHEEL,this.onMouseWheelHandler);
-            dispatchEvent(new BrowserEvent(BrowserEvent.BROWSER_FOCUS_OUT));
-         }
+         removeEventListener(MouseEvent.MOUSE_MOVE,this.onMouseMoveHandler);
+         removeEventListener(MouseEvent.MOUSE_WHEEL,this.onMouseWheelHandler);
+         dispatchEvent(new BrowserEvent(BrowserEvent.BROWSER_FOCUS_OUT));
       }
 
       private function onMouseWheelHandler(param1:MouseEvent) : void {
@@ -65,7 +60,6 @@ package net.wg.gui.lobby.browser
       private function onMouseDownHandler(param1:MouseEvent) : void {
          if(param1.target == this)
          {
-            this.isMouseDown = true;
             dispatchEvent(new BrowserEvent(BrowserEvent.BROWSER_DOWN,this.mouseX,this.mouseY));
          }
          else
@@ -75,7 +69,6 @@ package net.wg.gui.lobby.browser
       }
 
       private function onMouseUpHandler(param1:MouseEvent) : void {
-         this.isMouseDown = false;
          dispatchEvent(new BrowserEvent(BrowserEvent.BROWSER_UP,this.mouseX,this.mouseY));
       }
 

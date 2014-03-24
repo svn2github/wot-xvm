@@ -1,9 +1,8 @@
 package net.wg.data.managers
 {
-   import net.wg.infrastructure.interfaces.entity.IDisposable;
 
 
-   public interface IToolTipParams extends IDisposable
+   public interface IToolTipParams
    {
           
       function get header() : Object;

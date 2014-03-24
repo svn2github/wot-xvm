@@ -119,9 +119,9 @@ package net.wg.gui.cyberSport.controls
             }
             if((_loc4_) && !_loc3_)
             {
-               if(((this.model) && (this.model.tooltip)) && (!enabled) && !this.mouseOverAlert)
+               if(!enabled)
                {
-                  App.toolTipMgr.showComplex(this.model.tooltip);
+                  App.toolTipMgr.showComplex(TOOLTIPS.CYBERSPORT_VEHICLESELECTOR_OVERFLOWLEVEL);
                }
                else
                {
@@ -141,7 +141,10 @@ package net.wg.gui.cyberSport.controls
 
       override protected function handleMouseRollOver(param1:MouseEvent) : void {
          super.handleMouseRollOver(param1);
-         this.showDisabledToolTip();
+         if(!enabled && !this.mouseOverAlert)
+         {
+            App.toolTipMgr.showComplex(TOOLTIPS.CYBERSPORT_VEHICLESELECTOR_OVERFLOWLEVEL);
+         }
       }
 
       private var mouseOverAlert:Boolean = false;
@@ -166,13 +169,9 @@ package net.wg.gui.cyberSport.controls
       private function onRollOutAlert(param1:MouseEvent) : void {
          this.mouseOverAlert = false;
          App.toolTipMgr.hide();
-         this.showDisabledToolTip();
-      }
-
-      private function showDisabledToolTip() : void {
-         if(((this.model) && (this.model.tooltip)) && (!enabled) && !this.mouseOverAlert)
+         if(!enabled)
          {
-            App.toolTipMgr.showComplex(this.model.tooltip);
+            App.toolTipMgr.showComplex(TOOLTIPS.CYBERSPORT_VEHICLESELECTOR_OVERFLOWLEVEL);
          }
       }
 

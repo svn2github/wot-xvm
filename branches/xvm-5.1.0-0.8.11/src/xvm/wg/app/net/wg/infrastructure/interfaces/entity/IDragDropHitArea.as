@@ -1,10 +1,9 @@
 package net.wg.infrastructure.interfaces.entity
 {
-   import flash.events.IEventDispatcher;
    import flash.display.InteractiveObject;
 
 
-   public interface IDragDropHitArea extends IEventDispatcher
+   public interface IDragDropHitArea
    {
           
       function getHitArea() : InteractiveObject;

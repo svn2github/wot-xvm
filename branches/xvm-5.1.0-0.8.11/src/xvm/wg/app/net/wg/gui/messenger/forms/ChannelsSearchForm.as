@@ -13,6 +13,7 @@ package net.wg.gui.messenger.forms
    import scaleform.clik.events.InputEvent;
    import scaleform.clik.utils.Constraints;
    import scaleform.clik.constants.ConstrainMode;
+   import net.wg.data.constants.Errors;
    import scaleform.clik.constants.InvalidationType;
    import net.wg.gui.messenger.evnts.ChannelsFormEvent;
    import scaleform.clik.ui.InputDetails;
@@ -61,10 +62,20 @@ package net.wg.gui.messenger.forms
          constraints.addElement("searchResultList",this.searchResultList,Constraints.ALL);
          constraints.addElement("bg",this.bg,Constraints.ALL);
          constraints.addElement("joinButton",this.joinButton,Constraints.LEFT | Constraints.BOTTOM);
+         App.utils.scheduler.envokeInNextFrame(this.setFocusToInput);
       }
 
       override public function setSize(param1:Number, param2:Number) : void {
          super.setSize(param1,param2);
+      }
+
+      private function setFocusToInput() : void {
+         if(this.searchNameInput.enabled)
+         {
+            this.searchNameInput.validateNow();
+            DebugUtils.LOG_WARNING(Errors.INVALID_FOCUS_USING);
+            App.utils.focusHandler.setFocus(this.searchNameInput);
+         }
       }
 
       private function onIndexChange(param1:ListEvent=null) : void {
@@ -89,7 +100,7 @@ package net.wg.gui.messenger.forms
       }
 
       public function update(param1:Object) : void {
-          
+         this.setFocusToInput();
       }
 
       public function set searchResultText(param1:String) : void {
@@ -116,8 +127,7 @@ package net.wg.gui.messenger.forms
       }
 
       private function dispatchSearchEv() : void {
-         var _loc1_:String = null;
-         _loc1_ = this.searchNameInput.text;
+         var _loc1_:String = this.searchNameInput.text;
          this.searchResultList.selectedIndex = -1;
          this.searchButton.enabled = this.joinButton.enabled = false;
          dispatchEvent(new ChannelsFormEvent(ChannelsFormEvent.ON_SEARCH_CHANNEL_CLICK,true,false,_loc1_));
@@ -169,7 +179,7 @@ package net.wg.gui.messenger.forms
       }
 
       public function getComponentForFocus() : InteractiveObject {
-         return this.searchNameInput;
+         return null;
       }
    }
 

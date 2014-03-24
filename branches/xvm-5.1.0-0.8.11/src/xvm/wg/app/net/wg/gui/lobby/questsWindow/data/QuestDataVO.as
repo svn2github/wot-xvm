@@ -7,13 +7,12 @@ package net.wg.gui.lobby.questsWindow.data
    {
           
       public function QuestDataVO(param1:Object) {
-         this._award = [];
          super(param1);
       }
 
       private var _header:HeaderDataVO = null;
 
-      private var _award:Array;
+      private var _award:AwardsVO = null;
 
       private var _requirements:Object = null;
 
@@ -24,6 +23,9 @@ package net.wg.gui.lobby.questsWindow.data
          {
             case "header":
                this._header = param2?new HeaderDataVO(param2):null;
+               return false;
+            case "award":
+               this._award = param2?new AwardsVO(param2):null;
                return false;
             default:
                return true;
@@ -46,7 +48,7 @@ package net.wg.gui.lobby.questsWindow.data
          }
          if(this._award)
          {
-            this._award.splice(0,this._award.length);
+            this._award.dispose();
             this._award = null;
          }
          super.onDispose();
@@ -68,11 +70,11 @@ package net.wg.gui.lobby.questsWindow.data
          this._conditions = param1;
       }
 
-      public function get award() : Array {
+      public function get award() : AwardsVO {
          return this._award;
       }
 
-      public function set award(param1:Array) : void {
+      public function set award(param1:AwardsVO) : void {
          this._award = param1;
       }
    }

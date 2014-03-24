@@ -420,7 +420,7 @@ package scaleform.clik.controls
                {
                   if(FocusManager.getFocus(_loc2_) == this)
                   {
-                     App.utils.scheduler.envokeInNextFrame(FocusManager.setFocus,this.textField,_loc2_);
+                     FocusManager.setFocus(this.textField,_loc2_);
                   }
                   _loc2_++;
                }

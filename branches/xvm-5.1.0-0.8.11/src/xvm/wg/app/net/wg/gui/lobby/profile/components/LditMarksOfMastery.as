@@ -16,12 +16,17 @@ package net.wg.gui.lobby.profile.components
          invalidate(TEXT_INVALID);
       }
 
-      override protected function applyText(param1:String) : void {
+      override protected function applyText() : void {
          if(enabled)
          {
-            param1 = param1 + "<font size=\'14\' color=\'#939188\'>" + "/" + App.utils.locale.integer(this._totalCount) + "</font>";
+            gotoAndStop("up");
+            textComponent.text = _text + "<font size=\'14\' color=\'#939188\'>" + "/" + App.utils.locale.integer(this._totalCount) + "</font>";
          }
-         super.applyText(param1);
+         else
+         {
+            gotoAndStop("disabled");
+            textComponent.text = "--";
+         }
          invalidate(DESCRIPTION_TEXT_INVALID);
       }
    }

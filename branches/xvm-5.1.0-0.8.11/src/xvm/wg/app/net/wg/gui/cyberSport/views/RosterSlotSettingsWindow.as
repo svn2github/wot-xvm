@@ -35,8 +35,6 @@ package net.wg.gui.cyberSport.views
          isModal = true;
       }
 
-      private static const MODEL_INDEX:int = 2;
-
       public var viewStack:ViewStack;
 
       public var buttonBar:ButtonBarEx;
@@ -83,18 +81,17 @@ package net.wg.gui.cyberSport.views
 
       public function as_setDefaultData(param1:Array) : void {
          this.defaultModel = param1;
-         var _loc2_:Object = this.defaultModel[MODEL_INDEX];
-         if((_loc2_) && (_loc2_.hasOwnProperty("shortUserName")))
+         if((this.defaultModel[2]) && (this.defaultModel[2].hasOwnProperty("shortUserName")))
          {
             this.refreshBtnState(true);
-            this.selectedResultBtn.setVehicle(new VehicleVO(_loc2_));
+            this.selectedResultBtn.setVehicle(new VehicleVO(this.defaultModel[2]));
             this.autoSelectTabIndex = 0;
          }
          else
          {
-            if(_loc2_)
+            if(this.defaultModel[2])
             {
-               this.rangeModel = new SettingRosterVO(_loc2_);
+               this.rangeModel = new SettingRosterVO(this.defaultModel[2]);
                this.autoSelectTabIndex = 1;
                if(this.rangeRoster)
                {
@@ -104,7 +101,7 @@ package net.wg.gui.cyberSport.views
             }
             else
             {
-               if(_loc2_ == null)
+               if(this.defaultModel[2] == null)
                {
                   this.selectedResultBtn.reset();
                   this.createDefaultRangeModel();
@@ -116,7 +113,7 @@ package net.wg.gui.cyberSport.views
                }
             }
          }
-         if((initialized) && !(_loc2_ == null))
+         if((initialized) && !(this.defaultModel[2] == null))
          {
             this.buttonBar.selectedIndex = this.autoSelectTabIndex;
             this.viewStack.show(this.autoSelectTabIndex == 0?CYBER_SPORT_ALIASES.VEHICLE_SELECTOR_VIEW:CYBER_SPORT_ALIASES.RANGE_ROSTER_SETTINGS_VIEW);
@@ -198,6 +195,10 @@ package net.wg.gui.cyberSport.views
          this.refreshBtn.removeEventListener(ButtonEvent.CLICK,this.onClickrefreshBtnHandler);
          this.refreshBtn.dispose();
          this.refreshBtn = null;
+         this.viewStack.removeEventListener(ViewStackEvent.NEED_UPDATE,this.viewStackUpdateHandler);
+         this.viewStack.removeEventListener(ViewStackEvent.VIEW_CHANGED,this.viewStackChangedHandler);
+         this.viewStack.dispose();
+         this.viewStack = null;
          if(this.rangeModel)
          {
             this.rangeModel.dispose();
@@ -217,6 +218,7 @@ package net.wg.gui.cyberSport.views
          {
             this.vehicleSelector.removeEventListener(VehicleSelectorEvent.SELECTION_CHANGED,this.vehicleSelectorHandler);
             this.vehicleSelector.removeEventListener(VehicleSelectorFilterEvent.CHANGE,this.onFiltersChanged);
+            this.vehicleSelector.dispose();
             this.vehicleSelector = null;
          }
          if(this.listData)
@@ -232,10 +234,6 @@ package net.wg.gui.cyberSport.views
             this.viewStackData.splice(0,this.viewStackData.length);
             this.viewStackData = null;
          }
-         this.viewStack.removeEventListener(ViewStackEvent.NEED_UPDATE,this.viewStackUpdateHandler);
-         this.viewStack.removeEventListener(ViewStackEvent.VIEW_CHANGED,this.viewStackChangedHandler);
-         this.viewStack.dispose();
-         this.viewStack = null;
          if(this.buttonBar)
          {
             this.buttonBar.dispose();
@@ -245,7 +243,7 @@ package net.wg.gui.cyberSport.views
       }
 
       private function createDefaultRangeModel() : void {
-         var _loc1_:Object = {};
+         var _loc1_:Object = new Object();
          _loc1_.nationIDRange = [];
          _loc1_.vLevelRange = [];
          _loc1_.vTypeRange = [];
@@ -315,7 +313,7 @@ package net.wg.gui.cyberSport.views
                this.vehicleSelector.y = 90;
                this.vehicleSelector.x = 2;
                this.vehicleSelector.height = 205;
-               this.vehicleSelector.validateNow();
+               this.vehicleSelector.invalidateSize();
                _loc2_ = getFilterDataS();
                _loc3_ = new VehicleSelectorFilterVO(_loc2_);
                this.vehicleSelector.setFiltersData(_loc3_);
@@ -376,7 +374,7 @@ package net.wg.gui.cyberSport.views
       }
 
       private function onClickSubmitBtnHandler(param1:ButtonEvent=null) : void {
-         this.defaultModel[MODEL_INDEX] = this.selectedResultBtn.getModel();
+         this.defaultModel[2] = this.selectedResultBtn.getModel();
          submitButtonHandlerS(this.defaultModel);
       }
 

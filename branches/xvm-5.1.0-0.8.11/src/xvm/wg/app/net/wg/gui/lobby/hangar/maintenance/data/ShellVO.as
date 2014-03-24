@@ -39,8 +39,6 @@ package net.wg.gui.lobby.hangar.maintenance.data
 
       public var tableName:String = "";
 
-      public var label:String = "";
-
       public var maxAmmo:int;
 
       public var actionPrc:int = 0;

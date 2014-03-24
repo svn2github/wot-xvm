@@ -169,14 +169,10 @@ package net.wg.gui.lobby.recruitWindow
 
       override protected function configUI() : void {
          super.configUI();
-         var _loc1_:* = "recruitTypeGroup";
-         this.btnGroup = new ButtonGroup(_loc1_,this);
+         this.btnGroup = new ButtonGroup("group1",this);
          this.btnGroup.addButton(this.btnAcademy);
          this.btnGroup.addButton(this.btnScool);
          this.btnGroup.addButton(this.btnCourses);
-         this.btnAcademy.groupName = _loc1_;
-         this.btnScool.groupName = _loc1_;
-         this.btnCourses.groupName = _loc1_;
          this.btnAcademy.doubleClickEnabled = true;
          this.btnAcademy.allowDeselect = false;
          this.btnAcademy.addEventListener(ButtonEvent.CLICK,this.onButtonStudyTypeClick);

@@ -62,10 +62,6 @@ package net.wg.gui.lobby.profile.components.chart.layout
       public function layout(param1:uint, param2:Object) : void {
           
       }
-
-      public function dispose() : void {
-          
-      }
    }
 
 }

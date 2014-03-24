@@ -56,6 +56,7 @@ package net.wg.gui.crewOperations
             {
                this.group.parent.removeChild(this.group);
             }
+            trace(this);
             this.group.dispose();
             this.group = null;
          }

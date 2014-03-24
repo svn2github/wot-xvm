@@ -67,10 +67,6 @@ package net.wg.infrastructure.managers.impl
          return null;
       }
 
-      public function showFortificationCtxMenu(param1:DisplayObject, param2:Vector.<IContextItem>) : IContextMenu {
-         return this.show(param2,param1,this.handleUserContextMenu);
-      }
-
       private function handleUserContextMenu(param1:ContextMenuEvent) : void {
          var _loc2_:Object = param1.memberItemData;
          switch(param1.id)
@@ -112,22 +108,7 @@ package net.wg.infrastructure.managers.impl
                unsetMutedS(_loc2_.uid);
                break;
             case "kickPlayer":
-               kickPlayerS(_loc2_.kickId);
-               break;
-            case "fortDirectionControl":
-               fortDirectionS();
-               break;
-            case "fortAssignPlayers":
-               fortAssignPlayersS();
-               break;
-            case "fortModernization":
-               fortModernizationS();
-               break;
-            case "fortDestroy":
-               fortDestroyS();
-               break;
-            case "fortPrepareOrder":
-               fortPrepareOrderS();
+               kickPlayerS(_loc2_.accID);
                break;
          }
          if(this._extraHandler != null)
@@ -135,10 +116,6 @@ package net.wg.infrastructure.managers.impl
             this._extraHandler(param1);
          }
          this.hide();
-      }
-
-      public function vehicleWasInBattle(param1:Number) : Boolean {
-         return isVehicleWasInBattleS(param1);
       }
 
       private function destroy(param1:Event) : void {

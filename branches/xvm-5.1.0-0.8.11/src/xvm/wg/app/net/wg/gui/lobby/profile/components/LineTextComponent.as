@@ -54,13 +54,6 @@ package net.wg.gui.lobby.profile.components
          this._text = param1;
          invalidate(TEXT_INV);
       }
-
-      override protected function onDispose() : void {
-         this.leftLine = null;
-         this.rightLine = null;
-         this.textField = null;
-         super.onDispose();
-      }
    }
 
 }

@@ -133,7 +133,6 @@ package net.wg.gui.lobby.hangar.crew
       }
 
       public function setData(param1:Object) : void {
-         var rendererData:RecruitRendererVO = null;
          var listHeight:Number = NaN;
          var posY:Number = NaN;
          var listTop:Number = NaN;
@@ -145,7 +144,7 @@ package net.wg.gui.lobby.hangar.crew
             return;
          }
          this.visible = true;
-         rendererData = RecruitRendererVO(data);
+         var rendererData:RecruitRendererVO = RecruitRendererVO(data);
          if(rendererData.recruitList)
          {
             this.dataProvider = setupDataProvider(rendererData.recruitList.sort(function(param1:Object, param2:Object):Number
@@ -455,7 +454,6 @@ package net.wg.gui.lobby.hangar.crew
             _loc1_.rowCount = menuRowCount < 1?5:menuRowCount;
             _loc1_.labelField = _labelField;
             _loc1_.labelFunction = _labelFunction;
-            _loc1_.canCleanDataProvider = false;
             _dropdownRef = _loc1_;
             _dropdownRef.addEventListener(ListEvent.ITEM_CLICK,handleMenuItemClick,false,0,true);
             PopUpManager.show(_dropdownRef,x + menuOffset.left,menuDirection == "down"?y + height + menuOffset.top:y - _dropdownRef.height + menuOffset.bottom,parent);
@@ -679,6 +677,12 @@ package net.wg.gui.lobby.hangar.crew
             }
             _dropdownRef.parent.removeChild(_dropdownRef);
             _dropdownRef = null;
+         }
+         if(_dataProvider)
+         {
+            _dataProvider.removeEventListener(Event.CHANGE,handleDataChange,false);
+            _dataProvider.cleanUp();
+            _dataProvider = null;
          }
          if((scrollBar) && scrollBar  is  IDisposable)
          {

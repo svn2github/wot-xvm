@@ -179,7 +179,7 @@ package net.wg.gui.components.controls
       protected function handleTextFieldFocusOut(param1:FocusEvent) : void {
          if(App.instance)
          {
-            this._focusOutByWaiting = App.waiting.isOnStage;
+            this._focusOutByWaiting = App.waiting.visible;
             if(this._focusOutByWaiting)
             {
                if(this._pastSelectionStart == this._pastSelectionEnd)

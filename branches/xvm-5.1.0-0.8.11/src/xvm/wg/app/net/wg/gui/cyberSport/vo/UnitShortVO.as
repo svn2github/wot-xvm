@@ -21,10 +21,6 @@ package net.wg.gui.cyberSport.vo
 
       public var description:String = "";
 
-      public function isAvailable() : Boolean {
-         return !(this.slots == null) && this.slots.length > 0;
-      }
-
       public function get commander() : UnitCandidateVO {
          var _loc2_:UnitSlotVO = null;
          var _loc1_:UnitCandidateVO = null;

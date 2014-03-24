@@ -17,7 +17,6 @@ package net.wg.app
    import net.wg.infrastructure.managers.IVoiceChatManager;
    import net.wg.utils.IGameInputManager;
    import net.wg.utils.IUtils;
-   import net.wg.utils.ITweenManager;
    import net.wg.infrastructure.helpers.ILibraryLoader;
 
 
@@ -61,8 +60,6 @@ package net.wg.app
       function get gameInputMgr() : IGameInputManager;
 
       function get utils() : IUtils;
-
-      function get tweenMgr() : ITweenManager;
 
       function get browserBgClass() : Class;
 

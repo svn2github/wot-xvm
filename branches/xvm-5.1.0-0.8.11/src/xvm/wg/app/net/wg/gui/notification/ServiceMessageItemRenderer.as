@@ -3,7 +3,6 @@ package net.wg.gui.notification
    import scaleform.clik.interfaces.IListItemRenderer;
    import scaleform.clik.core.UIComponent;
    import scaleform.clik.data.ListData;
-   import net.wg.gui.notification.events.NotificationListEvent;
    import flash.display.InteractiveObject;
 
 
@@ -14,14 +13,6 @@ package net.wg.gui.notification
          super();
       }
 
-      private static const SINGLE_RENDERER_LABEL:String = "single";
-
-      private static const FIRST_RENDERER_LABEL:String = "first";
-
-      private static const DEFAULT_RENDERER_LABEL:String = "normal";
-
-      private static const LAST_RENDERER_LABEL:String = "last";
-
       private var _index:uint;
 
       private var _selectable:Boolean;
@@ -29,8 +20,6 @@ package net.wg.gui.notification
       private var _selected:Boolean;
 
       private var _owner:UIComponent;
-
-      private var _backgroundLabel:String = "";
 
       public function get index() : uint {
          return this._index;
@@ -60,31 +49,6 @@ package net.wg.gui.notification
          return this.data;
       }
 
-      public function get owner() : UIComponent {
-         return this._owner;
-      }
-
-      public function set owner(param1:UIComponent) : void {
-         if(this._owner)
-         {
-            this._owner.removeEventListener(NotificationListEvent.UPDATE_INDEXES,this.handleUpdateIndexes,false);
-         }
-         this._owner = param1;
-         if(this._owner)
-         {
-            this._owner.addEventListener(NotificationListEvent.UPDATE_INDEXES,this.handleUpdateIndexes,false,0,true);
-         }
-         this.focusTarget = this._owner;
-      }
-
-      public function get selected() : Boolean {
-         return this._selected;
-      }
-
-      public function set selected(param1:Boolean) : void {
-         this._selected = param1;
-      }
-
       override public function toString() : String {
          return "[Service message ListItemRenderer " + this.index + ", " + name + "]";
       }
@@ -98,7 +62,7 @@ package net.wg.gui.notification
          while(_loc1_ < numChildren)
          {
             _loc2_ = getChildAt(_loc1_) as InteractiveObject;
-            if((_loc2_) && (!(_loc2_ == textField)) && !(_loc2_ == btnsGroup))
+            if((_loc2_) && (!(_loc2_ == textField)) && !(_loc2_ == btnMoreInfo))
             {
                _loc2_.mouseEnabled = false;
             }
@@ -106,34 +70,21 @@ package net.wg.gui.notification
          }
       }
 
-      override protected function onDispose() : void {
-         this.owner = null;
-         super.onDispose();
+      public function get owner() : UIComponent {
+         return this._owner;
       }
 
-      private function handleUpdateIndexes(param1:NotificationListEvent) : void {
-         var _loc2_:int = param1.length;
-         if(!background)
-         {
-            return;
-         }
-         var _loc3_:String = DEFAULT_RENDERER_LABEL;
-         if(this.index == 0)
-         {
-            _loc3_ = _loc2_ > 0?FIRST_RENDERER_LABEL:SINGLE_RENDERER_LABEL;
-         }
-         else
-         {
-            if(this.index + 1 == _loc2_)
-            {
-               _loc3_ = LAST_RENDERER_LABEL;
-            }
-         }
-         if(_loc3_ != this._backgroundLabel)
-         {
-            this._backgroundLabel = _loc3_;
-            background.gotoAndStop(this._backgroundLabel);
-         }
+      public function set owner(param1:UIComponent) : void {
+         this._owner = param1;
+         this.focusTarget = this._owner;
+      }
+
+      public function get selected() : Boolean {
+         return this._selected;
+      }
+
+      public function set selected(param1:Boolean) : void {
+         this._selected = param1;
       }
    }
 

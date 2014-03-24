@@ -27,10 +27,6 @@ package net.wg.gui.cyberSport.vo
       public var type:String = "";
 
       public var isReadyToFight:Boolean = false;
-
-      public var enabled:Boolean = true;
-
-      public var tooltip:String = "";
    }
 
 }

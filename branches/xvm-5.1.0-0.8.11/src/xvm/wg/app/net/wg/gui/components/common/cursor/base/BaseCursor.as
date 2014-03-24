@@ -4,7 +4,6 @@ package net.wg.gui.components.common.cursor.base
    import flash.display.Sprite;
    import scaleform.gfx.MouseCursorEvent;
    import flash.events.MouseEvent;
-   import flash.display.MovieClip;
 
 
    class BaseCursor extends AbstractView
@@ -101,8 +100,8 @@ package net.wg.gui.components.common.cursor.base
       }
 
       private function onMouseMoveHandler(param1:MouseEvent) : void {
-         x = stage.mouseX - MovieClip(App.instance).x;
-         y = stage.mouseY - MovieClip(App.instance).y;
+         x = stage.mouseX;
+         y = stage.mouseY;
       }
    }
 

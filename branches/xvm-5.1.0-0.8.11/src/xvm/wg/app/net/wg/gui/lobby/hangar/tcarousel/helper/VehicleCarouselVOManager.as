@@ -72,23 +72,16 @@ package net.wg.gui.lobby.hangar.tcarousel.helper
 
       public function setData(param1:Object) : void {
          var _loc2_:String = null;
-         if(!this._vehiclesDataListIndexes)
+         this.clear();
+         this._addedData = new Vector.<VehicleCarouselVO>(0);
+         this._removedData = new Vector.<VehicleCarouselVO>(0);
+         this._updatedData = new Vector.<VehicleCarouselVO>(0);
+         if(param1)
          {
-            this.clear();
-            this._addedData = new Vector.<VehicleCarouselVO>(0);
-            this._removedData = new Vector.<VehicleCarouselVO>(0);
-            this._updatedData = new Vector.<VehicleCarouselVO>(0);
-            if(param1)
+            for (_loc2_ in param1)
             {
-               for (_loc2_ in param1)
-               {
-                  this.add(param1[_loc2_]);
-               }
+               this.add(param1[_loc2_]);
             }
-         }
-         else
-         {
-            this.updateData(param1);
          }
       }
 

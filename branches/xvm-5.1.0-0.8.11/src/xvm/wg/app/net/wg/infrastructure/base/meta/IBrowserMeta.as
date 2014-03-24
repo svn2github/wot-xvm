@@ -23,8 +23,6 @@ package net.wg.infrastructure.base.meta
       function as_loadingStart() : void;
 
       function as_loadingStop() : void;
-
-      function as_configure(param1:String, param2:Boolean) : void;
    }
 
 }

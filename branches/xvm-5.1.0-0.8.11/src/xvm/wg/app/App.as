@@ -13,7 +13,6 @@ package
    import net.wg.infrastructure.managers.IGuiItemsManager;
    import net.wg.infrastructure.managers.IVoiceChatManager;
    import net.wg.utils.IUtils;
-   import net.wg.utils.ITweenManager;
    import net.wg.infrastructure.interfaces.ICursor;
    import net.wg.infrastructure.managers.IContainerManager;
    import net.wg.utils.IGameInputManager;
@@ -90,10 +89,6 @@ package
 
       public static function get utils() : IUtils {
          return instance.utils;
-      }
-
-      public static function get tweenMgr() : ITweenManager {
-         return instance.tweenMgr;
       }
 
       public static function get cursor() : ICursor {

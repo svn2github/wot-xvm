@@ -2,7 +2,6 @@ package net.wg.gui.lobby.questsWindow
 {
    import net.wg.infrastructure.base.meta.impl.QuestsCurrentTabMeta;
    import net.wg.infrastructure.interfaces.IDAAPIModule;
-   import net.wg.data.constants.QuestsStates;
    import flash.display.InteractiveObject;
 
 
@@ -28,9 +27,8 @@ package net.wg.gui.lobby.questsWindow
       }
 
       override protected function configUI() : void {
-         this.questContent.setNodataLabel(QUESTS.QUESTS_CURRENT_NODATA);
-         this.questContent.questsList.questsState = QuestsStates.CURRENT_STATE;
-         this.questContent.validateNow();
+         super.configUI();
+         this._questContent.setNodataLabel(QUESTS.QUESTS_CURRENT_NODATA);
       }
 
       override protected function onDispose() : void {
@@ -40,7 +38,7 @@ package net.wg.gui.lobby.questsWindow
 
       override protected function onPopulate() : void {
          super.onPopulate();
-         this.questContent.sortingFunction = getSortedTableDataS;
+         this._questContent.sortingFunction = getSortedTableDataS;
       }
 
       public function get questContent() : QuestContent {

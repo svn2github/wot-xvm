@@ -7,6 +7,7 @@ package net.wg.gui.messenger.forms
    import net.wg.gui.components.controls.TextInput;
    import net.wg.gui.components.controls.ScrollingListEx;
    import flash.events.Event;
+   import net.wg.data.constants.Errors;
    import scaleform.clik.events.ButtonEvent;
    import net.wg.gui.events.ListEventEx;
    import scaleform.clik.events.ListEvent;
@@ -53,6 +54,8 @@ package net.wg.gui.messenger.forms
             this.resultsLabel.text = param1.resultText;
             this.searchButton.enabled = !param1.freezeSearch;
          }
+         DebugUtils.LOG_WARNING(Errors.INVALID_FOCUS_USING);
+         App.utils.focusHandler.setFocus(this.textInput);
       }
 
       override protected function onDispose() : void {
@@ -173,7 +176,7 @@ package net.wg.gui.messenger.forms
       }
 
       public function getComponentForFocus() : InteractiveObject {
-         return this.textInput;
+         return null;
       }
    }
 

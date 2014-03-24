@@ -234,20 +234,11 @@ package net.wg.gui.lobby.hangar
       }
 
       public function dispose() : void {
-         if(this._normal)
-         {
-            this._normal.clear();
-            this._normal = null;
-         }
-         if(this._selected)
-         {
-            this._selected.clear();
-            this._selected = null;
-         }
-         if(this._disabled)
-         {
-            this._disabled.clear();
-            this._disabled = null;
-         }
+         this._normal.clear();
+         this._normal = null;
+         this._selected.clear();
+         this._selected = null;
+         this._disabled.clear();
+         this._disabled = null;
       }
    }
