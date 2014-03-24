@@ -200,7 +200,7 @@ package com.xvm
             "token/hours_left": "Осталось часов",
             "token/cnt": "Количество запросов",
             "token/unknown_status": "Неизвестный статус",
-            "token/notify_xvm_site": "Пожалуйста, перейдите на <a href='event:http://www.modxvm.com/'>сайт XVM</a> и активируйте статистику в персональном кабинете."
+            "token/notify_xvm_site": "Пожалуйста, перейдите на <a href='#XVM_SITE#'>сайт XVM</a> и активируйте статистику в персональном кабинете."
         };
 
         /** Hardcoded EN language */
@@ -252,7 +252,7 @@ package com.xvm
             "token/hours_left": "Hours left",
             "token/cnt": "Requests count",
             "token/unknown_status": "Unknown status",
-            "token/notify_xvm_site": "Please go to the <a href='event:http://www.modxvm.com/'>XVM site</a> and activate statistics in the personal cabinet."
+            "token/notify_xvm_site": "Please go to the <a href='#XVM_SITE#'>XVM site</a> and activate statistics in the personal cabinet."
         };
 
         private static var s_lang:Object = { };

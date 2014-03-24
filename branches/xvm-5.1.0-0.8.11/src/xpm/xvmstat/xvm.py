@@ -80,7 +80,7 @@ class Xvm(object):
             elif cmd == COMMAND_GETDOSSIER:
                 getDossier(proxy, args)
             elif cmd == COMMAND_OPEN_URL:
-                if len(args[0]):
+                if len(args[0]) and args[0].lower().startswith('http://www.modxvm.com'):
                     BigWorld.wg_openWebBrowser(args[0])
             elif cmd == COMMAND_LOAD_SETTINGS:
                 pass # TODO

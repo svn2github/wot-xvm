@@ -46,7 +46,7 @@ def _getXvmStatTokenData():
         tdata2 = _tdata2
 
     type = SystemMessages.SM_TYPE.Warning
-    msg = '<textformat tabstops="[120]"><a href="event:http://www.modxvm.com/">www.modxvm.com</a>\n\n'
+    msg = '<textformat tabstops="[120]"><a href="#XVM_SITE#">www.modxvm.com</a>\n\n'
     if tdata2 is None:
         msg += '{{l10n:token/network_error}}'
     elif tdata2['status'] == 'badToken':
@@ -71,6 +71,8 @@ def _getXvmStatTokenData():
         type = SystemMessages.SM_TYPE.Error
         msg += '{{l10n:token/unknown_status}}\n%s' % json.dumps(tdata2)
     msg += '</textformat>'
+
+    msg = msg.replace('#XVM_SITE#', 'event:http://www.modxvm.com/')
 
     if _tdata2 is None or _tdata2['status'] != 'active' or tdata2 is None or tdata2['status'] != 'active':
         SystemMessages.pushMessage(msg, type)
