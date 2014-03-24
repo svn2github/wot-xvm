@@ -27,14 +27,10 @@ from loadurl import loadUrl
 
 _tokens = db.get('tokens', 'tokens') or dict()
 _tdata2 = None
-_token_checked = False
 
 def _getXvmStatTokenData():
     global _tokens
     global _tdata2
-    global _token_checked
-
-    _token_checked = True
 
     playerId = _getPlayerId()
     if playerId is None:
@@ -86,19 +82,24 @@ def _getXvmStatTokenData():
             db.set('tokens', 'tokens', _tokens)
         elif tdata is not None:
             tdata2['token'] = tdata['token']
+        db.set('tokens', 'lastPlayerId', playerId)
 
     return tdata2
 
 
 def _getXvmStatActiveTokenData():
     global _tokens
-    global _token_checked
-
-    if not _token_checked:
-        _getXvmStatTokenData()
 
     playerId = _getPlayerId()
     #log(playerId)
+    if playerId is None:
+        return None
+
+    if playerId not in _tokens:
+        # fallback to the last player id if replay is running
+        if _isReplay():
+            playerId = db.get('tokens', 'lastPlayerId') or None
+
     if playerId is None:
         return None
 
@@ -125,6 +126,10 @@ def _getPlayerId():
             if vData is not None:
                 playerId = vData.get('accountDBID')
     return playerId
+
+def _isReplay():
+    import BattleReplay
+    return BattleReplay.g_replayCtrl.isPlaying
 
 def _checkToken(playerId, token):
     data = None

@@ -243,26 +243,34 @@ class _Stat(object):
         data = None
         if cacheKey not in self.cacheUser:
             try:
-                req = "INFO/" + cacheKey
-                server = XVM_STAT_SERVERS[randint(0, len(XVM_STAT_SERVERS) - 1)]
-                (response, duration) = loadUrl(server, req)
-
-                if not response:
-                    #err('Empty response or parsing error')
-                    pass
+                token = getXvmStatActiveTokenData()
+                if token is None or not 'token' in token:
+                    err('No valid token for XVM statistics (key=%s)' % cacheKey)
                 else:
-                    try:
-                        data = None if response in ('', '[]') else json.loads(response)[0]
-                    except Exception, ex:
-                        err('  Bad answer: ' + response)
+                    tok = token['token'].encode('ascii')
+                    if isId:
+                        req = "user/%s/%s" % (tok, value)
+                    else:
+                        req = "nick/%s/%s/%s" % (tok, reg, value)
+                    server = XVM_STAT_SERVERS[randint(0, len(XVM_STAT_SERVERS) - 1)]
+                    (response, duration) = loadUrl(server, req)
 
-                    if data is not None:
-                        self._fix(data, None if isId else orig_value)
-                        if 'nm' in data and '_id' in data:
-                            self.cacheUser[reg + "/" + data['nm']] = data
-                            self.cacheUser["ID/" + str(data['_id'])] = data
-                    elif response == '[]':
-                        self.cacheUser[cacheKey] = {}
+                    if not response:
+                        #err('Empty response or parsing error')
+                        pass
+                    else:
+                        try:
+                            data = None if response in ('', '[]') else json.loads(response)[0]
+                        except Exception, ex:
+                            err('  Bad answer: ' + response)
+
+                        if data is not None:
+                            self._fix(data, None if isId else orig_value)
+                            if 'nm' in data and '_id' in data:
+                                self.cacheUser[reg + "/" + data['nm']] = data
+                                self.cacheUser["ID/" + str(data['_id'])] = data
+                        elif response == '[]':
+                            self.cacheUser[cacheKey] = {}
 
             except Exception, ex:
                 err('_get_user() exception: ' + traceback.format_exc())
@@ -285,7 +293,7 @@ class _Stat(object):
 
         token = getXvmStatActiveTokenData()
         if token is None or not 'token' in token:
-            err('No valid token for XVM statistics')
+            err('No valid token for XVM statistics (id=%s)' % playerVehicleID)
             return
 
         for vehId in self.players:
@@ -301,11 +309,11 @@ class _Stat(object):
             #    requestList.append(str(pl.playerId))
             #else:
             requestList.append("%d=%d%s" % (pl.playerId, pl.vId,
-                '=%s' % token['token'].encode('ascii') if pl.vehId == playerVehicleID else ''))
+                '=%s' % '1' if pl.vehId == playerVehicleID else ''))
 
         if not requestList:
             return
-        updateRequest = ','.join(requestList)
+        updateRequest = 'stat/%s/%s' % (token['token'].encode('ascii'), ','.join(requestList))
 
         if XVM_STAT_SERVERS is None or len(XVM_STAT_SERVERS) <= 0:
             err('Cannot read statistics: no suitable server was found.')
