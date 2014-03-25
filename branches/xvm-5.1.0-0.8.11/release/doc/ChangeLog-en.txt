@@ -8,6 +8,7 @@ XVM-5.2.0-test1:
 
   [OTHER]
   * stat: changed address of the stats server (now https://stat.modxvm.com/)
+  * Main config file (xvm.xc) moved to res_mods/xvm/configs
 
 XVM-5.1.0:
   * adaptation to WoT 0.8.11

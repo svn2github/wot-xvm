@@ -17,6 +17,9 @@ class com.xvm.Defines
     // res_mods/xvm/
     public static var XVM_ROOT:String = "../../../xvm/";
 
+    // res_mods/xvm/configs/
+    public static var XVMCONF_ROOT:String = XVM_ROOT + "configs/";
+
     // res_mods/xvm/res/
     public static var XVMRES_ROOT:String = XVM_ROOT + "res/";
 
@@ -26,7 +29,7 @@ class com.xvm.Defines
     // res_mods/xvm/res/SixthSense.png
     public static var SIXTH_SENSE_IMG:String = XVMRES_ROOT + "SixthSense.png";
 
-    // res_mods/xvm/xvm.xc
+    // res_mods/xvm/configs/xvm.xc
     public static var CONFIG_FILE_NAME:String = "xvm.xc";
     // res_mods/x.x.x/gui/flash/XVM.xvmconf
     public static var CONFIG_FILE_NAME_XVMCONF:String = "XVM.xvmconf";

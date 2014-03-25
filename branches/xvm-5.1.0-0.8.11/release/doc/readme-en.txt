@@ -44,7 +44,7 @@ Content:
   2. You do not need to setup anything by default.
 
     If you want special settings, you need to rename boot config file:
-      \res_mods\xvm\xvm.xc.sample to xvm.xc
+      \res_mods\xvm\configs\xvm.xc.sample to xvm.xc
     Instructions for setting it up are inside.
 
     All possible config options you can see in

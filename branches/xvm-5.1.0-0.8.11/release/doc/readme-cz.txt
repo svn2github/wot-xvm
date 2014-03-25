@@ -45,7 +45,7 @@
 
   2.  Nemusíte nic nastavovat.
     Pokud chcete nějaké jiné, než výchozí nastavení, musíte přejmenovat výchozí soubor s nastavením
-    "\res_mods\xvm\xvm.xc.sample" na "xvm.xc" v adresáři hry.
+    "\res_mods\xvm\configs\xvm.xc.sample" na "xvm.xc" v adresáři hry.
 
     Můžete použít online editor:
       http://www.koreanrandom.com/forum/topic/1422-/#entry11316

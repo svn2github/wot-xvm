@@ -53,7 +53,7 @@ Zawartość:
   2. Standardowo nie musisz niczego zmieniać.
 
     Jeśli chcesz używać innej konfiguracji, to musisz zmienić nazwę w pliku startowym:
-      \res_mods\xvm\xvm.xc.sample do xvm.xc
+      \res_mods\xvm\configs\xvm.xc.sample do xvm.xc
     Instrukcje znajdują sie w środku pliku.
 
     Wszystkie możliwe opcje konfiguracji możesz znaleźć w:

@@ -22,6 +22,9 @@ package com.xvm
         // res_mods/xvm/
         public static const XVM_ROOT:String = "../../../xvm/";
 
+        // res_mods/xvm/
+        public static const XVMCONF_ROOT:String = XVM_ROOT + "configs/";
+
         // res_mods/xvm/res/
         public static const XVMRES_ROOT:String = XVM_ROOT + "res/";
 
@@ -34,7 +37,7 @@ package com.xvm
         // res_mods/xvm/res/SixthSense.png
         public static const SIXTH_SENSE_IMG:String = XVMRES_ROOT + "SixthSense.png";
 
-        // res_mods/xvm/xvm.xc
+        // res_mods/xvm/configs/xvm.xc
         public static const CONFIG_FILE_NAME:String = "xvm.xc";
 
         // Settings keys

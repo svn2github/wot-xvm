@@ -48,7 +48,7 @@ Contenu :
 
     Si vous voulez personnaliser votre configuration, vous devez renommer le 
     fichier de démarrage de la config :
-      \res_mods\xvm\xvm.xc.sample en xvm.xc
+      \res_mods\xvm\configs\xvm.xc.sample en xvm.xc
     Les consignes pour modifier les paramêtres sont à l'intérieur.
 
     Toutes les options de configuration sont localisées dans
