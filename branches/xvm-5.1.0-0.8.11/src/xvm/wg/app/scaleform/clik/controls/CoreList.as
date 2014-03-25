@@ -50,6 +50,8 @@ package scaleform.clik.controls
 
       protected var _newFrame:String;
 
+      public var canCleanDataProvider:Boolean = true;
+
       public var container:Sprite;
 
       override protected function initialize() : void {
@@ -528,7 +530,10 @@ package scaleform.clik.controls
       protected function cleanUpDataProvider() : void {
          if(this._dataProvider)
          {
-            this._dataProvider.cleanUp();
+            if(this.canCleanDataProvider)
+            {
+               this._dataProvider.cleanUp();
+            }
             this._dataProvider.removeEventListener(Event.CHANGE,this.handleDataChange);
             this._dataProvider = null;
          }

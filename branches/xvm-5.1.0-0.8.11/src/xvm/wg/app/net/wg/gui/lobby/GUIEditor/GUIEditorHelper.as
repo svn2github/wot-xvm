@@ -163,6 +163,7 @@ package net.wg.gui.lobby.GUIEditor
 
 }   import __AS3__.vec.Vector;
    import net.wg.gui.lobby.GUIEditor.ComponentInfoVo;
+   import net.wg.gui.lobby.GUIEditor.GUIEditorHelper;
    import net.wg.infrastructure.exceptions.ArgumentException;
    import flash.display.DisplayObjectContainer;
    import flash.display.DisplayObject;
@@ -180,11 +181,11 @@ package net.wg.gui.lobby.GUIEditor
          this._ADVANCED_CONTROLS_LINKAGES = ["AccordionUI","ViewStack","AccrodionSoundRendererUI","BigAccrodionSoundRenderer","ButtonBarEx","ClanEmblem","CounterEx","DashLine_UI","DashLine","DoubleProgressBar","FieldSet","HelpLayout","InteractiveSortingButton_UI","ModuleIconUI","moduleIconExtra","PortraitsItemRendererUI","ScalableIconButton_UI","ScalableIconWrapper_UI","ShellButton","SkillItemViewMiniUI","SkillsItemRendererUI","SmallTabButton","SortableHeaderButtonBar_UI","SortingIconLoader","TabButton","TankIcon","TextAreaSimple","vehicleTypeButtonUI"];
          this.LINKAGES = {};
          super();
-         this.LINKAGES[ComponentsInfoContainer.TYPE_SIMPLE] = this._SIMPLE_CONTROLS_LINKAGES;
-         this.LINKAGES[ComponentsInfoContainer.TYPE_STANDART] = this._CONTROLS_LINKAGES;
-         this.LINKAGES[ComponentsInfoContainer.TYPE_ADVANCED] = this._ADVANCED_CONTROLS_LINKAGES;
-         this.LINKAGES[ComponentsInfoContainer.TYPE_NON_SMART] = this._SIMPLE_CONTROLS_LINKAGES.concat(this._CONTROLS_LINKAGES).concat(this._ADVANCED_CONTROLS_LINKAGES);
-         this.LINKAGES[ComponentsInfoContainer.TYPE_SMART] = [];
+         this.LINKAGES[GUIEditorHelper.TYPE_SIMPLE] = this._SIMPLE_CONTROLS_LINKAGES;
+         this.LINKAGES[GUIEditorHelper.TYPE_STANDART] = this._CONTROLS_LINKAGES;
+         this.LINKAGES[GUIEditorHelper.TYPE_ADVANCED] = this._ADVANCED_CONTROLS_LINKAGES;
+         this.LINKAGES[GUIEditorHelper.TYPE_NON_SMART] = this._SIMPLE_CONTROLS_LINKAGES.concat(this._CONTROLS_LINKAGES).concat(this._ADVANCED_CONTROLS_LINKAGES);
+         this.LINKAGES[GUIEditorHelper.TYPE_SMART] = [];
          for (_loc1_ in this.LINKAGES)
          {
             this._information[_loc1_] = this.createComponentsInfoByType(_loc1_);
@@ -215,16 +216,16 @@ package net.wg.gui.lobby.GUIEditor
       public function getComponentsList(param1:String) : Vector.<ComponentInfoVo> {
          switch(param1)
          {
-            case ComponentsInfoContainer.TYPE_ALL:
+            case GUIEditorHelper.TYPE_ALL:
                this.updateSmartControls(App.stage);
-               return this._information[ComponentsInfoContainer.TYPE_NON_SMART].concat(this._information[ComponentsInfoContainer.TYPE_SMART]);
-            case ComponentsInfoContainer.TYPE_SMART:
+               return this._information[GUIEditorHelper.TYPE_NON_SMART].concat(this._information[GUIEditorHelper.TYPE_SMART]);
+            case GUIEditorHelper.TYPE_SMART:
                this.updateSmartControls(App.stage);
-               return this._information[ComponentsInfoContainer.TYPE_SMART];
-            case ComponentsInfoContainer.TYPE_SIMPLE:
-            case ComponentsInfoContainer.TYPE_STANDART:
-            case ComponentsInfoContainer.TYPE_ADVANCED:
-            case ComponentsInfoContainer.TYPE_NON_SMART:
+               return this._information[GUIEditorHelper.TYPE_SMART];
+            case GUIEditorHelper.TYPE_SIMPLE:
+            case GUIEditorHelper.TYPE_STANDART:
+            case GUIEditorHelper.TYPE_ADVANCED:
+            case GUIEditorHelper.TYPE_NON_SMART:
                return this._information[param1];
             default:
                throw new ArgumentException("Unknown components type: " + param1);
@@ -241,10 +242,10 @@ package net.wg.gui.lobby.GUIEditor
             _loc4_ = getQualifiedClassName(_loc3_);
             if(_loc4_.indexOf(".app.") == -1)
             {
-               if(this.LINKAGES[ComponentsInfoContainer.TYPE_NON_SMART].indexOf(_loc4_) == -1 && this.LINKAGES[ComponentsInfoContainer.TYPE_SMART].indexOf(_loc4_) == -1)
+               if(this.LINKAGES[GUIEditorHelper.TYPE_NON_SMART].indexOf(_loc4_) == -1 && this.LINKAGES[GUIEditorHelper.TYPE_SMART].indexOf(_loc4_) == -1)
                {
-                  this._information[ComponentsInfoContainer.TYPE_SMART].push(new ComponentInfoVo(_loc4_));
-                  this.LINKAGES[ComponentsInfoContainer.TYPE_SMART].push(_loc4_);
+                  this._information[GUIEditorHelper.TYPE_SMART].push(new ComponentInfoVo(_loc4_));
+                  this.LINKAGES[GUIEditorHelper.TYPE_SMART].push(_loc4_);
                }
             }
             if(_loc3_  is  DisplayObjectContainer)

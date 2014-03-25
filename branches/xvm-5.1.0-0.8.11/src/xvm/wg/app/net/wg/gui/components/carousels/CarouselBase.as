@@ -28,7 +28,6 @@ package net.wg.gui.components.carousels
           
       public function CarouselBase() {
          this._padding = new Padding(0);
-         this.lastCursor = Cursors.ARROW;
          super();
          this.visible = false;
       }
@@ -85,7 +84,7 @@ package net.wg.gui.components.carousels
 
       private var mouseIn:Boolean = false;
 
-      private var lastCursor:String;
+      private var lastCursor:String = "arrow";
 
       private var countFactor:int = 0;
 

@@ -125,27 +125,41 @@ package net.wg.gui.lobby.retrainCrewWindow
             this.resultIcon.icon = this.summIconText.icon = _loc1_.isGold?IconsTypes.GOLD:IconsTypes.CREDITS;
             _loc4_ = _loc1_.price;
             this.result.value = _loc4_.toString();
-            if(_loc1_.currency == IconsTypes.GOLD)
+            if(this.btnsGroup.selectedId != -1)
             {
-               _loc5_ = this.btnsGroup.operationData.gold >= _loc4_;
-               _loc3_ = this.initCrewOperationVO.tankmanCost[this.btnsGroup.selectedId].gold;
+               if(_loc1_.currency == IconsTypes.GOLD)
+               {
+                  _loc5_ = this.btnsGroup.operationData.gold >= _loc4_;
+                  _loc3_ = this.initCrewOperationVO.tankmanCost[this.btnsGroup.selectedId].gold;
+               }
+               else
+               {
+                  _loc5_ = this.btnsGroup.operationData.credits >= _loc4_;
+                  _loc3_ = this.initCrewOperationVO.tankmanCost[this.btnsGroup.selectedId].credits;
+               }
+               this.summIconText.text = _loc2_ + " x " + _loc3_;
+               this.result.valueTextColor = _loc5_?this.enough_money_color:NOT_ENOUGH_MONEY_COLOR;
+               this.result.value = _loc4_.toString();
+               this.submitBtn.enabled = _loc5_;
             }
-            else
-            {
-               _loc5_ = this.btnsGroup.operationData.credits >= _loc4_;
-               _loc3_ = this.initCrewOperationVO.tankmanCost[this.btnsGroup.selectedId].credits;
-            }
-            this.summIconText.text = _loc2_ + " x " + _loc3_;
-            this.result.valueTextColor = _loc5_?this.enough_money_color:NOT_ENOUGH_MONEY_COLOR;
-            this.result.value = _loc4_.toString();
-            this.submitBtn.enabled = _loc5_;
          }
       }
 
       private function btnsGroupChangeHandler(param1:IndexEvent) : void {
-         var _loc2_:Object = changeRetrainTypeS(param1.index);
-         this.initCrewVO = new RetrainCrewBlockVO(_loc2_);
-         invalidate(CREW_BLOCK_INVALID);
+         var _loc2_:Object = null;
+         if(param1.index != -1)
+         {
+            _loc2_ = changeRetrainTypeS(param1.index);
+            this.initCrewVO = new RetrainCrewBlockVO(_loc2_);
+            invalidate(CREW_BLOCK_INVALID);
+         }
+         else
+         {
+            this.summIconText.text = "0 x 0";
+            this.result.valueTextColor = this.enough_money_color;
+            this.result.value = "0";
+            this.submitBtn.enabled = false;
+         }
       }
 
       private function groupResizeHandler(param1:Event) : void {
