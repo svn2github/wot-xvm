@@ -58,11 +58,11 @@ def _getXvmStatTokenData():
         e = tdata2['expires_at']/1000
         days_left = int((e - s) / 86400)
         if days_left > 0:
-            msg += '{{l10n:token/days_left}}:<tab/><font color="#eeeeee">%d</font>\n' % days_left
+            msg += '{{l10n:token/days_left}}\n' % days_left
         else:
             hours_left = int((e - s) / 3600)
-            msg += '{{l10n:token/hours_left}}:<tab/><font color="#ffff00">%d</font>\n' % hours_left
-        msg += '{{l10n:token/cnt}}:<tab/><font color="#eeeeee">%d</font>' % tdata2['cnt']
+            msg += '{{l10n:token/hours_left}}\n' % hours_left
+        msg += '{{l10n:token/cnt}}' % tdata2['cnt']
     else:
         type = SystemMessages.SM_TYPE.Error
         msg += '{{l10n:token/unknown_status}}\n%s' % json.dumps(tdata2)
