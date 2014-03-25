@@ -8,7 +8,10 @@ XVM-5.2.0-test1:
 
   [ДРУГОЕ]
   * stat: изменен адрес сервера статистики (теперь https://stat.modxvm.com/ )
-  * Основной файл конфига (xvm.xc) перемещен в res_mods/xvm/configs
+  * основной файл конфига (xvm.xc) перемещен в res_mods/xvm/configs
+  * опция battle/useStandardMarkers перенесена в markers/useStandardMarkers
+  * опция battle/removePanelsModeSwitcher перенесена в playersPanel/removePanelsModeSwitcher
+  * версия конфига увеличена до 5.0.2
 
 XVM-5.1.0:
   * адаптация к WoT 0.8.11

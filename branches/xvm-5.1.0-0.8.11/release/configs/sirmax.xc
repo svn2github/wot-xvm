@@ -1,5 +1,5 @@
 {
-  "configVersion": "5.0.0",
+  "configVersion": "5.0.2",
   "def": {
     //"standardMarkers": true,
     "standardMarkers": false,
@@ -77,9 +77,7 @@
   "battle": {
     "mirroredVehicleIcons": false,
     "showPostmortemTips": false,
-    "removePanelsModeSwitcher": true,
     "highlightVehicleIcon": false,
-    "useStandardMarkers": ${"def.standardMarkers"},
     "clanIconsFolder": "clanicons",
     "elements": ${"elements"}
   },
@@ -126,6 +124,7 @@
     "alpha": 50,
     "initialMode": "short",
     "removeSquadIcon": true,
+    "removePanelsModeSwitcher": true,
     "clanIcon": { "show": true, "x": 4, "y": 6, "h": 16, "w": 16, "alpha": 90 },
     "medium": {
       "width": 120,
@@ -219,6 +218,7 @@
     "formatHistory": "<textformat leading='-4' tabstops='[20,50,90,150]'><font size='12'>\u00D7{{n-player}}:</font><tab>{{dmg-player}}<tab>| <font color='{{c:dmg-kind}}'>{{dmg}}</font><tab>| <font color='{{c:dmg-kind}}'>{{dmg-kind}}</font><tab>| <font color='{{c:vtype}}'>{{vehicle}} {{dead}}</font></textformat>"
   },
   "markers": {
+    "useStandardMarkers": ${"def.standardMarkers"},
     "ally": {
       "alive": {
         "normal": {

@@ -23,7 +23,7 @@
 {
   // Version of the config. Do not remove or change it unnecessarily.
   // Версия конфига. Не удаляйте и не изменяйте её без необходимости.
-  "configVersion": "5.0.0",
+  "configVersion": "5.0.2",
 
   // Version of the editor.
   // Версия редактора.
