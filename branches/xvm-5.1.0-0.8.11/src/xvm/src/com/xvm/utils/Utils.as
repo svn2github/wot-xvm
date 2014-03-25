@@ -114,7 +114,42 @@ package com.xvm.utils
             return 0;
         }
 
-        public static function safeCall(target:Object, func:Function, args:Array):*
+    /**
+     *  from  mx.utils.StringUtil;
+     *
+     *  Substitutes "{n}" tokens within the specified string
+     *  with the respective arguments passed in.
+     *
+     *  @example
+     *
+     *  var str:String = "here is some info '{0}' and {1}";
+     *  trace(StringUtil.substitute(str, 15.4, true));
+     */
+    public static function substitute(str:String, ... rest):String
+    {
+        if (str == null)
+            return '';
+
+        // Replace all of the parameters in the msg string.
+        var len:uint = rest.length;
+        var args:Array;
+        if (len == 1 && rest[0] is Array)
+        {
+            args = rest[0] as Array;
+            len = args.length;
+        }
+        else
+        {
+            args = rest;
+        }
+
+        for (var i:int = 0; i < len; i++)
+            str = str.split("{" + i + "}").join(args[i]);
+
+        return str;
+    }
+
+    public static function safeCall(target:Object, func:Function, args:Array):*
         {
             try
             {

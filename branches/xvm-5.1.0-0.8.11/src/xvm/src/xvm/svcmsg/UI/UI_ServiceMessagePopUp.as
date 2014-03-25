@@ -26,10 +26,7 @@ package xvm.svcmsg.UI
 
         override public function set data(value:Object):void
         {
-            var d:NotificationInfoVO = value as NotificationInfoVO;
-            if (d != null)
-                d.messageVO.message = Locale.get(d.messageVO.message);
-            super.data = d;
+            super.data = ServiceMessageXvmView.fixData(value as NotificationInfoVO);
         }
     }
 }

@@ -37,6 +37,13 @@ package xvm.svcmsg
 
         // PUBLIC STATIC
 
+        public static function fixData(value:NotificationInfoVO):NotificationInfoVO
+        {
+            if (value != null)
+                value.messageVO.message = Locale.get(value.messageVO.message).split("#XVM_SITE#").join('event:http://www.modxvm.com/');
+            return value;
+        }
+
         public static function onMessageLinkClick(e:TextEvent):void
         {
             //Logger.addObject(e);

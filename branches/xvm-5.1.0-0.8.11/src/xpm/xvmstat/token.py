@@ -58,17 +58,15 @@ def _getXvmStatTokenData():
         e = tdata2['expires_at']/1000
         days_left = int((e - s) / 86400)
         if days_left > 0:
-            msg += '{{l10n:token/days_left}}\n' % days_left
+            msg += '{{l10n:token/days_left:%d}}\n' % days_left
         else:
             hours_left = int((e - s) / 3600)
-            msg += '{{l10n:token/hours_left}}\n' % hours_left
-        msg += '{{l10n:token/cnt}}' % tdata2['cnt']
+            msg += '{{l10n:token/hours_left:%d}}\n' % hours_left
+        msg += '{{l10n:token/cnt:%d}}' % tdata2['cnt']
     else:
         type = SystemMessages.SM_TYPE.Error
         msg += '{{l10n:token/unknown_status}}\n%s' % json.dumps(tdata2)
     msg += '</textformat>'
-
-    msg = msg.replace('#XVM_SITE#', 'event:http://www.modxvm.com/')
 
     if _tdata2 is None or _tdata2['status'] != 'active' or tdata2 is None or tdata2['status'] != 'active':
         SystemMessages.pushMessage(msg, type)
