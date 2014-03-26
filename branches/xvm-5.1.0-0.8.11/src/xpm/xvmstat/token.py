@@ -117,14 +117,18 @@ def _getXvmStatActiveTokenData():
 
 def _getPlayerId():
     player = BigWorld.player()
-    playerId = getattr(player, 'databaseID', None)
-    if playerId is None:
-        arena = getattr(player, 'arena', None)
-        if arena is not None:
-            vData = arena.vehicles.get(player.playerVehicleID, None)
-            if vData is not None:
-                playerId = vData.get('accountDBID')
-    return playerId
+    if hasattr(player, 'databaseID'):
+        return player.databaseID
+
+    pprint(vars(player))
+    arena = getattr(player, 'arena', None)
+    if arena is not None:
+        vehID = getattr(player, 'playerVehicleID', None)
+        if vehID is not None and vehID in arena.vehicles:
+            return arena.vehicles[vehID]['accountDBID']
+
+    return None
+
 
 def _checkToken(playerId, token):
     data = None
