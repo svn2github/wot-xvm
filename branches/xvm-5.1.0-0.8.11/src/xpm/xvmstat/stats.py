@@ -49,6 +49,7 @@ from logger import *
 from gameregion import region
 from loadurl import loadUrl
 from token import getXvmStatActiveTokenData
+import utils
 
 #############################
 
@@ -296,6 +297,8 @@ class _Stat(object):
             err('No valid token for XVM statistics (id=%s)' % playerVehicleID)
             return
 
+        isReplay = utils.is_replay()
+
         for vehId in self.players:
             pl = self.players[vehId]
             cacheKey = "%d=%d" % (pl.playerId, pl.vId)
@@ -309,7 +312,7 @@ class _Stat(object):
             #    requestList.append(str(pl.playerId))
             #else:
             requestList.append("%d=%d%s" % (pl.playerId, pl.vId,
-                '=%s' % '1' if pl.vehId == playerVehicleID else ''))
+                '=1' if not isReplay and pl.vehId == playerVehicleID else ''))
 
         if not requestList:
             return

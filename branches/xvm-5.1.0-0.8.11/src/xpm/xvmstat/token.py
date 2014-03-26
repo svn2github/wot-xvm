@@ -24,6 +24,7 @@ from constants import *
 import db
 from logger import *
 from loadurl import loadUrl
+import utils
 
 _tokens = db.get('tokens', 'tokens') or dict()
 _tdata2 = None
@@ -95,7 +96,7 @@ def _getXvmStatActiveTokenData():
 
     if playerId not in _tokens:
         # fallback to the last player id if replay is running
-        if _isReplay():
+        if utils.is_replay():
             playerId = db.get('tokens', 'lastPlayerId') or None
 
     if playerId is None:
@@ -124,10 +125,6 @@ def _getPlayerId():
             if vData is not None:
                 playerId = vData.get('accountDBID')
     return playerId
-
-def _isReplay():
-    import BattleReplay
-    return BattleReplay.g_replayCtrl.isPlaying
 
 def _checkToken(playerId, token):
     data = None
