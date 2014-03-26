@@ -46,7 +46,11 @@ for file in $files
 do
         mono xvm.langmerger.exe ../../temp/en.xc.o $file $file.csv
         csv2po --progress=none --columnorder=source,target $file.csv $file.po
-        rename 's/\.xc.po$/\.po/' $file.po
+
+        filename=$(basename $file .xc)
+        mkdir -p ../../temp/$filename/
+        mv $file.po ../../temp/$filename/xvm.po
+
         rm $file
         rm $file.csv
 done

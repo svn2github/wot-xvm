@@ -3,7 +3,7 @@
 rm -rf ../../temp/
 mkdir -p ../../temp/
 cp ../../release/l10n/* ../../temp/
-files=$(find ../../temp/ -type f -name *.xc)
+files=$(find ../../temp/ -type f -name en.xc)
 
 for file in $files
 do
@@ -43,3 +43,5 @@ do
         rename 's/\.xc.pot$/\.pot/' $file.pot
         rm $file.csv
 done
+rm -rf ../../temp/*.xc
+mv ../../temp/en.pot ../../temp/xvm.pot
