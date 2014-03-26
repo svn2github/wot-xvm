@@ -23,6 +23,9 @@ class com.xvm.Defines
     // res_mods/xvm/res/
     public static var XVMRES_ROOT:String = XVM_ROOT + "res/";
 
+    // res_mods/xvm/ (for <img> tag)
+    public static var XVM_IMG_ROOT:String = "../xvm/";
+
     // res_mods/xvm/res/ (for <img> tag)
     public static var XVMRES_IMG_ROOT:String = "../xvm/res/";
 

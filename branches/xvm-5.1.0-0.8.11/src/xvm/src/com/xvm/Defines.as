@@ -31,6 +31,9 @@ package com.xvm
         // res_mods/xvm/mods/
         public static const XVMMODS_ROOT:String = XVM_ROOT + "mods/";
 
+        // res_mods/xvm/ (for <img> tag)
+        public static const XVM_IMG_ROOT:String = "../";
+
         // res_mods/xvm/res/ (for <img> tag)
         public static const XVMRES_IMG_ROOT:String = "../res/";
 
