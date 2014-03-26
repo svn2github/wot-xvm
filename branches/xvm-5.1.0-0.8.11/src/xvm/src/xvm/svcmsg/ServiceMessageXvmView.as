@@ -25,14 +25,28 @@ package xvm.svcmsg
 
         override public function onBeforePopulate(e:LifeCycleEvent):void
         {
-            if (view is LobbyPage)
-                initLobby(view as LobbyPage)
+            try
+            {
+                if (view is LobbyPage)
+                    initLobby(view as LobbyPage)
+            }
+            catch (ex:Error)
+            {
+                Logger.add(ex.getStackTrace());
+            }
         }
 
         override public function onAfterPopulate(e:LifeCycleEvent):void
         {
-            if (view is NotificationListView)
-                initNotificationList(view as NotificationListView)
+            try
+            {
+                if (view is NotificationListView)
+                    initNotificationList(view as NotificationListView)
+            }
+            catch (ex:Error)
+            {
+                Logger.add(ex.getStackTrace());
+            }
         }
 
         // PUBLIC STATIC

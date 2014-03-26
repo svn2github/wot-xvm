@@ -20,13 +20,27 @@ package xvm.svcmsg.UI
 
         override protected function configUI():void
         {
-            super.configUI();
-            this.textField.addEventListener(TextEvent.LINK, ServiceMessageXvmView.onMessageLinkClick);
+            try
+            {
+                super.configUI();
+                this.textField.addEventListener(TextEvent.LINK, ServiceMessageXvmView.onMessageLinkClick);
+            }
+            catch (ex:Error)
+            {
+                Logger.add(ex.getStackTrace());
+            }
         }
 
         override public function set data(value:Object):void
         {
-            super.data = ServiceMessageXvmView.fixData(value as NotificationInfoVO);
+            try
+            {
+                super.data = ServiceMessageXvmView.fixData(value as NotificationInfoVO);
+            }
+            catch (ex:Error)
+            {
+                Logger.add(ex.getStackTrace());
+            }
         }
     }
 }
