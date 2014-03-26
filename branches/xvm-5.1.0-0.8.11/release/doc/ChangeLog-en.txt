@@ -172,7 +172,7 @@ XVM-4.0.0:
   * new option: userInfo/inHangarFilterEnabled - enable "In hangar" check box by default
   * switch in user info window: [show] in hangar, player tanks, all tanks
   * expertPanel mod; see battle.xc
-  * cluster responce time table at login and hangar (ping);
+  * cluster response time table at login and hangar (ping);
     "pingServers" section at login.xc and  hangar.xc config files
   * hitlog: shows enemy HP left (markers which were visible) on Alt press;
     hitlog.xc: "hpLeft": "true"

@@ -31,8 +31,8 @@ package xvm.hangar.views
             initStatToken();
             hideTutorial();
 
-            //Cmd.runTest("battleResults", "276059857563541063");
-            //Cmd.runTest("battleResults", "3365207052264475");
+            //Cmd.runTest("battleResults", "17842690011533");
+            //Cmd.runTest("battleResults", "18826237522693");
             //Cmd.runTest("battleResults", "69889899666055611");
         }
 
