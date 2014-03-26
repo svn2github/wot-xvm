@@ -10,6 +10,8 @@ class wot.Minimap.view.LabelViewBuilder
     public static var TEXT_FIELD_NAME:String = "textField";
     
     private static var TF_DEPTH:Number = 100;
+	private static var TF_SIZE:Number = 10; /** Any size. Will resize anyway. */
+	private static var AUTOSIZE_MODE:String = "left";
     
     public static function createTextField(label:MovieClip):Void
     {
@@ -20,11 +22,12 @@ class wot.Minimap.view.LabelViewBuilder
         
         var offset:Point = MapConfig.unitLabelOffset(entryName, status);
 
-        var textField:TextField = label.createTextField(TEXT_FIELD_NAME, TF_DEPTH, offset.x, offset.y, 100, 40);
+        var textField:TextField = label.createTextField(TEXT_FIELD_NAME, TF_DEPTH, offset.x, offset.y, TF_SIZE, TF_SIZE);
         textField.antiAliasType = "advanced";
         textField.html = true;
         textField.multiline = true;
         textField.selectable = false;
+		textField.autoSize = AUTOSIZE_MODE;
 
         var style:TextField.StyleSheet = new TextField.StyleSheet();
         style.parseCSS(MapConfig.unitLabelCss(entryName, status));

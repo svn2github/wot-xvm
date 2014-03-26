@@ -39,6 +39,9 @@ class wot.Minimap.view.LabelPositionAdjusting
 				
             entry.labelMc._x = entry.wrapper._x;
             entry.labelMc._y = entry.wrapper._y;
+			Logger.add("entry.labelMc._height " + entry.labelMc._height);
+			Logger.add("entry.labelMc._width " + entry.labelMc._width);
+			Logger.add("");
         }
 	}
 	
