@@ -44,12 +44,20 @@ cp ../../temp/en.xc ../../temp/en.xc.o
 
 for file in $files
 do
-        mono xvm.langmerger.exe ../../temp/en.xc.o $file $file.csv
-        csv2po --progress=none --columnorder=source,target $file.csv $file.po
-
         filename=$(basename $file .xc)
         mkdir -p ../../temp/$filename/
-        mv $file.po ../../temp/$filename/xvm.po
+
+        if [[ "$file" == *"en.xc" ]];
+        then
+                cp $file $file.csv
+                csv2po --progress=none --pot --columnorder=location,source $file.csv $file.pot
+                mv $file.pot ../../temp/$filename/xvm.pot
+
+        else
+                mono xvm.langmerger.exe ../../temp/en.xc.o $file $file.csv
+                csv2po --progress=none --columnorder=source,target $file.csv $file.po
+                mv $file.po ../../temp/$filename/xvm.po
+        fi
 
         rm $file
         rm $file.csv
