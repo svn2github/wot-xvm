@@ -92,6 +92,8 @@ class wot.Minimap.Features
             mapSizeFeature();
             shapesFeatures();
         }
+		
+		labelPositionAdjusting();
     }
     
     //-- Private
@@ -164,4 +166,9 @@ class wot.Minimap.Features
             lines = new Lines(); /** Total map side distance in meters  */
         }
     }
+	
+	private function labelPositionAdjusting():Void
+    {
+		LabelPositionAdjusting.instance.init();
+	}
 }

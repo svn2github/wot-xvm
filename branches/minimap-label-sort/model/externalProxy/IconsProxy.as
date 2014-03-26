@@ -102,9 +102,7 @@ class wot.Minimap.model.externalProxy.IconsProxy
         return false;
     }
 
-    // -- Private
-
-    private static function get _icons():MovieClip
+    public static function get _icons():MovieClip
     {
         var ret:MovieClip = _root.minimap.icons;
         if (ret == null)

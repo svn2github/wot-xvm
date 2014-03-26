@@ -153,7 +153,6 @@ class wot.Minimap.MinimapEntry
         if (MapConfig.revealedEnabled)
         {
             getLabel();
-            setLabelToMimicEntryMoves();
         }
     }
     private function getLabel():Void
@@ -161,29 +160,6 @@ class wot.Minimap.MinimapEntry
         labelMc = labelsContainer.getLabel(uid, wrapper.entryName, wrapper.vehicleClass);
         if (wrapper.entryName == STATIC_ICON_BASE)
             wrapper.setEntryName(STATIC_ICON_CONTROL);
-    }
-
-    private function setLabelToMimicEntryMoves():Void
-    {
-        /**
-         * No FPS drop discovered.
-         * Okay.
-         */
-        wrapper.onEnterFrame = function()
-        {
-            /**
-             * Seldom error workaround.
-             * Wreck sometimes is placed at map center.
-             */
-            if (!this._x && !this._y)
-            {
-                return;
-            }
-
-            var entry:wot.Minimap.MinimapEntry = this.xvm_worker;
-            entry.labelMc._x = this._x;
-            entry.labelMc._y = this._y;
-        }
     }
 
     private function get isSyncProcedureInProgress():Boolean
