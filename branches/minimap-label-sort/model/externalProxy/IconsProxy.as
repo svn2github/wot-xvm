@@ -113,6 +113,7 @@ class wot.Minimap.model.externalProxy.IconsProxy
         return ret;
     }
 
+	// TODO Optimize? Get rid of?
     public static function get _allEntries():Array
     {
         var children:Array = Utils.getChildrenOf(_icons, false);

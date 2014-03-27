@@ -3,6 +3,7 @@ import wot.Minimap.model.externalProxy.*;
 import wot.Minimap.model.mapSize.MapSizeModel;
 import wot.Minimap.shapes.*;
 import wot.Minimap.view.*;
+import wot.Minimap.view.labelsPosAdjust.LabelPositionAdjusting;
 
 class wot.Minimap.Features
 {

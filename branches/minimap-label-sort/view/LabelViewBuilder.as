@@ -28,6 +28,8 @@ class wot.Minimap.view.LabelViewBuilder
         textField.multiline = true;
         textField.selectable = false;
 		textField.autoSize = AUTOSIZE_MODE;
+		textField.border = true;
+		textField.borderColor = 0xFFFFFF;
 
         var style:TextField.StyleSheet = new TextField.StyleSheet();
         style.parseCSS(MapConfig.unitLabelCss(entryName, status));

@@ -1,3 +1,4 @@
+import wot.Minimap.view.labelsPosAdjust.LabelPositionAdjusting;
 import com.xvm.Logger;
 import com.xvm.AutoUpdate;
 import com.xvm.GlobalEventDispatcher;
@@ -68,6 +69,7 @@ class wot.Minimap.view.LabelsContainer
 
         var depth:Number = getFreeDepth(ALIVE_DEPTH_START);
         var labelMc:MovieClip = holderMc.createEmptyMovieClip("" + uid, depth);
+		LabelPositionAdjusting.instance.setInitialOffset(labelMc);
 
         /**
          * References to labelMc properties.

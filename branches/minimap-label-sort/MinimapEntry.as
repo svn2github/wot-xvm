@@ -155,6 +155,7 @@ class wot.Minimap.MinimapEntry
             getLabel();
         }
     }
+	
     private function getLabel():Void
     {
         labelMc = labelsContainer.getLabel(uid, wrapper.entryName, wrapper.vehicleClass);
