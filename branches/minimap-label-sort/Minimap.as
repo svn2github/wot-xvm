@@ -1,3 +1,4 @@
+import wot.Minimap.view.labelsPosAdjust.LabelPositionAdjusting;
 import com.xvm.*;
 import wot.Minimap.*;
 import wot.Minimap.model.externalProxy.MapConfig;
@@ -123,7 +124,9 @@ class wot.Minimap.Minimap
     /** Suitable for manual debug tracing by pushing "=" button */
     function sizeUpImpl()
     {
-        base.sizeUp();
+        //base.sizeUp();
+		Logger.add("sizeUpImpl");
+		LabelPositionAdjusting.instance.setArtificialOffset();
     }
 
     // -- Private

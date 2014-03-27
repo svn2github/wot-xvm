@@ -1,22 +1,18 @@
 import wot.Minimap.MinimapProxy;
 import com.xvm.Logger;
+import wot.Minimap.model.externalProxy.IconsProxy;
+import wot.Minimap.view.labelsPosAdjust.LabelOffsetUpdate;
 import wot.Minimap.MinimapEntry;
-import wot.Minimap.model.externalProxy.IconsProxy
 
 class wot.Minimap.view.labelsPosAdjust.Util
-{
-	public static function isTheSameEntry(entry1:MovieClip, entry2:MovieClip):Boolean
-	{
-		return entry1.uid == entry2.uid;
-	}	
-	
-	public static function getApplicableEntry(icon:MovieClip):MovieClip
+{	
+	public static function getApplicableEntry(icon:MovieClip):MinimapEntry
 	{
 		/** Not a player icon */
 		if (!icon.player)
 			return null;
 			
-		var entry:MovieClip = icon.xvm_worker;
+		var entry:MinimapEntry = icon.xvm_worker;
 		
 		/**
 		 * Seldom error workaround.
@@ -36,36 +32,46 @@ class wot.Minimap.view.labelsPosAdjust.Util
 		return entry;
 	}
 	
-	public static function centersDistance(label1:MovieClip, label2:MovieClip):Number
+	public static function isTheSameEntry(entry1:MinimapEntry, entry2:MinimapEntry):Boolean
 	{
-		var xCenter1:Number = Util.getXCenter(label1);
-		var yCenter1:Number = Util.getYCenter(label1);
-		var xCenter2:Number = Util.getXCenter(label2);
-		var yCenter2:Number = Util.getYCenter(label2);
+		return entry1.uid == entry2.uid;
+	}
+	
+	public static function centersDistance(entry1:MinimapEntry, entry2:MinimapEntry):Number
+	{
+		var xCenter1:Number = Util.getXCenter(entry1);
+		var yCenter1:Number = Util.getYCenter(entry1);
+		var xCenter2:Number = Util.getXCenter(entry2);
+		var yCenter2:Number = Util.getYCenter(entry2);
 		var distance:Number = Math.pow(xCenter2 - xCenter1, 2) +
 							  Math.pow(yCenter2 - yCenter1, 2);
 		return Math.sqrt(distance);
 	}
 	
-	/** Is label1 below label2? */
-	public static function isBelow(label1:MovieClip, label2:MovieClip):Boolean
-	{
-		return label1._y > label2._y;
+	/**
+	 * Is label1 below label2?.
+	 * Label position = entry position + label offset.
+	 */
+	public static function isBelow(entry1:MinimapEntry, entry2:MinimapEntry):Boolean {
+		return getCurrentY(entry1) > getCurrentY(entry2);
+	}
+	public static function isOnTheRight(entry1:MinimapEntry, entry2:MinimapEntry):Boolean	{
+		return getCurrentX(entry1) > getCurrentX(entry2);
 	}
 	
-	/** Is label1 below label2? */
-	public static function isOnTheRight(label1:MovieClip, label2:MovieClip):Boolean
-	{
-		return label1._x > label2._x;
+	
+	private static function getXCenter(entry:MinimapEntry):Number {
+		return getCurrentX(entry) + entry.labelMc._width;
+	}
+	private static function getYCenter(entry:MinimapEntry):Number {
+		return getCurrentY(entry) + entry.labelMc._height;
 	}
 	
-	private static function getXCenter(label:MovieClip):Number
-	{
-		return label._x + label._width / 2;
-	}
 	
-	private static function getYCenter(label:MovieClip):Number
-	{
-		return label._y + label._height / 2;
+	private static function getCurrentX(entry:MinimapEntry):Number	{
+		return entry.wrapper._x + entry.labelMc[LabelOffsetUpdate.X_OFFSET];
+	}
+	private static function getCurrentY(entry:MinimapEntry):Number	{
+		return entry.wrapper._y + entry.labelMc[LabelOffsetUpdate.Y_OFFSET];
 	}
 }
