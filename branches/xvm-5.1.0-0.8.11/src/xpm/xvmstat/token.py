@@ -120,13 +120,15 @@ def _getPlayerId():
     if hasattr(player, 'databaseID'):
         return player.databaseID
 
-    pprint(vars(player))
     arena = getattr(player, 'arena', None)
     if arena is not None:
         vehID = getattr(player, 'playerVehicleID', None)
         if vehID is not None and vehID in arena.vehicles:
             return arena.vehicles[vehID]['accountDBID']
 
+    print('===================')
+    pprint(vars(player))
+    print('===================')
     return None
 
 
