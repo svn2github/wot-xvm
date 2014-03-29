@@ -126,9 +126,9 @@ def _getPlayerId():
         if vehID is not None and vehID in arena.vehicles:
             return arena.vehicles[vehID]['accountDBID']
 
-    print('===================')
-    pprint(vars(player))
-    print('===================')
+    #print('===================')
+    #pprint(vars(player))
+    #print('===================')
     return None
 
 

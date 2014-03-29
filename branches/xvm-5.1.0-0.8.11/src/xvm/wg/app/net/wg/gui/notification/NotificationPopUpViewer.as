@@ -10,7 +10,7 @@ package net.wg.gui.notification
 
    public class NotificationPopUpViewer extends NotificationPopUpViewerMeta implements INotificationPopUpViewerMeta
    {
-          
+
       public function NotificationPopUpViewer(param1:Class) {
          this.layoutInfo = new LayoutInfoVO(
             {
@@ -43,7 +43,7 @@ package net.wg.gui.notification
 
       private var maxAvailaleMessagesCount:uint = 5;
 
-      private var popupClass:Class;
+      public var popupClass:Class;
 
       private var animationSpeed:Number;
 

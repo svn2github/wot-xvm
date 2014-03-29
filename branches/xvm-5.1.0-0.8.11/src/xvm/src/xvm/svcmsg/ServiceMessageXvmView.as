@@ -23,25 +23,14 @@ package xvm.svcmsg
             super(view);
         }
 
-        override public function onBeforePopulate(e:LifeCycleEvent):void
-        {
-            try
-            {
-                if (view is LobbyPage)
-                    initLobby(view as LobbyPage)
-            }
-            catch (ex:Error)
-            {
-                Logger.add(ex.getStackTrace());
-            }
-        }
-
         override public function onAfterPopulate(e:LifeCycleEvent):void
         {
             try
             {
+                if (view is LobbyPage)
+                    initLobby(view as LobbyPage);
                 if (view is NotificationListView)
-                    initNotificationList(view as NotificationListView)
+                    initNotificationList(view as NotificationListView);
             }
             catch (ex:Error)
             {
@@ -69,20 +58,7 @@ package xvm.svcmsg
 
         private function initLobby(v:LobbyPage):void
         {
-            //if (!v.notificationPopupViewer)
-            {
-                if (v.notificationPopupViewer)
-                {
-                    v.unregisterComponent(Aliases.SYSTEM_MESSAGES);
-                    v.removeChild(v.notificationPopupViewer);
-                }
-                v.notificationPopupViewer = new NotificationPopUpViewer(UI_ServiceMessagePopUp);
-                v.addChild(v.notificationPopupViewer);
-                v.registerComponent(v.notificationPopupViewer, Aliases.SYSTEM_MESSAGES);
-            //} else {
-            //    Logger.add("already");
-            //    Logger.addObject(v.notificationPopupViewer);
-            }
+            v.notificationPopupViewer.popupClass = UI_ServiceMessagePopUp;
         }
 
         private function initNotificationList(v:NotificationListView):void

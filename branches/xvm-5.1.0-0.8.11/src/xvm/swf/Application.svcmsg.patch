@@ -1,0 +1,30 @@
+diff -Naur Application.orig-0.orig/net/wg/gui/notification/NotificationPopUpViewer.class.asasm Application.orig-0/net/wg/gui/notification/NotificationPopUpViewer.class.asasm
+--- Application.orig-0.orig/net/wg/gui/notification/NotificationPopUpViewer.class.asasm	2014-03-29 12:44:38.704655300 +0200
++++ Application.orig-0/net/wg/gui/notification/NotificationPopUpViewer.class.asasm	2014-03-29 12:59:58.996634900 +0200
+@@ -54,7 +54,7 @@
+ 
+      getlocal0
+      getlocal1
+-     initproperty        QName(PrivateNamespace(null, "net.wg.gui.notification:NotificationPopUpViewer/instance#0"), "popupClass")
++     initproperty        QName(PackageNamespace(""), "popupClass")
+ 
+      returnvoid
+     end ; code
+@@ -69,7 +69,7 @@
+   trait slot QName(PrivateNamespace(null, "net.wg.gui.notification:NotificationPopUpViewer/instance#0"), "isMessagesCountInvalid") type QName(PackageNamespace(""), "Boolean") end
+   trait slot QName(PrivateNamespace(null, "net.wg.gui.notification:NotificationPopUpViewer/instance#0"), "arrangeLayout") type QName(PackageNamespace(""), "Boolean") end
+   trait slot QName(PrivateNamespace(null, "net.wg.gui.notification:NotificationPopUpViewer/instance#0"), "maxAvailaleMessagesCount") type QName(PackageNamespace(""), "uint") value Integer(5) end
+-  trait slot QName(PrivateNamespace(null, "net.wg.gui.notification:NotificationPopUpViewer/instance#0"), "popupClass") type QName(PackageNamespace(""), "Class") end
++  trait slot QName(PackageNamespace(""), "popupClass") type QName(PackageNamespace(""), "Class") end
+   trait slot QName(PrivateNamespace(null, "net.wg.gui.notification:NotificationPopUpViewer/instance#0"), "animationSpeed") type QName(PackageNamespace(""), "Number") end
+   trait method QName(ProtectedNamespace("net.wg.gui.notification:NotificationPopUpViewer"), "draw") flag OVERRIDE
+    method
+@@ -168,7 +168,7 @@
+       ifnlt               L135
+ 
+       getlocal0
+-      constructprop       QName(PrivateNamespace(null, "net.wg.gui.notification:NotificationPopUpViewer/instance#0"), "popupClass"), 0
++      constructprop       QName(PackageNamespace(""), "popupClass"), 0
+       coerce              QName(PackageNamespace("net.wg.gui.notification"), "ServiceMessagePopUp")
+       dup
+       setlocal            5

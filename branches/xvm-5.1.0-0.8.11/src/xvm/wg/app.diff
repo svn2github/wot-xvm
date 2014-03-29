@@ -251,6 +251,18 @@ diff -Naur app.orig/net/wg/gui/login/impl/LoginPage.as app/net/wg/gui/login/impl
  
        private static const SPARK_QUANTITY:uint = 150;
  
+diff -Naur app.orig/net/wg/gui/notification/NotificationPopUpViewer.as app/net/wg/gui/notification/NotificationPopUpViewer.as
+--- app.orig/net/wg/gui/notification/NotificationPopUpViewer.as	2014-02-01 11:33:30.949586300 +0200
++++ app/net/wg/gui/notification/NotificationPopUpViewer.as	2014-03-29 12:53:50.643615900 +0200
+@@ -43,7 +43,7 @@
+ 
+       private var maxAvailaleMessagesCount:uint = 5;
+ 
+-      private var popupClass:Class;
++      public var popupClass:Class;
+ 
+       private var animationSpeed:Number;
+ 
 diff -Naur app.orig/net/wg/gui/prebattle/squad/SquadItemRenderer.as app/net/wg/gui/prebattle/squad/SquadItemRenderer.as
 --- app.orig/net/wg/gui/prebattle/squad/SquadItemRenderer.as	2014-02-01 11:30:39.116291400 +0200
 +++ app/net/wg/gui/prebattle/squad/SquadItemRenderer.as	2014-02-01 11:58:52.369977800 +0200
