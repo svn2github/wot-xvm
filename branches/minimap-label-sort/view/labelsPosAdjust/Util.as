@@ -48,30 +48,20 @@ class wot.Minimap.view.labelsPosAdjust.Util
 		return Math.sqrt(distance);
 	}
 	
-	/**
-	 * Is label1 below label2?.
-	 * Label position = entry position + label offset.
-	 */
 	public static function isBelow(entry1:MinimapEntry, entry2:MinimapEntry):Boolean {
-		return getCurrentY(entry1) > getCurrentY(entry2);
-	}
-	public static function isOnTheRight(entry1:MinimapEntry, entry2:MinimapEntry):Boolean	{
-		return getCurrentX(entry1) > getCurrentX(entry2);
+		return getCurrentLabelY(entry1) > getCurrentLabelY(entry2);
 	}
 	
 	
 	private static function getXCenter(entry:MinimapEntry):Number {
-		return getCurrentX(entry) + entry.labelMc._width;
+		return entry.wrapper._x;
 	}
 	private static function getYCenter(entry:MinimapEntry):Number {
-		return getCurrentY(entry) + entry.labelMc._height;
+		return getCurrentLabelY(entry) + entry.labelMc._height / 2;
 	}
 	
 	
-	private static function getCurrentX(entry:MinimapEntry):Number	{
-		return entry.wrapper._x + entry.labelMc[LabelOffsetUpdate.X_OFFSET];
-	}
-	private static function getCurrentY(entry:MinimapEntry):Number	{
+	public static function getCurrentLabelY(entry:MinimapEntry):Number	{
 		return entry.wrapper._y + entry.labelMc[LabelOffsetUpdate.Y_OFFSET];
 	}
 }

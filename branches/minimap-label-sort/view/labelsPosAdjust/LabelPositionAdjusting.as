@@ -1,3 +1,6 @@
+import com.xvm.*;
+import wot.Minimap.*;
+import wot.PlayersPanel.*;
 import wot.Minimap.MinimapProxy;
 import com.xvm.Logger;
 import wot.Minimap.MinimapEntry;
@@ -14,16 +17,19 @@ class wot.Minimap.view.labelsPosAdjust.LabelPositionAdjusting
 	
 	public function init():Void
 	{
+		GlobalEventDispatcher.addEventListener(AutoUpdate.UPDATE_BY_TIMER_EVENT, this, updateAllLabelPositions);
+		/**
 		icons.onEnterFrame = function()
 		{
 			LabelPositionAdjusting.instance.updateAllLabelPositions();
 		}
+		*/
 	}
 	
 	public function setInitialOffset(labelMc:MovieClip):Void
 	{
 		labelMc[LabelOffsetUpdate.Y_OFFSET] = LabelOffsetUpdate.INITIAL_OFFSET;
-		labelMc[LabelOffsetUpdate.X_OFFSET] = LabelOffsetUpdate.INITIAL_OFFSET;
+		//labelMc[LabelOffsetUpdate.X_OFFSET] = LabelOffsetUpdate.INITIAL_OFFSET;
 	}
 	
 	public function setArtificialOffset():Void
@@ -36,11 +42,11 @@ class wot.Minimap.view.labelsPosAdjust.LabelPositionAdjusting
 			if (entry == null)
 				continue;
 				
-			entry.labelMc[LabelOffsetUpdate.Y_OFFSET] = -15;
-			entry.labelMc[LabelOffsetUpdate.X_OFFSET] = -15;
+			entry.labelMc[LabelOffsetUpdate.Y_OFFSET] += 15;
 		}
 	}
 	
+	/** Update labels positions by positions of label owners and offset */
 	public function updateAllLabelPositions():Void
 	{
         for (var i in icons)
@@ -50,14 +56,14 @@ class wot.Minimap.view.labelsPosAdjust.LabelPositionAdjusting
 			if (entry == null)
 				continue;
 				
-			LabelOffsetUpdate.updateEntry(entry);
-			applyOffset(entry);
+			//LabelOffsetUpdate.updateEntry(entry);
+			update(entry);
         }
 	}
 	
-	private function applyOffset(entry:MinimapEntry):Void
+	private function update(entry:MinimapEntry):Void
 	{
-		entry.labelMc._x = entry.wrapper._x + entry.labelMc[LabelOffsetUpdate.X_OFFSET];
+		entry.labelMc._x = entry.wrapper._x;
 		entry.labelMc._y = entry.wrapper._y + entry.labelMc[LabelOffsetUpdate.Y_OFFSET];
 	}
 	
