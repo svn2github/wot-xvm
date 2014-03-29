@@ -1,10 +1,33 @@
 #!/bin/bash
 
-rm -rf ../../release/l10n/*
-mkdir -p ../../release/l10n/
-cp -r ../../temp/* ../../release/l10n/
+# XVM Gettext to JSON localization files converter
+# Part of XVM translation server
+# Do not change anything if you are not sure in it
 
-files=$(find ../../release/l10n/ -type f -name *.po -o -name *.pot)
+# Author : Michael Pavlyshko <mixail@by-reservation.com>
+# License: GPLv3
+
+# Usage: ./po2json.sh <source dir> <target dir>
+
+if test -z "$1" 
+    then
+        sdir='../../temp'
+    else
+        sdir="$sdir"
+fi
+
+if test -z "$2" 
+    then
+        tdir='../../release/l10n'
+    else
+        tdir="$2"
+fi
+
+rm -rf $tdir/*
+mkdir -p $tdir/
+cp -r $sdir/* $tdir/
+
+files=$(find $tdir/ -type f -name *.po -o -name *.pot)
 
 for file in $files
 do
@@ -45,7 +68,7 @@ EOF
 
         filepath=$(dirname $file)
         filename=$(basename $filepath)
-        mv $file.xc ../../release/l10n/"$filename".xc
+        mv $file.xc $tdir/"$filename".xc
         rm $file
         rm -rf $filepath
 done

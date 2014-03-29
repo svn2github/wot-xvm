@@ -1,9 +1,32 @@
 #!/bin/bash
 
-rm -rf ../../temp/
-mkdir -p ../../temp/
-cp ../../release/l10n/* ../../temp/
-files=$(find ../../temp/ -type f -name *.xc)
+# XVM JSON to Gettext localization files converter
+# Part of XVM translation server
+# Do not change anything if you are not sure in it
+
+# Author : Michael Pavlyshko <mixail@by-reservation.com>
+# License: GPLv3
+
+# Usage: ./json2po.sh <source dir> <target dir>
+
+if test -z "$1" 
+    then
+        sdir='../../release/l10n'
+    else
+        sdir="$1"
+fi
+
+if test -z "$2" 
+    then
+        tdir='../../temp'
+    else
+        tdir="$2"
+fi
+
+rm -rf $tdir/
+mkdir -p $tdir/
+cp $sdir/* $tdir/
+files=$(find $tdir/ -type f -name *.xc)
 
 for file in $files
 do
@@ -40,27 +63,27 @@ do
         sed -i 's|": "|";"|g' $file 
 done
 
-cp ../../temp/en.xc ../../temp/en.xc.o
+cp $tdir/en.xc $tdir/en.xc.o
 
 for file in $files
 do
         filename=$(basename $file .xc)
-        mkdir -p ../../temp/$filename/
+        mkdir -p $tdir/$filename/
 
         if [[ "$file" == *"en.xc" ]];
         then
                 cp $file $file.csv
                 csv2po --progress=none --pot --columnorder=location,source $file.csv $file.pot
-                mv $file.pot ../../temp/$filename/xvm.pot
+                mv $file.pot $tdir/$filename/xvm.pot
 
         else
-                mono xvm.langmerger.exe ../../temp/en.xc.o $file $file.csv
+                mono xvm.langmerger.exe $tdir/en.xc.o $file $file.csv
                 csv2po --progress=none --columnorder=source,target $file.csv $file.po
-                mv $file.po ../../temp/$filename/xvm.po
+                mv $file.po $tdir/$filename/xvm.po
         fi
 
         rm $file
         rm $file.csv
 done
  
-rm ../../temp/en.xc.o
+rm $tdir/en.xc.o

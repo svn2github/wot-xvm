@@ -6,4 +6,6 @@ Requires:
  * Sed http://sed.sourceforge.net/
  * Translate Toolkit http://toolkit.translatehouse.org/
 
-XVM.langmerger source code: https://bitbucket.org/xvm/xvm.langmerger
+Sources:
+ * converters https://bitbucket.org/xvm/xvm.l10n.converter
+ * merger https://bitbucket.org/xvm/xvm.l10n.merger
