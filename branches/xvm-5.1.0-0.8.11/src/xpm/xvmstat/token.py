@@ -55,7 +55,7 @@ def _getXvmStatTokenData():
     elif tdata2['status'] == 'active':
         type = SystemMessages.SM_TYPE.Information
         msg += '{{l10n:token/active}}\n'
-        s = tdata2['start_at']/1000
+        s = _get_current_unix_time()
         e = tdata2['expires_at']/1000
         days_left = int((e - s) / 86400)
         if days_left > 0:
@@ -106,7 +106,7 @@ def _getXvmStatActiveTokenData():
     try:
         if playerId in _tokens:
             if _tokens[playerId]['status'] == 'active':
-                if long(_tokens[playerId]['expires_at'])/1000 > int(time.mktime(datetime.datetime.utcnow().timetuple())):
+                if long(_tokens[playerId]['expires_at'])/1000 > _get_current_unix_time():
                     token = _tokens[playerId]
     except:
         token = None
@@ -114,6 +114,8 @@ def _getXvmStatActiveTokenData():
     #log(token)
     return token
 
+def _get_current_unix_time():
+    return int(time.mktime(datetime.datetime.utcnow().timetuple()))
 
 def _getPlayerId():
     player = BigWorld.player()
