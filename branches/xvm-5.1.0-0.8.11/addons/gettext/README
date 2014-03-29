@@ -2,6 +2,7 @@ Different scripts for XVM localization files json<-->gettext conversion
 
 Requires:
  * Bash https://www.gnu.org/software/bash/bash.html
+ * Dos2Unix http://waterlan.home.xs4all.nl/dos2unix.html
  * Mono http://mono-project.com/
  * Sed http://sed.sourceforge.net/
  * Translate Toolkit http://toolkit.translatehouse.org/

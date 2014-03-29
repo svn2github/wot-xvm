@@ -40,6 +40,10 @@ do
                 rm $file.po
         fi
 
+        #CRLF -> LF
+        dos2unix --quiet $file    
+        sed -i 's/\r$//' $file  
+
         #del first line
         sed -i '1d' $file.xc
 
@@ -49,6 +53,10 @@ do
         #add trailing ,
         sed -i 's/.$/,/' $file.xc
         sed -i '$s/,$//' $file.xc
+
+        #add leading spaces
+        sed -i 's/^/    /' $file.xc
+
         
         # unescape \n
         sed -i 's/\\\\/\\/g' $file.xc   
