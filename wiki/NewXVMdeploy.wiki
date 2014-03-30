@@ -1,63 +1,65 @@
-=_Draft_=
-=Instructions for deploying new XVM release to download page=
-
-==Build==
------
-1) Update version number at com.xvm.Defines {
-  public static var XVM_VERSION:String = "4.1.1";
------
-2.1) Update version number at changelog files.
-
-2.2) Check changelog contents.
-
-\xvm\release\doc\ChangeLog-en.txt
-\xvm\release\doc\ChangeLog-ru.txt
------
-3) Update version + info at
-
-https://code.google.com/p/wot-xvm/wiki/ReleaseInfo?ts=1362224570&updated=ReleaseInfo
-
-XVM shows new version info while battle is loading in case client version is outdated.
-
-Edit rights needed.
------
-===If WoT updated flash files. Minor or major WoT update===
------
-4.1) Unzip original WoT file at WoT\res\packages\gui.
-4.2) Overwrite xvm\src\xvm\swf\orig files with new ones
-4.3) Run 1.make-patched-swfs.bat at xvm\src\xvm\swf at cygwin programm. diff programm is required.
------
-===For new WoT major update===
------
-5.1) Open xvm\src\vehicle-bank-parser project in Microsoft Visual C# 2010 Express. Not 2012.
+===_Draft_===
+=XVM release deploying=
 
 
-5.2) Right click on VehicleBankParser. Properties. Settings. Edit settings according to your paths.
+== Building ==
+  * Increase XVM version
+    * Update version number at `/src/xvm/src/com/xvm/Defines.as` (`public static const XVM_VERSION:String`)
+    * Update version number at `/release/doc/ChangeLog-*.txt` files
+    * Update content content in changelog files according new feautures and bugfixes
+    * Update version number at [https://code.google.com/p/wot-xvm/wiki/ReleaseInfo ReleaseInfo] wiki page
 
+  * Update Vehicle Data (for WoT major updates)
+    # Open `/src/vehicle-bank-parser/VehicleBankParser.sln` project in Microsoft Visual C# 2010 Express. Not 2012.
+    # Right click on `VehicleBankParser`. Properties. Settings. Edit settings according to your paths.
+    # Run project.
+    # This will generate vehicles file. It will contain info for all vehicles hp, names, levels etc including new vehicles released with new WoT version
 
-5.3) Run project.
+  * Update map sizes (for major WoT updates)
+    # Define size and system name at `wot.Minimap.model.mapSize.MapInfoData`
 
-6) Run all update scripts at xvm\addons\clanicons
+  * Update and patch WG.net AS2 .swf files
+    # Unzip original WoT file `[WoT]/res/packages/gui.pkg` (you can use 7-zip for it)
+    # Overwrite /src/xvm-as2/swf/orig files with new ones from `scaleform` folder
+    # Run 1.make-patched-swfs.bat at `/src/xvm-as2/swf/` at cygwin. Diffutils and patch must be installed.'
 
------
-This will generate vehicles file. It will contain info for all vehicles hp, names, levels etc including new vehicles released with new WoT version.
------
-7) Check if there are new map released. Define size and system name at
+  * Update and patch WG.net AS3 .swf files
+    # TODO
 
-wot.Minimap.model.mapSize.MapInfoData
+  * Build AS2 Flash files
+    # Build all `.as2proj` files from `/src/xvm-as2/` folder
 
------
+  * Build AS3 Flash files
+    # Build `/src/xvm/wg.as3proj`
+    # Build `/src/xvm/xvm.as3proj`
+    # Build other files in this folder
 
-8) *Build Flash projects.*
+  * Build Python files
+    # Run `/src/spm/build-all.sh` script from Cygwin.
 
+  * Update clanicons
+    # Run all update scripts at `/addons/clanicons` folder
 
-== File hierarchy for release preparation==
-C:\Users\ilit\xvm-4.1.0>tree
-
-res_mods\0.8.7\gui\flash <- *Obtain files from xvm\bin after all Flash projects compilation*
-
-res_mods\xvm *Obtain files from xvm\release\*
-
-user configs *Manual download from http://www.koreanrandom.com/forum/forum/50-%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0
-
-res\clanicons
+== File hierarchy in archive==
+  * res_mods
+    * x.x.xx
+      * gui
+        * flash
+          * _patched Application.swf_
+        * scaleform
+          * _AS2 files_
+      * scripts
+        * _python files_
+    * xvm
+      * configs
+        * _configs_
+      * doc
+        * _readme and changelog_
+      * l10n
+        * _localization files_
+      * mods
+        * _AS3 files_
+      * res
+        * clanicons
+          * _clanicons_
+        * _6-sense image_
