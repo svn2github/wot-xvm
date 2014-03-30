@@ -1,73 +1,24 @@
 #labels l10n,contribution,Featured
 =Localizing XVM=
+
 ==English tutorial==
-To translate XVM you need:
 
-* Translate XVM language file
+  # Sign up for http://translation.by-reservation.com/
+  # Log in and open the XVM project http://translation.by-reservation.com/projects/xvm/
+  # Select the language you want to translate and start translating by clicking the "Continue translation" link
 
-  # Download [https://wot-xvm.googlecode.com/svn/trunk/release/l10n/en.xc en.xc] or [https://wot-xvm.googlecode.com/svn/trunk/release/l10n/ru.xc ru.xc]
-  # Translate downloaded file
-  # Rename the file to XX.xc, where XX - language code, which you can see in the "Languages" section of this page or in the "LANGUAGE_CODE" key of `[WOT folder]\res\text\LC_MESSAGES\settings.mo`
 
-* Send your changes to the XVM
-
-  # Send file to `xvm-l10n@by-reservation.com`
-  # Or post a link to file in this ticket https://code.google.com/p/wot-xvm/issues/detail?id=466
-  
+Notes
+  # If you know language other than English, you can specify them in your profile http://translation.by-reservation.com/accounts/edit/. This can help you in the translation. 
+  # If you are the author of unofficial localization - write to `xvm-l10n@by-reservation.com`. We will import your localization in our translation system.  
   
 ==Русская инструкция ==
-Для перевода XVM нужно:
 
-* Перевести XVM
+  # Зарегистрируетесь на http://translation.by-reservation.com/
+  # Войдите и откройте страницу проекта XVM http://translation.by-reservation.com/projects/steam/
+  # Выберите нужный вам язык и начните перевод, кликнув по ссылке "Continue translation"
 
-  # Скачать [https://wot-xvm.googlecode.com/svn/trunk/release/l10n/en.xc en.xc] или [https://wot-xvm.googlecode.com/svn/trunk/release/l10n/ru.xc ru.xc]
-  # Выполнить перевод файла
-  # Переименовать файл в XX.xc, где XX - код языка, который вы можете подсмотреть в разделе "Languages" этой инструкции или в ключе "LANGUAGE_CODE" файла `[Папка WOT]\res\text\LC_MESSAGES\settings.mo`
 
-* Отправить свои изменения в XVM
-
-  # Написать на `xvm-l10n@by-reservation.com`
-  # Или запостить ссылку на файл в этом тиките https://code.google.com/p/wot-xvm/issues/detail?id=466
-
-== Languages ==
-===Updated===
-  * Bulgarian (bg)
-  * Chinese (Taiwan)(zh_TW)
-  * Czech (cs)
-  * English (en)
-  * Estonian (et)
-  * French (fr)
-  * German (de)
-  * Hungarian (hu)
-  * Latvian (lv)
-  * Norwegian (no)
-  * Polish (pl)
-  * Portuguese (pt)
-  * Russian (ru)
-  * Slovak (sk)(unofficial)
-  * Spanish (es)
-
-===Update needed===
-  * Belarusian (be)(unofficial)
-  * Danish (da)
-  * Dutch (nl)
-  * Finnish (fi)
-  * Italian (it)
-  * Japanese (ja)
-  * Korean (ko)
-  * Lithuanian (lt)
-  * Malay (ms)
-  * Portuguese (Brazil)(pt_BR)
-  * Romanian (ro)
-  * Serbian (sr)
-  * Swedish (sv)
-  * Turkish (tr)
-  * Ukrainian (uk)(unofficial)
-  * Vietnamese (vi)
-
-===To do===
-  * Chinese (China)(Simplified?)(zh_CN)
-  * Croatian (hr)
-  * Filipino (fil)
-  * Indonesian (id)
-  * Thai (th)
+Примечания
+  # Если вы знаете еще какой-нибудь язык, кроме английского, то вы можете указать их в своем профиле http://translation.by-reservation.com/accounts/edit/ . Это может облегчить вам процесс перевода.
+  # Если вы автор неофициальной локализации - напишите на `xvm-l10n@by-reservation.com`. Мы сделаем импорт вашей локализации в нашу систему переводов.
