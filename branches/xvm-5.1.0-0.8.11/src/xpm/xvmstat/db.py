@@ -1,11 +1,11 @@
 """ xvm (c) sirmax 2013-2014 """
 
 def get(dbname, key):
-    log('db.get: ' + str(key))
+    #debug('db.get: ' + str(key))
     return _get(dbname, key)
 
 def set(dbname, key, value):
-    log('db.set: ' + str(key) + ' => ' + str(value))
+    #debug('db.set: ' + str(key) + ' => ' + str(value))
     _set(dbname, key, value)
 
 

@@ -37,7 +37,7 @@ import json
 import traceback
 import time
 from random import randint
-from threading import Thread, RLock
+import threading
 from Queue import Queue
 
 import BigWorld
@@ -60,7 +60,7 @@ class _Stat(object):
     def __init__(self):
         player = BigWorld.player()
         self.queue = Queue()
-        self.lock = RLock()
+        self.lock = threading.RLock()
         self.thread = None
         self.req = None
         self.resp = None
@@ -83,7 +83,8 @@ class _Stat(object):
             return
         self.req = self.queue.get()
         self.resp = None
-        self.thread = Thread(target=self.req['func'])
+        self.thread = threading.Thread(target=self.req['func'])
+        self.thread.daemon = True
         self.thread.start()
         self._checkResult()
 
