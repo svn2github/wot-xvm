@@ -1,6 +1,7 @@
 """ xvm (c) sirmax 2013-2014 """
 
 import os
+import re
 
 def is_replay():
     import BattleReplay
@@ -13,3 +14,7 @@ def touch(fname, times=None):
 def rm(fname):
     if os.path.isfile(fname):
         os.remove(fname)
+
+def hide_guid(txt):
+    return re.sub('([0-9A-Fa-f]{8}-)[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}(-[0-9A-Fa-f]{12})', \
+        '\\1****-****-****\\2', txt)
