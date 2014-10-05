@@ -1,23 +1,26 @@
 {
     "RU": {
-        "ver": "5.3.5",
-        "message": "    * для WoT 0.9.3\n"
+        "ver": "5.3.6",
+        "message": "  * для WoT 0.9.3 #39\n  * исправлены ошибки"
     },
     "EU": {
-        "ver": "5.2.1-test2",
-        "message": "    www.modxvm.com\n  * for WoT 0.9.0\n  * new features, improvements and bugfixes"
+        "ver": "5.3.6",
+        "message": "  * for WoT 0.9.3 #39\n  * bugs fixed"
     },
     "US": {
-        "ver": "5.2.1-test2",
-        "message": "    www.modxvm.com\n  * for WoT 0.9.0\n  * new features, improvements and bugfixes"
+        "ver": "5.3.6",
+        "message": "  * for WoT 0.9.3 #39\n  * bugs fixed"
     },
     "SEA": {
-        "ver": "5.2.1-test2",
-        "message": "    www.modxvm.com\n  * for WoT 0.9.0\n  * new features, improvements and bugfixes"
+        "ver": "5.3.6",
+        "message": "  * for WoT 0.9.3 #39\n  * bugs fixed"
     },
     "VTC": {
-        "ver": "5.2.1-test2",
-        "message": "    www.modxvm.com\n  * for WoT 0.9.0\n  * new features, improvements and bugfixes"
+        "ver": "5.3.6",
+        "message": "  * for WoT 0.9.3 #39\n  * bugs fixed"
     },
-    "CT":  { "ver": "5.2.1-test2", "message": "    www.modxvm.com" }
+    "CT":  {
+        "ver": "5.3.6",
+        "message": "  * for WoT 0.9.3 #39\n  * new features, improvements and bugfixes"
+    }
 }
