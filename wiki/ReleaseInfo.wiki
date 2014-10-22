@@ -20,7 +20,7 @@
         "message": "  * for WoT 0.9.3 #39\n  * bugs fixed\n  * new mod xvm-comments\n  * network services settings in the personal cabinet at the XVM site"
     },
     "CT":  {
-        "ver": "5.4.1",
+        "ver": "5.4.0",
         "message": "  * for WoT 0.9.4 Common Test\n  * bugs fixed"
     }
 }
