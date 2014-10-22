@@ -1,23 +1,23 @@
 {
     "RU": {
         "ver": "5.4.0.1",
-        "message": "  * для WoT 0.9.3 #39\n  * исправлены ошибки\n  * новый мод xvm-comments\n  * настройки сетевых сервисов в персональном кабинете на сайте XVM"
+        "message": "  * для WoT 0.9.3 #756\n  * исправлены ошибки\n  * новый мод xvm-comments\n  * настройки сетевых сервисов в персональном кабинете на сайте XVM"
     },
     "EU": {
         "ver": "5.4.0.1",
-        "message": "  * for WoT 0.9.3 #39\n  * bugs fixed\n  * new mod xvm-comments\n  * network services settings in the personal cabinet at the XVM site"
+        "message": "  * for WoT 0.9.3 #756\n  * bugs fixed\n  * new mod xvm-comments\n  * network services settings in the personal cabinet at the XVM site"
     },
     "US": {
         "ver": "5.4.0.1",
-        "message": "  * for WoT 0.9.3 #39\n  * bugs fixed\n  * new mod xvm-comments\n  * network services settings in the personal cabinet at the XVM site"
+        "message": "  * for WoT 0.9.3 #756\n  * bugs fixed\n  * new mod xvm-comments\n  * network services settings in the personal cabinet at the XVM site"
     },
     "SEA": {
         "ver": "5.4.0.1",
-        "message": "  * for WoT 0.9.3 #39\n  * bugs fixed\n  * new mod xvm-comments\n  * network services settings in the personal cabinet at the XVM site"
+        "message": "  * for WoT 0.9.3 #756\n  * bugs fixed\n  * new mod xvm-comments\n  * network services settings in the personal cabinet at the XVM site"
     },
     "VTC": {
         "ver": "5.4.0.1",
-        "message": "  * for WoT 0.9.3 #39\n  * bugs fixed\n  * new mod xvm-comments\n  * network services settings in the personal cabinet at the XVM site"
+        "message": "  * for WoT 0.9.3 #756\n  * bugs fixed\n  * new mod xvm-comments\n  * network services settings in the personal cabinet at the XVM site"
     },
     "CT":  {
         "ver": "5.4.0",
