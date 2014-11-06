@@ -1,26 +1,26 @@
 {
     "RU": {
-        "ver": "5.4.1",
-        "message": "  * WoT 0.9.4\n  * исправлены ошибки\n  * новый мод xvm-comments\n  * настройки сетевых сервисов в персональном кабинете на сайте XVM"
+        "ver": "5.4.1.1",
+        "message": "  * WoT 0.9.4\n  * исправлены ошибки"
     },
     "EU": {
-        "ver": "5.4.1",
-        "message": "  * WoT 0.9.4\n  * bugs fixed\n  * new mod xvm-comments\n  * network services settings in the personal cabinet at the XVM site"
+        "ver": "5.4.1.1",
+        "message": "  * WoT 0.9.4\n  * bugs fixed"
     },
     "US": {
-        "ver": "5.4.1",
-        "message": "  * WoT 0.9.4\n  * bugs fixed\n  * new mod xvm-comments\n  * network services settings in the personal cabinet at the XVM site"
+        "ver": "5.4.1.1",
+        "message": "  * WoT 0.9.4\n  * bugs fixed"
     },
     "SEA": {
-        "ver": "5.4.1",
-        "message": "  * WoT 0.9.4\n  * bugs fixed\n  * new mod xvm-comments\n  * network services settings in the personal cabinet at the XVM site"
+        "ver": "5.4.1.1",
+        "message": "  * WoT 0.9.4\n  * bugs fixed"
     },
     "VTC": {
-        "ver": "5.4.1",
-        "message": "  * WoT 0.9.4\n  * bugs fixed\n  * new mod xvm-comments\n  * network services settings in the personal cabinet at the XVM site"
+        "ver": "5.4.1.1",
+        "message": "  * WoT 0.9.4\n  * bugs fixed"
     },
     "CT":  {
-        "ver": "5.4.1",
+        "ver": "5.4.1.1",
         "message": "  * WoT 0.9.4 Common Test\n  * bugs fixed"
     }
 }
